@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aquatic Carbonate System &amp; Water Acidification — Modeling Tool</title>
+<style>
+  :root{
+    --bg:#0d1b2a; --panel:#13293d; --panel2:#1b3a53; --ink:#eaf2f8;
+    --muted:#9db4c6; --line:#284b63; --accent:#48cae4; --accent2:#90e0ef;
+    --h2co3:#2e86de; --hco3:#e67e22; --co3:#27ae60;
+    --ph:#c0392b; --si:#117a65; --ct:#2471a3;
+    --good:#2ecc71; --bad:#e74c3c;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+    background:linear-gradient(160deg,#0b1622,#0d1b2a 40%,#102434);color:var(--ink);}
+  header{padding:22px 26px 14px;border-bottom:1px solid var(--line);
+    background:rgba(19,41,61,.55);backdrop-filter:blur(4px);}
+  header h1{margin:0;font-size:22px;letter-spacing:.2px}
+  header p{margin:6px 0 0;color:var(--muted);font-size:13.5px;max-width:900px}
+  .wrap{display:grid;grid-template-columns:340px 1fr;gap:0;min-height:calc(100vh - 92px)}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}}
+  /* ---- controls ---- */
+  .controls{padding:18px 20px;border-right:1px solid var(--line);
+    background:var(--panel);overflow-y:auto}
+  .modeRow{display:flex;gap:8px;margin-bottom:16px}
+  .modeRow button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--panel2);
+    color:var(--muted);border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;transition:.15s}
+  .modeRow button.active{background:var(--accent);color:#04222b;border-color:var(--accent)}
+  .ctl{margin-bottom:15px}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+  .ctl label .val{color:var(--accent2);font-weight:700;font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--accent);height:4px}
+  .hint{font-size:11px;color:var(--muted);margin-top:3px}
+  .presets{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 18px}
+  .presets button{font-size:11.5px;padding:6px 9px;border-radius:20px;border:1px solid var(--line);
+    background:transparent;color:var(--accent2);cursor:pointer}
+  .presets button:hover{background:var(--panel2)}
+  /* ---- results ---- */
+  .main{padding:18px 22px;overflow-y:auto}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:18px}
+  .card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .card .k{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+  .card .v{font-size:23px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+  .card .u{font-size:11px;color:var(--muted)}
+  .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;margin-top:6px}
+  .badge.over{background:rgba(46,204,113,.15);color:var(--good);border:1px solid var(--good)}
+  .badge.under{background:rgba(231,76,60,.15);color:var(--bad);border:1px solid var(--bad)}
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:1200px){.charts{grid-template-columns:1fr}}
+  .chartbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .chartbox h3{margin:0 0 2px;font-size:14px}
+  .chartbox .sub{font-size:11.5px;color:var(--muted);margin:0 0 8px}
+  canvas{width:100%;height:auto;display:block}
+  .footer{color:var(--muted);font-size:11.5px;margin-top:16px;line-height:1.6}
+  code{background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--accent2)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Aquatic Carbonate System &amp; Water Acidification</h1>
+  <p>Interactive equilibrium model of the CO<sub>2</sub>–HCO<sub>3</sub><sup>−</sup>–CO<sub>3</sub><sup>2−</sup> system.
+     Adjust the inputs and watch how <b>pH</b>, total inorganic carbon <b>C<sub>T</sub></b>,
+     speciation, and the <b>calcite saturation index</b> respond. Constants follow Plummer &amp; Busenberg (1982);
+     non-ideality via the Davies equation.</p>
+</header>
+
+<div class="wrap">
+  <!-- ================= CONTROLS ================= -->
+  <div class="controls">
+    <div class="modeRow">
+      <button id="mOpen" class="active">Open system<br><span style="font-weight:400;font-size:11px">fixed pCO₂</span></button>
+      <button id="mClosed">Closed system<br><span style="font-weight:400;font-size:11px">fixed C<sub>T</sub></span></button>
+    </div>
+
+    <div class="presets">
+      <button data-p="river">Hard river water</button>
+      <button data-p="soft">Soft lake</button>
+      <button data-p="sea">Seawater*</button>
+    </div>
+
+    <div class="ctl" id="pco2Ctl">
+      <label>Atmospheric pCO₂ <span class="val"><span id="pco2v">400</span> ppm</span></label>
+      <input type="range" id="pco2" min="1.7" max="3.7" step="0.01" value="2.602">
+      <div class="hint">log scale · pre-industrial 280 · today ~420 · high-emission 2100 ~1000</div>
+    </div>
+
+    <div class="ctl" id="ctCtl" style="display:none">
+      <label>Total inorganic carbon C<sub>T</sub> <span class="val"><span id="ctv">2.00</span> mM</span></label>
+      <input type="range" id="ct" min="0.1" max="10" step="0.05" value="2.0">
+      <div class="hint">closed system: no gas exchange</div>
+    </div>
+
+    <div class="ctl">
+      <label>Alkalinity <span class="val"><span id="alkv">2.00</span> meq/L</span></label>
+      <input type="range" id="alk" min="0.2" max="6" step="0.05" value="2.0">
+      <div class="hint">Alk = [HCO₃⁻] + 2[CO₃²⁻] + [OH⁻] − [H⁺]</div>
+    </div>
+
+    <div class="ctl">
+      <label>Temperature <span class="val"><span id="tv">15</span> °C</span></label>
+      <input type="range" id="temp" min="0" max="40" step="0.5" value="15">
+    </div>
+
+    <div class="ctl">
+      <label>Ionic strength I <span class="val"><span id="iv">0.010</span> M</span></label>
+      <input type="range" id="ion" min="0" max="0.5" step="0.001" value="0.01">
+      <div class="hint">Davies activity correction (valid I ≲ 0.5 M)</div>
+    </div>
+
+    <div class="ctl">
+      <label>Total calcium Ca<sup>2+</sup> <span class="val"><span id="cav">0.80</span> mM</span></label>
+      <input type="range" id="ca" min="0" max="10" step="0.05" value="0.8">
+      <div class="hint">used for calcite saturation (≈ <span id="camg">32</span> mg/L)</div>
+    </div>
+  </div>
+
+  <!-- ================= RESULTS ================= -->
+  <div class="main">
+    <div class="cards">
+      <div class="card"><div class="k">pH</div><div class="v" id="rpH">–</div><div class="u">activity scale</div></div>
+      <div class="card"><div class="k">C<sub>T</sub></div><div class="v" id="rCT">–</div><div class="u">mmol/L</div></div>
+      <div class="card"><div class="k">Calcite SI</div><div class="v" id="rSI">–</div>
+        <div id="rBadge" class="badge over">–</div></div>
+      <div class="card"><div class="k">Ω (Ca·CO₃/K<sub>sp</sub>)</div><div class="v" id="rOmega">–</div><div class="u">saturation ratio</div></div>
+    </div>
+
+    <div class="charts">
+      <div class="chartbox">
+        <h3>Bjerrum speciation diagram</h3>
+        <p class="sub">Mole fractions of C<sub>T</sub> vs pH · dashed line = your current pH</p>
+        <canvas id="cSpec" width="560" height="330"></canvas>
+      </div>
+      <div class="chartbox">
+        <h3>Current speciation</h3>
+        <p class="sub">Concentration of each carbonate species now (mmol/L)</p>
+        <canvas id="cBar" width="560" height="330"></canvas>
+      </div>
+      <div class="chartbox">
+        <h3>Acidification curve</h3>
+        <p class="sub">pH vs pCO₂ at your fixed alkalinity · marker = current state</p>
+        <canvas id="cAcid" width="560" height="330"></canvas>
+      </div>
+      <div class="chartbox">
+        <h3>Calcite saturation vs pCO₂</h3>
+        <p class="sub">SI &gt; 0 precipitation (green) · SI &lt; 0 dissolution (red)</p>
+        <canvas id="cSat" width="560" height="330"></canvas>
+      </div>
+    </div>
+
+    <div class="footer">
+      <b>Model.</b> Equilibrium constants K₁, K₂, K<sub>H</sub>, K<sub>sp,calcite</sub> and K<sub>w</sub> are
+      temperature-dependent (Plummer &amp; Busenberg 1982). Activity coefficients from the Davies equation with a
+      Debye–Hückel A-parameter computed from the temperature-dependent dielectric constant of water. pH is solved by
+      bisection on the alkalinity balance and reported on the activity scale.
+      <code>SI = log₁₀(a<sub>Ca</sub>·a<sub>CO₃</sub> / K<sub>sp</sub>)</code>.
+      * The seawater preset (I = 0.7 M) is outside strict Davies validity and is illustrative only.
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+// =====================================================================
+//  Chemistry engine  (identical formulation to carbonate_system_model.py)
+// =====================================================================
+const log10 = x => Math.log(x)/Math.LN10;
+
+function logK1(T){return -356.3094 - 0.06091964*T + 21834.37/T + 126.8339*log10(T) - 1684915/(T*T);}
+function logK2(T){return -107.8871 - 0.03252849*T + 5151.79/T + 38.92561*log10(T) - 563713.9/(T*T);}
+function logKH(T){return 108.3865 + 0.01985076*T - 6919.53/T - 40.45154*log10(T) + 669365/(T*T);}
+function logKsp(T){return -171.9065 - 0.077993*T + 2839.319/T + 71.595*log10(T);}
+function pKw(T){return 4470.99/T - 6.0875 + 0.01706*T;}          // = -log10 Kw
+function dielectric(TC){return 87.740 - 0.40008*TC + 9.398e-4*TC*TC - 1.410e-6*TC*TC*TC;}
+function dhA(T){const eps=dielectric(T-273.15);return 1.82e6/Math.pow(eps*T,1.5);}
+function gamma(z,I,T){
+  if(z===0||I<=0) return 1;
+  const A=dhA(T), s=Math.sqrt(I);
+  return Math.pow(10, -A*z*z*(s/(1+s)-0.3*I));
+}
+
+// Solve the system. p = {TC,I,Alk,Ca,mode,pCO2,CT}
+function solve(p){
+  const T=p.TC+273.15;
+  const K1=Math.pow(10,logK1(T)), K2=Math.pow(10,logK2(T));
+  const KH=Math.pow(10,logKH(T)), Ksp=Math.pow(10,logKsp(T));
+  const Kw=Math.pow(10,-pKw(T));
+  const g1=gamma(1,p.I,T), g2=gamma(2,p.I,T);
+  const K1c=K1/(g1*g1), K2c=K2/g2, Kwc=Kw/(g1*g1);
+
+  const alkFromH=H=>{
+    let H2CO3,HCO3,CO3;
+    if(p.mode==='open'){
+      H2CO3=KH*p.pCO2; HCO3=K1c*H2CO3/H; CO3=K2c*HCO3/H;
+    }else{
+      const a0=1/(1+K1c/H+K1c*K2c/(H*H));
+      HCO3=p.CT*a0*K1c/H; CO3=p.CT*a0*K1c*K2c/(H*H);
+    }
+    return HCO3+2*CO3+Kwc/H-H;
+  };
+  // geometric bisection on H (pH 1..13)
+  let lo=1e-1, hi=1e-13;
+  const f=H=>alkFromH(H)-p.Alk;
+  for(let i=0;i<200;i++){
+    const mid=Math.sqrt(lo*hi);
+    if(f(lo)*f(mid)<=0) hi=mid; else lo=mid;
+  }
+  const H=Math.sqrt(lo*hi);
+  let H2CO3;
+  if(p.mode==='open'){H2CO3=KH*p.pCO2;}
+  else{const a0=1/(1+K1c/H+K1c*K2c/(H*H));H2CO3=p.CT*a0;}
+  const HCO3=K1c*H2CO3/H, CO3=K2c*HCO3/H, OH=Kwc/H;
+  const CT=H2CO3+HCO3+CO3;
+  const pH=-log10(H*g1);
+  const IAP=(p.Ca*g2)*(CO3*g2);
+  const SI=log10(IAP/Ksp), Omega=IAP/Ksp;
+  return {H,pH,H2CO3,HCO3,CO3,OH,CT,SI,Omega,K1c,K2c,g1,g2,
+          pK1:-logK1(T),pK2:-logK2(T)};
+}
+
+// =====================================================================
+//  Tiny canvas plotting helpers (no external libraries)
+// =====================================================================
+function setupHiDPI(cv){
+  const dpr=window.devicePixelRatio||1;
+  const w=cv.width, h=cv.height;
+  cv.width=w*dpr; cv.height=h*dpr; cv.style.height='auto';
+  const ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
+  return {ctx,w,h};
+}
+const CSS=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+
+function axes(ctx,w,h,m,xr,yr,xlab,ylab,xlog,noXticks){
+  ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle=CSS('--line'); ctx.fillStyle=CSS('--muted');
+  ctx.lineWidth=1; ctx.font='11px Segoe UI';
+  const [x0,x1]=xr,[y0,y1]=yr;
+  const tx=v=>xlog?log10(v):v;                 // transform x (linear or log)
+  const txr=xlog?(log10(x1)-log10(x0)):(x1-x0);
+  const px=v=>m.l+((tx(v)-tx(x0))/txr)*(w-m.l-m.r);
+  const py=v=>h-m.b-((v-y0)/(y1-y0))*(h-m.t-m.b);
+  // frame
+  ctx.beginPath();ctx.moveTo(m.l,m.t);ctx.lineTo(m.l,h-m.b);ctx.lineTo(w-m.r,h-m.b);ctx.stroke();
+  // y ticks
+  ctx.textAlign='right';ctx.textBaseline='middle';
+  const yt=niceTicks(y0,y1,5);
+  yt.forEach(v=>{const y=py(v);ctx.strokeStyle='rgba(255,255,255,.06)';
+    ctx.beginPath();ctx.moveTo(m.l,y);ctx.lineTo(w-m.r,y);ctx.stroke();
+    ctx.fillStyle=CSS('--muted');ctx.fillText(fmt(v),m.l-6,y);});
+  // x ticks
+  ctx.textAlign='center';ctx.textBaseline='top';
+  if(!noXticks){
+    let xt;
+    if(xlog){xt=[];const a=Math.floor(log10(x0)),b=Math.floor(log10(x1));
+      for(let e=a;e<=b;e++){for(const mm of [1,2,5]){const v=mm*Math.pow(10,e);
+        if(v>=x0&&v<=x1)xt.push(v);}}}
+    else xt=niceTicks(x0,x1,6);
+    xt.forEach(v=>{const x=px(v);ctx.fillStyle=CSS('--muted');
+      ctx.fillText(xlog?fmtSci(v):fmt(v),x,h-m.b+5);});
+  }
+  // labels
+  ctx.fillStyle=CSS('--ink');ctx.textAlign='center';ctx.textBaseline='bottom';
+  ctx.fillText(xlab,(m.l+w-m.r)/2,h-2);
+  ctx.save();ctx.translate(11,(m.t+h-m.b)/2);ctx.rotate(-Math.PI/2);
+  ctx.textBaseline='top';ctx.fillText(ylab,0,0);ctx.restore();
+  return {px,py};
+}
+function niceTicks(a,b,n){const span=b-a||1;let step=Math.pow(10,Math.floor(log10(span/n)));
+  const err=span/n/step;if(err>5)step*=5;else if(err>2)step*=2;
+  const out=[];for(let v=Math.ceil(a/step)*step;v<=b+1e-9;v+=step)out.push(+v.toFixed(6));return out;}
+function fmt(v){return Math.abs(v)>=100?v.toFixed(0):Math.abs(v)>=1?v.toFixed(1):v.toFixed(2);}
+function fmtSci(v){const e=Math.round(log10(v));const m=v/Math.pow(10,e);
+  return (Math.abs(m-1)<0.01?'10':m.toFixed(0)+'·10')+ (e!==0?superscript(e):'');}
+function superscript(e){const map={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  return String(e).split('').map(c=>map[c]||c).join('');}
+function line(ctx,pts,map,color,lw){ctx.strokeStyle=color;ctx.lineWidth=lw||2;ctx.beginPath();
+  pts.forEach((p,i)=>{const x=map.px(p[0]),y=map.py(p[1]);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();}
+
+// =====================================================================
+//  Draw the four charts
+// =====================================================================
+function drawSpec(state){
+  const cv=document.getElementById('cSpec');const {ctx,w,h}=setupHiDPI(cv);
+  const m={l:44,r:12,t:10,b:34};
+  const map=axes(ctx,w,h,m,[2,13],[0,1.02],'pH','mole fraction',false);
+  const {K1c,K2c,g1}=state.res;
+  const a0=[],a1=[],a2=[];
+  for(let pH=2;pH<=13;pH+=0.05){
+    const H=Math.pow(10,-pH)/g1;
+    const d=1+K1c/H+K1c*K2c/(H*H);
+    a0.push([pH,1/d]);a1.push([pH,(K1c/H)/d]);a2.push([pH,(K1c*K2c/(H*H))/d]);
+  }
+  line(ctx,a0,map,CSS('--h2co3'),2.4);
+  line(ctx,a1,map,CSS('--hco3'),2.4);
+  line(ctx,a2,map,CSS('--co3'),2.4);
+  // current pH
+  const x=map.px(state.res.pH);
+  ctx.strokeStyle=CSS('--accent');ctx.setLineDash([5,4]);ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(x,m.t);ctx.lineTo(x,h-m.b);ctx.stroke();ctx.setLineDash([]);
+  // legend
+  legend(ctx,w,m,[['H₂CO₃*',CSS('--h2co3')],['HCO₃⁻',CSS('--hco3')],['CO₃²⁻',CSS('--co3')]]);
+}
+function drawBar(state){
+  const cv=document.getElementById('cBar');const {ctx,w,h}=setupHiDPI(cv);
+  const m={l:44,r:12,t:10,b:34};
+  const r=state.res;
+  const data=[['H₂CO₃*',r.H2CO3*1e3,CSS('--h2co3')],
+              ['HCO₃⁻',r.HCO3*1e3,CSS('--hco3')],
+              ['CO₃²⁻',r.CO3*1e3,CSS('--co3')],
+              ['OH⁻',r.OH*1e3,'#8e44ad'],
+              ['H⁺',r.H*1e3,'#c0392b']];
+  const ymax=Math.max(...data.map(d=>d[1]))*1.15||1;
+  const map=axes(ctx,w,h,m,[0,1],[0,ymax],'','mmol/L',false,true);
+  const n=data.length, bw=(w-m.l-m.r)/n*0.55;
+  data.forEach((d,i)=>{
+    const cx=m.l+(i+0.5)*(w-m.l-m.r)/n;
+    const y=map.py(d[1]);
+    ctx.fillStyle=d[2];ctx.fillRect(cx-bw/2,y,bw,h-m.b-y);
+    ctx.fillStyle=CSS('--ink');ctx.textAlign='center';ctx.textBaseline='top';ctx.font='11px Segoe UI';
+    ctx.fillText(d[0],cx,h-m.b+5);
+    ctx.textBaseline='bottom';ctx.fillStyle=CSS('--muted');
+    ctx.fillText(d[1]<0.01?d[1].toExponential(1):d[1].toFixed(2),cx,y-2);
+  });
+}
+function drawAcid(state){
+  const cv=document.getElementById('cAcid');const {ctx,w,h}=setupHiDPI(cv);
+  const m={l:44,r:12,t:10,b:34};
+  const map=axes(ctx,w,h,m,[150,3000],[6.5,9.5],'pCO₂ [ppm]','pH',true);
+  const pts=[];
+  for(let lp=log10(150);lp<=log10(3000);lp+=0.02){
+    const ppm=Math.pow(10,lp);
+    const r=solve({...state.p,mode:'open',pCO2:ppm*1e-6});
+    pts.push([ppm,r.pH]);
+  }
+  line(ctx,pts,map,CSS('--ph'),2.6);
+  // reference lines
+  [[280,'pre-ind'],[420,'today'],[1000,'2100']].forEach(([v,t])=>{
+    const x=map.px(v);ctx.strokeStyle='rgba(255,255,255,.12)';ctx.setLineDash([3,3]);
+    ctx.beginPath();ctx.moveTo(x,m.t);ctx.lineTo(x,h-m.b);ctx.stroke();ctx.setLineDash([]);
+    ctx.save();ctx.fillStyle=CSS('--muted');ctx.font='9px Segoe UI';ctx.translate(x-3,h-m.b-4);
+    ctx.rotate(-Math.PI/2);ctx.textAlign='left';ctx.fillText(t,0,0);ctx.restore();
+  });
+  // current marker (open mode only)
+  if(state.p.mode==='open'){
+    const x=map.px(state.p.pCO2*1e6),y=map.py(state.res.pH);
+    ctx.fillStyle=CSS('--accent');ctx.beginPath();ctx.arc(x,y,5,0,7);ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+  }
+}
+function drawSat(state){
+  const cv=document.getElementById('cSat');const {ctx,w,h}=setupHiDPI(cv);
+  const m={l:44,r:12,t:10,b:34};
+  const pts=[];
+  for(let lp=log10(150);lp<=log10(3000);lp+=0.02){
+    const ppm=Math.pow(10,lp);
+    const r=solve({...state.p,mode:'open',pCO2:ppm*1e-6});
+    pts.push([ppm,r.SI]);
+  }
+  let smin=Math.min(...pts.map(p=>p[1])),smax=Math.max(...pts.map(p=>p[1]));
+  smin=Math.min(smin,-0.1);smax=Math.max(smax,0.1);
+  const map=axes(ctx,w,h,m,[150,3000],[smin*1.1,smax*1.1],'pCO₂ [ppm]','Calcite SI',true);
+  // zero line
+  const yz=map.py(0);ctx.strokeStyle=CSS('--ink');ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(m.l,yz);ctx.lineTo(w-m.r,yz);ctx.stroke();
+  // fill
+  ctx.save();
+  ctx.beginPath();pts.forEach((p,i)=>{const x=map.px(p[0]),y=map.py(p[1]);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
+  ctx.lineTo(map.px(3000),yz);ctx.lineTo(map.px(150),yz);ctx.closePath();
+  ctx.clip();
+  ctx.fillStyle='rgba(46,204,113,.25)';ctx.fillRect(m.l,m.t,w,yz-m.t);
+  ctx.fillStyle='rgba(231,76,60,.25)';ctx.fillRect(m.l,yz,w,h-m.b-yz);
+  ctx.restore();
+  line(ctx,pts,map,CSS('--si'),2.6);
+  if(state.p.mode==='open'){
+    const x=map.px(state.p.pCO2*1e6),y=map.py(state.res.SI);
+    ctx.fillStyle=CSS('--accent');ctx.beginPath();ctx.arc(x,y,5,0,7);ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+  }
+}
+function legend(ctx,w,m,items){
+  ctx.font='11px Segoe UI';ctx.textAlign='left';ctx.textBaseline='middle';
+  let y=m.t+8;
+  items.forEach(([t,c])=>{const x=w-118;
+    ctx.fillStyle=c;ctx.fillRect(x,y-4,14,4);
+    ctx.fillStyle=CSS('--ink');ctx.fillText(t,x+20,y);y+=16;});
+}
+
+// =====================================================================
+//  State + UI wiring
+// =====================================================================
+const el=id=>document.getElementById(id);
+let mode='open';
+
+function readInputs(){
+  const p={
+    TC:+el('temp').value,
+    I:+el('ion').value,
+    Alk:+el('alk').value*1e-3,
+    Ca:+el('ca').value*1e-3,
+    mode:mode,
+    pCO2:Math.pow(10,+el('pco2').value)*1e-6,
+    CT:+el('ct').value*1e-3
+  };
+  return p;
+}
+function refresh(){
+  // sync labels
+  el('pco2v').textContent=Math.round(Math.pow(10,+el('pco2').value));
+  el('ctv').textContent=(+el('ct').value).toFixed(2);
+  el('alkv').textContent=(+el('alk').value).toFixed(2);
+  el('tv').textContent=(+el('temp').value);
+  el('iv').textContent=(+el('ion').value).toFixed(3);
+  el('cav').textContent=(+el('ca').value).toFixed(2);
+  el('camg').textContent=Math.round(+el('ca').value*40.08);
+
+  const p=readInputs();
+  const res=solve(p);
+  const state={p,res};
+
+  el('rpH').textContent=res.pH.toFixed(2);
+  el('rCT').textContent=(res.CT*1e3).toFixed(2);
+  el('rSI').textContent=(res.SI>=0?'+':'')+res.SI.toFixed(2);
+  el('rOmega').textContent=res.Omega.toFixed(2);
+  const b=el('rBadge');
+  if(res.SI>=0){b.className='badge over';b.textContent='over-saturated → precipitates';}
+  else{b.className='badge under';b.textContent='under-saturated → dissolves';}
+
+  drawSpec(state);drawBar(state);drawAcid(state);drawSat(state);
+}
+
+// sliders
+['pco2','ct','alk','temp','ion','ca'].forEach(id=>el(id).addEventListener('input',refresh));
+
+// mode toggle
+el('mOpen').addEventListener('click',()=>{mode='open';el('mOpen').classList.add('active');
+  el('mClosed').classList.remove('active');el('pco2Ctl').style.display='';el('ctCtl').style.display='none';refresh();});
+el('mClosed').addEventListener('click',()=>{mode='closed';el('mClosed').classList.add('active');
+  el('mOpen').classList.remove('active');el('pco2Ctl').style.display='none';el('ctCtl').style.display='';refresh();});
+
+// presets
+const PRESETS={
+  river:{alk:4.0,temp:15,ion:0.012,ca:2.0,pco2:2.602},
+  soft :{alk:0.8,temp:12,ion:0.003,ca:0.3,pco2:2.602},
+  sea  :{alk:2.3,temp:20,ion:0.5, ca:10.3,pco2:2.602}
+};
+document.querySelectorAll('.presets button').forEach(btn=>btn.addEventListener('click',()=>{
+  const q=PRESETS[btn.dataset.p];
+  el('alk').value=q.alk;el('temp').value=q.temp;el('ion').value=q.ion;
+  el('ca').value=q.ca;el('pco2').value=q.pco2;refresh();
+}));
+
+// resize redraw
+window.addEventListener('resize',()=>{ ['cSpec','cBar','cAcid','cSat'].forEach(id=>{
+  const c=el(id);c.width=560;c.height=330;}); refresh();});
+
+refresh();
+</script>
+</body>
+</html>
