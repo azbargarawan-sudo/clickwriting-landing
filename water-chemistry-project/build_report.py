@@ -6,6 +6,8 @@ carbonate_system_model.py so the PNG figures exist.
 from docx import Document
 from docx.shared import Pt, Inches, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.oxml.ns import qn
+from docx.oxml import OxmlElement
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -15,6 +17,46 @@ doc = Document()
 style = doc.styles['Normal']
 style.font.name = 'Calibri'
 style.font.size = Pt(11)
+
+
+def rtl_line(text, size=12, bold=False, color=(0x1b, 0x3a, 0x53), after=2):
+    """Centered Hebrew (right-to-left) header line."""
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_after = Pt(after)
+    pPr = p._p.get_or_add_pPr()
+    pPr.append(OxmlElement('w:bidi'))          # mark paragraph RTL
+    r = p.add_run(text)
+    r.bold = bold
+    r.font.size = Pt(size)
+    r.font.color.rgb = RGBColor(*color)
+    rPr = r._element.get_or_add_rPr()
+    rtl = OxmlElement('w:rtl'); rtl.set(qn('w:val'), '1'); rPr.append(rtl)
+    return p
+
+
+# =====================================================================
+# 0. University / faculty header  (matches the standard BGU cover format)
+# =====================================================================
+LOGO = os.path.join(HERE, 'bgu_logo.png')
+if os.path.exists(LOGO):
+    doc.add_picture(LOGO, width=Inches(1.9))
+    doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+else:
+    # placeholder to paste the official emblem into
+    ph = doc.add_paragraph()
+    ph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    r = ph.add_run('[ paste the official Ben-Gurion University logo here / '
+                   'הכניסו כאן את סמל האוניברסיטה ]')
+    r.italic = True
+    r.font.size = Pt(9)
+    r.font.color.rgb = RGBColor(0x99, 0x99, 0x99)
+
+rtl_line('אוניברסיטת בן-גוריון בנגב', size=14, bold=True)
+rtl_line('הפקולטה למדעי ההנדסה', size=12)
+rtl_line('המחלקה להנדסה כימית', size=12, after=8)
+rtl_line('כימיה של המים בהנדסה כימית סביבתית', size=11,
+         color=(0x55, 0x55, 0x55), after=12)
 
 
 def h(text, size=14, color=(0x1b, 0x3a, 0x53), space_before=10):
