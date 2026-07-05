@@ -177,7 +177,10 @@ body(
     'under-saturation (dissolution / corrosivity). We also output the CCPP '
     '(Calcium Carbonate Precipitation Potential): the mass of CaCO₃, in mg/L as '
     'CaCO₃, that must precipitate (+) or dissolve (−) to reach equilibrium '
-    '(Ω = 1), a standard index for water stability and corrosion control. The '
+    '(Ω = 1), a standard index for water stability and corrosion control (for '
+    'example, desalinated RO water has a strongly negative CCPP and must be '
+    'remineralized before distribution, whereas hard water has a positive CCPP and '
+    'tends to scale). The '
     'model was validated against literature constants at 25 °C (pK₁ = 6.35, '
     'pK₂ = 10.33, pKₕ = 1.47, pKₛₚ = 8.48, A = 0.51).'
 )

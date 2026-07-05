@@ -78,6 +78,8 @@
       <button data-p="river">Hard river water</button>
       <button data-p="soft">Soft lake</button>
       <button data-p="sea">Seawater*</button>
+      <button data-p="ro">Desalinated (RO)</button>
+      <button data-p="remin">Remineralized</button>
     </div>
 
     <div class="ctl" id="pco2Ctl">
@@ -537,9 +539,11 @@ el('mClosed').addEventListener('click',()=>{mode='closed';el('mClosed').classLis
 
 // presets
 const PRESETS={
-  river:{alk:4.0,temp:15,ion:0.012,ca:2.0,pco2:2.602},
-  soft :{alk:0.8,temp:12,ion:0.003,ca:0.3,pco2:2.602},
-  sea  :{alk:2.3,temp:20,ion:0.5, ca:10.3,pco2:2.602}
+  river:{alk:4.0,temp:15,ion:0.012,ca:2.0, pco2:2.602},
+  soft :{alk:0.8,temp:12,ion:0.003,ca:0.3, pco2:2.602},
+  sea  :{alk:2.3,temp:20,ion:0.5,  ca:10.3,pco2:2.602},
+  ro   :{alk:0.2,temp:24,ion:0.004,ca:0.2, pco2:2.602},  // RO permeate: corrosive
+  remin:{alk:1.8,temp:24,ion:0.009,ca:1.2, pco2:2.602}   // post-treatment: stabilized
 };
 document.querySelectorAll('.presets button').forEach(btn=>btn.addEventListener('click',()=>{
   const q=PRESETS[btn.dataset.p];
