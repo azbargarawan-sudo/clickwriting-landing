@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Aquatic Carbonate System &amp; Water Acidification — Modeling Tool</title>
+<title>Aquatic Carbonate System &amp; Water Acidification, Modeling Tool</title>
 <style>
   :root{
     --bg:#0d1b2a; --panel:#13293d; --panel2:#1b3a53; --ink:#eaf2f8;
@@ -60,7 +60,7 @@
 <body>
 <header>
   <h1>Aquatic Carbonate System &amp; Water Acidification</h1>
-  <p>Interactive equilibrium model of the CO<sub>2</sub>–HCO<sub>3</sub><sup>−</sup>–CO<sub>3</sub><sup>2−</sup> system.
+  <p>Interactive equilibrium model of the CO<sub>2</sub>-HCO<sub>3</sub><sup>−</sup>-CO<sub>3</sub><sup>2−</sup> system.
      Adjust the inputs and watch how <b>pH</b>, total inorganic carbon <b>C<sub>T</sub></b>,
      speciation, and the <b>calcite saturation index</b> respond. Constants follow Plummer &amp; Busenberg (1982);
      non-ideality via the Davies equation.</p>
@@ -119,11 +119,11 @@
   <!-- ================= RESULTS ================= -->
   <div class="main">
     <div class="cards">
-      <div class="card"><div class="k">pH</div><div class="v" id="rpH">–</div><div class="u">activity scale</div></div>
-      <div class="card"><div class="k">C<sub>T</sub></div><div class="v" id="rCT">–</div><div class="u">mmol/L</div></div>
-      <div class="card"><div class="k">Calcite SI</div><div class="v" id="rSI">–</div>
-        <div id="rBadge" class="badge over">–</div></div>
-      <div class="card"><div class="k">Ω (Ca·CO₃/K<sub>sp</sub>)</div><div class="v" id="rOmega">–</div><div class="u">saturation ratio</div></div>
+      <div class="card"><div class="k">pH</div><div class="v" id="rpH">-</div><div class="u">activity scale</div></div>
+      <div class="card"><div class="k">C<sub>T</sub></div><div class="v" id="rCT">-</div><div class="u">mmol/L</div></div>
+      <div class="card"><div class="k">Calcite SI</div><div class="v" id="rSI">-</div>
+        <div id="rBadge" class="badge over">-</div></div>
+      <div class="card"><div class="k">Ω (Ca·CO₃/K<sub>sp</sub>)</div><div class="v" id="rOmega">-</div><div class="u">saturation ratio</div></div>
     </div>
 
     <div class="charts">
@@ -152,7 +152,7 @@
     <div class="footer">
       <b>Model.</b> Equilibrium constants K₁, K₂, K<sub>H</sub>, K<sub>sp,calcite</sub> and K<sub>w</sub> are
       temperature-dependent (Plummer &amp; Busenberg 1982). Activity coefficients from the Davies equation with a
-      Debye–Hückel A-parameter computed from the temperature-dependent dielectric constant of water. pH is solved by
+      Debye-Hückel A-parameter computed from the temperature-dependent dielectric constant of water. pH is solved by
       bisection on the alkalinity balance and reported on the activity scale.
       <code>SI = log₁₀(a<sub>Ca</sub>·a<sub>CO₃</sub> / K<sub>sp</sub>)</code>.
       * The seawater preset (I = 0.7 M) is outside strict Davies validity and is illustrative only.

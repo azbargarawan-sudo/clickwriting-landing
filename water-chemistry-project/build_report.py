@@ -61,7 +61,7 @@ r.font.color.rgb = RGBColor(0x0d, 0x1b, 0x2a)
 
 sub = doc.add_paragraph()
 sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = sub.add_run('Water Chemistry course — Ben-Gurion University — Spring 2026')
+r = sub.add_run('Water Chemistry course, Ben-Gurion University, Spring 2026')
 r.italic = True
 r.font.size = Pt(11)
 r.font.color.rgb = RGBColor(0x55, 0x55, 0x55)
@@ -70,10 +70,10 @@ info = doc.add_paragraph()
 info.alignment = WD_ALIGN_PARAGRAPH.CENTER
 info.add_run(
     'Students:\n'
-    'Shada Taha — 213700875 — [email]\n'
-    'Abdallah Awad — 213041486 — [email]\n'
-    'Lina Awad — 325348571 — [email]\n'
-    'Yasmin Nassar — 326486032 — [email]\n'
+    'Shada Taha, 213700875, [email]\n'
+    'Abdallah Awad, 213041486, [email]\n'
+    'Lina Awad, 325348571, [email]\n'
+    'Yasmin Nassar, 326486032, [email]\n'
     'Lecturer: Oded Nir').font.size = Pt(10.5)
 
 # =====================================================================
@@ -83,8 +83,8 @@ h('1.  Background')
 body(
     'The carbonate system (CO₂/H₂CO₃*, HCO₃⁻, CO₃²⁻) '
     'governs the pH and buffering capacity of nearly all natural waters. Dissolving '
-    'CO₂ forms carbonic acid and lowers pH — the mechanism of ocean and freshwater '
-    'acidification — while the same equilibria decide whether calcium carbonate '
+    'CO₂ forms carbonic acid and lowers pH, the mechanism of ocean and freshwater '
+    'acidification, while the same equilibria decide whether calcium carbonate '
     'precipitates (scaling) or dissolves (corrosion). We model how atmospheric CO₂, '
     'alkalinity, temperature and ionic strength jointly control pH, total inorganic '
     'carbon and calcite saturation.'
@@ -106,7 +106,7 @@ body(
     'Henry’s constant Kₕ for CO₂, the water ion product Kᵥ, and the calcite '
     'solubility product Kₛₚ. All five are evaluated as functions of temperature with '
     'the Plummer & Busenberg (1982) polynomials. Non-ideality is treated with the Davies '
-    'equation, whose Debye–Hückel A-parameter is computed from the '
+    'equation, whose Debye-Hückel A-parameter is computed from the '
     'temperature-dependent dielectric constant of water; this converts thermodynamic '
     'constants into conditional (concentration) constants K₁′, K₂′, '
     'Kᵥ′. The proton condition is expressed through alkalinity:'
@@ -116,7 +116,7 @@ eq.alignment = WD_ALIGN_PARAGRAPH.CENTER
 eq.add_run('Alk = [HCO₃⁻] + 2[CO₃²⁻] + [OH⁻] − [H⁺]').italic = True
 body(
     'Algorithm. For a given alkalinity the model finds the hydrogen-ion concentration '
-    '[H⁺] that satisfies this balance by geometric bisection over pH 1–13 '
+    '[H⁺] that satisfies this balance by geometric bisection over pH 1-13 '
     '(200 iterations). In the open system [H₂CO₃*] is fixed by Henry’s law '
     '([H₂CO₃*] = Kₕ·pCO₂) and the other species follow from '
     'K₁′, K₂′; in the closed system the fixed Cₜ is distributed over '
@@ -149,7 +149,7 @@ body(
     'H₂CO₃* dominates below pK₁ (6.35), HCO₃⁻ dominates between the two '
     'pK values, and CO₃²⁻ takes over above pK₂ (10.33); the curves cross '
     'exactly at the pK values, where the two neighbouring species are equal. Around the '
-    'circum-neutral pH of most natural waters (7–8.5) bicarbonate carries essentially '
+    'circum-neutral pH of most natural waters (7-8.5) bicarbonate carries essentially '
     'all of Cₜ, which is why HCO₃⁻ is the principal contributor to alkalinity '
     'and to the buffering capacity of the system.')
 
@@ -159,7 +159,7 @@ figure('fig2_acidification.png',
 body(
     'Raising pCO₂ drives more CO₂ into solution (Henry’s law); the added '
     'H₂CO₃* dissociates and releases H⁺, so pH falls almost linearly with '
-    'log pCO₂ — the essence of ocean and freshwater acidification. Because alkalinity '
+    'log pCO₂, the essence of ocean and freshwater acidification. Because alkalinity '
     'is conserved, the extra acidity is buffered by converting CO₃²⁻ and '
     'HCO₃⁻, and total inorganic carbon Cₜ rises. Moving from the pre-industrial '
     '(280 ppm) to a high-emission 2100 level (~1000 ppm) lowers the modelled pH by several '
@@ -181,7 +181,7 @@ figure('fig5_ionic_strength.png',
        'Figure 4. Effect of ionic strength on the apparent pK values and calcite SI.')
 body(
     'Increasing ionic strength lowers activity coefficients (Davies equation), which '
-    'lowers the apparent pK₁′ and pK₂′ — dissolved ions are effectively '
+    'lowers the apparent pK₁′ and pK₂′, dissolved ions are effectively '
     '“shielded”, so the acids appear stronger. The divalent CO₃²⁻ is '
     'affected more than the monovalent species, so pK₂′ shifts most. Calcite SI '
     'first drops sharply then levels off, because the doubly-charged Ca²⁺ and '
@@ -195,9 +195,9 @@ body(
 h('4.  Conclusions')
 body(
     'A single set of carbonate equilibria, solved through the alkalinity balance, '
-    'reproduces water acidification, buffering, and the precipitation–dissolution '
+    'reproduces water acidification, buffering, and the precipitation-dissolution '
     'behaviour of calcite. The tool quantifies how CO₂, alkalinity, temperature and '
-    'ionic strength move a water across the SI = 0 line — directly useful for predicting '
+    'ionic strength move a water across the SI = 0 line, directly useful for predicting '
     'acidification impacts, corrosion control, carbonate scaling in desalination and '
     'cooling systems, and chemical stabilization of treated water.'
 )  # ~66 words
