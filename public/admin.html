@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ניהול הזמנות | כתיבה בקליק</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #D4A017; --gold-light: #F0C040; --gold-dark: #A87800;
+      --gold-pale: #FFF8E1; --white: #FFFFFF; --dark: #1A1A1A;
+      --gray: #555; --gray-light: #F5F5F5; --radius: 14px;
+      --shadow: 0 8px 32px rgba(212,160,23,0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Heebo', sans-serif; background: var(--gray-light); color: var(--dark); direction: rtl; }
+
+    /* ── Login ── */
+    .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .login-card {
+      background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 40px; width: 100%; max-width: 380px; border: 1px solid var(--gold-light);
+    }
+    .login-card h1 { font-size: 1.6rem; color: var(--gold-dark); text-align: center; margin-bottom: 6px; }
+    .login-card p.sub { text-align: center; color: var(--gray); margin-bottom: 26px; font-size: .95rem; }
+    .login-card label { font-weight: 600; font-size: .9rem; display: block; margin-bottom: 6px; }
+    .login-card input {
+      width: 100%; padding: 12px 14px; font-family: inherit; font-size: 1rem; margin-bottom: 16px;
+      border: 1.5px solid #E5D9B8; border-radius: 10px; background: #FFFDF7;
+    }
+    .login-card input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,160,23,0.15); }
+    .btn {
+      width: 100%; padding: 13px; font-size: 1.05rem; font-weight: 700; font-family: inherit;
+      color: var(--white); cursor: pointer; border: none; border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      box-shadow: 0 6px 20px rgba(212,160,23,0.3); transition: transform .15s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .err-msg { color: #C0392B; font-weight: 600; text-align: center; min-height: 1.2em; margin-bottom: 12px; }
+
+    /* ── Dashboard ── */
+    .dash { display: none; }
+    .dash.active { display: block; }
+    header.topbar {
+      background: var(--white); border-bottom: 2px solid var(--gold-light);
+      padding: 14px 4%; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 10;
+    }
+    header.topbar .brand { font-size: 1.3rem; font-weight: 900; color: var(--gold-dark); }
+    header.topbar .brand span { color: var(--dark); }
+    .topbar-actions { display: flex; align-items: center; gap: 14px; }
+    .topbar-actions .user { color: var(--gray); font-size: .9rem; }
+    .link-btn { background: none; border: 1.5px solid var(--gold); color: var(--gold-dark); font-family: inherit;
+      font-weight: 600; padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: .9rem; }
+    .link-btn:hover { background: var(--gold-pale); }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 26px 4% 60px; }
+
+    .stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 26px; }
+    .stat-card {
+      background: var(--white); border-radius: var(--radius); padding: 18px; text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05); cursor: pointer; border: 2px solid transparent; transition: border-color .15s;
+    }
+    .stat-card:hover { border-color: var(--gold-light); }
+    .stat-card.active { border-color: var(--gold); background: var(--gold-pale); }
+    .stat-card .num { font-size: 1.9rem; font-weight: 900; color: var(--gold-dark); }
+    .stat-card .lbl { font-size: .85rem; color: var(--gray); margin-top: 2px; }
+
+    .table-wrap { background: var(--white); border-radius: var(--radius); box-shadow: 0 4px 16px rgba(0,0,0,0.05); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 760px; }
+    th, td { padding: 13px 14px; text-align: right; border-bottom: 1px solid #EEE; font-size: .92rem; vertical-align: top; }
+    th { background: var(--gold-pale); color: var(--gold-dark); font-weight: 700; white-space: nowrap; position: sticky; top: 0; }
+    tr:hover td { background: #FFFDF7; }
+    .muted { color: var(--gray); font-size: .85rem; }
+    .details-cell { max-width: 240px; white-space: pre-wrap; }
+
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: .78rem; font-weight: 700; white-space: nowrap; }
+    .badge.new { background: #E3F2FD; color: #1565C0; }
+    .badge.in_progress { background: #FFF3E0; color: #E65100; }
+    .badge.done { background: #E8F5E9; color: #2E7D32; }
+    .badge.cancelled { background: #FBE9E7; color: #C62828; }
+
+    select.status-select { font-family: inherit; padding: 6px 8px; border-radius: 8px; border: 1.5px solid #E5D9B8; background: #FFFDF7; cursor: pointer; }
+    .del-btn { background: none; border: none; cursor: pointer; color: #C0392B; font-size: 1.1rem; padding: 4px; }
+    .del-btn:hover { transform: scale(1.15); }
+
+    .empty { text-align: center; padding: 50px; color: var(--gray); }
+    a.phone-link { color: var(--gold-dark); font-weight: 700; text-decoration: none; white-space: nowrap; }
+
+    /* ── Tabs ── */
+    .tabs { display: flex; gap: 8px; margin-bottom: 22px; }
+    .tab {
+      background: var(--white); border: 1.5px solid #E5D9B8; color: var(--gray);
+      font-family: inherit; font-weight: 700; font-size: .98rem; padding: 9px 20px;
+      border-radius: 10px; cursor: pointer; transition: all .15s;
+    }
+    .tab:hover { border-color: var(--gold-light); }
+    .tab.active { background: var(--gold); color: var(--white); border-color: var(--gold); }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ── Search + sort ── */
+    .toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .search-box {
+      flex: 1; min-width: 220px; padding: 11px 16px; font-family: inherit; font-size: 1rem;
+      border: 1.5px solid #E5D9B8; border-radius: 10px; background: #FFFDF7;
+    }
+    .search-box:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,160,23,0.15); }
+    .result-count { color: var(--gray); font-size: .9rem; white-space: nowrap; }
+    th.sortable { cursor: pointer; user-select: none; }
+    th.sortable:hover { color: var(--gold); }
+    th .arrow { font-size: .75rem; opacity: .5; }
+    th.sorted .arrow { opacity: 1; }
+
+    /* ── Charts ── */
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .chart-card {
+      background: var(--white); border-radius: var(--radius); padding: 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    .chart-card.full { grid-column: 1 / -1; }
+    .chart-card h3 { font-size: 1.1rem; color: var(--gold-dark); margin-bottom: 18px; }
+
+    /* horizontal bars */
+    .hbar-row { display: grid; grid-template-columns: 120px 1fr 40px; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .hbar-label { font-size: .9rem; color: var(--dark); text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .hbar-track { background: var(--gray-light); border-radius: 8px; height: 22px; overflow: hidden; }
+    .hbar-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--gold-light), var(--gold)); min-width: 2px; transition: width .5s; }
+    .hbar-val { font-weight: 700; color: var(--gold-dark); font-size: .9rem; }
+
+    /* vertical bars (timeline) */
+    .vbars { display: flex; align-items: flex-end; gap: 6px; height: 180px; padding-top: 10px; }
+    .vbar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+    .vbar { width: 100%; max-width: 34px; background: linear-gradient(180deg, var(--gold-light), var(--gold)); border-radius: 6px 6px 0 0; min-height: 2px; position: relative; transition: height .5s; }
+    .vbar[data-v]:hover::after {
+      content: attr(data-v); position: absolute; top: -22px; right: 50%; transform: translateX(50%);
+      background: var(--dark); color: #fff; font-size: .72rem; padding: 2px 6px; border-radius: 5px; white-space: nowrap;
+    }
+    .vbar-x { font-size: .68rem; color: var(--gray); margin-top: 6px; white-space: nowrap; }
+    .chart-empty { color: var(--gray); text-align: center; padding: 30px; }
+
+    @media (max-width: 720px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .charts-grid { grid-template-columns: 1fr; }
+      .hbar-row { grid-template-columns: 90px 1fr 34px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div class="login-wrap" id="loginView">
+    <div class="login-card">
+      <h1>ניהול · כתיבה בקליק</h1>
+      <p class="sub">התחברו כדי לצפות בהזמנות ולנהל אותן</p>
+      <form id="loginForm">
+        <div class="err-msg" id="loginErr"></div>
+        <label for="username">שם משתמש</label>
+        <input id="username" name="username" type="text" autocomplete="username" required />
+        <label for="password">סיסמה</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required />
+        <button class="btn" type="submit" id="loginBtn">התחברות</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dash" id="dashView">
+    <header class="topbar">
+      <div class="brand">ניהול <span>· כתיבה בקליק</span></div>
+      <div class="topbar-actions">
+        <span class="user" id="userLabel"></span>
+        <a class="link-btn" id="exportBtn" href="/api/orders/export.csv">⬇ ייצוא CSV</a>
+        <a class="link-btn" href="/" target="_blank">לאתר ↗</a>
+        <button class="link-btn" id="logoutBtn">התנתקות</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="tabs">
+        <button class="tab active" data-view="orders">📋 הזמנות</button>
+        <button class="tab" data-view="stats">📊 סטטיסטיקות</button>
+      </div>
+
+      <!-- ORDERS VIEW -->
+      <div class="view active" id="ordersView">
+        <div class="stats-row" id="statsRow"></div>
+        <div class="toolbar">
+          <input type="search" class="search-box" id="searchBox"
+            placeholder="🔍 חיפוש לפי שם, טלפון, נושא או סוג עבודה…" autocomplete="off" />
+          <span class="result-count" id="resultCount"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="id">#<span class="arrow"></span></th>
+                <th class="sortable" data-sort="created_at">תאריך<span class="arrow"></span></th>
+                <th class="sortable" data-sort="name">שם<span class="arrow"></span></th>
+                <th>קשר</th>
+                <th class="sortable" data-sort="work_type">סוג עבודה<span class="arrow"></span></th>
+                <th class="sortable" data-sort="subject">נושא<span class="arrow"></span></th>
+                <th class="sortable" data-sort="pages">עמ'<span class="arrow"></span></th>
+                <th class="sortable" data-sort="deadline">דדליין<span class="arrow"></span></th>
+                <th>פרטים</th>
+                <th class="sortable" data-sort="status">סטטוס<span class="arrow"></span></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+          <div class="empty" id="emptyState" style="display:none;">אין הזמנות להצגה.</div>
+        </div>
+      </div>
+
+      <!-- STATS VIEW -->
+      <div class="view" id="statsView">
+        <div class="charts-grid">
+          <div class="chart-card full">
+            <h3>📈 הזמנות ב-14 הימים האחרונים</h3>
+            <div id="chartDays"></div>
+          </div>
+          <div class="chart-card">
+            <h3>📝 לפי סוג עבודה</h3>
+            <div id="chartTypes"></div>
+          </div>
+          <div class="chart-card">
+            <h3>🏷️ לפי סטטוס</h3>
+            <div id="chartStatus"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>
