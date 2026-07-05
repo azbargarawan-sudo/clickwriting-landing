@@ -44,8 +44,10 @@ Or just double-click `carbonate_system_tool.html`.
 
 ## Before submitting
 
-1. Fill in **names, student numbers and emails** at the top of the `.docx`.
-2. Keep **one graph per group member** (five figures are provided — pick the
-   number that matches your group and remove the rest).
+1. Fill in the four **emails** at the top of the `.docx` (names and IDs are already
+   in). Group: Shada Taha, Abdallah Awad, Lina Awad, Yasmin Nassar.
+2. The report uses **4 graphs — one per group member** (Bjerrum, acidification,
+   calcite SI, ionic strength). A fifth figure (`fig4_temperature.png`) is also
+   generated if you prefer to swap one out.
 3. Submit two files: the Word/PDF report and the code
    (`carbonate_system_tool.html` or `carbonate_system_model.txt`).

@@ -69,8 +69,11 @@ r.font.color.rgb = RGBColor(0x55, 0x55, 0x55)
 info = doc.add_paragraph()
 info.alignment = WD_ALIGN_PARAGRAPH.CENTER
 info.add_run(
-    'Students:  [Name 1 — ID — email] ,  [Name 2 — ID — email] '
-    '[ , Name 3 … , Name 4 … ]\n'
+    'Students:\n'
+    'Shada Taha — 213700875 — [email]\n'
+    'Abdallah Awad — 213041486 — [email]\n'
+    'Lina Awad — 325348571 — [email]\n'
+    'Yasmin Nassar — 326486032 — [email]\n'
     'Lecturer: Oded Nir').font.size = Pt(10.5)
 
 # =====================================================================
@@ -174,19 +177,8 @@ body(
     'carbonate minerals and cement. This single threshold links climate-scale CO₂ to '
     'practical concerns of scaling versus corrosion in pipes and aquifers.')
 
-figure('fig4_temperature.png',
-       'Figure 4. Effect of temperature on pH and calcite SI (open system, 400 ppm).')
-body(
-    'Warming raises both pH and calcite SI. The equilibrium constants are temperature '
-    'dependent: higher temperature lowers CO₂ solubility (Kₕ) and shifts K₁, '
-    'K₂ and Kₛₚ, so at fixed pCO₂ and alkalinity less CO₂ stays '
-    'dissolved and pH increases. Calcite becomes markedly more over-saturated because '
-    'Kₛₚ decreases with temperature (inverse solubility) — the reason warm water '
-    'scales heat-exchangers and boilers more aggressively than cold water. The effect over '
-    '0–40 °C is modest for pH but substantial for SI.')
-
 figure('fig5_ionic_strength.png',
-       'Figure 5. Effect of ionic strength on the apparent pK values and calcite SI.')
+       'Figure 4. Effect of ionic strength on the apparent pK values and calcite SI.')
 body(
     'Increasing ionic strength lowers activity coefficients (Davies equation), which '
     'lowers the apparent pK₁′ and pK₂′ — dissolved ions are effectively '
