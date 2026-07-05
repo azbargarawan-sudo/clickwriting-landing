@@ -101,6 +101,35 @@ router.get('/export.csv', requireAuth, (req, res) => {
   res.send(csv);
 });
 
+/* ── מוגן: נתוני סטטיסטיקה לדשבורד ── */
+// GET /api/orders/stats
+router.get('/stats', requireAuth, (req, res) => {
+  const byStatusRows = db.prepare('SELECT status, COUNT(*) AS c FROM orders GROUP BY status').all();
+  const byStatus = { new: 0, in_progress: 0, done: 0, cancelled: 0 };
+  for (const r of byStatusRows) byStatus[r.status] = r.c;
+
+  const byWorkType = db.prepare(
+    'SELECT work_type, COUNT(*) AS c FROM orders GROUP BY work_type ORDER BY c DESC'
+  ).all();
+
+  // 14 הימים האחרונים (כולל ימים ללא הזמנות)
+  const dayRows = db.prepare(`
+    SELECT date(created_at) AS d, COUNT(*) AS c
+    FROM orders
+    WHERE date(created_at) >= date('now', '-13 days')
+    GROUP BY date(created_at)
+  `).all();
+  const dayMap = Object.fromEntries(dayRows.map((r) => [r.d, r.c]));
+  const byDay = [];
+  for (let i = 13; i >= 0; i--) {
+    const d = db.prepare("SELECT date('now', ? || ' days') AS d").get(String(-i)).d;
+    byDay.push({ day: d, count: dayMap[d] || 0 });
+  }
+
+  const total = db.prepare('SELECT COUNT(*) AS c FROM orders').get().c;
+  res.json({ total, byStatus, byWorkType, byDay });
+});
+
 /* ── מוגן: עדכון סטטוס הזמנה ── */
 // PATCH /api/orders/:id
 router.patch('/:id', requireAuth, (req, res) => {

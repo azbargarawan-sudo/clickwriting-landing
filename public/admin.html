@@ -90,8 +90,63 @@
     .empty { text-align: center; padding: 50px; color: var(--gray); }
     a.phone-link { color: var(--gold-dark); font-weight: 700; text-decoration: none; white-space: nowrap; }
 
+    /* ── Tabs ── */
+    .tabs { display: flex; gap: 8px; margin-bottom: 22px; }
+    .tab {
+      background: var(--white); border: 1.5px solid #E5D9B8; color: var(--gray);
+      font-family: inherit; font-weight: 700; font-size: .98rem; padding: 9px 20px;
+      border-radius: 10px; cursor: pointer; transition: all .15s;
+    }
+    .tab:hover { border-color: var(--gold-light); }
+    .tab.active { background: var(--gold); color: var(--white); border-color: var(--gold); }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ── Search + sort ── */
+    .toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .search-box {
+      flex: 1; min-width: 220px; padding: 11px 16px; font-family: inherit; font-size: 1rem;
+      border: 1.5px solid #E5D9B8; border-radius: 10px; background: #FFFDF7;
+    }
+    .search-box:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,160,23,0.15); }
+    .result-count { color: var(--gray); font-size: .9rem; white-space: nowrap; }
+    th.sortable { cursor: pointer; user-select: none; }
+    th.sortable:hover { color: var(--gold); }
+    th .arrow { font-size: .75rem; opacity: .5; }
+    th.sorted .arrow { opacity: 1; }
+
+    /* ── Charts ── */
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .chart-card {
+      background: var(--white); border-radius: var(--radius); padding: 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    .chart-card.full { grid-column: 1 / -1; }
+    .chart-card h3 { font-size: 1.1rem; color: var(--gold-dark); margin-bottom: 18px; }
+
+    /* horizontal bars */
+    .hbar-row { display: grid; grid-template-columns: 120px 1fr 40px; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .hbar-label { font-size: .9rem; color: var(--dark); text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .hbar-track { background: var(--gray-light); border-radius: 8px; height: 22px; overflow: hidden; }
+    .hbar-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--gold-light), var(--gold)); min-width: 2px; transition: width .5s; }
+    .hbar-val { font-weight: 700; color: var(--gold-dark); font-size: .9rem; }
+
+    /* vertical bars (timeline) */
+    .vbars { display: flex; align-items: flex-end; gap: 6px; height: 180px; padding-top: 10px; }
+    .vbar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+    .vbar { width: 100%; max-width: 34px; background: linear-gradient(180deg, var(--gold-light), var(--gold)); border-radius: 6px 6px 0 0; min-height: 2px; position: relative; transition: height .5s; }
+    .vbar[data-v]:hover::after {
+      content: attr(data-v); position: absolute; top: -22px; right: 50%; transform: translateX(50%);
+      background: var(--dark); color: #fff; font-size: .72rem; padding: 2px 6px; border-radius: 5px; white-space: nowrap;
+    }
+    .vbar-x { font-size: .68rem; color: var(--gray); margin-top: 6px; white-space: nowrap; }
+    .chart-empty { color: var(--gray); text-align: center; padding: 30px; }
+
     @media (max-width: 720px) {
       .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .charts-grid { grid-template-columns: 1fr; }
+      .hbar-row { grid-template-columns: 90px 1fr 34px; }
     }
   </style>
 </head>
@@ -126,18 +181,58 @@
     </header>
 
     <div class="container">
-      <div class="stats-row" id="statsRow"></div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th><th>תאריך</th><th>שם</th><th>קשר</th><th>סוג עבודה</th>
-              <th>נושא</th><th>עמ'</th><th>דדליין</th><th>פרטים</th><th>סטטוס</th><th></th>
-            </tr>
-          </thead>
-          <tbody id="ordersBody"></tbody>
-        </table>
-        <div class="empty" id="emptyState" style="display:none;">אין הזמנות להצגה בסינון הנוכחי.</div>
+      <div class="tabs">
+        <button class="tab active" data-view="orders">📋 הזמנות</button>
+        <button class="tab" data-view="stats">📊 סטטיסטיקות</button>
+      </div>
+
+      <!-- ORDERS VIEW -->
+      <div class="view active" id="ordersView">
+        <div class="stats-row" id="statsRow"></div>
+        <div class="toolbar">
+          <input type="search" class="search-box" id="searchBox"
+            placeholder="🔍 חיפוש לפי שם, טלפון, נושא או סוג עבודה…" autocomplete="off" />
+          <span class="result-count" id="resultCount"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="id">#<span class="arrow"></span></th>
+                <th class="sortable" data-sort="created_at">תאריך<span class="arrow"></span></th>
+                <th class="sortable" data-sort="name">שם<span class="arrow"></span></th>
+                <th>קשר</th>
+                <th class="sortable" data-sort="work_type">סוג עבודה<span class="arrow"></span></th>
+                <th class="sortable" data-sort="subject">נושא<span class="arrow"></span></th>
+                <th class="sortable" data-sort="pages">עמ'<span class="arrow"></span></th>
+                <th class="sortable" data-sort="deadline">דדליין<span class="arrow"></span></th>
+                <th>פרטים</th>
+                <th class="sortable" data-sort="status">סטטוס<span class="arrow"></span></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+          <div class="empty" id="emptyState" style="display:none;">אין הזמנות להצגה.</div>
+        </div>
+      </div>
+
+      <!-- STATS VIEW -->
+      <div class="view" id="statsView">
+        <div class="charts-grid">
+          <div class="chart-card full">
+            <h3>📈 הזמנות ב-14 הימים האחרונים</h3>
+            <div id="chartDays"></div>
+          </div>
+          <div class="chart-card">
+            <h3>📝 לפי סוג עבודה</h3>
+            <div id="chartTypes"></div>
+          </div>
+          <div class="chart-card">
+            <h3>🏷️ לפי סטטוס</h3>
+            <div id="chartStatus"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

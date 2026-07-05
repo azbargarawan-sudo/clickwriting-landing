@@ -75,8 +75,40 @@ async function sendWebhook(order) {
   return { channel: 'webhook', ok: true };
 }
 
+/* ── אישור אוטומטי ללקוח (אם מולא אימייל ו-SMTP מוגדר) ── */
+async function sendCustomerConfirmation(order) {
+  const { SMTP_HOST } = process.env;
+  if (!SMTP_HOST || !order.email) return { channel: 'customer', skipped: true };
+  const { default: nodemailer } = await import('nodemailer');
+  const transport = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: Number(process.env.SMTP_PORT) || 587,
+    secure: Number(process.env.SMTP_PORT) === 465,
+    auth: process.env.SMTP_USER ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS } : undefined,
+  });
+  const details = [];
+  details.push(`סוג עבודה: ${order.work_type}`);
+  if (order.subject) details.push(`נושא: ${order.subject}`);
+  if (order.pages) details.push(`היקף משוער: ${order.pages} עמ׳`);
+  if (order.deadline) details.push(`דדליין: ${order.deadline}`);
+  const text =
+    `שלום ${order.name},\n\n` +
+    `קיבלנו את הבקשה שלך להצעת מחיר — תודה שפנית ל"כתיבה בקליק"! 🙌\n` +
+    `נחזור אליך עם הצעה אישית תוך שעה.\n\n` +
+    `סיכום הבקשה שלך:\n${details.join('\n')}\n\n` +
+    `לכל שאלה ניתן להשיב למייל זה או לפנות אלינו בוואטסאפ.\n\n` +
+    `בהצלחה,\nצוות כתיבה בקליק`;
+  await transport.sendMail({
+    from: process.env.NOTIFY_EMAIL_FROM || process.env.SMTP_USER,
+    to: order.email,
+    subject: 'קיבלנו את הבקשה שלך — כתיבה בקליק',
+    text,
+  });
+  return { channel: 'customer', ok: true };
+}
+
 /**
- * שולח התראות על הזמנה חדשה בכל הערוצים המוגדרים.
+ * שולח התראות על הזמנה חדשה בכל הערוצים המוגדרים + אישור ללקוח.
  * לא זורק שגיאה — כשלים נרשמים ל-console בלבד.
  */
 export async function notifyNewOrder(order) {
@@ -85,6 +117,7 @@ export async function notifyNewOrder(order) {
     sendWhatsApp(message),
     sendEmail(order, message),
     sendWebhook(order),
+    sendCustomerConfirmation(order),
   ]);
 
   const active = [];
