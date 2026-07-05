@@ -77,13 +77,12 @@ export function requireAuth(req, res, next) {
 
 /* ── יצירת אדמין ראשוני אם אין ── */
 
-export function ensureAdminSeed() {
-  const count = db.prepare('SELECT COUNT(*) AS c FROM admins').get().c;
+export async function ensureAdminSeed() {
+  const count = await db.getAdminCount();
   if (count > 0) return;
   const username = process.env.ADMIN_USERNAME || 'admin';
   const password = process.env.ADMIN_PASSWORD || 'admin123';
-  db.prepare('INSERT INTO admins (username, password) VALUES (?, ?)')
-    .run(username, hashPassword(password));
+  await db.insertAdmin(username, hashPassword(password));
   console.log(`\n👤 נוצר משתמש אדמין ראשוני:  שם=${username}  סיסמה=${password}`);
   console.log('   מומלץ לשנות אותם בקובץ .env בפרודקשן.\n');
 }

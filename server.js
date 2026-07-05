@@ -2,6 +2,7 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { parseCookies, ensureAdminSeed } from './src/auth.js';
+import db, { initDb } from './src/db.js';
 import authRoutes from './src/routes/auth.js';
 import orderRoutes from './src/routes/orders.js';
 
@@ -48,9 +49,18 @@ app.use(express.static(join(__dirname, 'public')));
 /* ── 404 ל-API ── */
 app.use('/api', (req, res) => res.status(404).json({ error: 'לא נמצא.' }));
 
+/* ── מטפל שגיאות מרכזי ── */
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+  console.error('❌ שגיאת שרת:', err);
+  res.status(500).json({ error: 'שגיאת שרת פנימית.' });
+});
+
+/* ── אתחול מסד הנתונים ואז הרצת השרת ── */
+await initDb();
+await ensureAdminSeed();
+
 app.listen(PORT, () => {
-  ensureAdminSeed();
-  console.log(`\n🚀 כתיבה בקליק פועל על  http://localhost:${PORT}`);
+  console.log(`\n🚀 כתיבה בקליק פועל על  http://localhost:${PORT}  (DB: ${db.name})`);
   console.log(`   • אתר:      http://localhost:${PORT}/`);
   console.log(`   • ניהול:    http://localhost:${PORT}/admin.html\n`);
 });

@@ -1,5 +1,12 @@
 # Render Blueprint — פריסה אוטומטית של "כתיבה בקליק"
 # מדריך מלא: DEPLOY.md
+
+# מסד נתונים מנוהל (PostgreSQL) — הנתונים נשמרים לצמיתות
+databases:
+  - name: clickwriting-db
+    plan: free
+    region: frankfurt
+
 services:
   - type: web
     name: clickwriting
@@ -11,6 +18,10 @@ services:
     healthCheckPath: /api/health
     autoDeploy: true           # פריסה מחדש אוטומטית בכל push
     envVars:
+      - key: DATABASE_URL       # מחובר אוטומטית ל-Postgres שהוגדר למעלה
+        fromDatabase:
+          name: clickwriting-db
+          property: connectionString
       - key: NODE_VERSION
         value: "22.22.2"
       - key: SESSION_SECRET

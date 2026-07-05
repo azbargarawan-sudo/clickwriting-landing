@@ -7,12 +7,12 @@ import {
 const router = Router();
 
 // POST /api/auth/login
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { username, password } = req.body || {};
   if (!username || !password) {
     return res.status(400).json({ error: 'יש להזין שם משתמש וסיסמה.' });
   }
-  const admin = db.prepare('SELECT * FROM admins WHERE username = ?').get(username);
+  const admin = await db.getAdmin(username);
   if (!admin || !verifyPassword(password, admin.password)) {
     return res.status(401).json({ error: 'שם משתמש או סיסמה שגויים.' });
   }
