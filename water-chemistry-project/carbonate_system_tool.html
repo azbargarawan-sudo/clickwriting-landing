@@ -124,6 +124,7 @@
       <div class="card"><div class="k">Calcite SI</div><div class="v" id="rSI">-</div>
         <div id="rBadge" class="badge over">-</div></div>
       <div class="card"><div class="k">Ω (Ca·CO₃/K<sub>sp</sub>)</div><div class="v" id="rOmega">-</div><div class="u">saturation ratio</div></div>
+      <div class="card"><div class="k">CCPP</div><div class="v" id="rCCPP">-</div><div class="u">mg/L as CaCO₃ (+precip / −corrosive)</div></div>
     </div>
 
     <div class="charts">
@@ -147,6 +148,33 @@
         <p class="sub">SI &gt; 0 precipitation (green) · SI &lt; 0 dissolution (red)</p>
         <canvas id="cSat" width="560" height="330"></canvas>
       </div>
+    </div>
+
+    <div class="chartbox" style="margin-top:16px">
+      <h3>Dynamic model — kinetics + gas/liquid mass transfer (3 phases) ⭐</h3>
+      <p class="sub">A CO₂-rich groundwater is exposed to air: CO₂ <b>degasses</b> (mass transfer) so pH rises, the
+        water crosses into super-saturation, and calcite <b>precipitates</b> (kinetics) — the mechanism of pipe
+        scale &amp; travertine. Adjust the rates and run.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:10px">
+        <div class="ctl" style="margin:0;min-width:150px">
+          <label>Initial Alk <span class="val"><span id="kAlkv">4.0</span> meq/L</span></label>
+          <input type="range" id="kAlk" min="1" max="8" step="0.1" value="4.0"></div>
+        <div class="ctl" style="margin:0;min-width:150px">
+          <label>Initial Ca <span class="val"><span id="kCav">2.5</span> mM</span></label>
+          <input type="range" id="kCa" min="0.5" max="6" step="0.1" value="2.5"></div>
+        <div class="ctl" style="margin:0;min-width:170px">
+          <label>Soil pCO₂ <span class="val"><span id="kSoilv">30000</span> ppm</span></label>
+          <input type="range" id="kSoil" min="3" max="4.7" step="0.01" value="4.477"></div>
+        <div class="ctl" style="margin:0;min-width:150px">
+          <label>k<sub>L</sub>a (mass transf.) <span class="val"><span id="kLav">0.80</span> /h</span></label>
+          <input type="range" id="kLa" min="0.05" max="3" step="0.05" value="0.8"></div>
+        <div class="ctl" style="margin:0;min-width:150px">
+          <label>k<sub>p</sub> (precip.) <span class="val"><span id="kpv">6.0</span></span></label>
+          <input type="range" id="kp" min="0" max="20" step="0.5" value="6.0"></div>
+        <button id="runK" style="padding:9px 16px;border-radius:9px;border:1px solid var(--accent);
+          background:var(--accent);color:#04222b;font-weight:700;cursor:pointer">▶ Run</button>
+      </div>
+      <canvas id="cKin" width="1140" height="360"></canvas>
     </div>
 
     <div class="footer">
@@ -215,8 +243,32 @@ function solve(p){
   const pH=-log10(H*g1);
   const IAP=(p.Ca*g2)*(CO3*g2);
   const SI=log10(IAP/Ksp), Omega=IAP/Ksp;
-  return {H,pH,H2CO3,HCO3,CO3,OH,CT,SI,Omega,K1c,K2c,g1,g2,
+  return {H,pH,H2CO3,HCO3,CO3,OH,CT,SI,Omega,K1c,K2c,g1,g2,KH,
           pK1:-logK1(T),pK2:-logK2(T)};
+}
+
+// CCPP: mg/L as CaCO3 that precipitates (+) or dissolves (-) to reach Omega=1
+function ccpp(q){
+  const om=x=>solve({TC:q.TC,I:q.I,Alk:q.Alk-2*x,Ca:Math.max(q.Ca-x,1e-9),
+                     CT:Math.max(q.CT-x,1e-9),mode:'closed'}).Omega;
+  let lo=-0.9*q.Ca, hi=0.99*q.Ca;
+  for(let i=0;i<100;i++){const mid=0.5*(lo+hi); if(om(mid)>1) lo=mid; else hi=mid;}
+  return 0.5*(lo+hi)*1e5;
+}
+
+// Coupled kinetics + gas/liquid mass transfer + calcite (3 phases)
+function simulateKinetics(o){
+  const init=solve({TC:o.TC,I:o.I,Alk:o.Alk0,Ca:o.Ca0,mode:'open',pCO2:o.pCO2soil});
+  let CT=init.CT, Alk=o.Alk0, Ca=o.Ca0; const KH=init.KH, dt=o.tEnd/o.n;
+  const t=[],pH=[],Ca_=[],CT_=[],SI=[];
+  for(let k=0;k<=o.n;k++){
+    const cs=solve({TC:o.TC,I:o.I,Alk:Alk,Ca:Math.max(Ca,1e-9),CT:Math.max(CT,1e-9),mode:'closed'});
+    t.push(k*dt);pH.push(cs.pH);Ca_.push(Ca*1e3);CT_.push(CT*1e3);SI.push(cs.SI);
+    const J=o.kLa*(KH*o.pCO2atm-cs.H2CO3);        // CO2 mass transfer
+    const R=o.kp*Math.max(cs.Omega-1,0);          // calcite precipitation kinetics
+    CT+=(J-R)*dt; Alk+=(-2*R)*dt; Ca+=(-R)*dt;
+  }
+  return {t,pH,Ca:Ca_,CT:CT_,SI};
 }
 
 // =====================================================================
@@ -378,6 +430,36 @@ function drawSat(state){
     ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
   }
 }
+function drawKinetics(){
+  const cv=el('cKin'); const {ctx,w,h}=setupHiDPI(cv);
+  const m={l:48,r:60,t:14,b:38};
+  const o={TC:+el('temp').value, I:+el('ion').value,
+           Alk0:+el('kAlk').value*1e-3, Ca0:+el('kCa').value*1e-3,
+           pCO2soil:Math.pow(10,+el('kSoil').value)*1e-6,
+           pCO2atm:Math.pow(10,+el('pco2').value)*1e-6,
+           kLa:+el('kLa').value, kp:+el('kp').value*1e-4, tEnd:12, n:600};
+  const r=simulateKinetics(o), tmax=r.t[r.t.length-1];
+  const pmin=Math.min(...r.pH), pmax=Math.max(...r.pH);
+  const map=axes(ctx,w,h,m,[0,tmax],[pmin-0.1,pmax+0.1],'time [h]  (illustrative rates)','pH',false);
+  // right axis (Ca / CT, mM)
+  const rmax=Math.max(...r.Ca,...r.CT)*1.05, rmin=Math.min(...r.Ca,...r.CT)*0.9;
+  const py2=v=>h-m.b-((v-rmin)/(rmax-rmin))*(h-m.t-m.b);
+  ctx.fillStyle=CSS('--muted');ctx.font='11px Segoe UI';ctx.textAlign='left';ctx.textBaseline='middle';
+  niceTicks(rmin,rmax,5).forEach(v=>{const y=py2(v);if(y>m.t&&y<h-m.b) ctx.fillText(v.toFixed(1),w-m.r+6,y);});
+  ctx.save();ctx.translate(w-12,(m.t+h-m.b)/2);ctx.rotate(Math.PI/2);ctx.textAlign='center';
+  ctx.textBaseline='top';ctx.fillText('Ca²⁺ / C_T  [mmol/L]',0,0);ctx.restore();
+  // transition (first SI>=0)
+  let cross=-1; for(let i=0;i<r.SI.length;i++){if(r.SI[i]>=0){cross=i;break;}}
+  if(cross>0){const x=map.px(r.t[cross]);ctx.strokeStyle='rgba(255,255,255,.35)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x,m.t);ctx.lineTo(x,h-m.b);ctx.stroke();
+    ctx.fillStyle=CSS('--muted');ctx.font='10px Segoe UI';ctx.textAlign='center';ctx.textBaseline='top';
+    ctx.fillText('SI=0  (degassing → precipitation)',x,m.t+2);}
+  const map2={px:map.px,py:py2};
+  line(ctx,r.t.map((t,i)=>[t,r.pH[i]]),map,CSS('--ph'),2.6);
+  line(ctx,r.t.map((t,i)=>[t,r.Ca[i]]),map2,CSS('--ct'),2.2);
+  line(ctx,r.t.map((t,i)=>[t,r.CT[i]]),map2,'#7d3c98',1.8);
+  legend(ctx,w,{t:m.t+2},[['pH',CSS('--ph')],['Ca²⁺',CSS('--ct')],['C_T','#7d3c98']]);
+}
 function legend(ctx,w,m,items){
   ctx.font='11px Segoe UI';ctx.textAlign='left';ctx.textBaseline='middle';
   let y=m.t+8;
@@ -425,6 +507,8 @@ function refresh(){
   el('rCT').textContent=(res.CT*1e3).toFixed(2);
   el('rSI').textContent=(res.SI>=0?'+':'')+res.SI.toFixed(2);
   el('rOmega').textContent=res.Omega.toFixed(2);
+  const cc=ccpp({TC:p.TC,I:p.I,Alk:p.Alk,Ca:p.Ca,CT:res.CT});
+  el('rCCPP').textContent=(cc>=0?'+':'')+cc.toFixed(0);
   const b=el('rBadge');
   if(res.SI>=0){b.className='badge over';b.textContent='over-saturated → precipitates';}
   else{b.className='badge under';b.textContent='under-saturated → dissolves';}
@@ -432,8 +516,18 @@ function refresh(){
   drawSpec(state);drawBar(state);drawAcid(state);drawSat(state);
 }
 
+function syncK(){
+  el('kAlkv').textContent=(+el('kAlk').value).toFixed(1);
+  el('kCav').textContent=(+el('kCa').value).toFixed(1);
+  el('kSoilv').textContent=Math.round(Math.pow(10,+el('kSoil').value));
+  el('kLav').textContent=(+el('kLa').value).toFixed(2);
+  el('kpv').textContent=(+el('kp').value).toFixed(1);
+}
+
 // sliders
 ['pco2','ct','alk','temp','ion','ca'].forEach(id=>el(id).addEventListener('input',refresh));
+['kAlk','kCa','kSoil','kLa','kp'].forEach(id=>el(id).addEventListener('input',()=>{syncK();drawKinetics();}));
+el('runK').addEventListener('click',()=>{syncK();drawKinetics();});
 
 // mode toggle
 el('mOpen').addEventListener('click',()=>{mode='open';el('mOpen').classList.add('active');
@@ -455,9 +549,12 @@ document.querySelectorAll('.presets button').forEach(btn=>btn.addEventListener('
 
 // resize redraw
 window.addEventListener('resize',()=>{ ['cSpec','cBar','cAcid','cSat'].forEach(id=>{
-  const c=el(id);c.width=560;c.height=330;}); refresh();});
+  const c=el(id);c.width=560;c.height=330;});
+  const k=el('cKin');k.width=1140;k.height=360; refresh();syncK();drawKinetics();});
 
 refresh();
+syncK();
+drawKinetics();
 </script>
 </body>
 </html>

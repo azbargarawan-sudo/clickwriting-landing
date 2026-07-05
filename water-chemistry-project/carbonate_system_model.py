@@ -205,6 +205,63 @@ class CarbonateSystem:
 
 
 # ----------------------------------------------------------------------------
+# 3b. CCPP -- Calcium Carbonate Precipitation Potential  (a real water-utility
+#     stability index: how much CaCO3, in mg/L as CaCO3, will precipitate (+)
+#     or dissolve (-) to bring the water to calcite equilibrium, Omega = 1).
+# ----------------------------------------------------------------------------
+def ccpp(T_C=15, I=0.01, Alk=2.0e-3, Ca=0.8e-3, CT=2.0e-3):
+    """Precipitating x mol/L of CaCO3 removes x Ca, x CT and 2x alkalinity.
+    Solve for the x that yields Omega = 1 (closed system)."""
+    def omega(x):
+        cs = CarbonateSystem(T_C=T_C, I=I, Alk=Alk - 2 * x, Ca=max(Ca - x, 1e-9),
+                             CT=max(CT - x, 1e-9), mode='closed')
+        return cs.Omega
+    lo, hi = -0.9 * Ca, 0.99 * Ca             # allow dissolution (x<0)
+    for _ in range(100):                      # omega decreases with x
+        mid = 0.5 * (lo + hi)
+        if omega(mid) > 1:
+            lo = mid
+        else:
+            hi = mid
+    return 0.5 * (lo + hi) * 100_000.0        # mol/L -> mg/L as CaCO3
+
+
+# ----------------------------------------------------------------------------
+# 3c. Dynamic model -- COUPLED kinetics + gas/liquid mass transfer + 3 phases.
+#     A CO2-rich groundwater (equilibrated with high soil pCO2) is exposed to
+#     the atmosphere. Two rate processes act simultaneously:
+#       * CO2 mass transfer (gas<->liquid):  J = kLa (KH*pCO2_atm - [CO2aq])
+#         -> changes C_T but NOT alkalinity.
+#       * Calcite precipitation (kinetics):  R = kp (Omega - 1),  Omega>1
+#         -> d[Ca]=-R, d[C_T]=-R, d[Alk]=-2R.
+#     Integrated explicitly. Demonstrates degassing-driven scaling (travertine
+#     / pipe scale), the classic multi-phase, multi-rate carbonate problem.
+# ----------------------------------------------------------------------------
+def simulate_kinetics(Alk0=4.0e-3, Ca0=2.5e-3, T_C=15, I=0.02,
+                      pCO2_soil=30000e-6, pCO2_atm=400e-6,
+                      kLa=0.8, kp=6.0e-4, t_end=12.0, n=1200):
+    # initial C_T: water equilibrated with high soil CO2 (closed thereafter)
+    init = CarbonateSystem(T_C=T_C, I=I, Alk=Alk0, Ca=Ca0,
+                           pCO2=pCO2_soil, mode='open')
+    KH = init.KH
+    CT, Alk, Ca = init.CT, Alk0, Ca0
+    dt = t_end / n
+    t, pH, CTs, Cas, SI, Om = [], [], [], [], [], []
+    for k in range(n + 1):
+        cs = CarbonateSystem(T_C=T_C, I=I, Alk=Alk, Ca=max(Ca, 1e-9),
+                             CT=max(CT, 1e-9), mode='closed')
+        t.append(k * dt); pH.append(cs.pH); CTs.append(CT * 1e3)
+        Cas.append(Ca * 1e3); SI.append(cs.SI); Om.append(cs.Omega)
+        J = kLa * (KH * pCO2_atm - cs.H2CO3)      # CO2 mass transfer (mol/L/hr)
+        R = kp * max(cs.Omega - 1.0, 0.0)         # calcite precip. kinetics
+        CT += (J - R) * dt
+        Alk += (-2.0 * R) * dt
+        Ca += (-R) * dt
+    return dict(t=np.array(t), pH=np.array(pH), CT=np.array(CTs),
+                Ca=np.array(Cas), SI=np.array(SI), Omega=np.array(Om))
+
+
+# ----------------------------------------------------------------------------
 # 4. Validation
 # ----------------------------------------------------------------------------
 def validate():
@@ -362,14 +419,53 @@ def fig_ionic_strength(Alk=2.0e-3, T_C=15, Ca=0.8e-3, pCO2=400e-6,
     return outfile
 
 
+def fig_kinetics(outfile='fig6_kinetics.png', **kw):
+    """Dynamic run: degassing (mass transfer) + calcite precipitation (kinetics)."""
+    r = simulate_kinetics(**kw)
+    # transition time where the water first becomes over-saturated (SI crosses 0)
+    cross = np.argmax(r['SI'] >= 0) if np.any(r['SI'] >= 0) else None
+
+    fig, ax1 = plt.subplots(figsize=(7.2, 4.6))
+    ax1.plot(r['t'], r['pH'], color='#c0392b', lw=2.6, label='pH')
+    ax1.set_xlabel('time [h]  (illustrative rate constants)')
+    ax1.set_ylabel('pH', color='#c0392b')
+    ax1.tick_params(axis='y', labelcolor='#c0392b')
+
+    ax2 = ax1.twinx()
+    ax2.plot(r['t'], r['Ca'], color='#2471a3', lw=2.2, ls='--', label='Ca')
+    ax2.plot(r['t'], r['CT'], color='#7d3c98', lw=1.8, ls=':', label='$C_T$')
+    ax2.set_ylabel('Ca$^{2+}$ / $C_T$ [mmol/L]', color='#2471a3')
+    ax2.tick_params(axis='y', labelcolor='#2471a3')
+
+    if cross is not None and cross > 0:
+        tc = r['t'][cross]
+        ax1.axvline(tc, color='0.5', ls='-', lw=1)
+        ax1.annotate('degassing  |  + precipitation',
+                     xy=(tc, ax1.get_ylim()[0]), xytext=(tc, ax1.get_ylim()[0]),
+                     fontsize=8, color='0.35', ha='center', va='bottom')
+        ax1.text(tc, r['pH'][cross], '  SI=0', fontsize=8, color='0.35')
+
+    ax1.set_title('Dynamic model: CO$_2$ degassing (mass transfer) + '
+                  'calcite precipitation (kinetics)')
+    ax1.grid(alpha=0.3)
+    L1, l1 = ax1.get_legend_handles_labels()
+    L2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(L1 + L2, l1 + l2, loc='center right', fontsize=9)
+    fig.tight_layout(); fig.savefig(outfile, dpi=150); plt.close(fig)
+    return outfile
+
+
 if __name__ == '__main__':
     validate()
+    print(f"\n  CCPP (hard supersaturated water) = "
+          f"{ccpp(T_C=15, I=0.02, Alk=4e-3, Ca=2.5e-3, CT=4.2e-3):+.1f} mg/L as CaCO3")
     files = [
         fig_speciation(),
         fig_acidification(),
         fig_saturation(),
         fig_temperature(),
         fig_ionic_strength(),
+        fig_kinetics(),
     ]
     print("\nFigures written:")
     for f in files:

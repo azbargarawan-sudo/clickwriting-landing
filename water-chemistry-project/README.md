@@ -41,6 +41,12 @@ Or just double-click `carbonate_system_tool.html`.
 - **Modes:** *open* (fixed pCO₂ via Henry's law) and *closed* (fixed Cₜ).
 - **Saturation:** `SI = log₁₀(a_Ca · a_CO₃ / Kₛₚ)`. SI > 0 → precipitation;
   SI < 0 → dissolution/corrosion.
+- **CCPP:** Calcium Carbonate Precipitation Potential (mg/L as CaCO₃), the amount
+  that precipitates (+) or dissolves (−) to reach Ω = 1; a real water-stability index.
+- **Dynamic module (advanced):** couples CO₂ gas/liquid **mass transfer**
+  `J = kₗa(Kₕ·pCO₂ − [CO₂aq])` with calcite **precipitation kinetics**
+  `R = kₚ(Ω − 1)` across three phases; integrated in time (Fig 6 / interactive panel).
+  Demonstrates degassing-driven scaling (travertine, pipe scale).
 
 ## Before submitting
 

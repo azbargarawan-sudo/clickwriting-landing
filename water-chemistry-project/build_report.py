@@ -174,9 +174,21 @@ body(
     'saturation state, reported as the saturation index '
     'SI = log₁₀(a_Ca·a_CO₃ / Kₛₚ) and the saturation ratio '
     'Ω. SI > 0 indicates over-saturation (precipitation potential); SI < 0 indicates '
-    'under-saturation (dissolution / corrosivity). The model was validated against '
-    'literature constants at 25 °C (pK₁ = 6.35, pK₂ = 10.33, pKₕ = 1.47, '
-    'pKₛₚ = 8.48, A = 0.51).'
+    'under-saturation (dissolution / corrosivity). We also output the CCPP '
+    '(Calcium Carbonate Precipitation Potential): the mass of CaCO₃, in mg/L as '
+    'CaCO₃, that must precipitate (+) or dissolve (−) to reach equilibrium '
+    '(Ω = 1), a standard index for water stability and corrosion control. The '
+    'model was validated against literature constants at 25 °C (pK₁ = 6.35, '
+    'pK₂ = 10.33, pKₕ = 1.47, pKₛₚ = 8.48, A = 0.51).'
+)
+body(
+    'Dynamic extension (kinetics + mass transfer + multiple phases). Beyond the '
+    'instantaneous equilibrium, the tool integrates a time-dependent scenario that '
+    'couples three phases and two rate processes: (i) gas/liquid CO₂ mass transfer, '
+    'J = kₗa·(Kₕ·pCO₂,atm − [CO₂(aq)]), which changes Cₜ but not '
+    'alkalinity, and (ii) calcite precipitation kinetics, R = kₚ·(Ω − 1), which '
+    'removes Ca and consumes alkalinity (Δalk = −2R, ΔCₜ = −R). '
+    'The coupled ordinary differential equations are integrated explicitly in time.'
 )
 
 # =====================================================================
@@ -186,7 +198,8 @@ h('3.  Results and Discussion')
 body(
     'All curves below use a carbonate-buffered freshwater as the base case '
     '(Alk = 2.0 meq/L, Ca = 0.8 mM, T = 15 °C, I = 0.01 M) unless stated. '
-    'Include one figure per group member.', italic=True)
+    'Figures 1-4 are the equilibrium results (one per group member); Figure 5 is an '
+    'advanced dynamic result showcasing model complexity.', italic=True)
 
 figure('fig1_speciation.png',
        'Figure 1. Bjerrum plot: carbonate speciation as a function of pH.')
@@ -234,6 +247,19 @@ body(
     'CO₃²⁻ activities are strongly reduced at higher I. This explains why '
     'saline waters can hold much more dissolved carbonate before precipitating, and why '
     'ignoring non-ideality overestimates scaling potential.')
+
+figure('fig6_kinetics.png',
+       'Figure 5 (advanced). Dynamic model coupling CO₂ mass transfer and calcite '
+       'precipitation kinetics across three phases.')
+body(
+    'A CO₂-rich groundwater (equilibrated with high soil pCO₂) is exposed to the '
+    'atmosphere. First, CO₂ degasses by gas/liquid mass transfer: Cₜ falls and pH '
+    'rises steeply while Ca stays constant. When the water crosses into '
+    'super-saturation (SI = 0, marked), calcite precipitation kinetics switch on and '
+    'Ca drops as CaCO₃ forms, consuming alkalinity. The system self-regulates near '
+    'SI ≈ 0 as precipitation tracks continued degassing. This reproduces travertine '
+    'and pipe-scale formation, and simultaneously demonstrates kinetics, mass '
+    'transfer and multiple phases.')
 
 # =====================================================================
 # 5. Conclusions (<= 70 words)
