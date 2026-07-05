@@ -99,7 +99,9 @@ body(
     'an equivalent Python/Matplotlib script). '
     'Inputs: CO₂ partial pressure pCO₂ (open system) or total inorganic carbon '
     'Cₜ (closed system), total alkalinity, temperature, ionic strength I, and total '
-    'calcium.'
+    'calcium. Alkalinity and hardness are reported both in meq/L and in the common '
+    '“mg/L as CaCO₃” convention (multiply eq/L by 50,000 and mol/L by 100,000, '
+    'respectively; e.g. 2 meq/L = 100 mg/L as CaCO₃).'
 )
 body(
     'Equations. The model uses the two carbonic-acid dissociation constants K₁, K₂, '

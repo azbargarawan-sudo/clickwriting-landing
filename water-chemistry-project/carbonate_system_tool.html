@@ -95,7 +95,7 @@
     <div class="ctl">
       <label>Alkalinity <span class="val"><span id="alkv">2.00</span> meq/L</span></label>
       <input type="range" id="alk" min="0.2" max="6" step="0.05" value="2.0">
-      <div class="hint">Alk = [HCO₃⁻] + 2[CO₃²⁻] + [OH⁻] − [H⁺]</div>
+      <div class="hint">= <span id="alkcaco3">100</span> mg/L as CaCO₃ · Alk = [HCO₃⁻] + 2[CO₃²⁻] + [OH⁻] − [H⁺]</div>
     </div>
 
     <div class="ctl">
@@ -112,7 +112,7 @@
     <div class="ctl">
       <label>Total calcium Ca<sup>2+</sup> <span class="val"><span id="cav">0.80</span> mM</span></label>
       <input type="range" id="ca" min="0" max="10" step="0.05" value="0.8">
-      <div class="hint">used for calcite saturation (≈ <span id="camg">32</span> mg/L)</div>
+      <div class="hint">≈ <span id="camg">32</span> mg/L Ca²⁺ · hardness ≈ <span id="cahard">80</span> mg/L as CaCO₃</div>
     </div>
   </div>
 
@@ -413,6 +413,9 @@ function refresh(){
   el('iv').textContent=(+el('ion').value).toFixed(3);
   el('cav').textContent=(+el('ca').value).toFixed(2);
   el('camg').textContent=Math.round(+el('ca').value*40.08);
+  // units "as CaCO3" (lecture 1): meq/L x 50 ; mmol/L x 100
+  el('alkcaco3').textContent=Math.round(+el('alk').value*50);
+  el('cahard').textContent=Math.round(+el('ca').value*100);
 
   const p=readInputs();
   const res=solve(p);

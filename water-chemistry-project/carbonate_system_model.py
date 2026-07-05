@@ -67,6 +67,19 @@ def pKw(T):
 
 
 # ----------------------------------------------------------------------------
+#  Unit helpers -- "mg/L as CaCO3" convention (course Lecture 1)
+# ----------------------------------------------------------------------------
+def eqL_to_mgCaCO3(eq_per_L):
+    """Alkalinity: eq/L -> mg/L as CaCO3  (x 50,000; Ew(CaCO3)=50 g/eq)."""
+    return eq_per_L * 50_000.0
+
+
+def molL_to_mgCaCO3(mol_per_L):
+    """Hardness: mol/L -> mg/L as CaCO3  (x 100,000; Mw(CaCO3)=100 g/mol)."""
+    return mol_per_L * 100_000.0
+
+
+# ----------------------------------------------------------------------------
 # 2. Activity coefficients -- Davies equation with T-dependent A parameter
 # ----------------------------------------------------------------------------
 def dielectric_water(TC):
