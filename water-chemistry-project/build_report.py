@@ -40,8 +40,9 @@ def rtl_line(text, size=12, bold=False, color=(0x1b, 0x3a, 0x53), after=2):
 # =====================================================================
 LOGO = os.path.join(HERE, 'bgu_logo.png')
 if os.path.exists(LOGO):
-    doc.add_picture(LOGO, width=Inches(1.9))
+    doc.add_picture(LOGO, width=Inches(2.2))
     doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+    doc.paragraphs[-1].paragraph_format.space_after = Pt(6)
 else:
     # placeholder to paste the official emblem into
     ph = doc.add_paragraph()
@@ -51,8 +52,9 @@ else:
     r.italic = True
     r.font.size = Pt(9)
     r.font.color.rgb = RGBColor(0x99, 0x99, 0x99)
+    rtl_line('אוניברסיטת בן-גוריון בנגב', size=14, bold=True)
 
-rtl_line('אוניברסיטת בן-גוריון בנגב', size=14, bold=True)
+# faculty / department / course (the logo already carries the university name)
 rtl_line('הפקולטה למדעי ההנדסה', size=12)
 rtl_line('המחלקה להנדסה כימית', size=12, after=8)
 rtl_line('כימיה של המים בהנדסה כימית סביבתית', size=11,
