@@ -17,6 +17,8 @@ saturation index (SI)**, and shows how the input parameters control the outcome.
 | `carbonate_system_model.py`  | **Python engine + figure generator.** Run it to reproduce all report figures and the validation table. |
 | `carbonate_system_model.txt` | Same code as `.py`, for submission (the assignment asks Python code to be sent as `.txt`). |
 | `build_report.py` | Builds the Word report with the figures embedded. |
+| `carbonate_system_data.xlsx` | Data behind every figure, one sheet each, with embedded Excel charts. |
+| `build_excel.py` | Regenerates the Excel workbook from the model. |
 | `Water_Chemistry_Report.docx` | **The submission document**, Background, Methods, Results & Discussion, Conclusions. Add your names/IDs/emails at the top. |
 | `fig1..fig5_*.png` | The five generated figures. |
 
