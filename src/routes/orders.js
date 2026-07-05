@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import db from '../db.js';
 import { requireAuth } from '../auth.js';
+import { notifyNewOrder } from '../notify.js';
 
 const router = Router();
 
@@ -46,7 +47,13 @@ router.post('/', (req, res) => {
     String(b.details || '').trim() || null,
   );
 
-  res.status(201).json({ ok: true, id: info.lastInsertRowid });
+  const id = info.lastInsertRowid;
+
+  // התראה על הזמנה חדשה — fire-and-forget, לא מעכב ולא מפיל את התגובה
+  const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(id);
+  notifyNewOrder(order).catch((e) => console.error('notify error:', e));
+
+  res.status(201).json({ ok: true, id });
 });
 
 /* ── מוגן: רשימת הזמנות (עם סינון סטטוס אופציונלי) ── */
@@ -64,6 +71,34 @@ router.get('/', requireAuth, (req, res) => {
   for (const s of stats) counts[s.status] = s.c;
   counts.total = db.prepare('SELECT COUNT(*) AS c FROM orders').get().c;
   res.json({ orders: rows, counts });
+});
+
+/* ── מוגן: ייצוא כל ההזמנות ל-CSV (נפתח ב-Excel) ── */
+// GET /api/orders/export.csv
+router.get('/export.csv', requireAuth, (req, res) => {
+  const rows = db.prepare('SELECT * FROM orders ORDER BY created_at DESC').all();
+  const headers = ['מזהה', 'תאריך', 'שם', 'טלפון', 'אימייל', 'סוג עבודה',
+    'נושא', 'עמודים', 'דדליין', 'פרטים', 'סטטוס'];
+  const statusHe = { new: 'חדש', in_progress: 'בטיפול', done: 'הושלם', cancelled: 'בוטל' };
+
+  const esc = (v) => {
+    const s = v == null ? '' : String(v);
+    return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  };
+
+  const lines = [headers.join(',')];
+  for (const o of rows) {
+    lines.push([
+      o.id, o.created_at, o.name, o.phone, o.email, o.work_type,
+      o.subject, o.pages, o.deadline, o.details, statusHe[o.status] || o.status,
+    ].map(esc).join(','));
+  }
+
+  // BOM כדי ש-Excel יזהה UTF-8 ויציג עברית כראוי
+  const csv = '﻿' + lines.join('\r\n');
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="orders.csv"');
+  res.send(csv);
 });
 
 /* ── מוגן: עדכון סטטוס הזמנה ── */
