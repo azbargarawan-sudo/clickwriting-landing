@@ -15,7 +15,7 @@ from reportlab.lib.units import inch, mm
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import (SimpleDocTemplate, Paragraph as RLPara,
-                                Spacer, Image as RLImage)
+                                Spacer, Image as RLImage, PageBreak)
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
@@ -133,6 +133,11 @@ def build():
         if child.tag != qn('w:p'):
             continue
         para = Paragraph(child, doc)
+        # explicit page break -> new page
+        if any(br.get(qn('w:type')) == 'page'
+               for br in child.findall('.//' + qn('w:br'))):
+            story.append(PageBreak())
+            continue
         blips = child.findall('.//' + qn('a:blip'))
         if blips:
             rId = blips[0].get(qn('r:embed'))

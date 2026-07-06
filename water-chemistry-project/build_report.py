@@ -94,31 +94,58 @@ def figure(path, caption):
 
 
 # =====================================================================
-# 1. Title block
+# 1. Title block  (stand-alone cover page)
 # =====================================================================
+def gap(n=1):
+    for _ in range(n):
+        doc.add_paragraph()
+
+gap(2)
 title = doc.add_paragraph()
 title.alignment = WD_ALIGN_PARAGRAPH.CENTER
 r = title.add_run('Modeling the Aquatic Carbonate System and Water Acidification')
 r.bold = True
-r.font.size = Pt(17)
+r.font.size = Pt(20)
 r.font.color.rgb = RGBColor(0x0d, 0x1b, 0x2a)
 
 sub = doc.add_paragraph()
 sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = sub.add_run('Water Chemistry course, Ben-Gurion University, Spring 2026')
+r = sub.add_run('Final Project  ·  Water Chemistry, Spring 2026')
 r.italic = True
-r.font.size = Pt(11)
+r.font.size = Pt(12)
 r.font.color.rgb = RGBColor(0x55, 0x55, 0x55)
+
+gap(3)
+lbl = doc.add_paragraph()
+lbl.alignment = WD_ALIGN_PARAGRAPH.CENTER
+r = lbl.add_run('Submitted by')
+r.font.size = Pt(11)
+r.font.color.rgb = RGBColor(0x1b, 0x3a, 0x53)
+r.bold = True
 
 info = doc.add_paragraph()
 info.alignment = WD_ALIGN_PARAGRAPH.CENTER
+info.paragraph_format.space_after = Pt(2)
 info.add_run(
-    'Students:\n'
     'Shada Taha, 213700875, Shadat@post.bgu.ac.il\n'
     'Abdallah Awad, 213041486, awadabd@post.bgu.ac.il\n'
     'Lina Awad, 325348571, linaaw@post.bgu.ac.il\n'
-    'Yasmin Nassar, 326486032, nassarya@post.bgu.ac.il\n'
-    'Lecturer: Oded Nir').font.size = Pt(10.5)
+    'Yasmin Nassar, 326486032, nassarya@post.bgu.ac.il').font.size = Pt(11)
+
+gap(1)
+lec = doc.add_paragraph()
+lec.alignment = WD_ALIGN_PARAGRAPH.CENTER
+r = lec.add_run('Lecturer: Dr. Oded Nir')
+r.font.size = Pt(11)
+
+due = doc.add_paragraph()
+due.alignment = WD_ALIGN_PARAGRAPH.CENTER
+r = due.add_run('Due date: 14 July 2026')
+r.italic = True
+r.font.size = Pt(10.5)
+r.font.color.rgb = RGBColor(0x55, 0x55, 0x55)
+
+doc.add_page_break()
 
 # =====================================================================
 # 2. Background  (<= 70 words)
