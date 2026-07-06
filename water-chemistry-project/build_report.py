@@ -114,10 +114,10 @@ info = doc.add_paragraph()
 info.alignment = WD_ALIGN_PARAGRAPH.CENTER
 info.add_run(
     'Students:\n'
-    'Shada Taha, 213700875, [email]\n'
-    'Abdallah Awad, 213041486, [email]\n'
-    'Lina Awad, 325348571, [email]\n'
-    'Yasmin Nassar, 326486032, [email]\n'
+    'Shada Taha, 213700875, Shadat@post.bgu.ac.il\n'
+    'Abdallah Awad, 213041486, awadabd@post.bgu.ac.il\n'
+    'Lina Awad, 325348571, linaaw@post.bgu.ac.il\n'
+    'Yasmin Nassar, 326486032, nassarya@post.bgu.ac.il\n'
     'Lecturer: Oded Nir').font.size = Pt(10.5)
 
 # =====================================================================
