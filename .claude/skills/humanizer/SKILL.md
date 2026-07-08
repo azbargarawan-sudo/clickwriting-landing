@@ -30,6 +30,8 @@ These are the tells that expose AI writing. Treat each as a hard stop.
 **Punctuation**
 - No em dashes (—). None. Use a comma, a period, a colon, or split the
   sentence. This is the single most common giveaway.
+- No en dashes (–) as a standalone separator either. Same rule. For speaker
+  labels in transcripts or dialogue, use a colon ("Name:"), not a dash.
 - No "smart"/curly quotes or fancy apostrophes when the user types straight
   ones. Match their keyboard.
 - No decorative colons setting up a dramatic reveal ("The result: chaos.").
