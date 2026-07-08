@@ -104,6 +104,31 @@ These are the tells that expose AI writing. Treat each as a hard stop.
 - **Transcripts / interviews:** people interrupt themselves, pause, repeat,
   contradict, get emotional. Write that, not a clean essay in quotation marks.
 
+## RTL and punctuation (Hebrew / Arabic)
+
+When the text is Hebrew or Arabic, direction and punctuation placement matter as
+much as the words. Get these right every time:
+
+- **Direction is RTL, aligned to the right.** In a Word/`.docx` file set every
+  paragraph to RTL (`w:bidi`) and alignment to right or justified, and set the
+  section itself to RTL. In HTML use `dir="rtl"` (and `text-align: right`). Never
+  leave Hebrew/Arabic in a left-to-right paragraph.
+- **Sentence-ending punctuation goes at the END of the sentence**, i.e. the
+  left edge visually in RTL. The period, question mark, exclamation mark, comma
+  and colon belong after the last word, never floating at the start of the line.
+- **If a period (or `?`, `!`) shows up at the BEGINNING of a line, the direction
+  is wrong, not the character.** Fix the paragraph/section direction (make it
+  RTL); do not "solve" it by moving or deleting the punctuation mark.
+- **Parentheses, quotes and brackets must mirror correctly.** An opening `(`
+  should sit on the right and close on the left. If they look reversed, the
+  container isn't RTL.
+- **Latin words and numbers inside RTL text stay left-to-right** within the
+  line. Bidi handles this automatically once the paragraph direction is RTL, so
+  don't reorder digits or reverse them by hand.
+- Quick RTL check: read the first and last visible character of a line. In
+  correct RTL the sentence starts on the right and its ending punctuation is on
+  the left. If it's flipped, set direction, don't patch characters.
+
 ## Quick self-check before delivering
 
 Scan the draft and fix any hit:
@@ -114,5 +139,7 @@ Scan the draft and fix any hit:
 5. Does it end with a summary/moral? Cut it.
 6. Read one paragraph aloud in your head. Could a person have said this? If it
    sounds like a press release or a Wikipedia stub, rewrite it.
+7. If Hebrew/Arabic: is every paragraph RTL and right-aligned, and does each
+   sentence's ending period/`?`/`!` sit at the end (left edge), not the start?
 
-If it passes all six, it's ready.
+If it passes all seven, it's ready.
