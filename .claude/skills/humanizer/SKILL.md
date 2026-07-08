@@ -109,10 +109,16 @@ These are the tells that expose AI writing. Treat each as a hard stop.
 When the text is Hebrew or Arabic, direction and punctuation placement matter as
 much as the words. Get these right every time:
 
-- **Direction is RTL, aligned to the right.** In a Word/`.docx` file set every
-  paragraph to RTL (`w:bidi`) and alignment to right or justified, and set the
-  section itself to RTL. In HTML use `dir="rtl"` (and `text-align: right`). Never
-  leave Hebrew/Arabic in a left-to-right paragraph.
+- **Direction is RTL, aligned to the right.** In a Word/`.docx` file this takes
+  BOTH levels, and missing the run level is the usual cause of periods and
+  numbers landing on the wrong side:
+  - every run needs `<w:rtl w:val="1"/>` in its `rPr` (run level),
+  - every paragraph needs `<w:bidi w:val="1"/>` in its `pPr` (paragraph level),
+  - the section (`sectPr`) needs `<w:bidi/>`, tables need `<w:bidiVisual/>`, and
+    it helps to set the same on `docDefaults` and the Normal style.
+  Order matters: OOXML wants `rPr`/`pPr` children in schema sequence, so insert
+  `w:rtl`/`w:bidi` in the right position, don't just append. In HTML use
+  `dir="rtl"` and `text-align: right`. Never leave Hebrew/Arabic in an LTR run.
 - **Sentence-ending punctuation goes at the END of the sentence**, i.e. the
   left edge visually in RTL. The period, question mark, exclamation mark, comma
   and colon belong after the last word, never floating at the start of the line.
