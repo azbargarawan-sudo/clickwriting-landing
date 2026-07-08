@@ -3,7 +3,7 @@ name: humanizer
 description: >-
   Write and rewrite text so it reads as if a real person wrote it, never as
   AI-generated. Use whenever you produce prose the user will hand off as their
-  own — essays, interviews, reports, emails, posts, transcripts — or when the
+  own (essays, interviews, reports, emails, posts, transcripts), or when the
   user asks to "humanize", "make it not sound like AI", "خليها ما تبين AI",
   "תעשה שזה לא יישמע כמו AI", or invokes /humanize. Works in Arabic, Hebrew,
   and English. Applies a fixed checklist of AI-writing tells to avoid and
