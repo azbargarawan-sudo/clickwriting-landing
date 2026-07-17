@@ -65,13 +65,8 @@ def heading(doc, text, level):
     return p
 
 def bullet(doc, text, size=12, bold=False):
-    p = doc.add_paragraph(style='List Bullet')
-    set_rtl_para(p, WD_ALIGN_PARAGRAPH.JUSTIFY)
-    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
-    p.paragraph_format.space_after = Pt(2)
-    r = p.add_run(text)
-    style_run(r, size, bold)
-    return p
+    # ללא נקודות (בולטים): פסקה רגילה מיושרת לשני הצדדים
+    return para(doc, text, size, bold, space_after=4)
 
 def add_hyperlink(p, url, size=12):
     """מוסיף היפר-קישור אמיתי: כחול, קו תחתון, לחיץ."""
@@ -144,26 +139,35 @@ def rtl_table(doc, rows, header=True, col_widths=None, size=11):
     t = doc.add_table(rows=len(rows), cols=len(rows[0]))
     t.style = 'Table Grid'
     tblPr = t._tbl.tblPr
-    # סדר סכמה: bidiVisual -> tblW -> jc -> tblLayout
+    # כיוון טבלה ימין-לשמאל: העמודה הראשונה מוצגת מימין
     bidi = OxmlElement('w:bidiVisual')
     tblPr.append(bidi)
-    # רוחב טבלה: 100% מרוחב הטקסט, כך שהטבלה נצמדת לשוליים הימניים
+    # רוחב קבוע = מלוא רוחב הטקסט (16 ס"מ), כך שהטבלה נצמדת לשני השוליים
+    # ואין צורך ב-jc בכלל (בטבלת RTL וורד מפרש jc במהופך ומצמיד לשמאל)
+    TOTAL_CM = 16.0
+    ncols = len(rows[0])
+    if not col_widths:
+        col_widths = [TOTAL_CM / ncols] * ncols
+    scale = TOTAL_CM / sum(col_widths)
+    widths_cm = [w * scale for w in col_widths]
+    twips = [int(w * 567) for w in widths_cm]
     existing_w = tblPr.find(qn('w:tblW'))
     if existing_w is not None:
         tblPr.remove(existing_w)
     tblW = OxmlElement('w:tblW')
-    tblW.set(qn('w:type'), 'pct')
-    tblW.set(qn('w:w'), '5000')
+    tblW.set(qn('w:type'), 'dxa')
+    tblW.set(qn('w:w'), str(sum(twips)))
     tblPr.append(tblW)
     existing_jc = tblPr.find(qn('w:jc'))
     if existing_jc is not None:
         tblPr.remove(existing_jc)
-    jc = OxmlElement('w:jc')
-    jc.set(qn('w:val'), 'right')
-    tblPr.append(jc)
     layout = OxmlElement('w:tblLayout')
     layout.set(qn('w:type'), 'fixed')
     tblPr.append(layout)
+    # רשת עמודות מפורשת ברוחבים המדויקים
+    grid = t._tbl.find(qn('w:tblGrid'))
+    for gc, w in zip(grid.findall(qn('w:gridCol')), twips):
+        gc.set(qn('w:w'), str(w))
     for i, row in enumerate(rows):
         for j, cell_text in enumerate(row):
             cell = t.cell(i, j)
@@ -174,8 +178,7 @@ def rtl_table(doc, rows, header=True, col_widths=None, size=11):
             p.paragraph_format.space_after = Pt(2)
             r = p.add_run(cell_text)
             style_run(r, size, bold=(header and i == 0))
-            if col_widths:
-                cell.width = Cm(col_widths[j])
+            cell.width = Cm(widths_cm[j])
     return t
 
 def add_toc(doc):
@@ -1142,7 +1145,7 @@ links = [
  'מאמרי הד האולפן החדש (גולן; גולן בן־אורי; מזר; מנצור) - קובצי ה־PDF מצורפים להגשה כנספח דיגיטלי נפרד.',
 ]
 for l in links:
-    para_links(doc, l, 11, style='List Bullet', space_after=2)
+    para_links(doc, l, 11, space_after=4)
 
 heading(doc, 'נספח י: דיאלוגים מדגימים למורה', 2)
 para(doc,
