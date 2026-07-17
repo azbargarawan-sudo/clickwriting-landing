@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """בניית קובץ העבודה: יחידת לימוד 'מדברים אוכל' - docx בעברית, RTL, דוד 12, רווח 1.5."""
 import copy
+import re
+from docx.opc.constants import RELATIONSHIP_TYPE as RT
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING, WD_BREAK
@@ -69,6 +71,68 @@ def bullet(doc, text, size=12, bold=False):
     p.paragraph_format.space_after = Pt(2)
     r = p.add_run(text)
     style_run(r, size, bold)
+    return p
+
+def add_hyperlink(p, url, size=12):
+    """מוסיף היפר-קישור אמיתי: כחול, קו תחתון, לחיץ."""
+    r_id = p.part.relate_to(url, RT.HYPERLINK, is_external=True)
+    hl = OxmlElement('w:hyperlink')
+    hl.set(qn('r:id'), r_id)
+    r = OxmlElement('w:r')
+    rPr = OxmlElement('w:rPr')
+    rFonts = OxmlElement('w:rFonts')
+    for a in ('w:ascii', 'w:hAnsi', 'w:cs'):
+        rFonts.set(qn(a), FONT)
+    rPr.append(rFonts)
+    color = OxmlElement('w:color'); color.set(qn('w:val'), '0563C1'); rPr.append(color)
+    u = OxmlElement('w:u'); u.set(qn('w:val'), 'single'); rPr.append(u)
+    sz = OxmlElement('w:sz'); sz.set(qn('w:val'), str(int(size * 2))); rPr.append(sz)
+    szCs = OxmlElement('w:szCs'); szCs.set(qn('w:val'), str(int(size * 2))); rPr.append(szCs)
+    r.append(rPr)
+    t = OxmlElement('w:t'); t.text = url; t.set(qn('xml:space'), 'preserve')
+    r.append(t)
+    hl.append(r)
+    p._p.append(hl)
+
+URL_RE = re.compile(r'https?://\S+')
+
+def para_links(doc, text, size=12, align=WD_ALIGN_PARAGRAPH.JUSTIFY, space_after=8,
+               style=None, rtl=True, italic=False):
+    """פסקה שבה כל כתובת אינטרנט הופכת להיפר-קישור כחול."""
+    p = doc.add_paragraph(style=style)
+    if rtl:
+        set_rtl_para(p, align)
+    else:
+        p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+    p.paragraph_format.space_after = Pt(space_after)
+    pos = 0
+    for m in URL_RE.finditer(text):
+        url = m.group(0)
+        trail = ''
+        while url and url[-1] in '.,;':
+            trail = url[-1] + trail
+            url = url[:-1]
+        if m.start() > pos:
+            r = p.add_run(text[pos:m.start()])
+            if rtl:
+                style_run(r, size, italic=italic)
+            else:
+                r.font.name = FONT; r.font.size = Pt(size); r.font.italic = italic
+        add_hyperlink(p, url, size)
+        if trail:
+            r = p.add_run(trail)
+            if rtl:
+                style_run(r, size, italic=italic)
+            else:
+                r.font.name = FONT; r.font.size = Pt(size)
+        pos = m.end()
+    if pos < len(text):
+        r = p.add_run(text[pos:])
+        if rtl:
+            style_run(r, size, italic=italic)
+        else:
+            r.font.name = FONT; r.font.size = Pt(size); r.font.italic = italic
     return p
 
 def page_break(doc):
@@ -870,7 +934,7 @@ heb_sources = [
  'שתיל, נ\' (2008). הערבים בישראל: השפעת לשוניות ודרכי רכישת העברית - מיון הבעיות הלשוניות של לומדי עברית מן המגזר הערבי. הד האולפן החדש, 93, 70-88. https://meyda.education.gov.il/files/adulteducation/miyonbuot.pdf',
 ]
 for s in heb_sources:
-    p = para(doc, s, 12, space_after=8)
+    para_links(doc, s, 12, space_after=8)
 heading(doc, '6.2 מקורות באנגלית', 2)
 eng_sources = [
  'Albino, G. (2017). Improving speaking fluency in a task-based language teaching approach: The case of EFL learners at PUNIV-Cazenga. SAGE Open, 7(2), 1-11. https://journals.sagepub.com/doi/full/10.1177/2158244017691077',
@@ -880,13 +944,7 @@ eng_sources = [
  'Piccardo, E., North, B., & Goodier, T. (2019). Broadening the scope of language education: Mediation, plurilingualism, and collaborative learning: The CEFR Companion Volume. Journal of e-Learning and Knowledge Society, 15(1), 17-36. https://www.je-lks.org/ojs/index.php/Je-LKS_EN/article/view/1612',
 ]
 for s in eng_sources:
-    p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
-    p.paragraph_format.space_after = Pt(8)
-    r = p.add_run(s)
-    r.font.name = FONT
-    r.font.size = Pt(12)
+    para_links(doc, s, 12, space_after=8, rtl=False)
 
 # ============ 7. נספחים ============
 page_break(doc)
@@ -1066,7 +1124,7 @@ rtl_table(doc, adv_rows, col_widths=[3.5, 3.5, 8.0])
 para(doc, '', space_after=6)
 
 heading(doc, 'נספח ט: קישורים לסרטון ולמאמרים', 2)
-para(doc, 'הסרטון לשיעור 2: "תזונה נכונה לילדים" (יוטיוב): https://www.youtube.com/watch?v=heNv257IgQA - מקרינים '
+para_links(doc, 'הסרטון לשיעור 2: "תזונה נכונה לילדים" (יוטיוב): https://www.youtube.com/watch?v=heNv257IgQA - מקרינים '
  'מתחילת הסרטון (0:00) עד דקה 2:30. חובה לצפות בסרטון לפני השיעור ולוודא את התאמת הקטע. חלופה עדכנית תמיד זמינה '
  'במאגר הסרטונים של תוכנית "אפשריבריא" של משרד הבריאות: https://efsharibari.health.gov.il/tag-page/?tag=2160', space_after=6)
 para(doc, 'קישורים למאמרים המרכזיים (כולם בגישה חופשית):', space_after=2)
@@ -1084,7 +1142,7 @@ links = [
  'מאמרי הד האולפן החדש (גולן; גולן בן־אורי; מזר; מנצור) - קובצי ה־PDF מצורפים להגשה כנספח דיגיטלי נפרד.',
 ]
 for l in links:
-    bullet(doc, l, 11)
+    para_links(doc, l, 11, style='List Bullet', space_after=2)
 
 heading(doc, 'נספח י: דיאלוגים מדגימים למורה', 2)
 para(doc,
