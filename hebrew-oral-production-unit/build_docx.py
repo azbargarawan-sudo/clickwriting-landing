@@ -151,19 +151,29 @@ def rtl_table(doc, rows, header=True, col_widths=None, size=11):
     scale = TOTAL_CM / sum(col_widths)
     widths_cm = [w * scale for w in col_widths]
     twips = [int(w * 567) for w in widths_cm]
-    existing_w = tblPr.find(qn('w:tblW'))
-    if existing_w is not None:
-        tblPr.remove(existing_w)
     tblW = OxmlElement('w:tblW')
     tblW.set(qn('w:type'), 'dxa')
     tblW.set(qn('w:w'), str(sum(twips)))
-    tblPr.append(tblW)
-    existing_jc = tblPr.find(qn('w:jc'))
-    if existing_jc is not None:
-        tblPr.remove(existing_jc)
+    # הזחה 0 מהשוליים - הטבלה מתחילה בדיוק בשוליים הימניים
+    tblInd = OxmlElement('w:tblInd')
+    tblInd.set(qn('w:w'), '0')
+    tblInd.set(qn('w:type'), 'dxa')
     layout = OxmlElement('w:tblLayout')
     layout.set(qn('w:type'), 'fixed')
+    # בנייה מחדש של tblPr בסדר הסכמה הנכון, כדי שוורד לא יתעלם מאף מאפיין:
+    # tblStyle -> bidiVisual -> tblW -> tblInd -> tblLayout -> tblLook
+    style_el = tblPr.find(qn('w:tblStyle'))
+    look_el = tblPr.find(qn('w:tblLook'))
+    for child in list(tblPr):
+        tblPr.remove(child)
+    if style_el is not None:
+        tblPr.append(style_el)
+    tblPr.append(bidi)
+    tblPr.append(tblW)
+    tblPr.append(tblInd)
     tblPr.append(layout)
+    if look_el is not None:
+        tblPr.append(look_el)
     # רשת עמודות מפורשת ברוחבים המדויקים
     grid = t._tbl.find(qn('w:tblGrid'))
     for gc, w in zip(grid.findall(qn('w:gridCol')), twips):
@@ -224,6 +234,24 @@ def add_page_number_footer(doc):
     r3.append(fc3); footer_p._p.append(r3)
 
 doc = Document()
+
+# ביטול "מצב תאימות": סימון המסמך כקובץ וורד מודרני (Word 2013+)
+_settings = doc.settings.element
+_zoom = _settings.find(qn('w:zoom'))
+if _zoom is not None and _zoom.get(qn('w:percent')) is None:
+    _zoom.set(qn('w:percent'), '100')
+_compat = _settings.find(qn('w:compat'))
+if _compat is None:
+    _compat = OxmlElement('w:compat')
+    _settings.append(_compat)
+for _cs in _compat.findall(qn('w:compatSetting')):
+    if _cs.get(qn('w:name')) == 'compatibilityMode':
+        _compat.remove(_cs)
+_cs = OxmlElement('w:compatSetting')
+_cs.set(qn('w:name'), 'compatibilityMode')
+_cs.set(qn('w:uri'), 'http://schemas.microsoft.com/office/word')
+_cs.set(qn('w:val'), '15')
+_compat.append(_cs)
 
 # הגדרות עמוד ושוליים
 sec = doc.sections[0]
