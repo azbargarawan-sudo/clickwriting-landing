@@ -1,0 +1,43 @@
+קישורים לנספחים, עבודת מחקר משפטי
+
+גרסה 1 — לשון הרע ברשתות
+  - חוק איסור לשון הרע (נבו):
+    https://www.nevo.co.il/law_html/law00/74372.htm
+  - חוק איסור לשון הרע (כנסת):
+    https://main.knesset.gov.il/Activity/Legislation/Laws/Pages/LawPrimary.aspx?lawitemid=2000089
+  - פסק הדין רע"א 1239/19 שאול נ' נידיילי, טקסט מלא (בית המשפט העליון):
+    https://supremedecisions.court.gov.il/Home/Download?path=HebrewVerdicts\19\390\012\a09&fileName=19012390.A09&type=2
+  - מאמר מיכל לביא (משפטים על אתר, PDF):
+    https://lawjournal.huji.ac.il/sites/default/files/2021-03/mishpatimonline-15-159.pdf
+
+גרסה 2 — פרטיות מול אינטרס ציבורי
+  - חוק הגנת הפרטיות (נבו):
+    https://www.nevo.co.il/law_html/law00/71631.htm
+  - חוק-יסוד: כבוד האדם וחירותו (כנסת):
+    https://main.knesset.gov.il/Activity/Legislation/Laws/pages/lawbill.aspx?t=lawreshumot&lawitemid=147337
+  - פסק הדין בג"ץ 3809/08 האגודה לזכויות האזרח נ' משטרת ישראל, טקסט מלא (בית המשפט העליון):
+    https://supremedecisions.court.gov.il/Home/Download?path=HebrewVerdicts\08\090\038\n15&fileName=08038090_n15.txt&type=2
+  - מאמר מיכאל בירנהק (PDF, פקולטה למשפטים חיפה):
+    https://law.haifa.ac.il/wp-content/uploads/2021/11/KD5.pdf
+
+גרסה 3 — חופש העיסוק ואי-תחרות
+  - חוק-יסוד: חופש העיסוק (נבו):
+    https://www.nevo.co.il/law_html/law00/71905.htm
+  - חוק החוזים (חלק כללי) (נבו):
+    https://www.nevo.co.il/law_html/law00/71888.htm
+  - פסק הדין ע"א 6601/96 AES נ' סער (נבו):
+    https://www.nevo.co.il/psika_html/elyon/PADI-NG-3-850-L.htm
+  - חיפוש טקסט מלא לפי מספר הליך (בית המשפט העליון):
+    https://supremedecisions.court.gov.il/
+  - California Business and Professions Code § 16600:
+    https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=16600&lawCode=BPC
+
+גרסה 4 — הגנת הצרכן במכר מרחוק
+  - חוק הגנת הצרכן (נבו):
+    https://www.nevo.co.il/law_html/law00/70305.htm
+  - פסק הדין רע"א 3429/13 רז נ' גוליבר, טקסט מלא (בית המשפט העליון):
+    https://supremedecisions.court.gov.il/Home/Download?path=HebrewVerdicts%2F13%2F290%2F034%2Fb02&fileName=13034290_b02.txt&type=2
+  - Directive 2011/83/EU (EUR-Lex):
+    https://eur-lex.europa.eu/eli/dir/2011/83/oj
+
+לפני הגשה: פתחו כל קישור בדפדפן, הורידו את המסמך המלא (פסק הדין והמקור החלופי) וצרפו כנספח נפרד.
