@@ -92,8 +92,10 @@ const coverCentered = (text, opts = {}) =>
     children: runs(text, opts.run || {}),
   });
 
-// Logo at 4.8 cm wide, keeping the source aspect ratio (218 x 107 px).
-const LOGO_W = 136;
+// Logo at 5 cm wide, keeping the source aspect ratio (218 x 107 px).
+// docx-js transformation values are pixels at 96 dpi, not points:
+// 5 cm = 1.9685 in = 189 px.
+const LOGO_W = 189;
 const logo = new Paragraph({
   alignment: AlignmentType.CENTER,
   // lineRule must be AUTO here: the document-wide fixed 1.5 line height
