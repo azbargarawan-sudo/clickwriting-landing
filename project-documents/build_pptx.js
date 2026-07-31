@@ -25,9 +25,14 @@ function title(slide, txt, opts = {}) {
   }, opts));
 }
 
-function pageno(slide, n) {
+function pageno(slide, n, footer) {
   slide.addText(String(n), { x: W - 0.75, y: H - 0.5, w: 0.4, h: 0.3, fontFace: F,
     fontSize: 10, color: MUTED, align: "center" });
+  if (footer !== false) {
+    slide.addText("פרקטיקום בניהול מערכות מידע, תשפ\"ו | ס.א הנדסה | כאמל עואד", {
+      x: 0.35, y: H - 0.5, w: 5.6, h: 0.3, fontFace: F, fontSize: 9, color: "9AA7A4",
+      align: "left", rtlMode: true, margin: 0 });
+  }
 }
 
 function card(slide, x, y, w, h, fill) {
@@ -87,8 +92,8 @@ pageno(s, 2);
 
 // ---------------------------------------------------------------- 3. The problem
 s = pres.addSlide(); bg(s, WHITE);
-title(s, "המצב הקיים: הכול מנוהל ביד");
-s.addText("אין כלי ממוחשב מרכזי; העבודה מתנהלת בטלפון, בהודעות וברישומים מפוזרים", {
+title(s, "ניתוח המצב הקיים ובעיותיו");
+s.addText("מהראיונות עם בעל החברה והעובדים ומתצפית על יום עבודה עלו ארבע בעיות מרכזיות, כולן תוצאה של ניהול ידני ללא כלי ממוחשב מרכזי:", {
   x: 0.55, y: 1.1, w: W - 1.1, h: 0.45, fontFace: F, fontSize: 16, color: MUTED,
   align: "right", rtlMode: true, margin: 0 });
 const pains = [
@@ -113,31 +118,30 @@ pageno(s, 3);
 // ---------------------------------------------------------------- 4. Goal + measurable targets
 s = pres.addSlide(); bg(s, WHITE);
 title(s, "מטרת הפרויקט ויעדים מדידים");
-s.addText("ניתוח, איפיון ועיצוב של מערכת מידע מרכזית שמנהלת את כל מחזור הטיפול בבקשה: מקליטת הפנייה ועד החשבונית והשכר", {
-  x: 0.55, y: 1.12, w: W - 1.1, h: 0.75, fontFace: F, fontSize: 17, color: INK,
+s.addText("מטרת הפרויקט: ניתוח, איפיון ועיצוב של מערכת מידע מרכזית אחת שתנהל את מחזור הטיפול המלא בבקשת לקוח, מקליטת הפנייה ועד החשבונית והשכר, ותספק להנהלה תמונת מצב שוטפת.", {
+  x: 0.55, y: 1.15, w: W - 1.1, h: 0.85, fontFace: F, fontSize: 16, color: INK,
   align: "right", rtlMode: true, margin: 0 });
-const stats = [
-  ["קליטת בקשה", "20 דק׳", "5 דק׳"],
-  ["הכנת הצעת מחיר", "2-3 ימים", "יום אחד"],
-  ["דוח שכר חודשי", "יום מלא", "עד שעה"],
-  ["אובדן / כפילות רישום", "מדי חודש", "אפס"],
+const goalHeader = ["היעד לאחר המערכת", "המצב הקיים", "המדד"];
+const goalRows = [
+  ["5 דקות", "כ-20 דקות בממוצע", "זמן קליטת בקשה חדשה"],
+  ["יום עבודה אחד", "2-3 ימי עבודה", "זמן הכנת הצעת מחיר"],
+  ["אפס, רישום מרוכז אחד", "מספר מקרים בחודש", "אובדן או כפילות רישום"],
+  ["עדכון מיידי במערכת", "סבב טלפונים, לעיתים באיחור", "עדכון עובד על שיבוץ"],
+  ["עד שעה", "יום עבודה מלא", "הפקת דוח שכר חודשי"],
+  ["זמינים בכל רגע", "אינם קיימים", "דוחות ניהוליים להנהלה"],
 ];
-const sw = 2.92, sh = 3.1;
-stats.forEach((st, i) => {
-  const x = W - 0.55 - sw - i * (sw + 0.18);
-  const y = 2.25;
-  card(s, x, y, sw, sh, TINT);
-  s.addText(st[0], { x: x + 0.15, y: y + 0.22, w: sw - 0.3, h: 0.5, fontFace: F, fontSize: 15,
-    bold: true, color: TEAL, align: "center", rtlMode: true, margin: 0 });
-  s.addText(st[1], { x: x + 0.15, y: y + 0.85, w: sw - 0.3, h: 0.55, fontFace: F, fontSize: 20,
-    color: MUTED, strike: true, align: "center", rtlMode: true, margin: 0 });
-  s.addText(st[2], { x: x + 0.15, y: y + 1.5, w: sw - 0.3, h: 0.8, fontFace: F, fontSize: 30,
-    bold: true, color: ORANGE, align: "center", rtlMode: true, margin: 0 });
-  s.addText("היעד לאחר המערכת", { x: x + 0.15, y: y + 2.5, w: sw - 0.3, h: 0.35, fontFace: F,
-    fontSize: 11, color: MUTED, align: "center", rtlMode: true, margin: 0 });
-});
-s.addText("ובנוסף: עדכון מיידי של כל עובד על שיבוצו, ותמונת מצב ניהולית זמינה בכל רגע", {
-  x: 0.55, y: 5.75, w: W - 1.1, h: 0.5, fontFace: F, fontSize: 15, italic: true, color: TEAL,
+const goalData = [
+  goalHeader.map(h => ({ text: h, options: { bold: true, color: WHITE, fill: { color: TEAL },
+    align: "center", fontSize: 14 } })),
+  ...goalRows.map((r, ri) => r.map((c, ci) => ({ text: c, options: {
+    color: ci === 0 ? TEAL : INK, bold: ci === 0 || ci === 2,
+    fill: { color: ri % 2 === 0 ? "F4FAF8" : WHITE },
+    align: ci === 2 ? "right" : "center", fontSize: 13 } }))),
+];
+s.addTable(goalData, { x: 1.3, y: 2.2, w: W - 2.6, colW: [3.5, 3.6, 3.63],
+  fontFace: F, rowH: 0.58, border: { pt: 0.75, color: "D5E3DF" }, valign: "middle", margin: 0.06 });
+s.addText("היעדים הוגדרו יחד עם בעל החברה בשלב ההצעה, והם ישמשו למדידת הצלחת המערכת לאחר הטמעתה", {
+  x: 0.55, y: 6.45, w: W - 1.1, h: 0.45, fontFace: F, fontSize: 13, italic: true, color: MUTED,
   align: "right", rtlMode: true, margin: 0 });
 pageno(s, 4);
 
@@ -208,15 +212,21 @@ pageno(s, 6);
 
 // ---------------------------------------------------------------- 7. Gantt
 s = pres.addSlide(); bg(s, WHITE);
-title(s, "תוכנית העבודה: 31 פעילויות, כל אבני הדרך נשמרו");
-s.addImage({ path: "gantt_status.png", x: 1.25, y: 1.25, w: 10.83, h: 6.05 });
+title(s, "תוכנית העבודה ותרשים הגאנט, סטטוס 30.6.2026");
+s.addText("התוכנית כוללת 31 פעילויות בארבעה שלבים, עם תלות בין הפעילויות ומרווחי ביטחון לפני כל הגשה. בירוק: מה שבוצע; בתכלת: המתוכנן להמשך. כל מועדי ההגשה נשמרו.", {
+  x: 0.55, y: 1.08, w: W - 1.1, h: 0.6, fontFace: F, fontSize: 14, color: MUTED,
+  align: "right", rtlMode: true, margin: 0 });
+s.addImage({ path: "gantt_status.png", x: 1.55, y: 1.75, w: 10.23, h: 5.35 });
 pageno(s, 7);
 
 // ---------------------------------------------------------------- 8. Analysis: process
 s = pres.addSlide(); bg(s, WHITE);
-title(s, "איפיון: התהליך הארגוני מקצה לקצה");
-s.addImage({ path: "process.png", x: 1.6, y: 1.45, w: 10.13, h: 5.55 });
-pageno(s, 8);
+title(s, "איפיון: התהליך הארגוני המרכזי");
+s.addImage({ path: "process.png", x: 1.95, y: 1.35, w: 9.43, h: 5.17 });
+s.addText("התהליך שמופה בראיונות ובתצפית: מקבלת הפנייה, דרך השמאות והצעת המחיר, ועד הביצוע, המסירה והגבייה. המערכת מתעדת ומנהלת כל תחנה בתהליך; העבודה הפיזית עצמה נשארת מחוץ לתחולה.", {
+  x: 0.85, y: 6.6, w: W - 1.7, h: 0.7, fontFace: F, fontSize: 13, color: MUTED,
+  align: "center", rtlMode: true, margin: 0 });
+pageno(s, 8, false);
 
 // ---------------------------------------------------------------- 9. Analysis: DFD
 s = pres.addSlide(); bg(s, WHITE);
@@ -239,10 +249,10 @@ pageno(s, 9);
 s = pres.addSlide(); bg(s, WHITE);
 title(s, "איפיון: מודל הנתונים (ERD)");
 s.addImage({ path: "pdfimg/p10_07_1306x758.png", x: 2.2, y: 1.35, w: 8.93, h: 5.18 });
-s.addText("הישויות המרכזיות: עובדים, אתרים/קבלנים, שיבוצים, חשבוניות ושכר, והקשרים ביניהן", {
+s.addText("התרשים מגדיר את ישויות הליבה, עובדים, אתרים/קבלנים, שיבוצים, חשבוניות ושכר, את תכונותיהן ואת הקשרים ביניהן. בשלב העיצוב נגזר ממנו מבנה הטבלאות והמפתחות שיוצג בהמשך.", {
   x: 0.55, y: 6.7, w: W - 1.1, h: 0.45, fontFace: F, fontSize: 14, italic: true, color: MUTED,
   align: "center", rtlMode: true, margin: 0 });
-pageno(s, 10);
+pageno(s, 10, false);
 
 // ---------------------------------------------------------------- 11. Design: DB tables
 s = pres.addSlide(); bg(s, WHITE);
@@ -274,8 +284,11 @@ pageno(s, 11);
 // ---------------------------------------------------------------- 12. Design: menu tree
 s = pres.addSlide(); bg(s, WHITE);
 title(s, "עיצוב: עץ התפריטים לפי תפקידי המשתמשים");
-s.addImage({ path: "pdfimg/p14_08_1141x652.png", x: 1.9, y: 1.5, w: 9.53, h: 5.45 });
-pageno(s, 12);
+s.addImage({ path: "pdfimg/p14_08_1141x652.png", x: 2.15, y: 1.35, w: 9.03, h: 5.16 });
+s.addText("חמישה ענפים תפעוליים הנגזרים מהטבלאות ומהתהליך. הגישה נקבעת לפי תפקיד: נציג השירות רואה את ענף הלקוחות, מנהל העבודה גם את העובדים והאתרים, וההנהלה את הכול, כולל שכר וכספים.", {
+  x: 0.55, y: 6.7, w: W - 1.1, h: 0.6, fontFace: F, fontSize: 13, color: MUTED,
+  align: "center", rtlMode: true, margin: 0 });
+pageno(s, 12, false);
 
 // ---------------------------------------------------------------- 13. Design: screens
 s = pres.addSlide(); bg(s, WHITE);
@@ -298,7 +311,7 @@ shots.forEach((sh, i) => {
 s.addText("שני מסכים נוספים: עיבוד בקשה וניהול חשבוניות; כל ששת המסכים עוצבו עיצוב מלא", {
   x: 0.55, y: 7.05, w: W - 1.1, h: 0.38, fontFace: F, fontSize: 12, italic: true, color: MUTED,
   align: "center", rtlMode: true, margin: 0 });
-pageno(s, 13);
+pageno(s, 13, false);
 
 // ---------------------------------------------------------------- 14. Complexity + benefit
 s = pres.addSlide(); bg(s, WHITE);
