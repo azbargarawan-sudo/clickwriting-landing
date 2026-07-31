@@ -47,8 +47,8 @@ tasks = [
 ]
 
 phase_colors = ['#2e75b6', '#3fa66a', '#e0a030', '#9467bd']
-phase_names = ["שלב א' – ייזום והצעת פרויקט", "שלב ב' – איפיון המערכת",
-               "שלב ג' – עיצוב המערכת", "שלב ד' – סיכום, הצגה ותיק פרויקט"]
+phase_names = ["שלב א': ייזום והצעת פרויקט", "שלב ב': איפיון המערכת",
+               "שלב ג': עיצוב המערכת", "שלב ד': סיכום, הצגה ותיק פרויקט"]
 
 fig, ax = plt.subplots(figsize=(16, 9.2))
 ax.set_axisbelow(True)
@@ -93,7 +93,7 @@ legend_items.append(Line2D([0],[0], marker='D', color='none', markerfacecolor='#
                            markersize=10, label=he('אבן דרך (מועד הגשה)')))
 ax.legend(handles=legend_items, loc='lower left', fontsize=11.5, framealpha=0.95)
 
-ax.set_title(he('תרשים גאנט – תוכנית עבודה מלאה לפרויקט (מרץ–אוגוסט 2026)'),
+ax.set_title(he('תרשים גאנט: תוכנית עבודה מלאה לפרויקט (מרץ-אוגוסט 2026)'),
              fontsize=17, fontweight='bold', pad=30)
 plt.tight_layout()
 plt.savefig('gantt.png', dpi=200, bbox_inches='tight')

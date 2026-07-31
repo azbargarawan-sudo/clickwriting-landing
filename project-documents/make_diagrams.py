@@ -42,7 +42,7 @@ for x in (1.3, 3.75, 6.25, 8.7):
 for x in (2.5, 5.0, 7.5):
     arrow(ax, 6.25, y2 - 0.5, x, y3 + 0.5)
 
-ax.set_title('תרשים מבנה ארגוני – ס.א הנדסה', fontsize=16, fontweight='bold', pad=14)
+ax.set_title('תרשים מבנה ארגוני: ס.א הנדסה', fontsize=16, fontweight='bold', pad=14)
 plt.tight_layout()
 plt.savefig('orgchart.png', dpi=200, bbox_inches='tight')
 plt.close()
@@ -73,7 +73,7 @@ for x, t in steps_r2:
     box(ax, x, r2y, 2.2, 1.1, t, fc=fc, ec=ec, fs=12)
 
 box(ax, 10.0, 1.2, 2.4, 1.1, 'מסירת הנכס ללקוח,\nחשבונית וגביית תשלום', fc='#e2efda', ec='#548235', fs=12)
-box(ax, 5.0, 1.2, 2.2, 0.95, 'דחייה – סגירת התיק\nותיעוד הסיבה', fc='#f8cecc', ec='#b85450', fs=12)
+box(ax, 5.0, 1.2, 2.2, 0.95, 'דחייה: סגירת התיק\nותיעוד הסיבה', fc='#f8cecc', ec='#b85450', fs=12)
 
 # arrows row1 (right-to-left)
 for i in range(len(steps_r1) - 1):
@@ -87,7 +87,7 @@ arrow(ax, 5.0, r2y - 0.58, 5.0, 1.2 + 0.5)
 ax.text(6.25, r2y + 0.28, 'אישור', fontsize=11, color='#548235', fontweight='bold')
 ax.text(5.35, 2.55, 'דחייה', fontsize=11, color='#b85450', fontweight='bold')
 
-ax.set_title('התהליך הארגוני המרכזי – טיפול בבקשת לקוח מקצה לקצה', fontsize=16, fontweight='bold', pad=14)
+ax.set_title('התהליך הארגוני המרכזי: טיפול בבקשת לקוח מקצה לקצה', fontsize=16, fontweight='bold', pad=14)
 plt.tight_layout()
 plt.savefig('process.png', dpi=200, bbox_inches='tight')
 plt.close()
