@@ -19,8 +19,7 @@ const run = (text, opts = {}) => new TextRun({
 const P = (text) => new Paragraph({
   bidirectional: true,
   alignment: AlignmentType.JUSTIFIED,
-  spacing: { line: LINE, after: 0 },
-  indent: { firstLine: IND },
+  spacing: { line: LINE, after: 120 },
   children: [run(text)],
 });
 
