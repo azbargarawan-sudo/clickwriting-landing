@@ -117,18 +117,13 @@ const coverLine = (text, opts = {}) => new Paragraph({
 });
 
 const cover = [
-  coverLine('[اسم المؤسسة الأكاديمية]', { bold: true, size: 30 }),
-  coverLine('[اسم البرنامج / القسم]', { after: 480 }),
-  coverLine('[اسم الكورس ورقمه]'),
-  coverLine('[اسم المحاضرة]', { after: 1400 }),
+  coverLine('', { after: 2000 }),
   coverLine('الذكاء الاصطناعي ودمجه في التعليم', { bold: true, size: 40 }),
-  coverLine('تصميم وحدة تعليمية في العلوم للصف الخامس', { bold: true, size: 32 }),
-  coverLine('باستخدام أداة Canva', { bold: true, size: 32, after: 240 }),
-  coverLine('عمل سيمنار', { after: 1400 }),
-  coverLine('إعداد: [الاسم الكامل]'),
-  coverLine('رقم الهوية: [__________]', { after: 1200 }),
-  coverLine('التاريخ العبري: [__________]'),
-  coverLine('التاريخ الميلادي: [__________]'),
+  coverLine('تصميم وحدة تعليمية في العلوم للصف الخامس في التربية الخاصة', { bold: true, size: 30 }),
+  coverLine('باستخدام أداة Canva', { bold: true, size: 30, after: 480 }),
+  coverLine('عمل سيمنار', { after: 2000 }),
+  coverLine('إعداد:'),
+  coverLine('رقم الهوية:'),
   new Paragraph({ children: [new PageBreak()] }),
 ];
 
@@ -185,7 +180,7 @@ const toc = [
     columnWidths: [8000, 1072],
     width: { size: 9072, type: WidthType.DXA },
     rows: content
-      .filter((b) => b.t === 'h1' || b.t === 'h2' || b.t === 'h3')
+      .filter((b) => (b.t === 'h1' || b.t === 'h2' || b.t === 'h3') && b.x !== 'ملخّص')
       .map((b) => tocRow(b.x, b.t === 'h1' ? 1 : b.t === 'h2' ? 2 : 3)),
   }),
 ];
