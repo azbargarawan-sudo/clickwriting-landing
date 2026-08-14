@@ -12,7 +12,7 @@ const HANG = 709; // 1.25 cm
 
 // ---------- helpers ----------
 function run(text, opts = {}) {
-  return new TextRun({ text, font: HE, size: 24, rightToLeft: true, ...opts });
+  return new TextRun({ text, font: HE, size: 24, rightToLeft: true, noProof: true, language: { value: 'en-US', bidirectional: 'he-IL' }, ...opts });
 }
 
 function P(text, opts = {}) {
@@ -87,7 +87,7 @@ function REF_EN(text) {
     alignment: AlignmentType.LEFT,
     spacing: DOUBLE,
     indent: { left: HANG, hanging: HANG },
-    children: [new TextRun({ text, font: EN, size: 24 })],
+    children: [new TextRun({ text, font: EN, size: 24, noProof: true })],
   });
 }
 
@@ -619,7 +619,7 @@ const doc = new Document({
   styles: {
     default: {
       document: {
-        run: { font: HE, size: 24 },
+        run: { font: HE, size: 24, noProof: true, language: { value: 'en-US', bidirectional: 'he-IL' } },
         paragraph: { spacing: DOUBLE },
       },
     },
@@ -640,7 +640,7 @@ const doc = new Document({
         children: [new Paragraph({
           alignment: AlignmentType.CENTER,
           spacing: { line: 240, lineRule: 'auto' },
-          children: [new TextRun({ children: [PageNumber.CURRENT], font: HE, size: 20 })],
+          children: [new TextRun({ children: [PageNumber.CURRENT], font: HE, size: 20, noProof: true })],
         })],
       }),
     },
