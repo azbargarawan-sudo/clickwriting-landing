@@ -410,6 +410,70 @@
       color: var(--gold);
     }
 
+    /* ── KNOWLEDGE ── */
+    .knowledge { background: var(--white); }
+    .knowledge-header { text-align: center; margin-bottom: 56px; }
+    .knowledge-header .section-sub { margin-inline: auto; }
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .knowledge-card {
+      background: var(--white);
+      border: 1.5px solid #ECECEC;
+      border-radius: var(--radius);
+      padding: 30px 28px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+      transition: border-color .25s, box-shadow .25s, transform .25s;
+    }
+    .knowledge-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow);
+      transform: translateY(-5px);
+    }
+    .knowledge-icon {
+      width: 52px; height: 52px;
+      background: var(--gold-pale);
+      border: 1.5px solid var(--gold-light);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 18px;
+    }
+    .knowledge-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 14px; }
+    .knowledge-card ul { list-style: none; }
+    .knowledge-card li {
+      position: relative;
+      padding: 6px 22px 6px 0;
+      font-size: 0.88rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .knowledge-card li::before {
+      content: '✦';
+      position: absolute;
+      right: 0;
+      top: 6px;
+      color: var(--gold-dark);
+      font-size: 0.8rem;
+    }
+    .knowledge-note {
+      text-align: center;
+      margin: 44px auto 0;
+      max-width: 620px;
+      background: var(--gold-pale);
+      border: 1.5px solid var(--gold-light);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      color: var(--dark);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    .knowledge-note strong { color: var(--gold-dark); }
+
     /* ── TESTIMONIALS ── */
     .testimonials { background: var(--dark); }
     .testimonials .section-title { color: var(--white); }
@@ -772,6 +836,7 @@
   <a href="#services" class="mob-link">שירותים</a>
   <a href="#pricing" class="mob-link">מחירים</a>
   <a href="#testimonials" class="mob-link">המלצות</a>
+  <a href="#knowledge" class="mob-link">מרכז ידע</a>
   <a href="#faq" class="mob-link">שאלות</a>
   <a href="https://wa.me/ROGIB2YQ33TLO1" class="mob-cta" target="_blank" rel="noopener">📱 וואטסאפ</a>
 </div>
@@ -786,6 +851,7 @@
     <li><a href="#services">שירותים</a></li>
     <li><a href="#pricing">מחירים</a></li>
     <li><a href="#testimonials">המלצות</a></li>
+    <li><a href="#knowledge">מרכז ידע</a></li>
     <li><a href="#faq">שאלות</a></li>
     <li>
       <a href="tel:0544411592" style="display:inline-flex;align-items:center;gap:6px;color:var(--gold-dark);font-weight:700;">
@@ -1100,6 +1166,88 @@
   </div>
 </section>
 
+<!-- KNOWLEDGE CENTER -->
+<section class="knowledge" id="knowledge">
+  <div class="knowledge-header fade-up">
+    <div class="section-tag">מרכז ידע</div>
+    <h2 class="section-title">טיפים אקדמיים <span class="gold">מהמומחים שלנו</span></h2>
+    <p class="section-sub">זה הידע שאנחנו עובדים איתו כל יום. קבלו טעימה – ואם תרצו שנעשה את זה בשבילכם, אנחנו כאן.</p>
+  </div>
+  <div class="knowledge-grid">
+
+    <div class="knowledge-card fade-up">
+      <div class="knowledge-icon">🏗️</div>
+      <h3>מבנה עבודה סמינריונית</h3>
+      <ul>
+        <li>דף שער, תקציר של עד כ־250 מילים ותוכן עניינים אוטומטי</li>
+        <li>מבוא, סקירת ספרות, מתודולוגיה, ממצאים, דיון ומסקנות</li>
+        <li>היקף מקובל: כ־20–30 עמודים</li>
+        <li>כותרת שמשקפת גם את הנושא וגם את מטרת המחקר</li>
+      </ul>
+    </div>
+
+    <div class="knowledge-card fade-up">
+      <div class="knowledge-icon">📄</div>
+      <h3>איך מסכמים מאמר אקדמי?</h3>
+      <ul>
+        <li>קריאה ראשונית מרפרפת להבנת הנושא ומטרת המחקר</li>
+        <li>זיהוי מבנה המאמר והדגשת הרעיונות המרכזיים</li>
+        <li>סיכום ממוקד למטרה שלכם – לא כל חלק במאמר רלוונטי</li>
+        <li>בדיקה ועריכה לפני השימוש בסיכום</li>
+      </ul>
+    </div>
+
+    <div class="knowledge-card fade-up">
+      <div class="knowledge-icon">💻</div>
+      <h3>שימושי Word בכתיבה אקדמית</h3>
+      <ul>
+        <li>דף שער ותוכן עניינים אוטומטיים – לא ידניים</li>
+        <li>גופן Arial בגודל 11 או David בגודל 12, רווח שורה וחצי</li>
+        <li>כותרת 1 לפרקים וכותרת 2 לתתי־פרקים</li>
+        <li>מובאות, מספרי עמודים וביבליוגרפיה אוטומטית</li>
+      </ul>
+    </div>
+
+    <div class="knowledge-card fade-up">
+      <div class="knowledge-icon">📊</div>
+      <h3>איזה מבחן סטטיסטי לבחור?</h3>
+      <ul>
+        <li>מבחן t – השוואת ממוצעים בין שתי קבוצות</li>
+        <li>מבחן t לזוגות – מדידות לפני ואחרי התערבות</li>
+        <li>ANOVA – השוואה בין שלוש קבוצות ומעלה</li>
+        <li>מתאם, רגרסיה וחי־בריבוע – לפי סוג שאלת המחקר</li>
+      </ul>
+    </div>
+
+    <div class="knowledge-card fade-up">
+      <div class="knowledge-icon">🎤</div>
+      <h3>מצגת להגנה על סמינריון</h3>
+      <ul>
+        <li>15–18 שקפים לחצי שעת הצגה – כ־2 דקות לשקף</li>
+        <li>פתיחה ברורה עם מטרת המחקר ושאלת המחקר</li>
+        <li>נקודות מפתח בלבד בכל שקף, בלי טקסט ארוך</li>
+        <li>גרפים, טבלאות ודיאגרמות להמחשת הנתונים</li>
+      </ul>
+    </div>
+
+    <div class="knowledge-card fade-up">
+      <div class="knowledge-icon">⚖️</div>
+      <h3>אתיקה במחקר אקדמי</h3>
+      <ul>
+        <li>כבוד למשתתפי המחקר ולפרטיותם</li>
+        <li>הסכמה מדעת של כל משתתף לפני איסוף הנתונים</li>
+        <li>שמירה על סודיות ואנונימיות של המידע</li>
+        <li>דיווח הוגן ומדויק של הממצאים</li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="knowledge-note fade-up">
+    💡 <strong>אין לכם זמן ליישם את כל זה לבד?</strong> בדיוק בשביל זה אנחנו כאן –
+    שלחו לנו את פרטי העבודה ותקבלו תוצאה מקצועית שעומדת בכל הסטנדרטים האקדמיים.
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="faq" id="faq">
   <div class="faq-container">
@@ -1219,6 +1367,7 @@
     <a href="#about">אודות</a>
     <a href="#services">שירותים</a>
     <a href="#testimonials">המלצות</a>
+    <a href="#knowledge">מרכז ידע</a>
     <a href="#faq">שאלות נפוצות</a>
     <a href="tel:0544411592">054-441-1592</a>
     <a href="https://wa.me/ROGIB2YQ33TLO1" target="_blank" rel="noopener">וואטסאפ</a>
