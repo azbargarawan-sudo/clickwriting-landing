@@ -106,7 +106,7 @@ const cover = [
   coverLine('מרצה: ד"ר אילן דניאלס רחימי', { size: 26 }),
   coverLine('סקירת ספרות', { size: 36, bold: true, before: 1600 }),
   coverLine('השפעת מידת השימוש בכלי בינה מלאכותית יוצרת (כגון ChatGPT) על תחושת המסוגלות העצמית המקצועית של מורים בבית הספר', { size: 28, bold: true, before: 240 }),
-  coverLine('מגיש/ה: ____________________', { size: 26, before: 1600 }),
+  coverLine('מגישה: גאסיקה', { size: 26, before: 1600 }),
   coverLine('ת.ז: ____________________', { size: 26 }),
   coverLine('ב\' באלול תשפ"ו, 15 באוגוסט 2026', { size: 24, before: 480 }),
 ];
