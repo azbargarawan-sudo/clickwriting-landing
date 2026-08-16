@@ -1,8 +1,11 @@
 const {
   Document, Packer, Paragraph, TextRun, AlignmentType, PageBreak,
-  HeadingLevel, LineRuleType,
+  HeadingLevel, LineRuleType, ImageRun,
 } = require('docx');
 const fs = require('fs');
+const path = require('path');
+
+const LOGO = fs.readFileSync(path.join(__dirname, 'ono_logo.jpg'));
 
 // ---------- helpers ----------
 const CM = 567; // twips per cm
@@ -35,7 +38,7 @@ function enRun(text, opts = {}) {
 function hePara(text, opts = {}) {
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.START,
+    alignment: AlignmentType.RIGHT,
     spacing: { ...DOUBLE, after: opts.after ?? 0 },
     indent: opts.indent,
     children: [heRun(text, opts)],
@@ -47,7 +50,7 @@ function hePara(text, opts = {}) {
 function heHeading(text, { newPage = true } = {}) {
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.START,
+    alignment: AlignmentType.RIGHT,
     spacing: { ...DOUBLE, after: 120 },
     pageBreakBefore: newPage,
     children: [heRun(text, { bold: true, size: 28 })],
@@ -58,7 +61,7 @@ function heHeading(text, { newPage = true } = {}) {
 function heSub(text) {
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.START,
+    alignment: AlignmentType.RIGHT,
     spacing: { ...DOUBLE, before: 120 },
     children: [heRun(text, { bold: true, size: 24 })],
   });
@@ -79,7 +82,7 @@ function coverLine(text, { size = 24, bold = false, before = 0, after = 0 } = {}
 function heRef(parts) {
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.START,
+    alignment: AlignmentType.RIGHT,
     spacing: DOUBLE,
     indent: { start: Math.round(1.25 * CM), hanging: Math.round(1.25 * CM) },
     children: parts.map(p => heRun(p.t, { italics: !!p.i })),
@@ -100,7 +103,16 @@ function enRef(parts) {
 // ---------- content ----------
 
 const cover = [
-  coverLine('הקריה האקדמית אונו', { size: 32, bold: true, before: 1200 }),
+  new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { before: 400, after: 200 },
+    children: [new ImageRun({
+      type: 'jpg',
+      data: LOGO,
+      transformation: { width: 140, height: 140 },
+    })],
+  }),
+  coverLine('הקריה האקדמית אונו', { size: 32, bold: true, before: 200 }),
   coverLine('הפקולטה לחינוך', { size: 26 }),
   coverLine('מחקר מתקדם בחינוך, חלק כמותי, סמסטר ב\' תשפ"ו', { size: 26, before: 240 }),
   coverLine('מרצה: ד"ר אילן דניאלס רחימי', { size: 26 }),
