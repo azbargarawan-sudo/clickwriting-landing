@@ -1,6 +1,6 @@
 const fs = require('fs');
 const {
-  Document, Packer, Paragraph, TextRun, AlignmentType, LineRuleType, PageBreak,
+  Document, Packer, Paragraph, TextRun, AlignmentType, LineRuleType, PageBreak, ImageRun,
 } = require('docx');
 
 const FONT = { ascii: 'David', hAnsi: 'David', cs: 'David' };
@@ -52,6 +52,15 @@ const doc = new Document({
       },
     },
     children: [
+      new Paragraph({
+        children: [new ImageRun({
+          type: 'jpg',
+          data: fs.readFileSync('ono-logo.jpg'),
+          transformation: { width: 120, height: 120 },
+        })],
+        alignment: C,
+        spacing: { after: 120 },
+      }),
       para([['הפקולטה למשפטים | דיני עונשין | סמסטר קיץ, התשפ"ו', { bold: true }]], { align: C }),
       para([['פרופ\' גבריאל הלוי | מתרגל: עו"ד אריאל שניאור', {}]], { align: C }),
       para([['עבודת בקיאות', { bold: true, underline: true }]], { align: C, before: 120 }),
