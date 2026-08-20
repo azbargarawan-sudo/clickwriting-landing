@@ -50,12 +50,12 @@ function runsFor(text, opts = {}) {
   return runs;
 }
 
-const DOUBLE = { line: 480, lineRule: 'auto' };
+const DOUBLE = { line: 360, lineRule: 'auto' };
 
 function P(text, opts = {}) {
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.RIGHT,
+    alignment: AlignmentType.JUSTIFIED,
     spacing: { ...DOUBLE, after: opts.after ?? 120 },
     indent: opts.indent,
     pageBreakBefore: opts.pageBreak || false,
@@ -74,7 +74,7 @@ function H2(text) {
 function refHe(text) {
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.RIGHT,
+    alignment: AlignmentType.JUSTIFIED,
     spacing: { ...DOUBLE, after: 120 },
     indent: { start: 709, hanging: 709 },
     children: runsFor(text),
@@ -84,7 +84,7 @@ function refHe(text) {
 function refEn(text) {
   return new Paragraph({
     bidirectional: false,
-    alignment: AlignmentType.LEFT,
+    alignment: AlignmentType.JUSTIFIED,
     spacing: { ...DOUBLE, after: 120 },
     indent: { left: 709, hanging: 709 },
     children: runsFor(text),
