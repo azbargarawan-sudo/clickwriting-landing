@@ -3,7 +3,7 @@ const path = require('path');
 const pptxgen = require('pptxgenjs');
 
 const DIR = __dirname;
-const LOGO = path.join(DIR, 'logo.jpg');
+const LOGO = path.join(DIR, 'peres_logo.jpg');
 const DIAGRAM = path.join(DIR, 'themes.png');
 
 // palette

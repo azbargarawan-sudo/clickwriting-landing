@@ -10,7 +10,7 @@ import shutil
 import zipfile
 
 W = os.path.dirname(os.path.abspath(__file__))
-TPL = os.path.join(W, 'tpl')   # unpack template-original.pptx here first
+TPL = os.path.join(W, 'tpl')
 EMU = 914400
 
 INK = None                 # inherit from the template
@@ -440,6 +440,23 @@ def add_slide_number(slide_xml, n):
     return slide_xml.replace('</p:spTree>', SLDNUM.format(sn=n) + '</p:spTree>')
 
 
+LOGO_BOX = (0.30, 0.22, 1.35, 1.35)   # square, so the logo is not stretched
+
+
+def swap_logo(slide_xml):
+    """The template ships another college's logo in a landscape box. Point the
+    picture at a square box so the Peres mark keeps its aspect ratio."""
+    x, y, w, h = LOGO_BOX
+    new = (f'<a:off x="{int(x*EMU)}" y="{int(y*EMU)}"/>'
+           f'<a:ext cx="{int(w*EMU)}" cy="{int(h*EMU)}"/>')
+    def repl(m):
+        pic = m.group(0)
+        if 'name="Picture 5"' not in pic:
+            return pic
+        return re.sub(r'<a:off[^/]*/><a:ext[^/]*/>', lambda _: new, pic, count=1)
+    return re.sub(r'<p:pic>.*?</p:pic>', repl, slide_xml, flags=re.S)
+
+
 def shrink_body(slide_xml, y_in, h_in):
     """Give the body placeholder an explicit box, so a table or figure below it
     has room of its own instead of sitting inside the placeholder's area."""
@@ -513,6 +530,7 @@ def main():
              algn='ctr', space_before=300),
     ], autofit=False)
     x = set_placeholder(x, is_sub, sub)
+    x = swap_logo(x)
     open(p, 'w', encoding='utf-8').write(x)
 
     # ---- slides 2..16: prose bodies + normalised titles
@@ -529,7 +547,12 @@ def main():
             x = x.replace('</p:spTree>', pic_xml('rId3', 1.16, 2.85, 11.03, 11.03 * 913 / 2398)
                           + '</p:spTree>')
         x = add_slide_number(x, n)
+        x = swap_logo(x)
         open(p, 'w', encoding='utf-8').write(x)
+
+    # ---- the college logo the template ships is another institution's
+    shutil.copy(os.path.join(W, 'peres_logo.jpg'),
+                os.path.join(TPL, 'ppt', 'media', 'image1.jpeg'))
 
     # ---- media + rel + content type for the theme map
     shutil.copy(os.path.join(W, 'themes_wide.png'),

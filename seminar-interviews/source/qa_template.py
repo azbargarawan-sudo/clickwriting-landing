@@ -5,7 +5,7 @@ SW,SH=13.333,7.5
 # geometry inherited from the master / layout1 when a slide shape has no xfrm
 INHERIT={'title':(0.92,0.40,11.50,1.45), '':(0.92,2.00,11.50,4.76),
          'ctrTitle':(1.67,1.23,10.00,2.61), 'subTitle':(1.67,3.94,10.00,1.81)}
-LOGO=(0.0,0.19,2.32,1.39)
+LOGO=(0.30,0.22,1.35,1.35)   # square Peres mark, top-left
 
 z=zipfile.ZipFile(sys.argv[1])
 names=sorted([n for n in z.namelist() if re.match(r'ppt/slides/slide\d+\.xml$',n)],
@@ -52,13 +52,14 @@ for idx,n in enumerate(names,1):
             fs=max(szs)/100.0 if szs else 44.0
             textw=len(t)*0.5*fs/72
             left=x+w-textw
-            if left < LOGO[2] and y < LOGO[1]+LOGO[3]:
-                issues.append(f'slide {idx}: TITLE REACHES LOGO left={left:.2f} logo ends {LOGO[2]:.2f} "{t[:30]}"')
+            logo_right = LOGO[0]+LOGO[2]
+            if left < logo_right and y < LOGO[1]+LOGO[3]:
+                issues.append(f'slide {idx}: TITLE REACHES LOGO left={left:.2f} logo ends {logo_right:.2f} "{t[:30]}"')
     for i in range(len(boxes)):
         for j in range(i+1,len(boxes)):
             (ax,ay,aw,ah),at,_=boxes[i]; (bx,by,bw,bh),bt,_=boxes[j]
             if not at and not bt: continue
-            def is_logo(g): return abs(g[0])<0.02 and abs(g[1]-0.19)<0.05 and abs(g[2]-2.32)<0.05
+            def is_logo(g): return all(abs(a-b)<0.05 for a,b in zip(g,LOGO))
             if (not at and is_logo(boxes[i][0])) or (not bt and is_logo(boxes[j][0])): continue
             ox=min(ax+aw,bx+bw)-max(ax,bx); oy=min(ay+ah,by+bh)-max(ay,by)
             if ox>0.08 and oy>0.08 and ox*oy>0.10:

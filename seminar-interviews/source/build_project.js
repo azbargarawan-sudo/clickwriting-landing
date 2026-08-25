@@ -189,7 +189,14 @@ const children = [];
 
 // ===== cover =====
 const blank = (n, after) => { for (let i = 0; i < n; i++) children.push(P('', { after: after || 0, line: 240 })); };
-blank(1);
+const LOGO = path.join(DIR, 'peres_logo.jpg');
+children.push(new Paragraph({
+  bidirectional: true,
+  alignment: AlignmentType.CENTER,
+  spacing: { line: 240, lineRule: 'auto', before: 240, after: 200 },
+  children: [new ImageRun({ type: 'jpg', data: fs.readFileSync(LOGO),
+                            transformation: { width: 95, height: 95 } })],
+}));
 children.push(P('המרכז האקדמי פרס', { alignment: AlignmentType.CENTER, bold: true, size: 28, line: 240, after: 60 }));
 children.push(P('החוג למנהל מערכות בריאות', { alignment: AlignmentType.CENTER, bold: true, size: 28, line: 240, after: 60 }));
 children.push(P('תואר ראשון במנהל מערכות בריאות', { alignment: AlignmentType.CENTER, size: 24, line: 240 }));
