@@ -25,7 +25,7 @@ themes = [
 y0, hh, gap = 26, 62, 1.8
 w = (100 - 2*1.5 - 3*gap) / 4
 for i, (fc, ec, num, title, subs) in enumerate(themes):
-    x = 1.5 + i * (w + gap)
+    x = 1.5 + (len(themes) - 1 - i) * (w + gap)   # RTL: theme 1 sits on the right
     box(x, y0, w, hh, fc, ec)
     cx = x + w/2
     ax.text(cx, y0 + hh - 8, num, ha='center', va='center', fontsize=9.6,

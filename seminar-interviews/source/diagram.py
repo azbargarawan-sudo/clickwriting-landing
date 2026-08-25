@@ -31,7 +31,7 @@ themes = [
      'המלצה אישית של מטפל\nליווי של אישה קרובה\nמי שחלתה ושרדה\nנשים כסוכנות שינוי'),
 ]
 
-xs = [3.0, 27.0, 51.0, 75.0]
+xs = [3.0, 27.0, 51.0, 75.0][::-1]   # RTL: theme 1 sits on the right
 w = 22.0
 for (fc, ec, title, subs), x in zip(themes, xs):
     cx = x + w/2
