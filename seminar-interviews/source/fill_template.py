@@ -496,7 +496,9 @@ def add_notes(slide_no, text):
     open(os.path.join(nd, '_rels', f'notesSlide{slide_no}.xml.rels'), 'w', encoding='utf-8').write(
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
         '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
-        f'<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/'
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/'
+        'relationships/notesMaster" Target="../notesMasters/notesMaster1.xml"/>'
+        f'<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/'
         f'relationships/slide" Target="../slides/slide{slide_no}.xml"/></Relationships>')
     # link from the slide
     rp = os.path.join(TPL, 'ppt', 'slides', '_rels', f'slide{slide_no}.xml.rels')
@@ -509,6 +511,77 @@ def add_notes(slide_no, text):
                       f'officeDocument/2006/relationships/notesSlide" '
                       f'Target="../notesSlides/notesSlide{slide_no}.xml"/></Relationships>')
         open(rp, 'w', encoding='utf-8').write(s)
+
+
+NOTES_MASTER = (
+    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
+    '<p:notesMaster xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" '
+    'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" '
+    'xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:cSld>'
+    '<p:bg><p:bgRef idx="1001"><a:schemeClr val="bg1"/></p:bgRef></p:bg><p:spTree>'
+    '<p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>'
+    '<p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/>'
+    '<a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr>'
+    '<p:sp><p:nvSpPr><p:cNvPr id="2" name="Slide Image Placeholder 1"/>'
+    '<p:cNvSpPr><a:spLocks noGrp="1" noRot="1" noChangeAspect="1"/></p:cNvSpPr>'
+    '<p:nvPr><p:ph type="sldImg"/></p:nvPr></p:nvSpPr>'
+    '<p:spPr><a:xfrm><a:off x="1143000" y="685800"/><a:ext cx="4572000" cy="3429000"/></a:xfrm>'
+    '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>'
+    '<a:ln w="12700"><a:solidFill><a:prstClr val="black"/></a:solidFill></a:ln></p:spPr>'
+    '<p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang="he-IL"/></a:p></p:txBody></p:sp>'
+    '<p:sp><p:nvSpPr><p:cNvPr id="3" name="Notes Placeholder 2"/>'
+    '<p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr>'
+    '<p:nvPr><p:ph type="body" idx="1"/></p:nvPr></p:nvSpPr>'
+    '<p:spPr><a:xfrm><a:off x="685800" y="4343400"/><a:ext cx="5486400" cy="4114800"/></a:xfrm>'
+    '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr>'
+    '<p:txBody><a:bodyPr vert="horz" lIns="91440" tIns="45720" rIns="91440" bIns="45720" '
+    'rtlCol="0"/><a:lstStyle/><a:p><a:pPr algn="r" rtl="1"/>'
+    '<a:endParaRPr lang="he-IL"/></a:p></p:txBody></p:sp>'
+    '</p:spTree></p:cSld><p:clrMap bg1="lt1" tx1="dk1" bg2="lt2" tx2="dk2" accent1="accent1" '
+    'accent2="accent2" accent3="accent3" accent4="accent4" accent5="accent5" accent6="accent6" '
+    'hlink="hlink" folHlink="folHlink"/><p:notesStyle>'
+    '<a:lvl1pPr marL="0" algn="r" defTabSz="914400" rtl="1" eaLnBrk="1" latinLnBrk="0" '
+    'hangingPunct="1"><a:defRPr sz="1200" kern="1200"><a:solidFill><a:schemeClr val="tx1"/>'
+    '</a:solidFill><a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/>'
+    '<a:cs typeface="+mn-cs"/></a:defRPr></a:lvl1pPr></p:notesStyle></p:notesMaster>')
+
+
+def install_notes_master():
+    """A notes slide without a notes master makes PowerPoint refuse the file."""
+    nm = os.path.join(TPL, 'ppt', 'notesMasters')
+    os.makedirs(os.path.join(nm, '_rels'), exist_ok=True)
+    open(os.path.join(nm, 'notesMaster1.xml'), 'w', encoding='utf-8').write(NOTES_MASTER)
+
+    # a notes master gets its own theme part, the way PowerPoint writes it
+    t1 = os.path.join(TPL, 'ppt', 'theme', 'theme1.xml')
+    t2 = os.path.join(TPL, 'ppt', 'theme', 'theme2.xml')
+    theme = open(t1, encoding='utf-8').read()
+    theme = re.sub(r'(<a:theme[^>]*name=")[^"]*(")', r'\1Notes Theme\2', theme, count=1)
+    open(t2, 'w', encoding='utf-8').write(theme)
+
+    open(os.path.join(nm, '_rels', 'notesMaster1.xml.rels'), 'w', encoding='utf-8').write(
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/'
+        'relationships/theme" Target="../theme/theme2.xml"/></Relationships>')
+
+    rp = os.path.join(TPL, 'ppt', '_rels', 'presentation.xml.rels')
+    r = open(rp, encoding='utf-8').read()
+    if 'notesMasters/notesMaster1.xml' not in r:
+        r = r.replace('</Relationships>',
+                      '<Relationship Id="rId900" Type="http://schemas.openxmlformats.org/'
+                      'officeDocument/2006/relationships/notesMaster" '
+                      'Target="notesMasters/notesMaster1.xml"/></Relationships>')
+        open(rp, 'w', encoding='utf-8').write(r)
+
+    pp = os.path.join(TPL, 'ppt', 'presentation.xml')
+    x = open(pp, encoding='utf-8').read()
+    if 'notesMasterIdLst' not in x:
+        # schema order: sldMasterIdLst, notesMasterIdLst, sldIdLst
+        x = x.replace('</p:sldMasterIdLst>',
+                      '</p:sldMasterIdLst><p:notesMasterIdLst>'
+                      '<p:notesMasterId r:id="rId900"/></p:notesMasterIdLst>')
+        open(pp, 'w', encoding='utf-8').write(x)
 
 
 def main():
@@ -570,6 +643,16 @@ def main():
     if 'Extension="png"' not in s:
         s = s.replace('<Default Extension="jpeg"',
                       '<Default Extension="png" ContentType="image/png"/><Default Extension="jpeg"')
+    if '/ppt/notesMasters/notesMaster1.xml' not in s:
+        s = s.replace('</Types>',
+                      '<Override PartName="/ppt/notesMasters/notesMaster1.xml" '
+                      'ContentType="application/vnd.openxmlformats-officedocument.'
+                      'presentationml.notesMaster+xml"/></Types>')
+    if '/ppt/theme/theme2.xml' not in s:
+        s = s.replace('</Types>',
+                      '<Override PartName="/ppt/theme/theme2.xml" '
+                      'ContentType="application/vnd.openxmlformats-officedocument.'
+                      'theme+xml"/></Types>')
     for n in range(1, 18):
         tag = f'/ppt/notesSlides/notesSlide{n}.xml'
         if tag not in s:
@@ -579,6 +662,7 @@ def main():
     open(ct, 'w', encoding='utf-8').write(s)
 
     # ---- speaker notes
+    install_notes_master()
     for n, t in NOTES.items():
         add_notes(n, t)
 
@@ -586,11 +670,15 @@ def main():
     out = os.path.join(W, 'deck_template.pptx')
     if os.path.exists(out):
         os.remove(out)
+    parts = []
+    for root, _, files in os.walk(TPL):
+        for f in files:
+            full = os.path.join(root, f)
+            parts.append(os.path.relpath(full, TPL).replace(os.sep, '/'))
+    parts.sort(key=lambda n: (n != '[Content_Types].xml', n))
     with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
-        for root, _, files in os.walk(TPL):
-            for f in files:
-                full = os.path.join(root, f)
-                z.write(full, os.path.relpath(full, TPL))
+        for rel in parts:
+            z.write(os.path.join(TPL, rel.replace('/', os.sep)), rel)
     print('wrote', out)
 
 
