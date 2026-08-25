@@ -4,7 +4,7 @@ const pptxgen = require('pptxgenjs');
 
 const DIR = __dirname;
 const LOGO = path.join(DIR, 'peres_logo.jpg');
-const DIAGRAM = path.join(DIR, 'themes.png');
+const DIAGRAM = path.join(DIR, 'findings_path.png');
 
 // palette
 const INK = '16202B';
@@ -312,10 +312,10 @@ const S = (bg) => { const s = pres.addSlide(); s.background = { color: bg || WHI
 {
   const s = S(WHITE);
   kicker(s, 'ממצאים');
-  slideTitle(s, 'ארבע התמות שעלו מן הניתוח');
-  const dw = 9.2, dh = dw * 1162 / 1885;
-  s.addImage({ path: DIAGRAM, x: (W - dw) / 2, y: 1.34, w: dw, h: dh });
-  s.addNotes('מפת הדרכים לארבעת השקפים הבאים. לומר במשפט אחד את השורה התחתונה שבתחתית התרשים: ההיענות היא מאזן כוחות ולא רמת ידע.');
+  slideTitle(s, 'הדרך אל הבדיקה, והיכן פועלת כל תמה');
+  const dw = 11.9, dh = dw * 1002 / 2434;
+  s.addImage({ path: DIAGRAM, x: (W - dw) / 2, y: 1.62, w: dw, h: dh });
+  s.addNotes('להסביר שהחסמים אינם פועלים במקביל אלא כל אחד בשלב אחר בדרך אל הבדיקה, ושהרצועה התחתונה היא מה שמעביר את האישה מתחנה לתחנה.');
 }
 
 // ==========================================================================

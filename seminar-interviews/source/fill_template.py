@@ -185,8 +185,8 @@ S[9] = [prose([
 ])]
 
 S[10] = [prose([
-    'ארבע התמות אינן רשימה של חסמים נפרדים אלא מערכת אחת, וההיענות בפועל היא תוצר של המאזן '
-    'ביניהן.',
+    'התרשים מציג את הדרך אל הבדיקה ואת הנקודה שבה כל תמה חוסמת אותה, לצד הגורם המקדם '
+    'שנמצא כמעביר את האישה לאורכה.',
 ], sz=LEAD, space_before=0)]
 
 S[11] = [prose([
@@ -310,7 +310,7 @@ NOTES = {
     7: 'לנמק את בחירת השיטה האיכותנית ולהדגיש את השונוּת המכוונת שנבנתה במדגם.',
     8: 'אין להקריא את הטבלה. להצביע על שלוש שורות המייצגות את קצות הטווח ואת המקרה של האישה שחלתה.',
     9: 'לציין את ראיון הפיילוט ואת אופן הטיפול בסוגיות האתיות.',
-    10: 'מפת התמות משמשת מסגרת לשני השקפים הבאים. לנסח את המסקנה המרכזית העולה ממנה.',
+    10: 'להסביר כי החסמים אינם פועלים במקביל אלא כל אחד בשלב אחר בדרך אל הבדיקה, וכי הרצועה התחתונה היא הגורם המעביר את האישה לאורכה.',
     11: 'להקריא את הציטוטים במלואם, בהיותם הראיה האמפירית לתמות.',
     12: 'להדגיש כי מדובר בחסם שאינו מתועד די הצורך בספרות, ולהסביר מדוע אינו נלכד בשאלונים.',
     13: 'שלושת התנאים המפורטים באמצע הפסקה הם ליבת הסיכום.',
@@ -382,7 +382,7 @@ def table_xml(x_in, y_in):
 
 def pic_xml(rid, x_in, y_in, w_in, h_in):
     return (
-        '<p:pic><p:nvPicPr><p:cNvPr id="21" name="מפת התמות"/>'
+        '<p:pic><p:nvPicPr><p:cNvPr id="21" name="הדרך אל הבדיקה"/>'
         '<p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr>'
         f'<p:blipFill><a:blip r:embed="{rid}"/><a:stretch><a:fillRect/></a:stretch></p:blipFill>'
         f'<p:spPr><a:xfrm><a:off x="{int(x_in*EMU)}" y="{int(y_in*EMU)}"/>'
@@ -617,7 +617,7 @@ def main():
         if n == 8:
             x = x.replace('</p:spTree>', table_xml(0.92, 2.85) + '</p:spTree>')
         if n == 10:
-            x = x.replace('</p:spTree>', pic_xml('rId3', 1.16, 2.85, 11.03, 11.03 * 913 / 2398)
+            x = x.replace('</p:spTree>', pic_xml('rId3', 1.10, 2.82, 11.15, 11.15 * 1020 / 2648)
                           + '</p:spTree>')
         x = add_slide_number(x, n)
         x = swap_logo(x)
@@ -628,14 +628,14 @@ def main():
                 os.path.join(TPL, 'ppt', 'media', 'image1.jpeg'))
 
     # ---- media + rel + content type for the theme map
-    shutil.copy(os.path.join(W, 'themes_wide.png'),
-                os.path.join(TPL, 'ppt', 'media', 'themes_wide.png'))
+    shutil.copy(os.path.join(W, 'findings_path_wide.png'),
+                os.path.join(TPL, 'ppt', 'media', 'findings_path_wide.png'))
     rp = os.path.join(TPL, 'ppt', 'slides', '_rels', 'slide10.xml.rels')
     s = open(rp, encoding='utf-8').read()
-    if 'themes_wide' not in s:
+    if 'findings_path_wide' not in s:
         s = s.replace('</Relationships>',
                       '<Relationship Id="rId3" Type="http://schemas.openxmlformats.org/'
-                      'officeDocument/2006/relationships/image" Target="../media/themes_wide.png"/>'
+                      'officeDocument/2006/relationships/image" Target="../media/findings_path_wide.png"/>'
                       '</Relationships>')
         open(rp, 'w', encoding='utf-8').write(s)
     ct = os.path.join(TPL, '[Content_Types].xml')
