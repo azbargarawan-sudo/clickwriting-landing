@@ -208,11 +208,12 @@ blank(2, 0);
 children.push(P('מחקר איכותני מבוסס ראיונות עומק', { alignment: AlignmentType.CENTER, size: 24, line: 240 }));
 blank(3, 0);
 children.push(P('מגישות:', { alignment: AlignmentType.CENTER, bold: true, line: 240, after: 80 }));
-children.push(P('[שם מלא]        ת.ז. [_________]', { alignment: AlignmentType.CENTER, line: 240, after: 40 }));
-children.push(P('[שם מלא]        ת.ז. [_________]', { alignment: AlignmentType.CENTER, line: 240, after: 40 }));
-children.push(P('[שם מלא]        ת.ז. [_________]', { alignment: AlignmentType.CENTER, line: 240 }));
+children.push(P('מראם זיד        ת.ז. 211794235', { alignment: AlignmentType.CENTER, line: 240, after: 40 }));
+children.push(P('טגאיה סמאנך        ת.ז. 337622344', { alignment: AlignmentType.CENTER, line: 240, after: 40 }));
+children.push(P('עאליה אבו עראר        ת.ז. 2114908139', { alignment: AlignmentType.CENTER, line: 240, after: 40 }));
+children.push(P('לילה נגילי        ת.ז. 214175473', { alignment: AlignmentType.CENTER, line: 240, after: 0 }));
 blank(2, 0);
-children.push(P('בהנחיית: ד"ר שנהב פרץ', { alignment: AlignmentType.CENTER, line: 240 }));
+children.push(P('בהנחיית: ד"ר אסנת בשקין', { alignment: AlignmentType.CENTER, line: 240 }));
 blank(2, 0);
 children.push(P('תאריך הגשה: ______________          תשפ"ו', { alignment: AlignmentType.CENTER, line: 240 }));
 

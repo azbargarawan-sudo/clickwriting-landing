@@ -93,12 +93,13 @@ children.push(txt('בדגש על החברה הערבית', { alignment: Alignmen
 children.push(...blank(3));
 children.push(txt('עבודה מסכמת במסגרת סמינר', { alignment: AlignmentType.CENTER }));
 children.push(...blank(2));
-children.push(txt('מגישים:', { alignment: AlignmentType.CENTER, bold: true, after: 0 }));
-children.push(txt('[שם מלא]        ת.ז. [_________]', { alignment: AlignmentType.CENTER, after: 0 }));
-children.push(txt('[שם מלא]        ת.ז. [_________]', { alignment: AlignmentType.CENTER, after: 0 }));
-children.push(txt('[שם מלא]        ת.ז. [_________]', { alignment: AlignmentType.CENTER }));
+children.push(txt('מגישות:', { alignment: AlignmentType.CENTER, bold: true, after: 0 }));
+children.push(txt('מראם זיד        ת.ז. 211794235', { alignment: AlignmentType.CENTER, after: 0 }));
+children.push(txt('טגאיה סמאנך        ת.ז. 337622344', { alignment: AlignmentType.CENTER, after: 0 }));
+children.push(txt('עאליה אבו עראר        ת.ז. 2114908139', { alignment: AlignmentType.CENTER, after: 0 }));
+children.push(txt('לילה נגילי        ת.ז. 214175473', { alignment: AlignmentType.CENTER, after: 120 }));
 children.push(...blank(2));
-children.push(txt('בהנחיית: ד"ר שנהב פרץ', { alignment: AlignmentType.CENTER }));
+children.push(txt('בהנחיית: ד"ר אסנת בשקין', { alignment: AlignmentType.CENTER }));
 children.push(...blank(2));
 children.push(txt('תאריך הגשה: ______________     תשפ"ו', { alignment: AlignmentType.CENTER }));
 

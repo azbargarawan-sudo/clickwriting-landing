@@ -1,87 +1,74 @@
-"""Findings diagram: the path to the mammogram, and where each theme bites.
-Replaces the earlier four-column list with a mechanism picture."""
-import sys
+"""Findings figure: the path to the mammogram as a chevron flow, and the point
+at which each theme blocks it."""
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
+from matplotlib.patches import Polygon, FancyBboxPatch, FancyArrowPatch
 
 FONT = 'DejaVu Sans'
-SLATE, LINE = '#3d4b57', '#8b939c'
-T1 = ('#f6e8e8', '#b28585')
-T2 = ('#f0e9f2', '#95809d')
-T3 = ('#e3eded', '#71938f')
-T4 = ('#e9efe1', '#7f9468')
+ROSE, PURPLE, TEAL, SLATE, GREEN = '#a4626a', '#7d6c88', '#5c8380', '#69757e', '#6f8a58'
 
-# right to left: the first station sits on the right
+# right to left
 STATIONS = [
-    ('ידע וזכאות',        'תמה 1',      T1, 'הידע קיים כמעט אצל כולן\nואינו מבחין בין מי שנבדקת\nלמי שאינה נבדקת'),
-    ('הזימון מגיע ונקרא',  'תמה 3',      T3, 'כתובת שאינה מעודכנת,\nמכתב שאינו נקרא בשום שפה,\nתור בשעה בלתי אפשרית'),
-    ('ההחלטה לצאת',       'תמה 1 ותמה 3', ('#eaeeee', '#7e8f95'), 'הפחד מן האבחנה,\nהיעדר תסמין כהיתר לדחות,\nמחיר יום עבודה ונטל טיפולי'),
-    ('הדרך אל המכון',     'תמה 2',      T2, 'החשש שיראו אותה בדרך,\nולא החשיפה בחדר הבדיקה,\nשתוארה כרגע קצר'),
-    ('חזרה במועד',        'תמה 1',      T1, 'דחייה מוצדקת החוזרת\nעל עצמה ואינה מגיעה\nלכלל הכרעה'),
+    ('ידע וזכאות',       ROSE,   'תמה 1',        'הידע קיים כמעט אצל כולן\nואינו מבחין בין מי שנבדקת\nלמי שאינה נבדקת'),
+    ('קבלת הזימון',       TEAL,   'תמה 3',        'כתובת שאינה מעודכנת,\nמכתב שאינו נקרא בשום שפה,\nתור בשעה בלתי אפשרית'),
+    ('ההחלטה לצאת',      SLATE,  'תמה 1 ותמה 3', 'הפחד מן האבחנה,\nהיעדר תסמין כהיתר לדחות,\nמחיר יום עבודה ונטל טיפולי'),
+    ('הדרך אל המכון',    PURPLE, 'תמה 2',        'החשש שיראו אותה בדרך,\nולא החשיפה בחדר הבדיקה,\nשתוארה כרגע קצר'),
+    ('חזרה במועד',       ROSE,   'תמה 1',        'דחייה מוצדקת החוזרת על\nעצמה ואינה מגיעה\nלכלל הכרעה'),
 ]
+
 
 def build(outfile, figsize, fs_station, fs_tag, fs_body, fs_band):
     fig, ax = plt.subplots(figsize=figsize, dpi=230)
     ax.set_xlim(0, 100); ax.set_ylim(0, 100); ax.axis('off')
 
-    def box(x, y, w, h, fc, ec, lw=1.2):
-        ax.add_patch(FancyBboxPatch((x, y), w, h,
-                     boxstyle="round,pad=0.7,rounding_size=1.7",
-                     linewidth=lw, edgecolor=ec, facecolor=fc))
-
     n = len(STATIONS)
-    w, gap = 13.6, 2.8   # leaves room for the entry and exit labels
-    total = n * w + (n - 1) * gap
-    x0 = (100 - total) / 2
-    spine_y, spine_h = 40.0, 11.0
+    x0, x1 = 4.0, 96.0
+    seg = (x1 - x0) / n
+    top, bot = 72.0, 86.0
+    notch = seg * 0.14
 
-    for i, (name, tag, (fc, ec), body) in enumerate(STATIONS):
-        x = x0 + (n - 1 - i) * (w + gap)          # RTL
-        cx = x + w / 2
-        # barrier card above
-        box(x, 57, w, 30, fc, ec)
-        ax.text(cx, 83.5, tag, ha='center', va='center', fontsize=fs_tag,
-                fontname=FONT, color='#5a5a5a', fontweight='bold')
-        ax.text(cx, 70.5, body, ha='center', va='center', fontsize=fs_body,
-                fontname=FONT, color='#333333', linespacing=1.8)
-        ax.plot([cx, cx], [57, spine_y + spine_h], color=ec, lw=1.1, zorder=0)
-        # station on the spine
-        box(x, spine_y, w, spine_h, '#eef1f4', SLATE, lw=1.3)
-        ax.text(cx, spine_y + spine_h / 2, name, ha='center', va='center',
-                fontsize=fs_station, fontname=FONT, color='#1b1b1b', fontweight='bold')
-        # arrow to the next station, leftwards
-        if i < n - 1:
-            xa = x - 0.5
-            ax.add_patch(FancyArrowPatch((xa, spine_y + spine_h / 2),
-                                         (xa - gap + 1.0, spine_y + spine_h / 2),
-                                         arrowstyle='-|>', mutation_scale=11,
-                                         linewidth=1.2, color=LINE))
+    for i, (name, col, tag, body) in enumerate(STATIONS):
+        r = x1 - i * seg                      # right edge of this chevron
+        l = r - seg
+        pts = [(r, bot), (l + notch, bot), (l, (top + bot) / 2),
+               (l + notch, top), (r, top), (r - notch, (top + bot) / 2)]
+        if i == 0:
+            pts = [(r, bot), (l + notch, bot), (l, (top + bot) / 2), (l + notch, top), (r, top)]
+        ax.add_patch(Polygon(pts, closed=True, facecolor=col, edgecolor='white', linewidth=1.6))
+        cx = l + seg / 2 + notch * 0.35
+        ax.text(cx, (top + bot) / 2, name, ha='center', va='center', fontsize=fs_station,
+                fontname=FONT, color='white', fontweight='bold')
 
-    # the facilitator that carries a woman across the whole path
-    box(x0, 8, total, 20, T4[0], T4[1])
-    ax.text(x0 + total / 2, 22.5, 'תמה 4  ·  הפנייה האישית והרשת הנשית',
+        ax.plot([cx, cx], [top, top - 4.5], color=col, lw=1.3)
+        ax.text(cx, 62.0, tag, ha='center', va='center', fontsize=fs_tag,
+                fontname=FONT, color=col, fontweight='bold')
+        ax.text(cx, 48.0, body, ha='center', va='center', fontsize=fs_body,
+                fontname=FONT, color='#333333', linespacing=1.85)
+
+    ax.text(x1, 91.5, 'אישה בגיל הזכאות', ha='right', va='center', fontsize=fs_tag,
+            fontname=FONT, color='#7a8288')
+    ax.text(x0, 91.5, 'בדיקה אחת לשנתיים', ha='left', va='center', fontsize=fs_tag,
+            fontname=FONT, color='#7a8288')
+
+    ax.add_patch(FancyBboxPatch((x0, 6), x1 - x0, 22,
+                 boxstyle="round,pad=0.6,rounding_size=1.5",
+                 facecolor=GREEN, edgecolor=GREEN))
+    ax.text((x0 + x1) / 2, 22.0, 'תמה 4  ·  הפנייה האישית והרשת הנשית',
             ha='center', va='center', fontsize=fs_band, fontname=FONT,
-            color='#1b1b1b', fontweight='bold')
-    ax.text(x0 + total / 2, 14.0,
+            color='white', fontweight='bold')
+    ax.text((x0 + x1) / 2, 12.5,
             'פנייה אישית בשם פרטי וליווי של אישה קרובה הם שהעבירו את המשתתפות מתחנה לתחנה.\n'
             'כל הנבדקות בקביעות תיארו דמות מלווה, ואף אחת מן הנשים שלא נבדקו לא תיארה דמות כזאת.',
             ha='center', va='center', fontsize=fs_body, fontname=FONT,
-            color='#333333', linespacing=1.9)
-    for i in range(len(STATIONS)):
-        x = x0 + i * (w + gap)
-        ax.plot([x + w / 2, x + w / 2], [28, spine_y], color=T4[1], lw=1.0,
-                linestyle=(0, (3, 3)), zorder=0)
-
-    ax.text(x0 + total + 1.2, spine_y + spine_h / 2, 'אישה\nבגיל הזכאות', ha='left',
-            va='center', fontsize=fs_tag, fontname=FONT, color='#5a5a5a', linespacing=1.5)
-    ax.text(x0 - 1.2, spine_y + spine_h / 2, 'בדיקה\nאחת לשנתיים', ha='right',
-            va='center', fontsize=fs_tag, fontname=FONT, color='#5a5a5a', linespacing=1.5)
+            color='#eef3e8', linespacing=1.9)
+    ax.add_patch(FancyArrowPatch((x1 - 2, 32), (x0 + 2, 32), arrowstyle='-|>',
+                                 mutation_scale=13, linewidth=1.4, color=GREEN))
 
     plt.savefig(outfile, dpi=230, bbox_inches='tight', facecolor='white')
     print('wrote', outfile)
 
+
 W = '/tmp/claude-0/-home-user-clickwriting-landing/2ca03497-42eb-5d34-8079-069f09f39de3/scratchpad/work/'
-build(W + 'findings_path_wide.png', (14.6, 5.5), 10.4, 9.0, 8.4, 11.2)
-build(W + 'findings_path.png',      (13.4, 5.4), 10.0, 8.6, 8.0, 10.8)
+build(W + 'findings_path_wide.png', (14.8, 5.4), 10.6, 9.2, 8.5, 11.4)
+build(W + 'findings_path.png',      (13.6, 5.3), 10.2, 8.8, 8.1, 11.0)
