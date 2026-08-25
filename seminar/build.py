@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """בונה את קובץ העבודה מתוך תבנית המכללה: דף שער, מבוא, סקירת ספרות ורשימת מקורות."""
-import copy
 import docx
-from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Pt, Cm
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
@@ -72,23 +71,35 @@ PPR_ORDER = ['w:pStyle', 'w:keepNext', 'w:keepLines', 'w:pageBreakBefore', 'w:fr
              'w:divId', 'w:cnfStyle', 'w:rPr', 'w:sectPr', 'w:pPrChange']
 
 
-def set_bidi(par):
-    """מוסיף w:bidi במיקומו הנכון בתוך pPr (הסדר מחייב לפי הסכמה)."""
+def _ppr_set(par, tag, attrs=None):
+    """מוסיף אלמנט בתוך pPr במיקומו הנכון (הסדר מחייב לפי הסכמה)."""
     ppr = par._element.get_or_add_pPr()
-    if ppr.find(qn('w:bidi')) is not None:
-        return
-    el = OxmlElement('w:bidi')
-    idx = PPR_ORDER.index('w:bidi')
-    anchor = None
-    for child in ppr.iterchildren():
-        full = 'w:' + child.tag.split('}')[-1]
-        if full in PPR_ORDER and PPR_ORDER.index(full) > idx:
-            anchor = child
-            break
-    if anchor is not None:
-        anchor.addprevious(el)
-    else:
-        ppr.append(el)
+    el = ppr.find(qn(tag))
+    if el is None:
+        el = OxmlElement(tag)
+        idx = PPR_ORDER.index(tag)
+        anchor = None
+        for child in ppr.iterchildren():
+            full = 'w:' + child.tag.split('}')[-1]
+            if full in PPR_ORDER and PPR_ORDER.index(full) > idx:
+                anchor = child
+                break
+        if anchor is not None:
+            anchor.addprevious(el)
+        else:
+            ppr.append(el)
+    for k, v in (attrs or {}).items():
+        el.set(qn(k), v)
+    return el
+
+
+def set_bidi(par):
+    _ppr_set(par, 'w:bidi')
+
+
+def start_on_new_page(par):
+    """מעבר עמוד לפני הפסקה עצמה, בלי פסקה ריקה שמשאירה סימן תלוי."""
+    _ppr_set(par, 'w:pageBreakBefore', {'w:val': '1'})
 
 
 def clear_after(doc, keep_index):
@@ -134,11 +145,15 @@ def _is_latin(t):
     return False
 
 
-def page_break(doc):
-    p = doc.add_paragraph()
+def add_chapter_heading(doc, text):
+    """כותרת פרק: מיושרת לימין כמו הטקסט, ומתחילה בעמוד חדש."""
+    p = doc.add_paragraph(style='Heading 1')
     set_bidi(p)
+    start_on_new_page(p)
+    p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     p.paragraph_format.first_line_indent = Cm(0)
-    p.add_run().add_break(WD_BREAK.PAGE)
+    style_run(p.add_run(text), size=14, bold=True)
+    return p
 
 
 def main():
@@ -182,12 +197,7 @@ def main():
     # --- גוף העבודה ---
     for kind, text in content.BODY:
         if kind == 'h1':
-            page_break(doc)
-            p = doc.add_paragraph(style='Heading 1')
-            set_bidi(p)
-            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            p.paragraph_format.first_line_indent = Cm(0)
-            style_run(p.add_run(text), size=14, bold=True)
+            add_chapter_heading(doc, text)
         elif kind == 'h2':
             p = doc.add_paragraph(style='Heading 2')
             set_bidi(p)
@@ -199,12 +209,7 @@ def main():
             add_par(doc, text)
 
     # --- רשימת מקורות ---
-    page_break(doc)
-    p = doc.add_paragraph(style='Heading 1')
-    set_bidi(p)
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p.paragraph_format.first_line_indent = Cm(0)
-    style_run(p.add_run('רשימת מקורות'), size=14, bold=True)
+    add_chapter_heading(doc, 'רשימת מקורות')
 
     for ref in content.REFS_HE + content.REFS_EN:
         add_par(doc, ref, hanging=True)
