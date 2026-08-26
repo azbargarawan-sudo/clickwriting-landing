@@ -97,17 +97,17 @@ def sub_head(text, sz=1800):
     return f'<a:p>{ppr}{wrap_rtl(run(text, sz=sz, b=True, color=EMPH))}</a:p>'
 
 
-def rec(title, body, sz=1700, start=None):
-    """A numbered recommendation. PowerPoint draws the number itself, so it
-    lands on the right of an RTL paragraph, where a literal "1-" prefix would
-    reverse to "-1". start restarts the count after an intervening heading."""
-    at = f' startAt="{start}"' if start else ''
-    ppr = ('<a:pPr marL="514350" indent="-514350" algn="r" rtl="1">'
+def rec(n, title, body, sz=1700):
+    """A numbered recommendation. The marker is a literal character in the run
+    text, inside the paragraph's right-to-left embedding, so every viewer draws
+    it at the right edge. PowerPoint's own buAutoNum marker is placed from
+    a:pPr/@rtl instead, and a viewer that ignores that attribute puts it on the
+    left."""
+    ppr = ('<a:pPr marL="0" indent="0" algn="r" rtl="1">'
            '<a:lnSpc><a:spcPct val="100000"/></a:lnSpc>'
            '<a:spcBef><a:spcPts val="300"/></a:spcBef>'
-           '<a:buFont typeface="Arial" panose="020B0604020202020204" pitchFamily="34" charset="0"/>'
-           f'<a:buAutoNum type="arabicPeriod"{at}/></a:pPr>')
-    runs = run(title, sz=sz, b=True) + run(" " + body, sz=sz)
+           '<a:buNone/></a:pPr>')
+    runs = run(f'{n}- {title}', sz=sz, b=True) + run(' ' + body, sz=sz)
     return f'<a:p>{ppr}{wrap_rtl(runs)}</a:p>'
 
 
@@ -297,18 +297,18 @@ S[15] = [
            ('להסרת הגורמים החוצצים בין הכוונה לבין הפעולה', 'b'), '.'],
           sz=1700, space_before=0),
     sub_head('ברמת המרפאה, בעלות נמוכה יחסית'),
-    rec('רכזת זימונים דוברת ערבית שמטלפנת ואינה שולחת מכתבים,',
+    rec(1, 'רכזת זימונים דוברת ערבית שמטלפנת ואינה שולחת מכתבים,',
         'תוך מדידת שיעור ההמרה משיחה לתור שנקבע בפועל.'),
-    rec('התראה לרופא המשפחה בפתיחת ביקור של אישה שאיחרה בבדיקה,',
+    rec(2, 'התראה לרופא המשפחה בפתיחת ביקור של אישה שאיחרה בבדיקה,',
         'כך שההמלצה תינתן ביוזמת המטפל ולא ביוזמת האישה.'),
-    rec('פריסת תורים באחר הצהריים ובימי שישי,',
+    rec(3, 'פריסת תורים באחר הצהריים ובימי שישי,',
         'לצד אישור היעדרות מעבודה לאישה שהגיעה לבדיקה.'),
     sub_head('ברמת הקופה ומשרד הבריאות'),
-    rec('ניידת ממוגרפיה בלוח שנתי קבוע ובמיקום דיסקרטי,',
-        'ולא כאירוע חד-פעמי בחזית המרפאה.', start=4),
-    rec('מפגשים ביתיים בהנחיית נשים מקומיות שנבדקו,',
+    rec(4, 'ניידת ממוגרפיה בלוח שנתי קבוע ובמיקום דיסקרטי,',
+        'ולא כאירוע חד-פעמי בחזית המרפאה.'),
+    rec(5, 'מפגשים ביתיים בהנחיית נשים מקומיות שנבדקו,',
         'במסגרת קטנה ומוכרת במקום הרצאות פומביות.'),
-    rec('בחינת הרחבת הזימון היזום לגילאי 45 עד 49',
+    rec(6, 'בחינת הרחבת הזימון היזום לגילאי 45 עד 49',
         'בקהילות שבהן חציון גיל האבחון צעיר, ובראשן החברה הבדואית בנגב.'),
 ]
 

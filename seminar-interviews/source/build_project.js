@@ -297,7 +297,7 @@ const doc = new Document({
       levels: [{
         level: 0,
         format: LevelFormat.DECIMAL,
-        text: '%1.',
+        text: '%1-',
         alignment: AlignmentType.RIGHT,
         style: { paragraph: { indent: { right: 560, hanging: 560 } } },
       }],
