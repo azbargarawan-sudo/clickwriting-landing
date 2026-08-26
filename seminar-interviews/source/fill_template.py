@@ -7,6 +7,8 @@ with continuous prose, adds the interviewee table and the theme map, and repacks
 import os
 import re
 import shutil
+import subprocess
+import sys
 import zipfile
 
 W = os.path.dirname(os.path.abspath(__file__))
@@ -654,6 +656,59 @@ def install_notes_master():
         open(pp, 'w', encoding='utf-8').write(x)
 
 
+# --------------------------------------------------------------- file preview
+# A pptx carries its own preview image and its own summary properties, and
+# WhatsApp, Explorer and mail clients read those instead of rendering the file.
+# The template's copies belong to the college that published it, so a deck built
+# from it advertises that college's logo, its slide titles and its author until
+# these three parts are rewritten.
+SLIDE_TITLES = [
+    'פרויקט גמר: היענות לבדיקות ממוגרפיה בחברה הערבית בישראל',
+    'רקע והצגת הבעיה', 'שאלת המחקר ומטרות המחקר',
+    'סקירת ספרות – מה ידוע לנו בנושא', 'סקירת ספרות',
+    'מסגרת תיאורטית / מודל המחקר', 'מתודולוגיה', 'מתודולוגיה',
+    'כלי המחקר', 'ממצאים מרכזיים', 'ממצאים מרכזיים', 'ממצאים מרכזיים',
+    'סיכום', 'סיכום', 'המלצות', 'מגבלות המחקר', 'רשימת מקורות',
+]
+
+
+def fix_docprops():
+    """Replace the template's preview image, slide summary and author."""
+    subprocess.run([sys.executable, os.path.join(W, 'make_thumbnail.py'),
+                    os.path.join(TPL, 'docProps', 'thumbnail.jpeg')], check=True)
+
+    words = sum(len(t.split()) for t in SLIDE_TITLES)
+    titles = ''.join(f'<vt:lpstr>{esc(t)}</vt:lpstr>' for t in SLIDE_TITLES)
+    ap = os.path.join(TPL, 'docProps', 'app.xml')
+    s = open(ap, encoding='utf-8').read()
+    s = re.sub(r'<Slides>\d+</Slides>', f'<Slides>{len(SLIDE_TITLES)}</Slides>', s)
+    s = re.sub(r'<Notes>\d+</Notes>', f'<Notes>{len(SLIDE_TITLES)}</Notes>', s)
+    s = re.sub(r'<Words>\d+</Words>', f'<Words>{words}</Words>', s)
+    s = re.sub(r'<Paragraphs>\d+</Paragraphs>', f'<Paragraphs>{len(SLIDE_TITLES)}</Paragraphs>', s)
+    # the heading pairs count the title entries that follow, so both must agree
+    s = re.sub(r'(<vt:lpstr>כותרות שקופיות</vt:lpstr></vt:variant><vt:variant><vt:i4>)\d+',
+               lambda m: m.group(1) + str(len(SLIDE_TITLES)), s)
+    fonts_and_theme = re.search(r'<vt:vector size="(\d+)" baseType="lpstr">(.*?)</vt:vector>',
+                                s, re.S)
+    keep = re.findall(r'<vt:lpstr>[^<]*</vt:lpstr>', fonts_and_theme.group(2))[:4]
+    s = (s[:fonts_and_theme.start()]
+         + f'<vt:vector size="{len(keep) + len(SLIDE_TITLES)}" baseType="lpstr">'
+         + ''.join(keep) + titles + '</vt:vector>'
+         + s[fonts_and_theme.end():])
+    open(ap, 'w', encoding='utf-8').write(s)
+
+    cp = os.path.join(TPL, 'docProps', 'core.xml')
+    s = open(cp, encoding='utf-8').read()
+    s = s.replace('<dc:title></dc:title>',
+                  f'<dc:title>{esc(SLIDE_TITLES[0])}</dc:title>')
+    authors = 'מראם זיד, טגאיה סמאנך, עאליה אבו עראר, לילה נגילי'
+    s = re.sub(r'<dc:creator>[^<]*</dc:creator>', f'<dc:creator>{esc(authors)}</dc:creator>', s)
+    s = re.sub(r'<cp:lastModifiedBy>[^<]*</cp:lastModifiedBy>',
+               f'<cp:lastModifiedBy>{esc(authors)}</cp:lastModifiedBy>', s)
+    open(cp, 'w', encoding='utf-8').write(s)
+
+
+
 def main():
     # ---- slide 1: cover
     p = os.path.join(TPL, 'ppt', 'slides', 'slide1.xml')
@@ -739,6 +794,9 @@ def main():
     install_notes_master()
     for n, t in NOTES.items():
         add_notes(n, t)
+
+    # ---- preview image and summary properties
+    fix_docprops()
 
     # ---- repack
     out = os.path.join(W, 'deck_template.pptx')
