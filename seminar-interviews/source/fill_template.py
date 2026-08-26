@@ -662,7 +662,7 @@ def main():
         para([run('פרויקט גמר בנושא:', sz=1800, b=True, color=MUTE)], algn='ctr', space_before=0),
         para([run('היענות לבדיקות ממוגרפיה בחברה הערבית בישראל', sz=2800, b=True)], algn='ctr', space_before=400),
         para([run('חסמים, מאיצים ודרכים להגברת ההיענות', sz=2200, color=EMPH)], algn='ctr', space_before=200),
-        para([run('מחקר איכותני מבוסס שנים עשר ראיונות עומק  |  שנה"ל תשפ"ו', sz=1500, color=MUTE)],
+        para([run('מחקר איכותני מבוסס שנים עשר ראיונות עומק, שנה"ל תשפ"ו', sz=1500, color=MUTE)],
              algn='ctr', space_before=400),
     ], autofit=False)
     x = set_placeholder(x, is_title, cover)
@@ -673,7 +673,7 @@ def main():
         para([run('עאליה אבו עראר        ת.ז. 2114908139', sz=1300)], algn='ctr', space_before=90),
         para([run('לילה נגילי        ת.ז. 214175473', sz=1300)], algn='ctr', space_before=90),
         para([run('בהנחיית: ד"ר אסנת בשקין', sz=1300)], algn='ctr', space_before=200),
-        para([run('המרכז האקדמי פרס  |  החוג למנהל מערכות בריאות', sz=1200, color=MUTE)],
+        para([run('המרכז האקדמי פרס, החוג למנהל מערכות בריאות', sz=1200, color=MUTE)],
              algn='ctr', space_before=180),
     ], autofit=False)
     x = set_placeholder(x, is_sub, sub)
