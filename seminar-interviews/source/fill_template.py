@@ -38,7 +38,7 @@ def run(text, sz=BODY, b=False, i=False, color=None):
     return f'<a:r>{rpr}<a:t>{esc(text)}</a:t></a:r>'
 
 
-def para(runs, algn='just', space_before=600):
+def para(runs, algn='r', space_before=600):
     ppr = (f'<a:pPr marL="0" indent="0" algn="{algn}" rtl="1">'
            f'<a:lnSpc><a:spcPct val="100000"/></a:lnSpc>'
            f'<a:spcBef><a:spcPts val="{space_before}"/></a:spcBef>'
@@ -52,7 +52,7 @@ def txbody(paras, autofit=True):
 
 
 # --- prose helper: a paragraph built from (text, style) segments -------------
-def prose(segments, sz=BODY, algn='just', space_before=600):
+def prose(segments, sz=BODY, algn='r', space_before=600):
     runs = []
     for seg in segments:
         if isinstance(seg, str):
@@ -77,7 +77,7 @@ def rec(title, body, sz=1700, start=None):
     lands on the right of an RTL paragraph, where a literal "1-" prefix would
     reverse to "-1". start restarts the count after an intervening heading."""
     at = f' startAt="{start}"' if start else ''
-    ppr = ('<a:pPr marL="514350" indent="-514350" algn="just" rtl="1">'
+    ppr = ('<a:pPr marL="514350" indent="-514350" algn="r" rtl="1">'
            '<a:lnSpc><a:spcPct val="100000"/></a:lnSpc>'
            '<a:spcBef><a:spcPts val="300"/></a:spcBef>'
            '<a:buFont typeface="Arial" panose="020B0604020202020204" pitchFamily="34" charset="0"/>'
@@ -463,8 +463,12 @@ SLDNUM = (
     '<p:sp><p:nvSpPr><p:cNvPr id="31" name="מציין מיקום של מספר שקופית"/>'
     '<p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr>'
     '<p:nvPr><p:ph type="sldNum" sz="quarter" idx="12"/></p:nvPr></p:nvSpPr>'
-    '<p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/>'
-    '<a:p><a:pPr algn="l" rtl="0"/>'
+    # the master anchors this placeholder bottom-left; in a right-to-left deck
+    # the page number belongs under the right edge of the content column.
+    '<p:spPr><a:xfrm><a:off x="8613648" y="6355080"/>'
+    '<a:ext cx="2743200" cy="365760"/></a:xfrm></p:spPr>'
+    '<p:txBody><a:bodyPr/><a:lstStyle/>'
+    '<a:p><a:pPr algn="r" rtl="1"/>'
     '<a:fld id="{{2D6E5B1F-8A4C-4B71-9E3A-{sn:012d}}}" type="slidenum">'
     '<a:rPr lang="he-IL" sz="1200"/><a:t>{sn}</a:t></a:fld></a:p></p:txBody></p:sp>')
 
