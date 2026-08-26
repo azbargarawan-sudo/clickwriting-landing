@@ -72,13 +72,17 @@ def sub_head(text, sz=1800):
     return f'<a:p>{ppr}{run(text, sz=sz, b=True, color=EMPH)}</a:p>'
 
 
-def rec(num, title, body, sz=1700):
-    """A numbered recommendation with a hanging indent."""
+def rec(title, body, sz=1700, start=None):
+    """A numbered recommendation. PowerPoint draws the number itself, so it
+    lands on the right of an RTL paragraph, where a literal "1-" prefix would
+    reverse to "-1". start restarts the count after an intervening heading."""
+    at = f' startAt="{start}"' if start else ''
     ppr = ('<a:pPr marL="514350" indent="-514350" algn="just" rtl="1">'
            '<a:lnSpc><a:spcPct val="100000"/></a:lnSpc>'
-           '<a:spcBef><a:spcPts val="300"/></a:spcBef><a:buNone/></a:pPr>')
-    return (f'<a:p>{ppr}{run(num + "  ", sz=sz, b=True)}'
-            f'{run(title, sz=sz, b=True)}{run(" " + body, sz=sz)}</a:p>')
+           '<a:spcBef><a:spcPts val="300"/></a:spcBef>'
+           '<a:buFont typeface="Arial" panose="020B0604020202020204" pitchFamily="34" charset="0"/>'
+           f'<a:buAutoNum type="arabicPeriod"{at}/></a:pPr>')
+    return f'<a:p>{ppr}{run(title, sz=sz, b=True)}{run(" " + body, sz=sz)}</a:p>'
 
 
 def ref_he(text, sz=1200):
@@ -267,18 +271,18 @@ S[15] = [
            ('להסרת הגורמים החוצצים בין הכוונה לבין הפעולה', 'b'), '.'],
           sz=1700, space_before=0),
     sub_head('ברמת המרפאה, בעלות נמוכה יחסית'),
-    rec('1-', 'רכזת זימונים דוברת ערבית שמטלפנת ואינה שולחת מכתבים,',
+    rec('רכזת זימונים דוברת ערבית שמטלפנת ואינה שולחת מכתבים,',
         'תוך מדידת שיעור ההמרה משיחה לתור שנקבע בפועל.'),
-    rec('2-', 'התראה לרופא המשפחה בפתיחת ביקור של אישה שאיחרה בבדיקה,',
+    rec('התראה לרופא המשפחה בפתיחת ביקור של אישה שאיחרה בבדיקה,',
         'כך שההמלצה תינתן ביוזמת המטפל ולא ביוזמת האישה.'),
-    rec('3-', 'פריסת תורים באחר הצהריים ובימי שישי,',
+    rec('פריסת תורים באחר הצהריים ובימי שישי,',
         'לצד אישור היעדרות מעבודה לאישה שהגיעה לבדיקה.'),
     sub_head('ברמת הקופה ומשרד הבריאות'),
-    rec('4-', 'ניידת ממוגרפיה בלוח שנתי קבוע ובמיקום דיסקרטי,',
-        'ולא כאירוע חד-פעמי בחזית המרפאה.'),
-    rec('5-', 'מפגשים ביתיים בהנחיית נשים מקומיות שנבדקו,',
+    rec('ניידת ממוגרפיה בלוח שנתי קבוע ובמיקום דיסקרטי,',
+        'ולא כאירוע חד-פעמי בחזית המרפאה.', start=4),
+    rec('מפגשים ביתיים בהנחיית נשים מקומיות שנבדקו,',
         'במסגרת קטנה ומוכרת במקום הרצאות פומביות.'),
-    rec('6-', 'בחינת הרחבת הזימון היזום לגילאי 45 עד 49',
+    rec('בחינת הרחבת הזימון היזום לגילאי 45 עד 49',
         'בקהילות שבהן חציון גיל האבחון צעיר, ובראשן החברה הבדואית בנגב.'),
 ]
 

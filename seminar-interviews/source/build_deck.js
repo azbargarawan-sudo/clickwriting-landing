@@ -536,7 +536,7 @@ themes.forEach((th) => {
     s.addText(g.sub, rtl({ x: x + 0.28, y: 1.9, w: cw - 0.56, h: 0.28, fontSize: 11.5, color: MUTED, margin: 0, valign: 'middle' }));
     g.items.forEach((it, i) => {
       const y = 2.32 + i * 1.2;
-      badge(s, x + cw - 0.72, y + 0.02, 0.42, String(i + 1), g.color);
+      badge(s, x + cw - 0.72, y + 0.02, 0.42, String(gi * 3 + i + 1), g.color);
       s.addText(it[0], rtl({ x: x + 0.28, y, w: cw - 1.12, h: 0.36, fontSize: 14.5, bold: true, margin: 0, valign: 'middle' }));
       s.addText(it[1], rtl({ x: x + 0.28, y: y + 0.38, w: cw - 0.56, h: 0.68, fontSize: 12, color: MUTED, margin: 0, valign: 'top', lineSpacingMultiple: 1.16 }));
     });

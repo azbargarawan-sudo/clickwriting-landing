@@ -3,7 +3,7 @@ const path = require('path');
 const {
   Document, Packer, Paragraph, TextRun, Footer, PageNumber, PageBreak,
   Table, TableRow, TableCell, WidthType, ShadingType, BorderStyle, ImageRun,
-  TableOfContents, AlignmentType, HeadingLevel, TabStopType,
+  TableOfContents, AlignmentType, HeadingLevel, TabStopType, LevelFormat,
 } = require('docx');
 
 const DIR = __dirname;
@@ -126,13 +126,16 @@ function renderLines(lines, out) {
     } else if (line.startsWith('t|')) {
       tableBuf.push(line.slice(2).split('|').map(s => s.trim()));
     } else if (line.startsWith('n ')) {
-      // numbered recommendation: "n 1- כותרת|הסבר"
+      // numbered recommendation: "n כותרת|הסבר". The number comes from Word's
+      // own numbering, so it sits on the right of an RTL paragraph; a literal
+      // "1-" in the text would reverse to "-1".
       const [head, rest] = line.slice(2).split('|');
       out.push(new Paragraph({
         bidirectional: true,
         alignment: AlignmentType.JUSTIFIED,
         spacing: { line: LINE, lineRule: 'auto', after: 100 },
         indent: { right: 560, hanging: 560 },
+        numbering: { reference: 'recs', level: 0 },
         children: [run(head, { bold: true }), run(rest ? ' ' + rest : '')],
       }));
     } else if (line.startsWith('h ')) {
@@ -288,6 +291,18 @@ const headingStyle = (id, name, size) => ({
 
 const doc = new Document({
   features: { updateFields: true },
+  numbering: {
+    config: [{
+      reference: 'recs',
+      levels: [{
+        level: 0,
+        format: LevelFormat.DECIMAL,
+        text: '%1.',
+        alignment: AlignmentType.RIGHT,
+        style: { paragraph: { indent: { right: 560, hanging: 560 } } },
+      }],
+    }],
+  },
   styles: {
     default: {
       document: {
