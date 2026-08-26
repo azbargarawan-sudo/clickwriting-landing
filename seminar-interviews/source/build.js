@@ -148,7 +148,10 @@ const doc = new Document({
   styles: {
     default: {
       document: {
-        run: { font: FONT, size: SZ, rightToLeft: true },
+        run: { font: FONT, size: SZ, rightToLeft: true,
+               // tag the complex-script language, so Word proofs the Hebrew
+               // against a Hebrew dictionary instead of the Latin default
+               language: { value: 'en-US', bidirectional: 'he-IL' } },
         paragraph: { spacing: { line: LINE, lineRule: 'auto' }, alignment: AlignmentType.JUSTIFIED, bidirectional: true },
       },
     },
