@@ -393,9 +393,14 @@ COL_IN = [0.5, 1.75, 0.5, 1.35, 2.9, 4.5]      # inches, sums to 11.5
 
 
 def table_xml(x_in, y_in):
-    grid = ''.join(f'<a:gridCol w="{int(c*EMU)}"/>' for c in COL_IN)
+    # a:tblPr/@rtl mirrors the column order, and a viewer that ignores it leaves
+    # the first column on the left. The columns are therefore emitted already
+    # reversed and the table is declared left-to-right, so the "#" column lands
+    # on the right in every viewer. TABLE_ROWS and COL_IN stay in reading order.
+    grid = ''.join(f'<a:gridCol w="{int(c*EMU)}"/>' for c in reversed(COL_IN))
     rows = ''
     for ri, r in enumerate(TABLE_ROWS):
+        r = list(reversed(r))
         head = ri == 0
         h = int(0.29 * EMU)
         cells = ''
@@ -430,7 +435,7 @@ def table_xml(x_in, y_in):
         f'<p:xfrm><a:off x="{int(x_in*EMU)}" y="{int(y_in*EMU)}"/>'
         f'<a:ext cx="{int(sum(COL_IN)*EMU)}" cy="{total_h}"/></p:xfrm>'
         '<a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/table">'
-        f'<a:tbl><a:tblPr rtl="1" firstRow="1"/><a:tblGrid>{grid}</a:tblGrid>{rows}</a:tbl>'
+        f'<a:tbl><a:tblPr rtl="0" firstRow="1"/><a:tblGrid>{grid}</a:tblGrid>{rows}</a:tbl>'
         '</a:graphicData></a:graphic></p:graphicFrame>')
 
 
