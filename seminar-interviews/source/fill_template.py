@@ -38,12 +38,37 @@ def run(text, sz=BODY, b=False, i=False, color=None):
     return f'<a:r>{rpr}<a:t>{esc(text)}</a:t></a:r>'
 
 
+# --- right-to-left embedding -------------------------------------------------
+# The a:pPr/@rtl attribute states the paragraph direction, but some viewers
+# ignore it and lay the paragraph out with a left-to-right base direction. The
+# Unicode algorithm then resolves the sentence-final full stop, which is a
+# neutral character, to that base direction and draws it at the right-hand end
+# of the line, i.e. in front of the sentence instead of after it. Wrapping the
+# text in U+202B RIGHT-TO-LEFT EMBEDDING and U+202C POP DIRECTIONAL FORMATTING
+# sets the direction in the character stream itself, so the line comes out the
+# same whether or not the viewer honours the attribute.
+RLE, PDF = '\u202b', '\u202c'
+
+
+def wrap_rtl(runs_xml):
+    """Open the embedding inside the first run's text and close it in the last."""
+    first = runs_xml.find('<a:t>')
+    last = runs_xml.rfind('</a:t>')
+    if first < 0 or last < 0:
+        return runs_xml
+    return (runs_xml[:first + 5] + RLE + runs_xml[first + 5:last]
+            + PDF + runs_xml[last:])
+
+
 def para(runs, algn='r', space_before=600):
     ppr = (f'<a:pPr marL="0" indent="0" algn="{algn}" rtl="1">'
            f'<a:lnSpc><a:spcPct val="100000"/></a:lnSpc>'
            f'<a:spcBef><a:spcPts val="{space_before}"/></a:spcBef>'
            f'<a:buNone/></a:pPr>')
-    return f'<a:p>{ppr}{"".join(runs)}</a:p>'
+    body = "".join(runs)
+    if algn != 'l':
+        body = wrap_rtl(body)
+    return f'<a:p>{ppr}{body}</a:p>'
 
 
 def txbody(paras, autofit=True):
@@ -69,7 +94,7 @@ def sub_head(text, sz=1800):
     ppr = ('<a:pPr marL="0" indent="0" algn="r" rtl="1">'
            '<a:lnSpc><a:spcPct val="100000"/></a:lnSpc>'
            '<a:spcBef><a:spcPts val="500"/></a:spcBef><a:buNone/></a:pPr>')
-    return f'<a:p>{ppr}{run(text, sz=sz, b=True, color=EMPH)}</a:p>'
+    return f'<a:p>{ppr}{wrap_rtl(run(text, sz=sz, b=True, color=EMPH))}</a:p>'
 
 
 def rec(title, body, sz=1700, start=None):
@@ -82,14 +107,15 @@ def rec(title, body, sz=1700, start=None):
            '<a:spcBef><a:spcPts val="300"/></a:spcBef>'
            '<a:buFont typeface="Arial" panose="020B0604020202020204" pitchFamily="34" charset="0"/>'
            f'<a:buAutoNum type="arabicPeriod"{at}/></a:pPr>')
-    return f'<a:p>{ppr}{run(title, sz=sz, b=True)}{run(" " + body, sz=sz)}</a:p>'
+    runs = run(title, sz=sz, b=True) + run(" " + body, sz=sz)
+    return f'<a:p>{ppr}{wrap_rtl(runs)}</a:p>'
 
 
 def ref_he(text, sz=1200):
     ppr = (f'<a:pPr marL="342900" indent="-342900" algn="r" rtl="1">'
            f'<a:lnSpc><a:spcPct val="95000"/></a:lnSpc>'
            f'<a:spcBef><a:spcPts val="300"/></a:spcBef><a:buNone/></a:pPr>')
-    return f'<a:p>{ppr}{run(text, sz=sz)}</a:p>'
+    return f'<a:p>{ppr}{wrap_rtl(run(text, sz=sz))}</a:p>'
 
 
 def ref_en(text, sz=1200):
@@ -387,7 +413,7 @@ def table_xml(x_in, y_in):
                 '<a:tc><a:txBody><a:bodyPr/><a:lstStyle/>'
                 '<a:p><a:pPr algn="r" rtl="1"><a:lnSpc><a:spcPct val="100000"/></a:lnSpc>'
                 '<a:spcBef><a:spcPts val="0"/></a:spcBef><a:buNone/></a:pPr>'
-                f'<a:r>{rpr}<a:t>{esc(c)}</a:t></a:r></a:p></a:txBody>'
+                f'<a:r>{rpr}<a:t>{RLE}{esc(c)}{PDF}</a:t></a:r></a:p></a:txBody>'
                 '<a:tcPr marL="45720" marR="45720" marT="18288" marB="18288" anchor="ctr">'
                 '<a:lnL w="6350" cmpd="sng"><a:solidFill><a:srgbClr val="D6DCE4"/></a:solidFill></a:lnL>'
                 '<a:lnR w="6350" cmpd="sng"><a:solidFill><a:srgbClr val="D6DCE4"/></a:solidFill></a:lnR>'
@@ -529,7 +555,7 @@ def add_notes(slide_no, text):
         '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr>'
         '<p:txBody><a:bodyPr/><a:lstStyle/>'
         f'<a:p><a:pPr algn="r" rtl="1"/><a:r><a:rPr lang="he-IL" sz="1200" dirty="0"/>'
-        f'<a:t>{esc(text)}</a:t></a:r></a:p></p:txBody></p:sp>'
+        f'<a:t>{RLE}{esc(text)}{PDF}</a:t></a:r></a:p></p:txBody></p:sp>'
         '</p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:notes>')
     open(os.path.join(nd, f'notesSlide{slide_no}.xml'), 'w', encoding='utf-8').write(xml)
     open(os.path.join(nd, '_rels', f'notesSlide{slide_no}.xml.rels'), 'w', encoding='utf-8').write(
