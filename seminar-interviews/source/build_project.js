@@ -125,6 +125,21 @@ function renderLines(lines, out) {
       }));
     } else if (line.startsWith('t|')) {
       tableBuf.push(line.slice(2).split('|').map(s => s.trim()));
+    } else if (line.startsWith('n ')) {
+      // numbered recommendation: "n 1- כותרת|הסבר"
+      const [head, rest] = line.slice(2).split('|');
+      out.push(new Paragraph({
+        bidirectional: true,
+        alignment: AlignmentType.JUSTIFIED,
+        spacing: { line: LINE, lineRule: 'auto', after: 100 },
+        indent: { right: 560, hanging: 560 },
+        children: [run(head, { bold: true }), run(rest ? ' ' + rest : '')],
+      }));
+    } else if (line.startsWith('h ')) {
+      out.push(P(line.slice(2), {
+        alignment: AlignmentType.RIGHT, bold: true, keepNext: true,
+        before: 160, after: 80, line: 360,
+      }));
     } else if (line.startsWith('b ')) {
       out.push(P('•  ' + line.slice(2), { indent: { right: 400, hanging: 260 }, after: 80 }));
     } else if (line.startsWith('x ')) {
