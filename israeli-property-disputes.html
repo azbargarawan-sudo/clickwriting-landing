@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>סכסוכי מקרקעין ודרישת הכתב | מאמר לדוגמה – כתיבה בקליק</title>
+  <meta name="description" content="מאמר משפטי לדוגמה: דרישת הכתב בעסקאות מקרקעין בישראל – ניתוח משווה של רע&quot;א 1681/10 עיני נ' סידי וע&quot;א 7119/08 חיימי נ' שמיר." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #D4A017;
+      --gold-light: #F0C040;
+      --gold-dark: #A87800;
+      --gold-pale: #FFF8E1;
+      --white: #FFFFFF;
+      --dark: #1A1A1A;
+      --gray: #555555;
+      --gray-light: #F5F5F5;
+      --radius: 16px;
+      --shadow: 0 8px 32px rgba(212,160,23,0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      direction: rtl;
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; right: 0; left: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 5%;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--gold-light);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--gold-dark);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .nav-back:hover { color: var(--gold); }
+
+    /* ── ARTICLE HEADER ── */
+    .article-hero {
+      padding: 140px 5% 60px;
+      background: linear-gradient(145deg, #FFF9E6 0%, #FFFFFF 55%, #FFFBF0 100%);
+      text-align: center;
+    }
+    .article-hero .badge {
+      display: inline-block;
+      background: var(--gold-pale);
+      border: 1.5px solid var(--gold-light);
+      color: var(--gold-dark);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 22px;
+      letter-spacing: 0.5px;
+    }
+    .article-hero h1 {
+      font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.25;
+      max-width: 860px;
+      margin: 0 auto 18px;
+    }
+    .article-hero h1 .gold { color: var(--gold-dark); }
+    .article-hero .subtitle {
+      color: var(--gray);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .article-meta {
+      margin-top: 26px;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      color: var(--gray);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    /* ── ARTICLE BODY ── */
+    .article-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 60px 5% 40px;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #2b2b2b;
+    }
+    .article-body h2 {
+      font-size: 1.55rem;
+      font-weight: 900;
+      margin: 48px 0 16px;
+      color: var(--dark);
+      border-right: 4px solid var(--gold);
+      padding-right: 14px;
+    }
+    .article-body h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 32px 0 12px;
+      color: var(--dark);
+    }
+    .article-body p { margin-bottom: 18px; }
+    .article-body ul, .article-body ol {
+      margin: 0 22px 18px 0;
+      padding-right: 8px;
+    }
+    .article-body li { margin-bottom: 10px; }
+
+    .lead {
+      font-size: 1.13rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+
+    blockquote {
+      background: var(--gold-pale);
+      border-right: 4px solid var(--gold);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 24px 0;
+      font-size: 0.98rem;
+      color: #444;
+      line-height: 1.85;
+    }
+    blockquote cite {
+      display: block;
+      margin-top: 10px;
+      font-style: normal;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+    }
+
+    .case-card {
+      background: var(--gray-light);
+      border: 1.5px solid #E8E8E8;
+      border-radius: var(--radius);
+      padding: 24px 26px;
+      margin: 24px 0;
+    }
+    .case-card h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--gold-dark);
+      margin-bottom: 10px;
+    }
+    .case-card p { font-size: 0.95rem; margin-bottom: 8px; }
+    .case-card p:last-child { margin-bottom: 0; }
+
+    .compare-table-wrap { overflow-x: auto; margin: 28px 0; }
+    table.compare {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      min-width: 560px;
+    }
+    table.compare th {
+      background: var(--gold-pale);
+      color: var(--gold-dark);
+      font-weight: 800;
+      padding: 12px 14px;
+      text-align: right;
+      border: 1px solid var(--gold-light);
+    }
+    table.compare td {
+      padding: 12px 14px;
+      border: 1px solid #E8E8E8;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+    table.compare tr td:first-child {
+      font-weight: 700;
+      background: #FAFAFA;
+      white-space: nowrap;
+    }
+
+    .footnotes {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 2px solid var(--gold-light);
+      font-size: 0.88rem;
+      color: var(--gray);
+    }
+    .footnotes h3 { font-size: 1.05rem; color: var(--dark); }
+    .footnotes ol { margin-right: 20px; }
+    .footnotes li { margin-bottom: 8px; line-height: 1.7; }
+
+    .disclaimer {
+      background: var(--gray-light);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 0.83rem;
+      color: var(--gray);
+      margin-top: 32px;
+      line-height: 1.7;
+    }
+
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+      padding: 70px 5%;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .cta-strip h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 14px;
+    }
+    .cta-strip p { color: rgba(0,0,0,0.65); font-size: 1.02rem; margin-bottom: 32px; max-width: 520px; margin-inline: auto; }
+    .btn-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--dark);
+      color: var(--white);
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 16px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn-dark:hover { background: #333; transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.35); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111;
+      padding: 40px 5% 28px;
+      text-align: center;
+    }
+    .footer-logo { font-size: 1.4rem; font-weight: 900; color: var(--gold); margin-bottom: 10px; }
+    .footer-copy { color: #555; font-size: 0.8rem; margin-top: 16px; }
+    footer a { color: #aaa; text-decoration: none; font-size: 0.9rem; }
+    footer a:hover { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      .article-body { padding-top: 44px; }
+      .article-hero { padding-top: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <a href="index.html"><img src="logo.png" alt="כתיבה בקליק" style="height:44px; width:auto; display:block;" /></a>
+  </div>
+  <a href="index.html" class="nav-back">→ חזרה לעמוד הראשי</a>
+</nav>
+
+<!-- HEADER -->
+<header class="article-hero">
+  <div class="badge">⚖️ מאמר לדוגמה | משפטים – דיני קניין</div>
+  <h1>
+    סכסוכי מקרקעין ודרישת הכתב במשפט הישראלי:<br />
+    <span class="gold">בין ריכוך ההלכה להוכחת מסמך אבוד</span>
+  </h1>
+  <p class="subtitle">
+    ניתוח משווה של רע"א 1681/10 עיני נ' סידי וע"א 7119/08 חיימי נ' שמיר –
+    שני פסקי דין של בית המשפט העליון המציבים את גבולותיה של דרישת הכתב
+    בעסקאות מקרקעין ובהתחייבות לתת מתנה.
+  </p>
+  <div class="article-meta">
+    <span>📚 תחום: דיני קניין וחוזים</span>
+    <span>📄 סוג: מאמר עיוני–משווה</span>
+    <span>⏱️ זמן קריאה: כ-12 דקות</span>
+  </div>
+</header>
+
+<!-- BODY -->
+<article class="article-body">
+
+  <p class="lead">
+    דרישת הכתב בעסקאות מקרקעין נחשבת לאחת הדרישות הצורניות המחמירות במשפט הפרטי הישראלי.
+    סעיף 8 לחוק המקרקעין, התשכ"ט-1969, קובע כי "התחייבות לעשות עסקה במקרקעין טעונה מסמך בכתב",
+    והפסיקה הכירה בדרישה זו כדרישה מהותית – ולא ראייתית בלבד. ואולם, מה דינו של מי שטוען לזכות
+    במקרקעין כאשר המסמך הכתוב איננו בנמצא? שני פסקי דין של בית המשפט העליון – שניתנו בהפרש של
+    כשנה זה מזה – מספקים שתי תשובות שונות, ולמעשה משרטטים יחד את קו הגבול שבין טענה הנשענת על
+    מסמך משוער לבין טענה המוכיחה מסמך שהיה ואבד.
+  </p>
+
+  <h2>א. הרקע הנורמטיבי: דרישת הכתב ומגמת הריכוך</h2>
+
+  <p>
+    נקודת המוצא החקיקתית כפולה. ראשית, סעיף 7(ב) לחוק המקרקעין קובע כי "עסקה שלא נגמרה ברישום
+    רואים אותה כהתחייבות לעשות עסקה" – ומכאן שמתנת מקרקעין שלא נרשמה איננה מתנה מושלמת אלא
+    התחייבות להקנות מקרקעין בדרך של מתנה. שנית, על התחייבות כזו חלה דרישת כתב כפולה: מכוח סעיף 8
+    לחוק המקרקעין ומכוח סעיף 5(א) לחוק המתנה, התשכ"ח-1968, הקובע כי "התחייבות לתת מתנה בעתיד
+    טעונה מסמך בכתב".<sup>1</sup>
+  </p>
+
+  <p>
+    לצד הדרישה הצורנית התפתחה בפסיקה מגמת ריכוך, ששיאה בהלכת קלמר נ' גיא.<sup>2</sup> באותו עניין
+    הכיר בית המשפט העליון באפשרות כי עקרון תום הלב יגבר, במקרים חריגים, על דרישת הכתב – מקום שבו
+    עמידה דווקנית על הדרישה תעלה כדי "זעקת הגינות" נוכח חוסר תום לב משווע של הצד המתנער מן העסקה,
+    ובפרט כאשר הצד השני שינה את מצבו לרעה בהסתמך עליה. ההלכה סויגה מלכתחילה: אין מדובר בפתח שגרתי
+    אלא בחריג שמור למקרים קיצוניים, וכדי שתתקיים "דרישת כתב מרוככת" נדרשת מסכת ראיות תחליפית
+    "משמעותית ומוצקת".<sup>3</sup>
+  </p>
+
+  <h2>ב. עיני נ' סידי: המכתב שלא היה</h2>
+
+  <div class="case-card">
+    <h4>רע"א 1681/10 חיים עיני נ' טלי סידי (ניתן 5.7.2010, השופט א' רובינשטיין)</h4>
+    <p><strong>העובדות:</strong> בני משפחה התגוררו עשרות שנים בדירה שנרשמה על שם ירמיהו – אבי המשיבה – אשר העניק אותה בשנת 2005 במתנה רשומה לבתו. הבת תבעה פינוי; הדיירים טענו כי קיבלו את הדירה במתנה שנים קודם לכן, אך לא הציגו כל מסמך בכתב.</p>
+    <p><strong>ההכרעה:</strong> בקשת רשות הערעור נדחתה. בהעדר מסמך בכתב ובהעדר הוכחה לחוסר תום לב משווע – הרישום במרשם המקרקעין גובר.</p>
+  </div>
+
+  <p>
+    ייחודו של המקרה בדרך שבה ניסה בית משפט השלום (בגלגולו השני של ההליך) לגשר על העדר הכתב.
+    בהסתמך על רישומי ארנונה בעירייה ורישום צרכן בחברת הגז, ועל נהלים <em>עכשוויים</em> של גופים אלה,
+    הסיק בית משפט השלום כי לשם ביצוע הרישומים "חייב היה להתקיים" מכתב מאת החברה הקבלנית המציג את
+    הדיירים כבעלים – וכי מכתב תיאורטי זה, בצירוף קביעה בדבר חוסר תום לבם של האב והבת, מספק את
+    דרישת הכתב ברוח הלכת קלמר.
+  </p>
+
+  <p>
+    בית המשפט המחוזי הפך את הקביעה, ובית המשפט העליון אישר את דבריו. השופט רובינשטיין עמד על שני
+    כשלים מרכזיים בקונסטרוקציה: ראשית, לא ניתן להסיק מנהלים עדכניים של עירייה וחברת גז על הנוהג
+    ששרר כעשרים שנה קודם לכן; שנית – והוא העיקר – לא ניתן לספק דרישת כתב מהותית באמצעות מסמך
+    משוער, שאיש לא ראה ושקיומו נלמד בהיקש בלבד:
+  </p>
+
+  <blockquote>
+    "הראיות המשניות שלטענת המבקשים מקימות קונסטרוקטיבית את קיום ה'מכתב האבוד'... אינן על פניהן
+    ראיות איתנות... אין להלום איפוא הרחבה של מגמת הריכוך בדרישת הכתב למישור שאינו מוצק כדבעי."
+    <cite>— רע"א 1681/10, פסקה ח' להחלטה</cite>
+  </blockquote>
+
+  <p>
+    לצד זאת הודגש כי הלכת קלמר איננה כלי שבשגרה: בית המשפט לא יידרש לה אלא במקרים חריגים, ובוודאי
+    שלא מקום שבו מנגד ניצבת בעלות רשומה במרשם המקרקעין – שהמבקש לסתור אותה נושא בנטל כבד.
+  </p>
+
+  <h2>ג. חיימי נ' שמיר: המסמך שהיה ואבד</h2>
+
+  <div class="case-card">
+    <h4>ע"א 7119/08 עזרי חיימי נ' ליאת שמיר (ניתן בהרכב השופטים חיות, פוגלמן ועמית)</h4>
+    <p><strong>העובדות:</strong> המשיבים טענו כי רכשו בשנת 1981 מקרקעין ברעננה מידי המערערים, שילמו את מלוא התמורה ודיווחו לרשויות המס – אך הסכם המכר החתום נותר בידי עורך הדין שערך את העסקה, נפטר בינתיים, ולא אותר. התביעה לאכיפה הוגשה כ-26 שנים לאחר העסקה, בלא שההסכם צורף אליה. המערערים, הבעלים הרשומים, כפרו בקיומה של כל עסקה.</p>
+    <p><strong>ההכרעה:</strong> הערעור נדחה. הוכח במאזן ההסתברויות, באמצעות ראיות משניות, כי הסכם מכר בכתב נכרת ואבד – והמערערים חויבו לחתום על שטרי המכר.</p>
+  </div>
+
+  <p>
+    כאן, בשונה מעניין עיני, קיבלו הערכאות את הטענה כי מסמך כתוב אכן נוצר ונכרת – אלא שאבד מסיבות
+    שאינן בשליטת התובעים. בית המשפט העליון, מפי השופטת חיות, קבע את העיקרון הראייתי המרכזי:
+  </p>
+
+  <blockquote>
+    "הצגת ההסכם איננה תנאי בלעדיו אין להוכחת קיומו... מקום שיעלה בידי התובע להראות כי הסכם בכתב
+    נוצר ונכרת אך אבד או שאין בידי התובע להציגו מסיבות שונות שאינן בשליטתו, כי אז יוכל התובע
+    להוכיח בראיות משניות אף את תוכנו של ההסכם הכתוב ותביעתו לא תיכשל אך בשל העובדה שהמסמך גופו
+    אינו מצוי בידיו."
+    <cite>— ע"א 7119/08, מפסק דינה של השופטת א' חיות</cite>
+  </blockquote>
+
+  <p>
+    מסכת הראיות המשניות שנמצאה מספקת הייתה עשירה במיוחד, ובעיקרה רשומות מוסדיות בנות-הזמן:
+  </p>
+
+  <ul>
+    <li><strong>רישום ב"ספר השדה"</strong> של משרדי מיסוי מקרקעין, הכולל את פרטי העסקה כפי שדווחה בזמן אמת – מועד המכירה, סכום התמורה ושמות הרוכשים;</li>
+    <li><strong>אישור מנהל מס שבח</strong> המופנה ללשכת רישום המקרקעין והמאשר כי מס השבח ומס הרכישה בגין העסקה שולמו;</li>
+    <li><strong>אישורי תשלום מס רכוש</strong> על ידי הרוכשים לאורך שנים רבות לאחר העסקה;</li>
+    <li><strong>עדויות</strong> שנמצאו מהימנות, לרבות עדות מפקח ממשרדי מיסוי מקרקעין על נוהלי הרישום דאז ועל הצפה בארכיב שהשמידה את מסמכי המקור.</li>
+  </ul>
+
+  <p>
+    לכך הצטרפו התמיהות שעלו מגרסת המוכרים עצמם: אי-תשלום מס רכוש במשך עשרות שנים בלא בירור,
+    אי-שימוש בקרקע חקלאית בידי מי שהיה חקלאי פעיל, וסמיכות זמנים חשודה בין מועד העסקה הנטענת
+    למעבר דירה שמומן, לכאורה, בלא מקור כספי נראה לעין. בית המשפט העליון לא מצא עילה להתערב
+    בממצאי העובדה והמהימנות, שנשענו על תמונה ראייתית קוהרנטית.
+  </p>
+
+  <h2>ד. ניתוח משווה: היכן עובר הגבול?</h2>
+
+  <p>
+    לכאורה, שני פסקי הדין עוסקים באותה שאלה – הוכחת זכות במקרקעין בהעדר מסמך – ומגיעים לתוצאות
+    הפוכות. אך העמדתם זה מול זה מלמדת שאין ביניהם סתירה, אלא הבחנה דוקטרינרית חדה בין שני מסלולים
+    נפרדים:
+  </p>
+
+  <div class="compare-table-wrap">
+    <table class="compare">
+      <tr>
+        <th></th>
+        <th>עיני נ' סידי (רע"א 1681/10)</th>
+        <th>חיימי נ' שמיר (ע"א 7119/08)</th>
+      </tr>
+      <tr>
+        <td>מהות הטענה</td>
+        <td>מסמך משוער – קיומו נלמד בהיקש מנהלים עכשוויים של גופים חיצוניים</td>
+        <td>מסמך שהוכח כי נוצר ונכרת בפועל, אך אבד מסיבות שאינן בשליטת התובעים</td>
+      </tr>
+      <tr>
+        <td>המסלול המשפטי</td>
+        <td>ריכוך דרישת הכתב המהותית מכוח תום הלב (הלכת קלמר)</td>
+        <td>דין ראייתי: חריג לכלל הראיה הטובה ביותר – הוכחת תוכנו של מסמך אבוד בראיות משניות</td>
+      </tr>
+      <tr>
+        <td>טיב הראיות המשניות</td>
+        <td>רישומי ארנונה וגז עדכניים; היסק על נהלי עבר; "מכתב אבוד" תיאורטי</td>
+        <td>רשומות מוסדיות בנות-זמן העסקה: ספר השדה, אישורי מס שבח ומס רכוש, עדויות מהימנות</td>
+      </tr>
+      <tr>
+        <td>חוסר תום לב</td>
+        <td>לא הוכח חוסר תום לב משווע המקים "זעקת הגינות"</td>
+        <td>גרסת המוכרים נמצאה רצופת תמיהות; עמידתם על דרישת הכתב חרף הוכחת קיומו של כתב – חוסר תום לב</td>
+      </tr>
+      <tr>
+        <td>התוצאה</td>
+        <td>הרישום גובר; הטוענים למתנה פונו מהדירה</td>
+        <td>העסקה נאכפה חרף הרישום; המוכרים חויבו לחתום על שטרי המכר</td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>1. בין "מסמך משוער" ל"מסמך אבוד"</h3>
+  <p>
+    ההבחנה המרכזית היא אפוא בין טענה קונסטרוקטיבית לקיומו של כתב – שבית המשפט דחה בעניין עיני
+    כ"מישור שאינו מוצק כדבעי" – לבין הוכחה פוזיטיבית, במאזן ההסתברויות, כי מסמך ממשי נערך ונחתם
+    ורק לאחר מכן אבד. במסלול השני אין כלל "ריכוך" של דרישת הכתב: הדרישה המהותית התקיימה במלואה
+    בזמן אמת, והשאלה שנותרה היא ראייתית גרידא – כיצד מוכיחים את קיומו ותוכנו של מסמך שאיננו.
+    ואמנם, בעניין חיימי הדגיש בית המשפט המחוזי כי "אין מדובר במקרה דנן בריכוך דרישת הכתב", והלכת
+    קלמר הוזכרה שם כנימוק חלופי בלבד.
+  </p>
+
+  <h3>2. משקלן של רשומות מוסדיות בנות-זמן</h3>
+  <p>
+    שני פסקי הדין מדגימים גם היררכיה ראייתית ברורה. ראיות מנהליות בנות-זמן העסקה – דיווח לרשויות
+    המס, תשלומי מסים רציפים, אישור רשמי המופנה ללשכת הרישום – זכו למשקל מכריע בעניין חיימי, דווקא
+    משום שנוצרו בזמן אמת ובידי גורם ניטרלי. לעומתן, ניסיון לשחזר את העבר מתוך נהלים של ההווה נדחה
+    בעניין עיני כספקולציה. המסר לפרקטיקה ברור: לא כל "ראיה משנית" שווה בערכה, והשאלה המכרעת היא
+    האם היא משקפת את שאירע בזמן אמת או רק את מה שסביר שהיה צריך להתרחש.
+  </p>
+
+  <h3>3. הרישום כנקודת מוצא – ותום הלב כחריג צר</h3>
+  <p>
+    בשני המקרים ניצב מרשם המקרקעין כנקודת המוצא, והנטל לסתרו הוטל על הטוען כנגדו. בעניין עיני
+    הנטל לא הורם; בעניין חיימי הוא הורם – אך רק באמצעות מסכת ראייתית עבה במיוחד, שנתמכה גם
+    בקריסת גרסת הבעלים הרשומים בחקירה. אשר להלכת קלמר, שני פסקי הדין מאשררים את צמצומה: היא
+    שמורה ל"זעקת הגינות" של ממש, ואין די בתחושת אי-נוחות מתוצאה קשה – כפי שביטא השופט רובינשטיין
+    בסיפא של החלטתו, בציינו כי "צר על הנסיבות" שבהן על המבקשים לפנות דירה לאחר שנים רבות, ואף
+    על פי כן אין מנוס מדחיית הבקשה.
+  </p>
+
+  <h2>ה. סיכום</h2>
+  <p>
+    צירופם של שני פסקי הדין משרטט מפה ברורה למתדיין בסכסוך מקרקעין ללא מסמך זמין: המסלול הראייתי
+    – הוכחת קיומו ותוכנו של הסכם כתוב שאבד באמצעות ראיות משניות מוצקות ובנות-זמן – הוא מסלול חי
+    ופתוח, כפי שהוכח בעניין חיימי. לעומתו, המסלול המהותי של התגברות על דרישת הכתב מכוח תום הלב
+    נותר חריג שבחריגים, והוא לא ייפתח בפני מי שכל שבידו הוא מסמך היפותטי ורישומים נסיבתיים,
+    כבעניין עיני. בין שני המסלולים עובר קו פשוט אך מכריע: היה כתב – או לא היה.
+  </p>
+
+  <!-- FOOTNOTES -->
+  <div class="footnotes">
+    <h3>מקורות והערות</h3>
+    <ol>
+      <li>ע"א 1915/91 יעקובי נ' יעקובי, פ"ד מט(3) 529, 608 (השופטת דורנר); ע"א 2215/00 ג'ורי נ' דנגור, פ"ד נו(3) 932, 941. ראו גם מ"א ראבילו <em>חוק המתנה, תשכ"ח-1968</em> (מהדורה שנייה, 1996) 347.</li>
+      <li>ע"א 986/93 קלמר נ' גיא, פ"ד נ(1) 185. לצמצום ההלכה ראו ע"א 2143/00 לוין נ' שולר, פסקה 5 לפסק דינו של המשנה לנשיא ש' לוין.</li>
+      <li>רע"א 1681/10 עיני נ' סידי (5.7.2010), פסקה ז' להחלטת השופט א' רובינשטיין; ראבילו, לעיל ה"ש 1, בעמ' 350.</li>
+      <li>ע"א 7119/08 חיימי נ' שמיר (פסק דינה של השופטת א' חיות, בהסכמת השופטים ע' פוגלמן וי' עמית), על פסק דינו של בית המשפט המחוזי מרכז בת"א 1939-01-08 (הנשיאה ה' גרסטל).</li>
+      <li>חוק המקרקעין, התשכ"ט-1969, ס' 7(ב), 8, 9; חוק המתנה, התשכ"ח-1968, ס' 5(א); חוק החוזים (חלק כללי), התשל"ג-1973, ס' 39.</li>
+    </ol>
+  </div>
+
+  <div class="disclaimer">
+    ⚠️ מאמר זה נכתב כדוגמה להמחשת סגנון כתיבה אקדמית-משפטית בלבד. אין באמור משום ייעוץ משפטי,
+    ואין להסתמך עליו לכל צורך משפטי. הציטוטים מפסקי הדין מובאים מתוך הנוסחים שפורסמו במאגר נבו,
+    הכפופים לשינויי עריכה וניסוח.
+  </div>
+
+</article>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <h2>צריכים עבודה ברמה כזאת? ✍️</h2>
+  <p>סמינריונים ומאמרים במשפטים ובכל תחום אחר – כתובים מאפס, מדויקים ובזמן.</p>
+  <a href="https://wa.me/ROGIB2YQ33TLO1" class="btn-dark" target="_blank" rel="noopener">
+    דברו איתנו בוואטסאפ
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">כתיבה בקליק</div>
+  <a href="index.html">חזרה לעמוד הראשי</a>
+  <div class="footer-copy">© 2024 כתיבה בקליק | כל הזכויות שמורות</div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+</script>
+</body>
+</html>
