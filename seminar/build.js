@@ -9,10 +9,12 @@ const fs = require('fs');
 // סדר הטעינה = סדר המסמך = סדר מספרי הערות השוליים
 const { intro } = require('./ch_intro');
 const { ch1 } = require('./ch1');
+const { ch1b } = require('./ch1b');
 const { ch2 } = require('./ch2');
-const { ch3 } = require('./ch3');
 const { ch4 } = require('./ch4');
+const { ch3 } = require('./ch3');
 const { ch5 } = require('./ch5');
+const { chDiscussion } = require('./ch_discussion');
 const { conclusion, bibliography } = require('./ch6');
 
 function coverLine(text, opts = {}) {
@@ -92,10 +94,12 @@ const doc = new Document({
       children: [
         ...intro,
         ...ch1,
+        ...ch1b,
         ...ch2,
-        ...ch3,
         ...ch4,
+        ...ch3,
         ...ch5,
+        ...chDiscussion,
         ...conclusion,
         ...bibliography,
       ],
