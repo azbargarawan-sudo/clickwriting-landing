@@ -1,0 +1,147 @@
+const { he, en, heN, enN, fn, fnk, ref, p, pi, quote, h1, h2, h3, bib, bibEn } = require('./lib');
+const { docx } = require('./lib');
+const { Paragraph, TextRun, AlignmentType, HeadingLevel } = docx;
+
+// ================= סיכום ומסקנות =================
+const conclusion = [
+  h1('סיכום ומסקנות'),
+  pi(
+    he('לשאלת המחקר הראשונה', { bold: true }),
+    ' – כלי ההכרעה בהיעדר רישום – העלה העיון תמונה של ארגז כלים עשיר אך מדורג: הזכות שביושר מכוח הלכת ',
+    he('אהרונוב', { italics: true }),
+    ' היא עמוד השדרה, המקנה למחזיק הבלתי רשום מעמד מהותי מוגן; ייפוי הכוח הבלתי חוזר הוכר הן כמסמך הממלא את דרישת הכתב הן כוויתור על זכות החזרה ממתנה; עקרון תום הלב ו"זעקת ההגינות" משמשים שסתום למקרי הקיצון שבהם אין כל מסמך; הרישיון במקרקעין מגן על מי שהחזיק בהסכמה בלא עסקה; ודיני הראיות – ובכללם דרישת הסיוע בתביעה נגד עיזבון – מסננים את הטענות. ההכרעה השיפוטית הטיפוסית אינה נשענת על כלי יחיד אלא על הצטברות קוהרנטית של מסמך ותיק, ביצוע ממושך וראיות נסיבתיות.'
+  ),
+  pi(
+    he('לשאלת המחקר השנייה', { bold: true }),
+    ' – התניית הרישום במס – נמצא כי הצימוד הסטטוטורי שבין המרשם לרשות המסים (סעיף 16 לחוק מיסוי מקרקעין וסעיף 324 לפקודת העיריות) פועל על עסקאות היסטוריות כמס רטרואקטיבי מצטבר: חוב השבח, הרכישה, ההצמדה, הריבית והקנסות של עסקת שנות השבעים מוטל כתנאי סף על הדור המבקש להסדיר היום. במישור האזרחי אין באי־הדיווח כדי לאיין את העסקה, אך במישור המעשי הוא מקים "מעגל אי־רישום": ככל שההסדרה נדחית היא מתייקרת, וככל שהיא מתייקרת – היא נדחית. הניסיון המצרי, שבו הוליד צימוד דומה אי־רישום של למעלה מתשעים אחוזים עד שנותק ברפורמת 2022, מלמד כי מדובר בכשל מדיניות מבני ולא בכשל אכיפה.'
+  ),
+  pi(
+    he('לשאלת המחקר השלישית', { bold: true }),
+    ' – משקלם של היתר הבנייה והארנונה – הוצע בפרק ד מדרג: אלה אינן ראיות בעלות, שכן מוסדות התכנון והגבייה אינם מכריעים בקניין והארנונה נגבית מן המחזיק באשר הוא; אך הן ראיות נסיבתיות רבות ערך להחזקה, להשקעה ולהסכמה המשפחתית שבזמן אמת – ובעיקר לשתיקתם רבת־השנים של בני המשפחה החולקים היום. כוחן במצטבר ובקוהרנטיות שלהן עם יתר הראיות, לא כתחליף רישום.'
+  ),
+  pi(
+    he('במישור ההשוואתי', { bold: true }),
+    ', העבודה חשפה רצף גנאלוגי אחד: מן הקַבְּץ׳ השרעי, דרך המג׳לה וחוק הקרקעות העות׳מאני, אל ייפוי הכוח הבלתי חוזר של הפרקטיקה הערבית – בישראל כבמצרים – ואל הזכות שביושר שמקורה אנגלי. הסכסוך הפנים־משפחתי על מקרקעין לא רשומים איננו, אפוא, "סטייה" מקומית מן הדין, אלא מפגש בין שלוש תפיסות הקניה היסטוריות החיות בשכבות השיטה: תפיסה פיזית, מסמך פרטי ומרשם ממלכתי. השופט הישראלי המכריע בתיק כזה מיישב, בלא דעת, בין המג׳לה לבין חוק המקרקעין.'
+  ),
+  pi(
+    'מן הראוי לחתום בשלוש המלצות מדיניות. ',
+    he('ראשית', { bold: true }),
+    ', יש לשקול – בעקבות מצרים – ריכוך ממוקד של צימוד המרשם והמס לגבי עסקאות פנים־משפחתיות היסטוריות: הוראת שעה של הקלה בקנסות ובריבית, או מסלול "הסדרה מוזלת", שתמריץ רישום במקום להענישו. ',
+    he('שנית', { bold: true }),
+    ', ראוי להשלים את הליכי הסדר הזכויות ביישובים הערביים שבהם לא הושלמו, בשיתוף הקהילות ובהכרה בראיות ההחזקה המסורתיות – שאם לא כן יוסיף כל דור להוריש לדור הבא סכסוך גדול משהוריש לו קודמו. ',
+    he('שלישית', { bold: true }),
+    ', במישור השיפוטי, מוצע לעגן בגלוי את המדרג הראייתי שהותווה בפרק ד, ולהכיר בכך שבסכסוכים אלה "היעדר מסמכים" איננו חשד אלא נורמה תרבותית־היסטורית – כפי שעשה הדין האנגלי בפתחו את ההשתק הקנייני לסכסוכי המשק המשפחתי. המרשם הוא משאת הנפש; אך עד שיגיעו אליו כל בתי החברה הערבית, מוטב שהדרך אליו תהיה גשר – ולא חומה.'
+  ),
+];
+
+// ================= ביבליוגרפיה =================
+function bibTitle(text) {
+  return new Paragraph({
+    heading: HeadingLevel.HEADING_2,
+    bidirectional: true,
+    spacing: { before: 240, after: 160 },
+    children: [new TextRun({ text, rightToLeft: true, bold: true, size: 28, font: 'David', color: '000000' })],
+  });
+}
+
+const bibliography = [
+  h1('ביבליוגרפיה'),
+
+  bibTitle('חקיקה ישראלית'),
+  bib('חוק המקרקעין, התשכ"ט-1969.'),
+  bib('חוק המתנה, התשכ"ח-1968.'),
+  bib('חוק השליחות, התשכ"ה-1965.'),
+  bib('חוק הירושה, התשכ"ה-1965.'),
+  bib('חוק מיסוי מקרקעין (שבח ורכישה), התשכ"ג-1963.'),
+  bib('חוק ההתיישנות, התשי"ח-1958.'),
+  bib('חוק לביטול המג׳לה, התשמ"ד-1984.'),
+  bib('פקודת הסדר זכויות במקרקעין [נוסח חדש], התשכ"ט-1969.'),
+  bib('פקודת הראיות [נוסח חדש], התשל"א-1971.'),
+  bib('פקודת העיריות [נוסח חדש].'),
+  bib('תקנות התכנון והבניה (רישוי בניה), התשע"ו-2016.'),
+  bib('חוק הקרקעות העות׳מאני, 1858.'),
+
+  bibTitle('פסיקה ישראלית'),
+  bib('ע"א 726/71 ', he('גרוסמן את ק.ב.ק. בע"מ נ׳ מנהלי עזבון בידרמן', { italics: true }), ', פ"ד כו(2) 781 (1972).'),
+  bib('ע"א 463/79 ', he('ג׳בראן נ׳ ג׳בראן', { italics: true }), ', פ"ד לו(4) 403 (1982).'),
+  bib('ע"א 496/82 ', he('רוזן נ׳ סלונים', { italics: true }), ', פ"ד לט(2) 337 (1985).'),
+  bib('ע"א 986/93 ', he('קלמר נ׳ גיא', { italics: true }), ', פ"ד נ(1) 185 (1996).'),
+  bib('ע"א 189/95 ', he('בנק אוצר החייל בע"מ נ׳ אהרונוב', { italics: true }), ', פ"ד נג(4) 199 (1999).'),
+  bib('ע"א 1516/99 ', he('לוי נ׳ חיג׳אזי', { italics: true }), ', פ"ד נה(4) 730 (2001).'),
+  bib('ע"א 3205/00 ', he('נאטור נ׳ יאסין', { italics: true }), ', פ"ד נה(4) 145 (2001).'),
+  bib('ע"א 1559/99 ', he('צימבלר נ׳ תורג׳מן', { italics: true }), ', פ"ד נז(5) 49 (2003).'),
+  bib('רע"א 7060/12 ', he('מדינת ישראל נ׳ ', { italics: true }), en('United Israel Appeal Inc', { italics: true }), ' (נבו 30.4.2015).'),
+  bib('ע"א 483/16 ', he('יהודאי נ׳ חלמיש – חברה ממשלתית-עירונית לדיור, לשיקום ולהתחדשות שכונות בתל-אביב בע"מ', { italics: true }), ' (נבו 3.10.2017).'),
+  bib('ע"א 3274/18 ', he('אבו אסמעיל נ׳ סלימאן', { italics: true }), ' (נבו 28.7.2020).'),
+  bib('בע"מ 2311/22 ', he('פלוני נ׳ פלוני', { italics: true }), ' (נבו 13.4.2022).'),
+  bib('ת"א (מחוזי חי׳) 64669-10-18 ', he('בדארנה נ׳ בדארנה', { italics: true }), ' (נבו 9.1.2022).'),
+  bib('עמ"ש (מחוזי מר׳) 52601-10-23 ', he('א.א. נ׳ אר.א', { italics: true }), ' (נבו 1.11.2024).'),
+  bib('ת"א (שלום נצ׳) 19781-06-18 ', he('אבו ליל נ׳ פאהום', { italics: true }), ' (נבו 18.10.2023).'),
+  bib('תמ"ש (משפחה ת"א) 18541-01-22 ', he('פלונים נ׳ אלמונים', { italics: true }), ' (נבו 15.1.2023).'),
+  bib('תלה"מ (משפחה נצ׳) 60777-07-20 ', he('ג.ס נ׳ מ.ד', { italics: true }), ' (נבו 2021).'),
+  bib('תמ"ש (משפחה נצ׳) 4821-07 ', he('ס.ע.ז נ׳ ע.ע.ז', { italics: true }), ' (נבו 2012).'),
+
+  bibTitle('ספרות עברית'),
+  bib('אהרן ברק ', he('חוק השליחות', { italics: true }), ' (מהדורה שנייה, 1996).'),
+  bib('אבי גורמן ושי אהרונוביץ׳ ', he('מיסוי מקרקעין – פרשנות, הלכה ומעשה', { italics: true }), ' (2017).'),
+  bib('יהושע ויסמן ', he('דיני קניין – חלק כללי', { italics: true }), ' (1993).'),
+  bib('יהושע ויסמן "יפוי-כוח בלתי-חוזר כתחליף לבעלות" משפטים יד 572 (תשמ"ה).'),
+  bib('נינה זלצמן "רישיון במקרקעין" הפרקליט מב 24 (תשנ"ה).'),
+  bib('חיים זנדברג ', he('הסדר זכויות במקרקעין בארץ-ישראל ובמדינת ישראל', { italics: true }), ' (תש"ס).'),
+  bib('גד טדסקי "הרשאה בלתי-הדירה לביצוע מתנה לאדם שלישי" משפטים יט 205 (תשמ"ט).'),
+  bib(`אורן יפתחאל, סנדי קדר ואחמד אמארה "עיון מחדש בהלכת 'הנגב המת': זכויות קניין במרחב הבדווי" משפט וממשל יד 7 (2012).`),
+  bib('נילי כהן "צורת החוזה" הפרקליט לח 383 (תשמ"ט).'),
+  bib('רונית לוין-שנור "הפרטה, הפרדה והפליה – זניחת ההליכים של הסדר הזכויות במקרקעין במזרח ירושלים" עיוני משפט לד 183 (2011).'),
+  bib('מרדכי אלפרדו ראבילו ', he('חוק המתנה, תשכ"ח-1968', { italics: true }), ' (פירוש לחוקי החוזים מיסודו של ג׳ טדסקי, מהדורה שנייה, תשנ"ז).'),
+  bib('אוריאל רייכמן "הערת האזהרה – מהות, יצירה והגנה כנגד עסקות נוגדות" עיוני משפט י 297 (1984).'),
+  bib('יעקב שקד ', he('פינוי מקרקעין – הליכים והלכות', { italics: true }), ' (2014).'),
+
+  bibTitle('חקיקה ופסיקה זרה'),
+  bibEn('Land Registration Act 2002 (UK).'),
+  bibEn('Land Registration Act 1925 (UK).'),
+  bibEn('Law of Property (Miscellaneous Provisions) Act 1989 (UK).'),
+  bibEn('Powers of Attorney Act 1971 (UK).'),
+  bibEn('Lysaght v Edwards (1876) 2 Ch D 499 (Ch).'),
+  bibEn('Walsh v Lonsdale (1882) 21 Ch D 9 (CA).'),
+  bibEn('Re Rose [1952] Ch 499 (CA).'),
+  bibEn('Williams & Glyn’s Bank Ltd v Boland [1981] AC 487 (HL).'),
+  bibEn('Pennington v Waine [2002] EWCA Civ 227, [2002] 1 WLR 2075.'),
+  bibEn('Stack v Dowden [2007] UKHL 17, [2007] 2 AC 432.'),
+  bibEn('Thorner v Major [2009] UKHL 18, [2009] 1 WLR 776.'),
+  bibEn('Jones v Kernott [2011] UKSC 53, [2012] 1 AC 776.'),
+  bibEn('Guest v Guest [2022] UKSC 27, [2022] 3 WLR 911.'),
+  bibEn('The Egyptian Civil Code, Law No. 131 of 1948, arts. 1, 418, 714–715, 934.'),
+  bibEn('Real Estate Publicity Law No. 114 of 1946 (Egypt), as amended by Law No. 9 of 2022.'),
+  bibEn('Real Property Registry Law No. 142 of 1964 (Egypt).'),
+  bibEn('Law of Inheritance No. 77 of 1943 (Egypt).'),
+  bibEn('Constitution of the Arab Republic of Egypt (2014), art. 2.'),
+  bibEn('The Mejelle (Majallat al-Ahkam al-Adliyya, 1869–1876), arts. 833–880, 1449–1530 (C.R. Tyser et al. trans., 1901).'),
+  bibEn('The Ottoman Land Code 1858 (F. Ongley trans., 1892).'),
+
+  bibTitle('ספרות זרה'),
+  bibEn('Chris Bevan, “Overriding Interests under the Land Registration Act 2002: Time to Repair the ‘Cracked Mirror’?” [2024] Conveyancer & Property Lawyer 123.'),
+  bibEn('N.J. Coulson, Succession in the Muslim Family (1971).'),
+  bibEn('Hernando de Soto, The Mystery of Capital: Why Capitalism Triumphs in the West and Fails Everywhere Else (2000).'),
+  bibEn('Kareem Ibrahim & Deena Khalil, “Land Titling: A Tool, not a Panacea — Insights from Egypt,” Metropolitics (Dec. 20, 2016), metropolitics.org.'),
+  bibEn('Ruth Kark, “Consequences of the Ottoman Land Law: Agrarian and Privatization Processes in Palestine, 1858–1918,” in Societies, Social Inequalities and Marginalization (R. Chand, E. Nel & S. Pelc eds., 2017).'),
+  bibEn('Nasr Kheir & Boris A. Portnov, “Land Market Segmentation Along Ethnic Lines: Four Urban Localities in Israel as a Case Study,” 136 Land Use Policy art. 106916 (2024).'),
+  bibEn('L. Landau, “The Gift Law, 1968,” 4 Israel Law Review 260 (1969).'),
+  bibEn('Aharon Layish, Women and Islamic Law in a Non-Muslim State: A Study Based on Decisions of the Shari‘a Courts in Israel (1975).'),
+  bibEn('Y. Linant de Bellefonds, “Hiba,” in The Encyclopaedia of Islam (2d ed.).'),
+  bibEn('Annelies Moors, Women, Property and Islam: Palestinian Experiences, 1920–1990 (1995).'),
+  bibEn('Amos Nadan, “Colonial Misunderstanding of an Efficient Peasant Institution: Land Settlement and Musha‘ Tenure in Mandate Palestine, 1921–47,” 46 Journal of the Economic and Social History of the Orient 320 (2003).'),
+  bibEn('Siti Norfatirah Abdul Rahmani & Mohd Zamro Muda, “Ownership Status of Hibah Marad al-Mawt: A Study on the Views of Classical and Contemporary Scholars,” 34(8) al-Qanatir: International Journal of Islamic Studies (2025).'),
+  bibEn('Joseph Schacht, An Introduction to Islamic Law (1964).'),
+  bibEn('David Sims, “Securing Land Tenure in Egypt: Who Needs Registered Titles?” Metropolitics (June 14, 2016), metropolitiques.eu.'),
+  bibEn('Brian Sloan, “Proprietary Estoppel in the Supreme Court: Banquo’s Ghost?” (2023) 82 Cambridge Law Journal 13.'),
+  bibEn('Kenneth W. Stein, The Land Question in Palestine, 1917–1939 (1984).'),
+  bibEn('Alex Waghorn, “Promises in Equity and at Law: Proprietary Estoppel after Guest v Guest” (2023) 86 Modern Law Review 1504.'),
+  bibEn('Konrad Zweigert & Hein Kötz, An Introduction to Comparative Law (Tony Weir trans., 3d ed. 1998).'),
+  bibEn('AAOIFI, Shari‘ah Standard No. 23: Agency and the Act of an Uncommissioned Agent (Fudooli).'),
+  bibEn('Law Commission, Updating the Land Registration Act 2002 (Law Com. No. 380, 2018).'),
+  bibEn('“More than 90% of Egypt’s Properties Are Unregistered: Justice Minister,” Daily News Egypt (Feb. 14, 2022), dailynewsegypt.com.'),
+  bibEn('“Real Estate Registration Law Amendments – Development Brief,” The Built Environment Observatory (May 2021), marsadomran.info.'),
+  bibEn('Shalakany Law Office, “New Amendments to Real Estate Registration Law: Accelerated and Streamlined Registration Procedures” (2022), shalakany.com.'),
+];
+
+module.exports = { conclusion, bibliography };
