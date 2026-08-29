@@ -35,7 +35,7 @@ const cover = [
     bidirectional: true,
     alignment: AlignmentType.CENTER,
     spacing: { after: 240 },
-    children: [new TextRun({ text: 'הכרעה בזכויות במקרקעין לא רשומים בסכסוכים פנים־משפחתיים בחברה הערבית', rightToLeft: true, font: HE_FONT, size: 44, bold: true })],
+    children: [new TextRun({ text: 'הכרעה בזכויות במקרקעין לא רשומים בסכסוכים פנים משפחתיים בחברה הערבית', rightToLeft: true, font: HE_FONT, size: 44, bold: true })],
   }),
   new Paragraph({
     bidirectional: true,
@@ -51,7 +51,7 @@ const cover = [
   new Paragraph({
     bidirectional: true,
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: 'הערות השוליים והביבליוגרפיה ערוכות על פי כללי האזכור האחיד בכתיבה המשפטית (מהדורה שלישית, 2021)', rightToLeft: true, font: HE_FONT, size: 20, italics: true })],
+    children: [new TextRun({ text: 'הערות השוליים והביבליוגרפיה ערוכות על פי כללי האזכור האחיד בכתיבה המשפטית (מהדורה שלישית 2021)', rightToLeft: true, font: HE_FONT, size: 20, italics: true })],
   }),
 ];
 
