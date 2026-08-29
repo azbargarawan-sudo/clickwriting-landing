@@ -2,7 +2,7 @@
 const { docx, he, en, finalizeFootnotes, HE_FONT } = require('./lib');
 const {
   Document, Packer, Paragraph, TextRun, AlignmentType, TableOfContents,
-  Footer, PageNumber, PageBreak, HeadingLevel, LevelFormat,
+  Footer, PageNumber, PageBreak, HeadingLevel, LevelFormat, ImageRun,
 } = docx;
 const fs = require('fs');
 
@@ -27,9 +27,18 @@ function coverLine(text, opts = {}) {
 }
 
 const cover = [
-  coverLine('', { after: 600 }),
-  coverLine('[שם המוסד האקדמי]', { size: 28 }),
-  coverLine('הפקולטה למשפטים', { size: 28, after: 900 }),
+  coverLine('', { after: 300 }),
+  new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { after: 240 },
+    children: [new ImageRun({
+      type: 'jpg',
+      data: fs.readFileSync(__dirname + '/ono-logo.jpg'),
+      transformation: { width: 150, height: 150 },
+    })],
+  }),
+  coverLine('הקריה האקדמית אונו', { size: 28 }),
+  coverLine('הפקולטה למשפטים', { size: 28, after: 700 }),
   coverLine('עבודה סמינריונית', { size: 26, after: 500 }),
   new Paragraph({
     bidirectional: true,
