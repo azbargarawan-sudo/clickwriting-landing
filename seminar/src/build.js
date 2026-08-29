@@ -49,7 +49,7 @@ function heRuns(text, opts = {}) {
   return parts.map((p, i) => heRun(p, { ...opts, bold: i % 2 === 1 ? true : !!opts.bold }));
 }
 
-const SP = { line: 480, lineRule: 'auto', after: 120 }; // 1.5 line spacing
+const SP = { line: 360, lineRule: 'auto', after: 120 }; // 1.5 line spacing
 
 function render(item) {
   switch (item.t) {
@@ -58,7 +58,7 @@ function render(item) {
         heading: HeadingLevel.HEADING_1,
         bidirectional: true,
         alignment: AlignmentType.RIGHT,
-        spacing: { before: 360, after: 240, line: 480, lineRule: 'auto' },
+        spacing: { before: 360, after: 240, line: 360, lineRule: 'auto' },
         children: [heRun(item.text, { bold: true, size: 32 })],
       });
     case 'h2':
@@ -66,7 +66,7 @@ function render(item) {
         heading: HeadingLevel.HEADING_2,
         bidirectional: true,
         alignment: AlignmentType.RIGHT,
-        spacing: { before: 280, after: 180, line: 480, lineRule: 'auto' },
+        spacing: { before: 280, after: 180, line: 360, lineRule: 'auto' },
         children: [heRun(item.text, { bold: true, size: 28 })],
       });
     case 'h3':
@@ -74,21 +74,21 @@ function render(item) {
         heading: HeadingLevel.HEADING_3,
         bidirectional: true,
         alignment: AlignmentType.RIGHT,
-        spacing: { before: 220, after: 140, line: 480, lineRule: 'auto' },
+        spacing: { before: 220, after: 140, line: 360, lineRule: 'auto' },
         children: [heRun(item.text, { bold: true, size: 26 })],
       });
     case 'p':
       return new Paragraph({
         bidirectional: true,
-        alignment: AlignmentType.RIGHT,
+        alignment: AlignmentType.BOTH,
         spacing: SP,
         children: heRuns(item.text),
       });
     case 'q': // block quotation, 40+ words, no quotation marks (APA 7)
       return new Paragraph({
         bidirectional: true,
-        alignment: AlignmentType.RIGHT,
-        spacing: { line: 480, lineRule: 'auto', after: 120 },
+        alignment: AlignmentType.BOTH,
+        spacing: { line: 360, lineRule: 'auto', after: 120 },
         indent: { left: 720, right: 720 },
         children: heRuns(item.text),
       });
@@ -102,8 +102,8 @@ function render(item) {
     case 'refHe':
       return new Paragraph({
         bidirectional: true,
-        alignment: AlignmentType.RIGHT,
-        spacing: { line: 480, lineRule: 'auto', after: 160 },
+        alignment: AlignmentType.BOTH,
+        spacing: { line: 360, lineRule: 'auto', after: 160 },
         indent: { left: 720, hanging: 720 },
         children: heRuns(item.text),
       });
@@ -111,7 +111,7 @@ function render(item) {
       return new Paragraph({
         bidirectional: false,
         alignment: AlignmentType.LEFT,
-        spacing: { line: 480, lineRule: 'auto', after: 160 },
+        spacing: { line: 360, lineRule: 'auto', after: 160 },
         indent: { left: 720, hanging: 720 },
         children: item.runs
           ? item.runs.map(r => enRun(r.text, r))
@@ -121,7 +121,7 @@ function render(item) {
       return new Paragraph({
         bidirectional: true,
         alignment: AlignmentType.CENTER,
-        spacing: { line: 480, lineRule: 'auto', after: item.after != null ? item.after : 120 },
+        spacing: { line: 360, lineRule: 'auto', after: item.after != null ? item.after : 120 },
         children: heRuns(item.text, { size: item.size || BODY, bold: !!item.bold }),
       });
     case 'empty':
