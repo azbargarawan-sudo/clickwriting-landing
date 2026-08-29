@@ -139,7 +139,7 @@ function render(item) {
     case 'img': {
       const file = __dirname + '/' + item.file;
       const { w, h } = sizeOf(file);
-      const maxW = 600, maxH = 840;
+      const maxW = item.maxW || 600, maxH = item.maxH || 840;
       const scale = Math.min(maxW / w, maxH / h);
       return new Paragraph({
         alignment: AlignmentType.CENTER,
