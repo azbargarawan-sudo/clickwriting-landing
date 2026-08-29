@@ -1,8 +1,12 @@
 // Builds the seminar paper .docx (Hebrew, RTL) from content files.
 const {
   Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel,
-  TableOfContents, PageBreak, Footer, PageNumber, SectionType,
+  TableOfContents, PageBreak, Footer, PageNumber, SectionType, ImageRun,
 } = require('docx');
+const sizeOf = f => {
+  const b = fs.readFileSync(f);
+  return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) }; // PNG IHDR
+};
 const fs = require('fs');
 
 const HE_FONT = 'David';
@@ -126,6 +130,21 @@ function render(item) {
       });
     case 'empty':
       return new Paragraph({ spacing: { after: item.after || 200 }, children: [] });
+    case 'img': {
+      const file = __dirname + '/' + item.file;
+      const { w, h } = sizeOf(file);
+      const maxW = 600, maxH = 840;
+      const scale = Math.min(maxW / w, maxH / h);
+      return new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 120 },
+        children: [new ImageRun({
+          data: fs.readFileSync(file),
+          type: 'png',
+          transformation: { width: Math.round(w * scale), height: Math.round(h * scale) },
+        })],
+      });
+    }
     case 'pb':
       return new Paragraph({ children: [new PageBreak()] });
     default:
