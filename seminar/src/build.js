@@ -112,10 +112,12 @@ function render(item) {
     case 'refHe':
       return new Paragraph({
         bidirectional: true,
-        alignment: AlignmentType.BOTH,
+        alignment: AlignmentType.RIGHT,
         spacing: { line: 360, lineRule: 'auto', after: 160 },
         indent: { left: 720, hanging: 720 },
-        children: heRuns(item.text),
+        children: item.runs
+          ? item.runs.map(r => heRun(r.text, r))
+          : heRuns(item.text),
       });
     case 'refEn':
       return new Paragraph({
