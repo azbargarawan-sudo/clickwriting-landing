@@ -6,6 +6,7 @@ module.exports = [
   { t: 'refHe', text: 'כהן-סקירה, י\', הוד-שמר, א\' ושר, ע\' (2022). קידום חשיבה יצירתית בגן הילדים באמצעות סיפורי ילדים. חוקרים@הגיל הרך, 15, 104-129.' },
   { t: 'refHe', text: 'מאתיוס, ג\' (2003). פילוסופיה וילדים. ידיעות אחרונות.' },
   { t: 'refHe', text: 'פיאז\'ה, ז\' (1986). הפסיכולוגיה של הילד. הפועלים.' },
+  { t: 'refHe', text: 'פריד בוארון, ח\' והוד-שמר, א\' (2026). "החבר הדמיוני שלי" מנקודת מבטם של ילדים בגיל הרך. עיונים בחינוך, 26, 133-150.' },
   { t: 'refHe', text: 'צבר בן-יהושע, נ\' (1990). המחקר האיכותי בהוראה ובלמידה. מסדה.' },
   { t: 'refHe', text: 'קיזל, א\' (2012). החינוך הדמוקרטי הממיין בישראל: תיקון עולם או בדלנות? עיונים בחינוך, 6, 46-61.' },
   { t: 'refHe', text: 'קיזל, א\' (2014). פילוסופיה עם ילדים, קו העוני ורגישות פילוסופית-חברתית. עיונים בחינוך, 12-11, 147-166.' },
@@ -96,6 +97,11 @@ module.exports = [
     { text: 'Mohr Lone, J. (2012). ' },
     { text: 'The philosophical child', italics: true },
     { text: '. Rowman & Littlefield.' },
+  ] },
+  { t: 'refEn', runs: [
+    { text: 'Nevo, E., & Vaknin-Nusbaum, V. (2018). Enhancing language and print-concept skills by using interactive storybook reading in kindergarten. ' },
+    { text: 'Journal of Early Childhood Literacy, 18', italics: true },
+    { text: '(4), 545-569. https://doi.org/10.1177/1468798417694482' },
   ] },
   { t: 'refEn', runs: [
     { text: 'Sharp, A. M. (1988). What is a community of inquiry? In J. Portelli & W. Hare (Eds.), ' },
