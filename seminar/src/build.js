@@ -21,6 +21,8 @@ function heRun(text, opts = {}) {
     font: HE_FONT,
     size, sizeComplexScript: size,
     rightToLeft: true,
+    noProof: true,
+    language: { value: 'he-IL', bidirectional: 'he-IL' },
     bold: !!opts.bold, boldComplexScript: !!opts.bold,
     italics: !!opts.italics, italicsComplexScript: !!opts.italics,
     underline: opts.underline ? {} : undefined,
@@ -33,6 +35,8 @@ function arRun(text, opts = {}) {
     font: AR_FONT,
     size, sizeComplexScript: size,
     rightToLeft: true,
+    noProof: true,
+    language: { value: 'ar-SA', bidirectional: 'ar-SA' },
     bold: !!opts.bold, boldComplexScript: !!opts.bold,
   });
 }
@@ -42,6 +46,8 @@ function enRun(text, opts = {}) {
     text,
     font: EN_FONT,
     size, sizeComplexScript: size,
+    noProof: true,
+    language: { value: 'en-US' },
     bold: !!opts.bold,
     italics: !!opts.italics,
   });
