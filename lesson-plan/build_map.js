@@ -13,7 +13,7 @@ function hePara(text, opts = {}) {
   const { bold, size, underline, spacingAfter = 120, spacingBefore, alignment } = opts;
   return new Paragraph({
     bidirectional: true,
-    alignment: alignment || AlignmentType.RIGHT,
+    alignment: alignment || AlignmentType.JUSTIFIED,
     spacing: { after: spacingAfter, before: spacingBefore || 0 },
     children: [heRun(text, { bold, size, underline })],
   });

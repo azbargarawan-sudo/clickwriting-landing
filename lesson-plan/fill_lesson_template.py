@@ -21,7 +21,7 @@ def para(text, bold=False, size=None, underline=False):
     if underline: rpr += '<w:u w:val="single"/>'
     if size: rpr += f'<w:sz w:val="{size}"/><w:szCs w:val="{size}"/>'
     rpr += '<w:rtl/></w:rPr>'
-    return (f'<w:p><w:pPr><w:bidi/><w:jc w:val="right"/><w:rPr><w:rtl/></w:rPr></w:pPr>'
+    return (f'<w:p><w:pPr><w:bidi/><w:jc w:val="both"/><w:rPr><w:rtl/></w:rPr></w:pPr>'
             f'<w:r>{rpr}<w:t xml:space="preserve">{esc(text)}</w:t></w:r></w:p>')
 
 # ---- insert topic + rationale after the title paragraph ----
