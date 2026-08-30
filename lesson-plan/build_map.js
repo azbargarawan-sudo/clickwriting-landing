@@ -1,6 +1,6 @@
 const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-  WidthType, AlignmentType, ShadingType, VerticalAlign, PageBreak,
+  WidthType, AlignmentType, ShadingType, VerticalAlign, PageBreak, ImageRun,
 } = require('docx');
 const fs = require('fs');
 
@@ -518,12 +518,34 @@ const doc = new Document({
     {
       properties: {},
       children: [
+        new Paragraph({
+          alignment: AlignmentType.CENTER,
+          spacing: { before: 600, after: 300 },
+          children: [new ImageRun({
+            type: 'png',
+            data: fs.readFileSync(__dirname + '/logo.png'),
+            transformation: { width: 140, height: 140 },
+          })],
+        }),
+        hePara('סמינר הקיבוצים, המכללה לחינוך, לטכנולוגיה ולאמנויות', { bold: true, size: 30, alignment: AlignmentType.CENTER, spacingAfter: 400 }),
+        new Paragraph({
+          bidirectional: true,
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 200 },
+          children: [heRun('מיפוי, תוכנית התערבות ומערכי שיעור במתמטיקה', { bold: true, size: 40 })],
+        }),
+        hePara('על בסיס אבחון המספרים השלמים, מסלול יסודי א\'-ד\'', { size: 26, alignment: AlignmentType.CENTER, spacingAfter: 500 }),
+        hePara('המרצה: מאיה קובה שלוש', { size: 26, alignment: AlignmentType.CENTER, spacingAfter: 120 }),
+        hePara('שם המגישה: הנאדי סאלם', { bold: true, size: 26, alignment: AlignmentType.CENTER, spacingAfter: 120 }),
+        hePara('ת.ז. 302497789', { size: 26, alignment: AlignmentType.CENTER, spacingAfter: 500 }),
+        hePara('אלול התשפ"ו, אוגוסט 2026', { size: 24, alignment: AlignmentType.CENTER }),
+        pageBreakPara(),
         title('מיפוי ותוכנית עבודה במתמטיקה'),
         hePara('על בסיס אבחון המספרים השלמים (סגל, ל.ת.), מסלול יסודי א\'-ד\'', { bold: true, size: 26, alignment: AlignmentType.CENTER }),
         hePara('(פרטי התלמיד בדויים; מערך השיעור מוגש בקובץ נפרד)', { size: 20, alignment: AlignmentType.CENTER, spacingAfter: 240 }),
 
         sectionHead('א. רקע'),
-        hePara('שם המורה: רוואן                                שם התלמיד: יובל (שם בדוי)'),
+        hePara('שם המורה: הנאדי סאלם                                שם התלמיד: יובל (שם בדוי)'),
         hePara('תאריך לידה: 12.3.2017 (גיל 8.5)                שם בי"ס: יסודי "ניצנים"'),
         hePara('כיתה: ג\'2        מחנכת הכיתה: לימור        מועדי המיפוי: שלושה מפגשים פרטניים, ספטמבר (תחילת שנה"ל)'),
         hePara('מיקום הילד במשפחה: שני מתוך שלושה ילדים.'),
