@@ -21,7 +21,7 @@ def para(text, bold=False, size=None, underline=False):
     if underline: rpr += '<w:u w:val="single"/>'
     if size: rpr += f'<w:sz w:val="{size}"/><w:szCs w:val="{size}"/>'
     rpr += '<w:rtl/></w:rPr>'
-    return (f'<w:p><w:pPr><w:bidi/><w:rPr><w:rtl/></w:rPr></w:pPr>'
+    return (f'<w:p><w:pPr><w:bidi/><w:jc w:val="right"/><w:rPr><w:rtl/></w:rPr></w:pPr>'
             f'<w:r>{rpr}<w:t xml:space="preserve">{esc(text)}</w:t></w:r></w:p>')
 
 title_p = re.search(r'<w:p [^>]*>(?:(?!</w:p>).)*?מערך שיעור:.*?</w:p>', doc, re.S).group(0)
@@ -78,7 +78,7 @@ def cell_para(text, bold=False):
     rpr = ('<w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial" w:hint="cs"/>'
            + ('<w:b/><w:bCs/>' if bold else '')
            + '<w:sz w:val="18"/><w:szCs w:val="18"/><w:rtl/></w:rPr>')
-    return ('<w:p><w:pPr><w:bidi/><w:spacing w:after="60" w:line="240" w:lineRule="auto"/>'
+    return ('<w:p><w:pPr><w:bidi/><w:spacing w:after="60" w:line="240" w:lineRule="auto"/><w:jc w:val="right"/>'
             '<w:rPr><w:sz w:val="18"/><w:szCs w:val="18"/><w:rtl/></w:rPr></w:pPr>'
             f'<w:r>{rpr}<w:t xml:space="preserve">{esc(text)}</w:t></w:r></w:p>')
 

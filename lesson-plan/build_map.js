@@ -13,7 +13,7 @@ function hePara(text, opts = {}) {
   const { bold, size, underline, spacingAfter = 120, spacingBefore, alignment } = opts;
   return new Paragraph({
     bidirectional: true,
-    alignment: alignment || AlignmentType.START,
+    alignment: alignment || AlignmentType.RIGHT,
     spacing: { after: spacingAfter, before: spacingBefore || 0 },
     children: [heRun(text, { bold, size, underline })],
   });
@@ -47,7 +47,7 @@ function cellParas(texts, opts = {}) {
   const arr = Array.isArray(texts) ? texts : [texts];
   return arr.map(t => new Paragraph({
     bidirectional: true,
-    alignment: opts.center ? AlignmentType.CENTER : AlignmentType.START,
+    alignment: opts.center ? AlignmentType.CENTER : AlignmentType.RIGHT,
     spacing: { after: 40 },
     children: [heRun(t, { size: opts.size || 20, bold: opts.bold })],
   }));
