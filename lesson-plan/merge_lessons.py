@@ -56,8 +56,8 @@ logo_para = (
 cover = (
     logo_para
     + center_para('סמינר הקיבוצים, המכללה לחינוך, לטכנולוגיה ולאמנויות', bold=True, size=30, after=400)
-    + center_para('מערכי שיעור במתמטיקה', bold=True, size=40, underline=True, after=200)
-    + center_para('שיעור 1: המרה, "סוד ההחלפה"; שיעור 3: פריטה, "הסוד בכיוון ההפוך"', size=26, after=500)
+    + center_para('מערך שיעור במתמטיקה', bold=True, size=40, underline=True, after=200)
+    + center_para('שיעור מס\' 1 בתוכנית ההתערבות: המרה, "סוד ההחלפה"', size=26, after=500)
     + center_para('המרצה: מאיה קובה שלוש', size=26, after=120)
     + center_para('שם המגישה: הנאדי סאלם', bold=True, size=26, after=120)
     + center_para('ת.ז. 302497789', size=26, after=500)
@@ -75,7 +75,7 @@ def body_inner(d):
 b1, sect = body_inner(d1)
 b2, _ = body_inner(d2)
 pb = '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'
-merged = (d1.split('<w:body>', 1)[0] + '<w:body>' + cover + pb + b1 + pb + b2 + sect
+merged = (d1.split('<w:body>', 1)[0] + '<w:body>' + cover + pb + b1 + sect
           + '</w:body></w:document>')
 open('fmt_merged/word/document.xml', 'w', encoding='utf-8').write(merged)
 
