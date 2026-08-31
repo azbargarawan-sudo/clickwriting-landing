@@ -2,8 +2,8 @@
 # after displayBackgroundShape, before evenAndOddHeaders).
 import zipfile, shutil, sys
 
-src = 'seminar.docx'
-tmp = 'seminar_pp.docx'
+src = sys.argv[1] if len(sys.argv) > 1 else 'seminar.docx'
+tmp = src + '.pp.tmp'
 zin = zipfile.ZipFile(src)
 zout = zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED)
 for item in zin.infolist():
