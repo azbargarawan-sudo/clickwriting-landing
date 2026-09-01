@@ -75,6 +75,16 @@ function pi(...items) {
     children,
   });
 }
+// פסקה פותחת (אחרי כותרת): שורה ראשונה מיושרת, בלא הזחה
+function pn(...items) {
+  const children = items.map((it) => (typeof it === 'string' ? he(it) : it));
+  return new Paragraph({
+    bidirectional: true,
+    alignment: AlignmentType.BOTH,
+    spacing: { line: 360, after: 160 },
+    children,
+  });
+}
 // ציטוט מובלע
 function quote(...items) {
   const children = items.map((it) => (typeof it === 'string' ? he(it, { size: 22 }) : it));
@@ -136,5 +146,5 @@ function bibEn(...items) {
 
 module.exports = {
   docx, he, en, heN, enN, fn, fnk, ref, finalizeFootnotes,
-  p, pi, quote, h1, h2, h3, bib, bibEn, HE_FONT, EN_FONT,
+  p, pi, pn, quote, h1, h2, h3, bib, bibEn, HE_FONT, EN_FONT,
 };

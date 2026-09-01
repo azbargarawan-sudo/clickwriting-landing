@@ -1,11 +1,11 @@
-const { he, en, heN, enN, fn, fnk, ref, p, pi, quote, h1, h2, h3, bib, bibEn } = require('./lib');
+const { he, en, heN, enN, fn, fnk, ref, p, pi, pn, quote, h1, h2, h3, bib, bibEn } = require('./lib');
 const { docx } = require('./lib');
 const { Paragraph, TextRun, AlignmentType, HeadingLevel } = docx;
 
 // ================= סיכום ומסקנות =================
 const conclusion = [
   h1('סיכום ומסקנות'),
-  pi(
+  pn(
     he('לשאלת המחקר הראשונה', { bold: true }),
     ' (כלי ההכרעה בהיעדר רישום) העלה העיון תמונה של ארגז כלים עשיר אך מדורג: הזכות שביושר מכוח הלכת ',
     he('אהרונוב', { italics: true }),
