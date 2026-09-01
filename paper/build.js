@@ -22,7 +22,7 @@ let tocPages = {};
 try { tocPages = JSON.parse(fs.readFileSync(path.join(__dirname, 'toc-pages.json'), 'utf8')); } catch (e) {}
 
 // כותרות ספרים המודגשות בנטוי בגוף הטקסט
-const TITLES = /(געגועי לקיסינג'ר|אוטוקורקט|צינורות \(1992\)|Alone Together)/g;
+const TITLES = /(אוטוקורקט)/g;
 
 const run = (text, o = {}) => new TextRun({
   text, font: FONT, size: o.size || SZ,
@@ -123,6 +123,10 @@ for (const b of blocks) {
       const rs = segs.map((s) => typeof s === 'string'
         ? run(s, { ltr: b.dir === 'ltr' })
         : run(s.i, { italics: true, ltr: b.dir === 'ltr' }));
+      if (b.url) {
+        rs.push(new TextRun({ text: '  ', font: FONT, size: SZ }));
+        rs.push(new TextRun({ text: b.url, font: FONT, size: SZ, rightToLeft: false }));
+      }
       children.push(base(rs, {
         ltr: b.dir === 'ltr',
         alignment: b.dir === 'ltr' ? AlignmentType.LEFT : AlignmentType.RIGHT,
@@ -144,9 +148,6 @@ for (const n of [160, 161, 162, 163, 164]) {
 }
 children.push(base([run("נספח ב': דף זכויות היוצרים של הקובץ אוטוקורקט (כנרת, זמורה, דביר, 2024).", { bold: true })], { alignment: AlignmentType.RIGHT }));
 children.push(img('p-copyright_s.png', 555, 734));
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(base([run("נספח ג': \"שוברים את החזיר\", מתוך אתגר קרת, געגועי לקיסינג'ר (זמורה־ביתן, 1994) – עמודים סרוקים.", { bold: true })], { alignment: AlignmentType.RIGHT }));
-children.push(base([run('[יש לצרף כאן את סריקת הסיפור מתוך הקובץ שברשותך.]', { italics: true, color: '808080' })], { alignment: AlignmentType.RIGHT }));
 
 const doc = new Document({
   styles: {
