@@ -137,15 +137,11 @@ for (const b of blocks) {
 }
 
 // נספחים
-children.push(img('p160_s.png', 555, 774));
-children.push(base([run('עמוד 160', { size: 22 })], { alignment: AlignmentType.CENTER, after: 0 }));
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(img('p161_s.png', 555, 774));
-children.push(base([run('עמוד 161', { size: 22 })], { alignment: AlignmentType.CENTER, after: 0 }));
-children.push(new Paragraph({ children: [new PageBreak()] }));
-children.push(img('p-end_s.png', 555, 774));
-children.push(base([run('עמוד הסיום של הסיפור', { size: 22 })], { alignment: AlignmentType.CENTER, after: 0 }));
-children.push(new Paragraph({ children: [new PageBreak()] }));
+for (const n of [160, 161, 162, 163, 164]) {
+  children.push(img('p' + n + '_s.png', 555, 774));
+  children.push(base([run('עמוד ' + n, { size: 22 })], { alignment: AlignmentType.CENTER, after: 0 }));
+  children.push(new Paragraph({ children: [new PageBreak()] }));
+}
 children.push(base([run("נספח ב': דף זכויות היוצרים של הקובץ אוטוקורקט (כנרת, זמורה, דביר, 2024).", { bold: true })], { alignment: AlignmentType.RIGHT }));
 children.push(img('p-copyright_s.png', 555, 734));
 children.push(new Paragraph({ children: [new PageBreak()] }));
