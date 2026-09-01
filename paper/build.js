@@ -52,6 +52,17 @@ let numCounter = 0;
 
 for (const b of blocks) {
   switch (b.t) {
+    case 'logo':
+      children.push(new Paragraph({
+        bidirectional: true, alignment: AlignmentType.CENTER,
+        spacing: { after: 240 },
+        children: [new ImageRun({
+          type: 'png',
+          data: fs.readFileSync(path.join(__dirname, 'logo.png')),
+          transformation: { width: 300, height: 188 },
+        })],
+      }));
+      break;
     case 'title':
       children.push(base([run(b.x, { bold: true, size: 32 })], { alignment: AlignmentType.CENTER, after: 400 })); break;
     case 'title2':
