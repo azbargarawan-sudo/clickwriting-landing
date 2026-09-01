@@ -67,7 +67,7 @@ const cover = [
 function abstractPara(text, opts = {}) {
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.RIGHT,
+    alignment: AlignmentType.BOTH,
     indent: opts.first ? undefined : { firstLine: 420 },
     spacing: { line: 360, after: 160 },
     children: [new TextRun({ text, rightToLeft: true, font: HE_FONT, size: 24 , noProof: true })],

@@ -49,7 +49,7 @@ function finalizeFootnotes() {
       }
       return p;
     });
-    out[id] = { children: [new Paragraph({ bidirectional: true, spacing: { after: 60 }, children })] };
+    out[id] = { children: [new Paragraph({ bidirectional: true, alignment: AlignmentType.BOTH, spacing: { after: 60 }, children })] };
   }
   return out;
 }
@@ -59,7 +59,7 @@ function p(...items) {
   const children = items.map((it) => (typeof it === 'string' ? he(it) : it));
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.RIGHT,
+    alignment: AlignmentType.BOTH,
     spacing: { line: 360, after: 120 },
     children,
   });
@@ -69,7 +69,7 @@ function pi(...items) {
   const children = items.map((it) => (typeof it === 'string' ? he(it) : it));
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.RIGHT,
+    alignment: AlignmentType.BOTH,
     indent: { firstLine: 420 },
     spacing: { line: 360, after: 0 },
     children,
@@ -80,7 +80,7 @@ function pn(...items) {
   const children = items.map((it) => (typeof it === 'string' ? he(it) : it));
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.RIGHT,
+    alignment: AlignmentType.BOTH,
     spacing: { line: 360, after: 0 },
     children,
   });
@@ -90,7 +90,7 @@ function quote(...items) {
   const children = items.map((it) => (typeof it === 'string' ? he(it, { size: 22 }) : it));
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.RIGHT,
+    alignment: AlignmentType.BOTH,
     indent: { start: 720, end: 720 },
     spacing: { line: 300, before: 120, after: 160 },
     children,
@@ -127,7 +127,7 @@ function bib(...items) {
   const children = items.map((it) => (typeof it === 'string' ? he(it) : it));
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.RIGHT,
+    alignment: AlignmentType.BOTH,
     indent: { start: 420, hanging: 420 },
     spacing: { line: 300, after: 120 },
     children,
