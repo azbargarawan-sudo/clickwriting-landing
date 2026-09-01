@@ -60,7 +60,7 @@ function p(...items) {
   return new Paragraph({
     bidirectional: true,
     alignment: AlignmentType.BOTH,
-    spacing: { line: 360, after: 160 },
+    spacing: { line: 360, after: 120 },
     children,
   });
 }
@@ -71,7 +71,7 @@ function pi(...items) {
     bidirectional: true,
     alignment: AlignmentType.BOTH,
     indent: { firstLine: 420 },
-    spacing: { line: 360, after: 160 },
+    spacing: { line: 360, after: 0 },
     children,
   });
 }
@@ -81,7 +81,7 @@ function pn(...items) {
   return new Paragraph({
     bidirectional: true,
     alignment: AlignmentType.BOTH,
-    spacing: { line: 360, after: 160 },
+    spacing: { line: 360, after: 0 },
     children,
   });
 }
