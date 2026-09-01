@@ -11,10 +11,10 @@ const NOTE_SIZE = 20;   // 10pt
 
 // ---- runs ----
 function he(text, opts = {}) {
-  return new TextRun({ text, rightToLeft: true, font: HE_FONT, size: BODY_SIZE, ...opts });
+  return new TextRun({ text, rightToLeft: true, font: HE_FONT, size: BODY_SIZE, noProof: true, ...opts });
 }
 function en(text, opts = {}) {
-  return new TextRun({ text, font: EN_FONT, size: BODY_SIZE, ...opts });
+  return new TextRun({ text, font: EN_FONT, size: BODY_SIZE, noProof: true, ...opts });
 }
 function heN(text, opts = {}) { return he(text, { size: NOTE_SIZE, ...opts }); }
 function enN(text, opts = {}) { return en(text, { size: NOTE_SIZE, ...opts }); }

@@ -22,7 +22,7 @@ function coverLine(text, opts = {}) {
     bidirectional: true,
     alignment: AlignmentType.CENTER,
     spacing: { after: opts.after ?? 120 },
-    children: [new TextRun({ text, rightToLeft: true, font: HE_FONT, size: opts.size ?? 26, bold: opts.bold ?? false })],
+    children: [new TextRun({ text, rightToLeft: true, font: HE_FONT, size: opts.size ?? 26, bold: opts.bold ?? false, noProof: true  })],
   });
 }
 
@@ -44,13 +44,13 @@ const cover = [
     bidirectional: true,
     alignment: AlignmentType.CENTER,
     spacing: { after: 240 },
-    children: [new TextRun({ text: 'הכרעה בזכויות במקרקעין לא רשומים בסכסוכים פנים משפחתיים בחברה הערבית', rightToLeft: true, font: HE_FONT, size: 44, bold: true })],
+    children: [new TextRun({ text: 'הכרעה בזכויות במקרקעין לא רשומים בסכסוכים פנים משפחתיים בחברה הערבית', rightToLeft: true, font: HE_FONT, size: 44, bold: true , noProof: true })],
   }),
   new Paragraph({
     bidirectional: true,
     alignment: AlignmentType.CENTER,
     spacing: { after: 900 },
-    children: [new TextRun({ text: 'עיון במשפט הישראלי ובמשפט משווה: המשפט המקובל, המשפט המצרי והמשפט השרעי האסלאמי', rightToLeft: true, font: HE_FONT, size: 30 })],
+    children: [new TextRun({ text: 'עיון במשפט הישראלי ובמשפט משווה: המשפט המקובל, המשפט המצרי והמשפט השרעי האסלאמי', rightToLeft: true, font: HE_FONT, size: 30 , noProof: true })],
   }),
   coverLine('מגיש/ה: ______________', {}),
   coverLine('מספר זהות: ______________', {}),
@@ -60,7 +60,7 @@ const cover = [
   new Paragraph({
     bidirectional: true,
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: 'הערות השוליים והביבליוגרפיה ערוכות על פי כללי האזכור האחיד בכתיבה המשפטית (מהדורה שלישית 2021)', rightToLeft: true, font: HE_FONT, size: 20, italics: true })],
+    children: [new TextRun({ text: 'הערות השוליים והביבליוגרפיה ערוכות על פי כללי האזכור האחיד בכתיבה המשפטית (מהדורה שלישית 2021)', rightToLeft: true, font: HE_FONT, size: 20, italics: true , noProof: true })],
   }),
 ];
 
@@ -70,7 +70,7 @@ function abstractPara(text, opts = {}) {
     alignment: AlignmentType.BOTH,
     indent: opts.first ? undefined : { firstLine: 420 },
     spacing: { line: 360, after: 160 },
-    children: [new TextRun({ text, rightToLeft: true, font: HE_FONT, size: 24 })],
+    children: [new TextRun({ text, rightToLeft: true, font: HE_FONT, size: 24 , noProof: true })],
   });
 }
 
@@ -79,7 +79,7 @@ const abstractSection = [
     bidirectional: true,
     alignment: AlignmentType.CENTER,
     spacing: { after: 240 },
-    children: [new TextRun({ text: 'תקציר', rightToLeft: true, font: HE_FONT, size: 32, bold: true })],
+    children: [new TextRun({ text: 'תקציר', rightToLeft: true, font: HE_FONT, size: 32, bold: true , noProof: true })],
   }),
   abstractPara(
     'עבודה זו בוחנת כיצד מכריעים בתי המשפט בישראל בזכויות במקרקעין לא רשומים בסכסוכים פנים משפחתיים בחברה הערבית, שבה חלק ניכר מן הקרקעות מוחזק ומועבר מדור לדור על יסוד הסכמות בעל פה, ייפויי כוח בלתי חוזרים ישנים וחלוקות משפחתיות שלא נרשמו ולא דווחו לרשויות המס. העבודה נסבה על שלוש שאלות: מהם הכלים המשפטיים והראייתיים שבהם מתמודדים בתי המשפט עם היעדר הרישום; מהן ההשלכות הכלכליות של התניית הרישום בהסדרת מס לגבי עסקאות היסטוריות שלא דווחו במועדן; ומהו משקלם הראייתי של היתרי בנייה ותשלומי ארנונה כראיה לבעלות. הבירור נערך בשיטה דוקטרינרית ביקורתית, בצירוף עיון משווה פונקציונלי בשלוש שיטות: המשפט המקובל האנגלי, המשפט המצרי והמשפט השרעי האסלאמי.',
@@ -98,7 +98,7 @@ const tocSection = [
     bidirectional: true,
     alignment: AlignmentType.CENTER,
     spacing: { after: 240 },
-    children: [new TextRun({ text: 'תוכן עניינים', rightToLeft: true, font: HE_FONT, size: 32, bold: true })],
+    children: [new TextRun({ text: 'תוכן עניינים', rightToLeft: true, font: HE_FONT, size: 32, bold: true , noProof: true })],
   }),
   new TableOfContents('תוכן עניינים', { hyperlink: true, headingStyleRange: '1-3' }),
 ];
@@ -118,8 +118,8 @@ const doc = new Document({
   features: { updateFields: true },
   styles: {
     default: {
-      document: { run: { font: HE_FONT, size: 24 } },
-      footnoteText: { run: { font: HE_FONT, size: 20 } },
+      document: { run: { font: HE_FONT, size: 24, noProof: true, language: { value: 'he-IL', bidirectional: 'he-IL' } } },
+      footnoteText: { run: { font: HE_FONT, size: 20, noProof: true } },
     },
   },
   footnotes: finalizeFootnotes(),
