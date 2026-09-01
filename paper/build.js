@@ -3,7 +3,7 @@ const path = require('path');
 const D = require('docx');
 const {
   Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType,
-  PageBreak, Footer, PageNumber, ImageRun, LevelFormat, Tab, TabStopType,
+  PageBreak, Footer, PageNumber, ImageRun, LevelFormat, Tab, TabStopType, TableOfContents,
   LeaderType, convertMillimetersToTwip
 } = D;
 
@@ -17,9 +17,6 @@ const blocks = [
   ...require('./content-2.js'),
   ...require('./content-3.js'),
 ];
-
-let tocPages = {};
-try { tocPages = JSON.parse(fs.readFileSync(path.join(__dirname, 'toc-pages.json'), 'utf8')); } catch (e) {}
 
 // כותרות ספרים המודגשות בנטוי בגוף הטקסט
 const TITLES = /(אוטוקורקט)/g;
@@ -50,14 +47,6 @@ const img = (file, w, h) => new Paragraph({
   children: [new ImageRun({ type: 'png', data: fs.readFileSync(path.join(__dirname, file)), transformation: { width: w, height: h } })],
 });
 
-// --- איסוף ערכי תוכן העניינים ---
-const tocEntries = [];
-for (const b of blocks) {
-  if ((b.t === 'h1' || b.t === 'h2') && b.x !== 'תוכן העניינים') {
-    tocEntries.push({ level: b.t === 'h1' ? 1 : 2, text: b.x });
-  }
-}
-
 const children = [];
 let numCounter = 0;
 
@@ -76,35 +65,31 @@ for (const b of blocks) {
     case 'pb':
       children.push(new Paragraph({ children: [new PageBreak()] })); break;
     case 'toc':
-      for (const e of tocEntries) {
-        const pg = tocPages[e.text] !== undefined ? String(tocPages[e.text]) : '—';
-        children.push(new Paragraph({
-          bidirectional: true, alignment: AlignmentType.RIGHT,
-          spacing: { line: 276, lineRule: 'auto', after: 40 },
-          indent: e.level === 2 ? { right: convertMillimetersToTwip(8) } : undefined,
-          tabStops: [{ type: TabStopType.LEFT, position: convertMillimetersToTwip(e.level === 2 ? 146 : 154), leader: LeaderType.DOT }],
-          children: [
-            run(e.text, { bold: e.level === 1, size: e.level === 1 ? 28 : 26 }),
-            new TextRun({ children: [new Tab()], font: FONT, size: 26 }),
-            new TextRun({ text: pg, font: FONT, size: 26 }),
-          ],
-        }));
-      }
+      children.push(new TableOfContents('תוכן העניינים', {
+        hyperlink: true,
+        headingStyleRange: '1-2',
+        rightTabStop: convertMillimetersToTwip(154),
+      }));
       break;
+    case 'h1plain':
+      children.push(base([run(b.x, { bold: true, size: 34 })],
+        { alignment: AlignmentType.RIGHT, before: 360, after: 200 })); break;
     case 'h1':
       children.push(new Paragraph({
-        heading: HeadingLevel.HEADING_1, bidirectional: true, alignment: AlignmentType.RIGHT,
+        heading: HeadingLevel.HEADING_1, outlineLevel: 0,
+        bidirectional: true, alignment: AlignmentType.RIGHT,
         spacing: { line: LINE, lineRule: 'auto', before: 360, after: 200 },
         children: [run(b.x, { bold: true, size: 34 })],
       })); break;
     case 'h2':
       children.push(new Paragraph({
-        heading: HeadingLevel.HEADING_2, bidirectional: true, alignment: AlignmentType.RIGHT,
+        heading: HeadingLevel.HEADING_2, outlineLevel: 1,
+        bidirectional: true, alignment: AlignmentType.RIGHT,
         spacing: { line: LINE, lineRule: 'auto', before: 280, after: 140 },
         children: [run(b.x, { bold: true, size: 30 })],
       })); break;
     case 'p':
-      children.push(base(autoRuns(b.x), { indent: { firstLine: convertMillimetersToTwip(8) } })); break;
+      children.push(base(autoRuns(b.x))); break;
     case 'sub':
       children.push(base([run(b.x, { bold: true })], { alignment: AlignmentType.RIGHT, before: 160, after: 140 })); break;
     case 'kw':
@@ -153,6 +138,7 @@ children.push(base([run("נספח ב': דף זכויות היוצרים של ה�
 children.push(img('p-copyright_s.png', 555, 734));
 
 const doc = new Document({
+  features: { updateFields: true },
   styles: {
     default: {
       document: { run: { font: FONT, size: SZ }, paragraph: { spacing: { line: LINE, lineRule: 'auto' } } },
@@ -187,6 +173,5 @@ const doc = new Document({
 
 Packer.toBuffer(doc).then((buf) => {
   fs.writeFileSync(path.join(__dirname, 'keret_paper.docx'), buf);
-  fs.writeFileSync(path.join(__dirname, 'toc-entries.json'), JSON.stringify(tocEntries, null, 1));
-  console.log('written. toc entries:', tocEntries.length, 'paragraphs:', children.length);
+  console.log('written. paragraphs:', children.length);
 });
