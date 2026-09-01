@@ -1,3 +1,6 @@
 paper/node_modules/
 paper/keret_paper.docx
 paper/keret_paper.pdf
+paper/*.jpg
+paper/out.txt
+paper/o.txt
