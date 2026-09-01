@@ -109,6 +109,9 @@ for (const b of blocks) {
       children.push(base([run(b.x, { bold: true })], { alignment: AlignmentType.RIGHT, before: 160, after: 140 })); break;
     case 'kw':
       children.push(base([run(b.x, { bold: true })], { before: 200 })); break;
+    case 'refnote':
+      children.push(base([run(b.x, { italics: true, color: '808080', size: 24 })],
+        { alignment: AlignmentType.RIGHT, indent: { right: convertMillimetersToTwip(12) }, after: 160 })); break;
     case 'note':
       children.push(base([run(b.x, { italics: true, color: '808080', size: 24 })],
         { indent: { right: convertMillimetersToTwip(6), left: convertMillimetersToTwip(6) } })); break;
