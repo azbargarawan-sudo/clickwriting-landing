@@ -21,10 +21,16 @@ const blocks = [
 // כותרות ספרים המודגשות בנטוי בגוף הטקסט
 const TITLES = /(אוטוקורקט)/g;
 
+const LANG = { value: 'en-US', bidirectional: 'he-IL' };
+
 const run = (text, o = {}) => new TextRun({
   text, font: FONT, size: o.size || SZ,
   rightToLeft: o.ltr ? false : true,
   bold: !!o.bold, italics: !!o.italics, color: o.color,
+  language: LANG,
+  // שמות פרטיים כמו בוחניק, סרחיו וזיגמונד אינם במילון ויסומנו באדום.
+  // כיבוי הבדיקה מסיר את הקו האדום לגמרי. להחזרתה: למחוק את השורה הבאה.
+  noProof: true,
 });
 
 const autoRuns = (text, o = {}) => {
@@ -152,9 +158,9 @@ const doc = new Document({
   features: { updateFields: true },
   styles: {
     default: {
-      document: { run: { font: FONT, size: SZ }, paragraph: { spacing: { line: LINE, lineRule: 'auto' } } },
-      heading1: { run: { font: FONT, size: 34, bold: true, color: '000000' } },
-      heading2: { run: { font: FONT, size: 30, bold: true, color: '000000' } },
+      document: { run: { font: FONT, size: SZ, language: LANG }, paragraph: { spacing: { line: LINE, lineRule: 'auto' } } },
+      heading1: { run: { font: FONT, size: 34, bold: true, color: '000000', language: LANG } },
+      heading2: { run: { font: FONT, size: 30, bold: true, color: '000000', language: LANG } },
     },
   },
   numbering: {
@@ -175,7 +181,7 @@ const doc = new Document({
     footers: {
       default: new Footer({ children: [new Paragraph({
         alignment: AlignmentType.CENTER, bidirectional: true,
-        children: [new TextRun({ children: [PageNumber.CURRENT], font: FONT, size: 22 })],
+        children: [new TextRun({ children: [PageNumber.CURRENT], font: FONT, size: 22, language: LANG })],
       })] }),
     },
     children,
