@@ -247,7 +247,7 @@ const contrib = [
 ];
 
 // ---------- 6. לוח זמנים ----------
-const W = [3000, 3000, 3300];
+const W = [2900, 2900, 3272]; // סה"כ 9072 = רוחב הטקסט בעמוד A4 עם שוליים 2.5 ס"מ
 const rows = [
   ['שלב', 'תוצר', 'מועד משוער'],
   ['אישור הנושא וההצעה', 'הצעת מחקר מאושרת', 'ספטמבר–אוקטובר 2026'],
@@ -262,6 +262,8 @@ const timeline = [
   h1('6. לוח זמנים משוער'),
   new Table({
     visuallyRightToLeft: true,
+    alignment: AlignmentType.RIGHT,
+    width: { size: 9072, type: WidthType.DXA },
     columnWidths: W,
     rows: rows.map((r, i) => new TableRow({
       tableHeader: i === 0,
