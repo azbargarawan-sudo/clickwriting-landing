@@ -2,7 +2,7 @@
 
 - `research-proposal-bedouin-mothers.docx` – הצעת המחקר המלאה, רשימת מקורות לפי APA 7, ונספחים:
   מדריך ריאיון בעברית (נספח א'), מדריך ריאיון בערבית (נספח ב'), טיוטת טופס הסכמה מדעת (נספח ג').
-- `build_proposal.js` – הסקריפט שמייצר את הקובץ (`npm i docx && node build_proposal.js out.docx`).
+- `build_proposal.js` – הסקריפט שמייצר את הקובץ (`npm i docx && node build_proposal.js out.docx`, דורש את `ono-logo.png` באותה תיקייה).
 
 לפני הגשה: לעדכן את תוכן העניינים (F9), למלא ת.ז., שם התוכנית ומספר הקורס בשער,
 ולצרף הצהרת שימוש ב-AI לפי הטופס הרשמי באתר הקורס.

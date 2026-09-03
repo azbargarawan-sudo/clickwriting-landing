@@ -3,16 +3,16 @@
 const fs = require('fs');
 const {
   Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, Table, TableRow, TableCell,
-  WidthType, BorderStyle, Footer, PageNumber, TableOfContents, LevelFormat, ShadingType,
+  WidthType, BorderStyle, Footer, PageNumber, TableOfContents, LevelFormat, ShadingType, ImageRun,
 } = require('docx');
 
 const OUT = process.argv[2] || 'proposal.docx';
 
 // ---------- עזרי עיצוב ----------
-const HE = { ascii: 'Times New Roman', hAnsi: 'Times New Roman', cs: 'David', eastAsia: 'David' };
-const EN = { ascii: 'Times New Roman', hAnsi: 'Times New Roman', cs: 'Times New Roman' };
-const AR = { ascii: 'Times New Roman', hAnsi: 'Times New Roman', cs: 'Traditional Arabic', eastAsia: 'Traditional Arabic' };
-const LINE = 480; // מרווח כפול
+const HE = { ascii: 'David', hAnsi: 'David', cs: 'David', eastAsia: 'David' };
+const EN = { ascii: 'David', hAnsi: 'David', cs: 'David' };
+const AR = { ascii: 'Arial', hAnsi: 'Arial', cs: 'Arial', eastAsia: 'Arial' };
+const LINE = 360; // מרווח 1.5
 const CM = 567;   // 1 ס"מ ב-DXA
 
 function run(text, o = {}) {
@@ -60,16 +60,16 @@ let numInstance = 0;
 function numbered(items) {
   numInstance += 1;
   const inst = numInstance;
-  return items.map(t => p(t, { numbering: { reference: 'nums', level: 0, instance: inst }, align: AlignmentType.START }));
+  return items.map(t => p(t, { numbering: { reference: 'nums', level: 0, instance: inst }, align: AlignmentType.BOTH }));
 }
 function bullets(items, opts = {}) {
-  return items.map(t => p(t, { numbering: { reference: 'bullets', level: 0 }, align: AlignmentType.START, ...opts }));
+  return items.map(t => p(t, { numbering: { reference: 'bullets', level: 0 }, align: AlignmentType.BOTH, ...opts }));
 }
 
 // רשומה עברית ברשימת המקורות
 function refHe(segs) {
   return new Paragraph({
-    bidirectional: true, alignment: AlignmentType.START,
+    bidirectional: true, alignment: AlignmentType.BOTH,
     indent: { start: 709, hanging: 709 }, spacing: { line: LINE },
     children: segs.map(s => run(s.t, { italics: !!s.i })),
   });
@@ -77,7 +77,7 @@ function refHe(segs) {
 // רשומה לועזית ברשימת המקורות
 function refEn(segs) {
   return new Paragraph({
-    bidirectional: false, alignment: AlignmentType.LEFT,
+    bidirectional: false, alignment: AlignmentType.BOTH,
     indent: { left: 709, hanging: 709 }, spacing: { line: LINE },
     children: segs.map(s => new TextRun({ text: s.t, italics: !!s.i, font: EN, size: 24 })),
   });
@@ -86,9 +86,9 @@ function refEn(segs) {
 function ar(content, o = {}) {
   const segs = Array.isArray(content) ? content : [{ t: content }];
   return new Paragraph({
-    bidirectional: true, alignment: o.align || AlignmentType.START,
+    bidirectional: true, alignment: o.align || AlignmentType.BOTH,
     spacing: { line: LINE }, numbering: o.numbering, indent: o.indent,
-    children: segs.map(s => new TextRun({ text: s.t, rightToLeft: true, font: AR, size: 26, sizeComplexScript: 26, bold: !!s.b })),
+    children: segs.map(s => new TextRun({ text: s.t, rightToLeft: true, font: AR, size: 24, sizeComplexScript: 24, bold: !!s.b })),
   });
 }
 function arNumbered(items) {
@@ -108,7 +108,7 @@ function cell(text, width, o = {}) {
 
 // ---------- שער ----------
 const cover = [
-  empty(), empty(),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 120 }, children: [new ImageRun({ type: 'png', data: fs.readFileSync(__dirname + '/ono-logo.png'), transformation: { width: 170, height: 170 } })] }),
   p('הקריה האקדמית אונו', { align: AlignmentType.CENTER, line: 360 }),
   p('[שם הפקולטה / התוכנית]', { align: AlignmentType.CENTER, line: 360 }),
   empty(),
@@ -184,14 +184,14 @@ const lit = [
 const rq = [
   h1('3. שאלת המחקר ומטרותיו'),
   p([{ t: 'שאלת המחקר המרכזית: ', b: true }, { t: 'כיצד תופסות אימהות בחברה הבדואית את תהליך השילוב של ילדן עם מוגבלות בתוך מסגרות החינוך והקהילה?' }]),
-  p([{ t: 'שאלות משנה:', b: true }], { align: AlignmentType.START, keepNext: true }),
+  p([{ t: 'שאלות משנה:', b: true }], { align: AlignmentType.BOTH, keepNext: true }),
   ...numbered([
     'כיצד חוו האימהות את תהליך קביעת המסגרת החינוכית לילדן, ומה היה חלקן בהחלטה?',
     'כיצד הן מתארות את הקשר היומיומי עם הצוות החינוכי, ומה מקדם או מעכב אותו?',
     'כיצד הן תופסות את יחס המשפחה המורחבת והקהילה לילד ולשילובו, ואיזה מקום יש למסורת ולדת בתפיסה זו?',
     'אילו חסמים ואילו משאבי תמיכה הן מזהות, ומה לדעתן צריך להשתנות?',
   ]),
-  p([{ t: 'מטרות המחקר:', b: true }], { align: AlignmentType.START, keepNext: true, before: 120 }),
+  p([{ t: 'מטרות המחקר:', b: true }], { align: AlignmentType.BOTH, keepNext: true, before: 120 }),
   ...bullets([
     'לתת קול לאימהות בדואיות בשיח המחקרי והמקצועי על שילוב והכלה.',
     'למפות חסמים ומשאבי תמיכה כפי שהם נחווים מבפנים, במקום כפי שהמערכת מגדירה אותם.',
@@ -265,7 +265,7 @@ const timeline = [
       children: r.map((t, j) => cell(t, W[j], { head: i === 0 })),
     })),
   }),
-  p('לוח הזמנים יותאם למועדי ההגשה שייקבעו בקורס.', { align: AlignmentType.START, before: 120 }),
+  p('לוח הזמנים יותאם למועדי ההגשה שייקבעו בקורס.', { align: AlignmentType.BOTH, before: 120 }),
 ];
 
 // ---------- רשימת מקורות ----------
@@ -294,14 +294,14 @@ const refs = [
 ];
 
 // ---------- נספח א': מדריך ריאיון ----------
-const probe = (t) => p(t, { align: AlignmentType.START, indent: { start: 2 * CM }, run: { italics: true, size: 22, sizeComplexScript: 22 } });
+const probe = (t) => p(t, { align: AlignmentType.BOTH, indent: { start: 2 * CM }, run: { italics: true, size: 22, sizeComplexScript: 22 } });
 
 const appA = [
   h1('נספח א\': מדריך ריאיון חצי-מובנה (עברית)'),
-  p('הריאיון ייערך בערבית (הנוסח הערבי בנספח ב\'). השאלות הראשיות יישאלו לכל המשתתפות. שאלות ההמשך, בכתב נטוי, ישמשו רק אם הנושא לא עלה מעצמו. סדר השאלות גמיש ויותאם לזרימת השיחה.', { align: AlignmentType.START }),
+  p('הריאיון ייערך בערבית (הנוסח הערבי בנספח ב\'). השאלות הראשיות יישאלו לכל המשתתפות. שאלות ההמשך, בכתב נטוי, ישמשו רק אם הנושא לא עלה מעצמו. סדר השאלות גמיש ויותאם לזרימת השיחה.', { align: AlignmentType.BOTH }),
 
   h2('פתיחה'),
-  p('הצגת החוקר או המראיינת, הסבר קצר על מטרת המחקר ("אני רוצה להבין איך אימהות כמוך חוות את הדרך של הילד בבית הספר ובקהילה"), הבהרה שאין תשובות נכונות או לא נכונות, סודיות, הקלטה, זכות לעצור בכל רגע, חתימה על טופס הסכמה.', { align: AlignmentType.START }),
+  p('הצגת החוקר או המראיינת, הסבר קצר על מטרת המחקר ("אני רוצה להבין איך אימהות כמוך חוות את הדרך של הילד בבית הספר ובקהילה"), הבהרה שאין תשובות נכונות או לא נכונות, סודיות, הקלטה, זכות לעצור בכל רגע, חתימה על טופס הסכמה.', { align: AlignmentType.BOTH }),
 
   h2('1. שאלת פתיחה'),
   ...numbered(['ספרי לי על עצמך.']),
@@ -374,7 +374,7 @@ const appA = [
     'יש משהו שלא שאלתי ואת רוצה להוסיף?',
     'איך הרגשת בשיחה הזאת?',
   ]),
-  p('תודה, תזכורת על סודיות, הסבר על השלבים הבאים ועל האפשרות לקבל סיכום של הממצאים, מסירת פרטי קשר של החוקר ושל שירותי תמיכה בערבית.', { align: AlignmentType.START }),
+  p('תודה, תזכורת על סודיות, הסבר על השלבים הבאים ועל האפשרות לקבל סיכום של הממצאים, מסירת פרטי קשר של החוקר ושל שירותי תמיכה בערבית.', { align: AlignmentType.BOTH }),
 
   h2('שאלות המשך כלליות (לשימוש בכל תחום)'),
   ...bullets([
@@ -468,19 +468,19 @@ const appB = [
 // ---------- נספח ג': טופס הסכמה ----------
 const appC = [
   h1('נספח ג\': טיוטת טופס הסכמה מדעת (לתרגום לערבית ולאישור ועדת האתיקה)'),
-  p([{ t: 'שם המחקר: ', b: true }, { t: 'חוויותיהן של אימהות לילדים עם מוגבלות בחברה הבדואית: בין מסורת לשילוב במערכת החינוך ובקהילה.' }], { align: AlignmentType.START }),
-  p([{ t: 'החוקר: ', b: true }, { t: 'מוחמד מוחמד, סטודנט בקורס "שילוב והכלה במרחב החינוכי-חברתי", הקריה האקדמית אונו, בהנחיית עומרי טנקמן.' }], { align: AlignmentType.START }),
-  p([{ t: 'מטרת המחקר: ', b: true }, { t: 'להבין כיצד אימהות בחברה הבדואית חוות את השילוב של ילדן עם מוגבלות בבית הספר ובקהילה.' }], { align: AlignmentType.START }),
-  p([{ t: 'מה כוללת ההשתתפות: ', b: true }, { t: 'ריאיון אחד בערבית, באורך של כשעה, במקום שתבחרי. הריאיון יוקלט כדי שאוכל לזכור במדויק את דברייך.' }], { align: AlignmentType.START }),
-  p([{ t: 'התנדבות: ', b: true }, { t: 'ההשתתפות היא מרצונך החופשי. את יכולה לא לענות על שאלה, לעצור את הריאיון או לבקש למחוק את ההקלטה, בכל שלב וללא כל הסבר. לא תהיה לכך שום השפעה על השירותים שאת או ילדך מקבלים.' }], { align: AlignmentType.START }),
-  p([{ t: 'סודיות: ', b: true }, { t: 'שמך, שם ילדך, שם היישוב ושם בית הספר לא יופיעו בשום מסמך. ההקלטה תישמר בקובץ מוגן, תשמש רק לצורך המחקר ותימחק בסיומו. בעבודה ישולבו ציטוטים קצרים תחת שם בדוי.' }], { align: AlignmentType.START }),
-  p([{ t: 'סיכונים ותועלת: ', b: true }, { t: 'הריאיון עשוי לעורר רגשות קשים. אם תרצי, נעצור, ואוכל למסור לך פרטים של גורמי תמיכה בערבית. אין תועלת אישית ישירה מההשתתפות, אך דברייך עשויים לסייע לשיפור השירותים לאימהות אחרות.' }], { align: AlignmentType.START }),
-  p([{ t: 'פרטי קשר לשאלות: ', b: true }, { t: 'מוחמד מוחמד, טלפון: __________, דוא"ל: __________.' }], { align: AlignmentType.START }),
+  p([{ t: 'שם המחקר: ', b: true }, { t: 'חוויותיהן של אימהות לילדים עם מוגבלות בחברה הבדואית: בין מסורת לשילוב במערכת החינוך ובקהילה.' }], { align: AlignmentType.BOTH }),
+  p([{ t: 'החוקר: ', b: true }, { t: 'מוחמד מוחמד, סטודנט בקורס "שילוב והכלה במרחב החינוכי-חברתי", הקריה האקדמית אונו, בהנחיית עומרי טנקמן.' }], { align: AlignmentType.BOTH }),
+  p([{ t: 'מטרת המחקר: ', b: true }, { t: 'להבין כיצד אימהות בחברה הבדואית חוות את השילוב של ילדן עם מוגבלות בבית הספר ובקהילה.' }], { align: AlignmentType.BOTH }),
+  p([{ t: 'מה כוללת ההשתתפות: ', b: true }, { t: 'ריאיון אחד בערבית, באורך של כשעה, במקום שתבחרי. הריאיון יוקלט כדי שאוכל לזכור במדויק את דברייך.' }], { align: AlignmentType.BOTH }),
+  p([{ t: 'התנדבות: ', b: true }, { t: 'ההשתתפות היא מרצונך החופשי. את יכולה לא לענות על שאלה, לעצור את הריאיון או לבקש למחוק את ההקלטה, בכל שלב וללא כל הסבר. לא תהיה לכך שום השפעה על השירותים שאת או ילדך מקבלים.' }], { align: AlignmentType.BOTH }),
+  p([{ t: 'סודיות: ', b: true }, { t: 'שמך, שם ילדך, שם היישוב ושם בית הספר לא יופיעו בשום מסמך. ההקלטה תישמר בקובץ מוגן, תשמש רק לצורך המחקר ותימחק בסיומו. בעבודה ישולבו ציטוטים קצרים תחת שם בדוי.' }], { align: AlignmentType.BOTH }),
+  p([{ t: 'סיכונים ותועלת: ', b: true }, { t: 'הריאיון עשוי לעורר רגשות קשים. אם תרצי, נעצור, ואוכל למסור לך פרטים של גורמי תמיכה בערבית. אין תועלת אישית ישירה מההשתתפות, אך דברייך עשויים לסייע לשיפור השירותים לאימהות אחרות.' }], { align: AlignmentType.BOTH }),
+  p([{ t: 'פרטי קשר לשאלות: ', b: true }, { t: 'מוחמד מוחמד, טלפון: __________, דוא"ל: __________.' }], { align: AlignmentType.BOTH }),
   empty(),
-  p('קראתי (או הוקרא לי) את ההסבר, קיבלתי תשובות לשאלותיי, ואני מסכימה להשתתף במחקר ולהקלטת הריאיון.', { align: AlignmentType.START }),
+  p('קראתי (או הוקרא לי) את ההסבר, קיבלתי תשובות לשאלותיי, ואני מסכימה להשתתף במחקר ולהקלטת הריאיון.', { align: AlignmentType.BOTH }),
   empty(),
-  p('שם המשתתפת: ____________________    חתימה: ______________    תאריך: ___________', { align: AlignmentType.START }),
-  p('שם החוקר/ת: ____________________    חתימה: ______________    תאריך: ___________', { align: AlignmentType.START }),
+  p('שם המשתתפת: ____________________    חתימה: ______________    תאריך: ___________', { align: AlignmentType.BOTH }),
+  p('שם החוקר/ת: ____________________    חתימה: ______________    תאריך: ___________', { align: AlignmentType.BOTH }),
 ];
 
 // ---------- מסמך ----------
