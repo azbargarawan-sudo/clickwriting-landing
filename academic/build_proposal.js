@@ -13,10 +13,13 @@ const HE = { ascii: 'David', hAnsi: 'David', cs: 'David', eastAsia: 'David' };
 const EN = { ascii: 'David', hAnsi: 'David', cs: 'David' };
 const AR = { ascii: 'Arial', hAnsi: 'Arial', cs: 'Arial', eastAsia: 'Arial' };
 const LINE = 360; // מרווח 1.5
+const LANG_HE = { value: 'he-IL', bidirectional: 'he-IL' };
+const LANG_AR = { value: 'ar-JO', bidirectional: 'ar-JO' };
+const LANG_EN = { value: 'en-US', bidirectional: 'he-IL' };
 const CM = 567;   // 1 ס"מ ב-DXA
 
 function run(text, o = {}) {
-  return new TextRun({ text, rightToLeft: true, font: HE, size: 24, sizeComplexScript: 24, ...o });
+  return new TextRun({ text, rightToLeft: true, font: HE, size: 24, sizeComplexScript: 24, language: LANG_HE, ...o });
 }
 // פסקה עברית רגילה. מקבל מחרוזת או מערך של קטעים {t, b, i}
 function p(content, o = {}) {
@@ -79,7 +82,7 @@ function refEn(segs) {
   return new Paragraph({
     bidirectional: false, alignment: AlignmentType.BOTH,
     indent: { left: 709, hanging: 709 }, spacing: { line: LINE },
-    children: segs.map(s => new TextRun({ text: s.t, italics: !!s.i, font: EN, size: 24 })),
+    children: segs.map(s => new TextRun({ text: s.t, italics: !!s.i, font: EN, size: 24, language: LANG_EN })),
   });
 }
 // פסקה בערבית
@@ -88,7 +91,7 @@ function ar(content, o = {}) {
   return new Paragraph({
     bidirectional: true, alignment: o.align || AlignmentType.BOTH,
     spacing: { line: LINE }, numbering: o.numbering, indent: o.indent,
-    children: segs.map(s => new TextRun({ text: s.t, rightToLeft: true, font: AR, size: 24, sizeComplexScript: 24, bold: !!s.b })),
+    children: segs.map(s => new TextRun({ text: s.t, rightToLeft: true, font: AR, size: 24, sizeComplexScript: 24, bold: !!s.b, language: LANG_AR })),
   });
 }
 function arNumbered(items) {
@@ -374,7 +377,7 @@ const doc = new Document({
   title: 'הצעת מחקר: אימהות לילדים עם מוגבלות בחברה הבדואית',
   features: { updateFields: true },
   styles: {
-    default: { document: { run: { font: HE, size: 24, sizeComplexScript: 24, rightToLeft: true }, paragraph: { spacing: { line: LINE } } } },
+    default: { document: { run: { font: HE, size: 24, sizeComplexScript: 24, rightToLeft: true, language: LANG_HE }, paragraph: { spacing: { line: LINE } } } },
     paragraphStyles: [
       { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', quickFormat: true,
         run: { size: 32, bold: true, font: HE, color: '000000', rightToLeft: true },
@@ -401,7 +404,7 @@ const doc = new Document({
       page: { margin: { top: 1417, bottom: 1417, left: 1417, right: 1417 } },
     },
     footers: {
-      default: new Footer({ children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ children: [PageNumber.CURRENT], font: HE, size: 22 })] })] }),
+      default: new Footer({ children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ children: [PageNumber.CURRENT], font: HE, size: 22, language: LANG_HE })] })] }),
       first: new Footer({ children: [new Paragraph({ children: [] })] }),
     },
     children: [
@@ -410,4 +413,15 @@ const doc = new Document({
   }],
 });
 
-Packer.toBuffer(doc).then(buf => { fs.writeFileSync(OUT, buf); console.log('written', OUT, buf.length); });
+Packer.toBuffer(doc).then(async buf => {
+  // מכבה את סימון שגיאות האיות והדקדוק (הקווים האדומים) בקובץ עצמו
+  const JSZip = require('jszip');
+  const zip = await JSZip.loadAsync(buf);
+  let settings = await zip.file('word/settings.xml').async('string');
+  if (!settings.includes('hideSpellingErrors')) {
+    settings = settings.replace('<w:displayBackgroundShape/>', '<w:displayBackgroundShape/><w:hideSpellingErrors/><w:hideGrammaticalErrors/>');
+  }
+  zip.file('word/settings.xml', settings);
+  const out = await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
+  fs.writeFileSync(OUT, out); console.log('written', OUT, out.length);
+});
