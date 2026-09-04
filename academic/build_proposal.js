@@ -59,11 +59,12 @@ function h3(text) {
 }
 const empty = () => new Paragraph({ spacing: { line: LINE }, children: [run('')] });
 
-let numInstance = 0;
+// כל רשימה ממוספרת מקבלת הגדרת מספור נפרדת (abstractNum משלה), כך שהיא תמיד מתחילה מ-1
+let numRef = 0;
+const NUM_REFS = ['nums1', 'nums2', 'nums3', 'nums4', 'nums5', 'nums6'];
 function numbered(items) {
-  numInstance += 1;
-  const inst = numInstance;
-  return items.map(t => p(t, { numbering: { reference: 'nums', level: 0, instance: inst }, align: AlignmentType.BOTH }));
+  const ref = NUM_REFS[numRef++];
+  return items.map(t => p(t, { numbering: { reference: ref, level: 0 }, align: AlignmentType.BOTH }));
 }
 function bullets(items, opts = {}) {
   return items.map(t => p(t, { numbering: { reference: 'bullets', level: 0 }, align: AlignmentType.BOTH, ...opts }));
@@ -95,9 +96,8 @@ function ar(content, o = {}) {
   });
 }
 function arNumbered(items) {
-  numInstance += 1;
-  const inst = numInstance;
-  return items.map(t => ar(t, { numbering: { reference: 'nums', level: 0, instance: inst } }));
+  const ref = NUM_REFS[numRef++];
+  return items.map(t => ar(t, { numbering: { reference: ref, level: 0 } }));
 }
 
 function cell(text, width, o = {}) {
@@ -392,8 +392,8 @@ const doc = new Document({
   },
   numbering: {
     config: [
-      { reference: 'nums', levels: [{ level: 0, format: LevelFormat.DECIMAL, text: '%1.', alignment: AlignmentType.START,
-        style: { paragraph: { indent: { start: 720, hanging: 360 } } } }] },
+      ...NUM_REFS.map(reference => ({ reference, levels: [{ level: 0, format: LevelFormat.DECIMAL, text: '%1.', alignment: AlignmentType.START, start: 1,
+        style: { paragraph: { indent: { start: 720, hanging: 360 } } } }] })),
       { reference: 'bullets', levels: [{ level: 0, format: LevelFormat.BULLET, text: '•', alignment: AlignmentType.START,
         style: { paragraph: { indent: { start: 720, hanging: 360 } } } }] },
     ],
