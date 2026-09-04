@@ -113,7 +113,6 @@ function cell(text, width, o = {}) {
 const cover = [
   new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 120 }, children: [new ImageRun({ type: 'png', data: fs.readFileSync(__dirname + '/ono-logo.png'), transformation: { width: 170, height: 170 } })] }),
   p('הקריה האקדמית אונו', { align: AlignmentType.CENTER, line: 360 }),
-  p('[שם הפקולטה / התוכנית]', { align: AlignmentType.CENTER, line: 360 }),
   empty(),
   p('קורס: שילוב והכלה במרחב החינוכי-חברתי [מספר קורס: ________]', { align: AlignmentType.CENTER, line: 360 }),
   p('מרצה: עומרי טנקמן', { align: AlignmentType.CENTER, line: 360 }),
