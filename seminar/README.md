@@ -17,7 +17,7 @@
 ## רשימה ביבליוגרפית (APA 7)
 
 ### מקורות ראשוניים
-- קרת, א' (1994). האנשים החלולים. בתוך *געגועי לקיסינג'ר*. זמורה-ביתן.
+- קרת, א' (1994). האנשים החלולים. בתוך *געגועי לקיסינג'ר* (עמ' 16-17). זמורה-ביתן.
 - קרת, א' (2024). מי כמונו יודע. בתוך *אוטוקורקט*. כנרת, זמורה-ביתן, דביר.
 
 ### מקור על הסיפורת העברית
@@ -26,12 +26,12 @@
 ### שישה מאמרים שפיטים עיקריים (טקסט מלא זמין)
 | מאמר | גישה |
 |---|---|
-| כהן, ד' (2015). בשני צירים שונים: תהליך האבל והתקשורת של הורים ואחים שכולים לאחר אבדן ילד בוגר. *מפגש לעבודה חינוכית-סוציאלית*, כג(41). | [PDF חופשי](https://kitvei-et.efshar.org.il/wp-content/uploads/Mifgash-41-05-בשני-צירים-אבל-הורים-ואחים-כהן.pdf) |
-| קצמן, ר' (2005). געגועים למיתוס: אישיות, אתיקה ואידאולוגיה במיתופואסיס הפוסטמודרני של אתגר קרת. *מכאן*, ד, 20–41. | [PDF חופשי](https://library.osu.edu/projects/hebrew-lexicon/99995-files/99995095/99995095-004/99995095-004-020-041.pdf) |
+| כהן, ד' (2015). בשני צירים שונים: תהליך האבל והתקשורת של הורים ואחים שכולים לאחר אבדן ילד בוגר. *מפגש לעבודה חינוכית-סוציאלית*, כג(41), 97-130. | [PDF חופשי](https://kitvei-et.efshar.org.il/wp-content/uploads/Mifgash-41-05-בשני-צירים-אבל-הורים-ואחים-כהן.pdf) |
+| כצמן, ר' (2005). געגועים למיתוס: אישיות, אתיקה ואידיאולוגיה במיתופואסיס הפוסטמודרני של אתגר קרת. *מכאן*, ד, 20-41. | [PDF חופשי](https://library.osu.edu/projects/hebrew-lexicon/99995-files/99995095/99995095-004/99995095-004-020-041.pdf) |
 | Abramovich, D. (2019). Israeli Holocaust memory in a short story by Etgar Keret. *Australian Journal of Jewish Studies, 32*, 21–33. | [PDF חופשי](http://www.aajs.org.au/wp-content/uploads/2020/03/AJJSvol32_Abramovich_21-33.pdf) |
-| Mendelson-Maoz, A. (2018). Keret's "living-dead" and the sacrifice of Israeli masculinity. *BGU Review: A Journal of Israeli Culture*, Winter 2018. | [PDF חופשי](https://in.bgu.ac.il/en/heksherim/BGU%20Review%202018/Adia-Mendelson-Maoz-BGUR.pdf) |
+| Mendelson-Maoz, A. (2018). Keret's "living-dead" and the sacrifice of Israeli masculinity. *BGU Review: A Journal of Israeli Culture*, Winter 2018, 1-24. | [PDF חופשי](https://in.bgu.ac.il/en/heksherim/BGU%20Review%202018/Adia-Mendelson-Maoz-BGUR.pdf) |
 | Omer-Sherman, R. (2020). "To extract from it some sort of beautiful thing": The Holocaust in the families and fiction of Nava Semel and Etgar Keret. *Humanities, 9*(4), 137. | [Open Access](https://doi.org/10.3390/h9040137) |
-| Schwartz, Y. (2018). Stam: The unbearable lightness of banality, or on the nature of Etgar Keret's humor. *BGU Review: A Journal of Israeli Culture*, Winter 2018. | [PDF חופשי](https://www.bgu.ac.il/media/zpjot1iw/yigal-schwartz-bgur.pdf) |
+| Schwartz, Y. (2018). "A story or a bullet between the eyes": Etgar Keret: Repetitiveness, morality, and postmodernism. *BGU Review: A Journal of Israeli Culture*, Winter 2018, 1-24. (פורסם לראשונה ב-Hebrew Studies, 58, 2017) | [PDF חופשי](https://www.bgu.ac.il/media/zpjot1iw/yigal-schwartz-bgur.pdf) |
 
 ### מקורות משלימים (אופציונלי)
 - טאוב, ג' (1997). *המרד השפוף: על תרבות צעירה בישראל*. הקיבוץ המאוחד.
