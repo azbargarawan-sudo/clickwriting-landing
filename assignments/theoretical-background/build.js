@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { Document, Packer, Paragraph, TextRun, AlignmentType, Header, PageBreak, HeadingLevel } = require('docx');
+const { Document, Packer, Paragraph, TextRun, AlignmentType, Header, PageBreak, ImageRun } = require('docx');
 
 const HEB = 'David', ENG = 'David';
 const LINE = 360; // 1.5 spacing
@@ -65,16 +65,54 @@ children.push(hebTitle('רשימת מקורות'));
 for (const r of body.refs_he) children.push(hebRef(r));
 for (const r of body.refs_en) children.push(engRef(r));
 
+// ---- title page ----
+function tp(text, { size = 24, bold = false, before = 0, after = 0 } = {}) {
+  return new Paragraph({
+    bidirectional: true, alignment: AlignmentType.CENTER,
+    spacing: { line: LINE, before, after },
+    children: [new TextRun({ text, font: HEB, size, bold, rightToLeft: true })],
+  });
+}
+const logo = new Paragraph({
+  alignment: AlignmentType.CENTER,
+  spacing: { before: 400, after: 200 },
+  children: [new ImageRun({
+    type: 'jpg',
+    data: fs.readFileSync('ono-logo.jpg'),
+    transformation: { width: 155, height: 155 },
+  })],
+});
+const titlePage = [
+  logo,
+  tp('הקריה האקדמית אונו', { size: 28, bold: true }),
+  tp('הפקולטה למדעי החברה והרוח'),
+  tp('סמינר: תהליכי חזון ומנהיגות בארגונים', { before: 300 }),
+  tp("מרצה: ד\"ר עימאד ג'ראיסי"),
+  tp('הרקע התאורטי', { size: 36, bold: true, before: 700, after: 120 }),
+  tp('סקירת ספרות', { size: 28 }),
+  tp('תפיסות מנהלי בתי ספר בדרום את מנהיגותם החזונית', { before: 400 }),
+  tp('בזמן מלחמת "חרבות ברזל"'),
+  tp('מוגש על ידי: סלסביל אבו קוידר', { before: 700 }),
+  tp('תעודת זהות: 215075086'),
+  tp("כ\"ו באלול התשפ\"ו, 8 בספטמבר 2026", { before: 700 }),
+];
+
 const doc = new Document({
   styles: { default: { document: { run: { font: HEB, size: 24 } } } },
-  sections: [{
-    properties: {
-      titlePage: true,
-      page: { margin: { top: 1417, bottom: 1417, left: 1417, right: 1417 } },
+  sections: [
+    {
+      properties: { page: { margin: { top: 1417, bottom: 1417, left: 1417, right: 1417 } } },
+      children: titlePage,
     },
-    headers: { first: firstHeader },
-    children,
-  }],
+    {
+      properties: {
+        titlePage: true,
+        page: { margin: { top: 1417, bottom: 1417, left: 1417, right: 1417 } },
+      },
+      headers: { first: firstHeader },
+      children,
+    },
+  ],
 });
 
 Packer.toBuffer(doc).then(buf => {
