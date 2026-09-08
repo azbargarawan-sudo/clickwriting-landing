@@ -58,7 +58,7 @@ const children = [];
 children.push(hebTitle('מטלה 4: הרקע התאורטי (סקירת ספרות)'));
 for (const sec of body.sections) {
   if (sec.h) children.push(hebHeading(sec.h));
-  for (const p of sec.p) children.push(heb(p, { indent: { firstLine: 709 }, justify: true }));
+  for (const p of sec.p) children.push(heb(p, { justify: true }));
 }
 children.push(new Paragraph({ children: [new PageBreak()] }));
 children.push(hebTitle('רשימת מקורות'));
