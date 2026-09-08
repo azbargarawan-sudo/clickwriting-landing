@@ -1,13 +1,13 @@
 const fs = require('fs');
 const { Document, Packer, Paragraph, TextRun, AlignmentType, Header, PageBreak, HeadingLevel } = require('docx');
 
-const HEB = 'David', ENG = 'Times New Roman';
-const LINE = 480; // double spacing
+const HEB = 'David', ENG = 'David';
+const LINE = 360; // 1.5 spacing
 
 function heb(text, opts = {}) {
   return new Paragraph({
     bidirectional: true,
-    alignment: AlignmentType.RIGHT,
+    alignment: opts.justify ? AlignmentType.JUSTIFIED : AlignmentType.RIGHT,
     spacing: { line: LINE, after: 0 },
     indent: opts.indent,
     children: [new TextRun({ text, font: HEB, size: 24, rightToLeft: true, bold: !!opts.bold, underline: opts.underline ? {} : undefined })],
@@ -58,7 +58,7 @@ const children = [];
 children.push(hebTitle('מטלה 4: הרקע התאורטי (סקירת ספרות)'));
 for (const sec of body.sections) {
   if (sec.h) children.push(hebHeading(sec.h));
-  for (const p of sec.p) children.push(heb(p, { indent: { firstLine: 709 } }));
+  for (const p of sec.p) children.push(heb(p, { indent: { firstLine: 709 }, justify: true }));
 }
 children.push(new Paragraph({ children: [new PageBreak()] }));
 children.push(hebTitle('רשימת מקורות'));
