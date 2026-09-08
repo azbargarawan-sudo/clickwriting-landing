@@ -57,7 +57,7 @@ const firstHeader = new Header({
 const children = [];
 children.push(hebTitle('מטלה 4: הרקע התאורטי (סקירת ספרות)'));
 for (const sec of body.sections) {
-  children.push(hebHeading(sec.h));
+  if (sec.h) children.push(hebHeading(sec.h));
   for (const p of sec.p) children.push(heb(p, { indent: { firstLine: 709 } }));
 }
 children.push(new Paragraph({ children: [new PageBreak()] }));
