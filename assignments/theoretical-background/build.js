@@ -116,6 +116,6 @@ const doc = new Document({
 });
 
 Packer.toBuffer(doc).then(buf => {
-  fs.writeFileSync('הרקע_התאורטי_סלסביל_אבו_קוידר.docx', buf);
+  fs.writeFileSync('סקירה סלסביל.docx', buf);
   console.log('written');
 });
