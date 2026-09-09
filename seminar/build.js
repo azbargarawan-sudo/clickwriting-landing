@@ -52,7 +52,6 @@ function P(text, o = {}) {
     bidirectional: true,
     alignment: o.align || AlignmentType.BOTH,
     spacing: { line: LINE, after: o.after === undefined ? 120 : o.after },
-    indent: o.noIndent ? undefined : { firstLine: 567 },
     children: runs(text, o),
   });
 }
