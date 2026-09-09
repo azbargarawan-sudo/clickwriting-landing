@@ -1,7 +1,7 @@
 const fs = require("fs");
 const {
   Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, Table, TableRow, TableCell,
-  WidthType, ShadingType, BorderStyle, TableOfContents, PageNumber, Footer,
+  WidthType, ShadingType, BorderStyle, TableOfContents, PageNumber, Footer, ImageRun,
 } = require("docx");
 
 // ---------- run splitting (Hebrew RTL / Latin LTR / numbers LTR) ----------
@@ -125,8 +125,10 @@ const Note = t => new Paragraph({ bidirectional: true, alignment: AlignmentType.
 // ======================= CONTENT =======================
 const TITLE = "רווחה נפשית ותפיסת הלגיטימיות של סגל הכליאה בקרב אסירים שפוטים בישראל";
 
+const LOGO = fs.readFileSync("logo.jpg");
 const cover = [
-  Empty(), Empty(), Empty(),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 240 }, children: [new ImageRun({ type: "jpg", data: LOGO, transformation: { width: 300, height: Math.round(300 * 233 / 586) } })] }),
+  Empty(), Empty(),
   new Paragraph({ bidirectional: true, alignment: AlignmentType.CENTER, spacing: { line: 480 }, children: [].concat(hebRun(TITLE, false, { size: 36, bold: true })) }),
   Empty(), Empty(),
   P("עבודה מוגשת במסגרת סמינריון תנאי כליאה של אסירים פליליים בישראל ובעולם", { align: AlignmentType.CENTER, noIndent: true }),
