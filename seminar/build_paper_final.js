@@ -159,9 +159,10 @@ function PL(text, opts = {}) { // LTR paragraph (English)
 const c = [];
 
 // ===== שער =====
-c.push(EMPTY(), EMPTY(), EMPTY());
-c.push(center('[שם המוסד האקדמי]', 28, true));
-c.push(center('[שם התוכנית / החוג]', 24));
+c.push(EMPTY());
+c.push(IMG('logo_sakhnin.png', 5.5, 5.5));
+c.push(center('מכללת סכנין להכשרת עובדי הוראה', 28, true));
+c.push(center('[שם התוכנית / החוג, למשל: החוג לחינוך מיוחד]', 24));
 c.push(EMPTY(), EMPTY());
 c.push(center('עבודה סמינריונית במסגרת הקורס: סמינריון בלקויות למידה', 24, true));
 c.push(center('[מספר הקורס]', 24));
