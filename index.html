@@ -369,6 +369,131 @@
       border-radius: 50px;
     }
 
+    /* ── SAMPLE WORK ── */
+    .sample { background: var(--gray-light); }
+    .sample-header { text-align: center; margin-bottom: 48px; }
+    .sample-header .section-sub { margin-inline: auto; }
+    .sample-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: stretch;
+    }
+    .sample-doc {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid #eee;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .sample-doc-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 22px;
+      background: var(--gold-pale);
+      border-bottom: 1px solid var(--gold-light);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+    }
+    .sample-doc-bar span:last-child { color: var(--gray); font-weight: 500; }
+    .sample-doc-body { padding: 28px 26px; flex: 1; }
+    .sample-doc-body h3 {
+      font-size: 1.25rem;
+      font-weight: 900;
+      line-height: 1.35;
+      margin-bottom: 18px;
+    }
+    .sample-field { margin-bottom: 18px; }
+    .sample-field h5 {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--gold-dark);
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .sample-field p { color: var(--gray); font-size: 0.92rem; line-height: 1.65; }
+    .sample-outline { list-style: none; display: grid; gap: 8px; }
+    .sample-outline li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--dark);
+    }
+    .sample-outline li::before {
+      content: "";
+      flex: 0 0 8px;
+      width: 8px; height: 8px;
+      margin-top: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+    .sample-outline strong { font-weight: 800; }
+    .sample-side { display: flex; flex-direction: column; gap: 20px; }
+    .sample-quote {
+      background: var(--dark);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 28px 26px;
+      position: relative;
+      flex: 1;
+    }
+    .sample-quote::before {
+      content: "\201D";
+      position: absolute;
+      top: 8px; left: 20px;
+      font-size: 4rem;
+      color: var(--gold);
+      opacity: 0.35;
+      line-height: 1;
+    }
+    .sample-quote .poem {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .sample-quote .poem-src { font-size: 0.8rem; color: #bbb; margin-bottom: 18px; }
+    .sample-quote .analysis {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #ddd;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 16px;
+    }
+    .sample-quote .analysis strong { color: var(--gold-light); }
+    .sample-facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .sample-fact {
+      background: var(--white);
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .sample-fact b {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--gold-dark);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .sample-fact span { font-size: 0.78rem; color: var(--gray); }
+    .sample-cta { text-align: center; margin-top: 36px; }
+    .sample-cta p { color: var(--gray); font-size: 0.95rem; margin-bottom: 14px; }
+
     /* ── HOW IT WORKS ── */
     .how { background: var(--white); text-align: center; }
     .how-header { margin-bottom: 56px; }
@@ -748,11 +873,13 @@
       .hero-buttons { flex-direction: column; align-items: center; }
       nav { padding: 14px 4%; }
       .pricing-grid { grid-template-columns: 1fr; }
+      .sample-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 480px) {
       section { padding: 64px 4%; }
       .about-cards { grid-template-columns: 1fr; }
+      .sample-facts { grid-template-columns: 1fr 1fr; }
     }
 
     /* ── ANIMATIONS ── */
@@ -770,6 +897,7 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about" class="mob-link">אודות</a>
   <a href="#services" class="mob-link">שירותים</a>
+  <a href="#sample" class="mob-link">דוגמה</a>
   <a href="#pricing" class="mob-link">מחירים</a>
   <a href="#testimonials" class="mob-link">המלצות</a>
   <a href="#faq" class="mob-link">שאלות</a>
@@ -784,6 +912,7 @@
   <ul class="nav-links">
     <li><a href="#about">אודות</a></li>
     <li><a href="#services">שירותים</a></li>
+    <li><a href="#sample">דוגמה</a></li>
     <li><a href="#pricing">מחירים</a></li>
     <li><a href="#testimonials">המלצות</a></li>
     <li><a href="#faq">שאלות</a></li>
@@ -975,6 +1104,66 @@
 </section>
 
 <!-- PRICING -->
+<!-- ═══════ SAMPLE WORK ═══════ -->
+<section class="sample" id="sample">
+  <div class="sample-header fade-up">
+    <div class="section-tag">דוגמה מהשטח</div>
+    <h2 class="section-title">ככה נראית <span class="gold">עבודה שלנו</span></h2>
+    <p class="section-sub">עבודה סמינריונית בספרות עברית שכתבנו לסטודנטית – מנושא ושאלת מחקר ועד ניתוח טקסטואלי צמוד וסיכום.</p>
+  </div>
+
+  <div class="sample-grid">
+    <div class="sample-doc fade-up">
+      <div class="sample-doc-bar">
+        <span>📄 עבודה סמינריונית · ספרות עברית</span>
+        <span>ציון: 95</span>
+      </div>
+      <div class="sample-doc-body">
+        <h3>מוטיב השתיקה והדומייה בשיריה של המשוררת זלדה</h3>
+
+        <div class="sample-field">
+          <h5>שאלת המחקר</h5>
+          <p>כיצד מעצב השדה הסמנטי של השתיקה בשירת זלדה מרחב של התבוננות פנימית וחוויה קיומית?</p>
+        </div>
+
+        <div class="sample-field">
+          <h5>הטענה המרכזית</h5>
+          <p>אצל זלדה השתיקה אינה "היעדר מילים" אלא ישות דינמית ובעלת מטען חיובי – "אוצר" שמאפשר לדוברת להקשיב לעולם, לטבע ולעצמה.</p>
+        </div>
+
+        <div class="sample-field">
+          <h5>מבנה העבודה</h5>
+          <ul class="sample-outline">
+            <li><span><strong>מבוא ורקע:</strong> ההקשר החסידי, חייה האישיים של המשוררת ודילמות בהמלך המחקר.</span></li>
+            <li><span><strong>קבוצה 1 – שקט להסתכלות פנימה:</strong> "פנאי" ו"כל שושנה".</span></li>
+            <li><span><strong>קבוצה 2 – המוות והאובדן:</strong> "לכל איש יש שם" ו"כאשר היית פה".</span></li>
+            <li><span><strong>קבוצה 3 – השתיקה כעוצמה רוחנית:</strong> "שני יסודות" – הברוש מול הלהבה.</span></li>
+            <li><span><strong>סיכום:</strong> השתיקה כ"שפה הכי גבוהה של הנפש".</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sample-side fade-up">
+      <div class="sample-quote">
+        <p class="poem">"הָיָה לָנוּ אוֹצָר הָיָה לָנוּ פְּנַאי / שֶׁל דּוּמִיָּה הַבָּאָה מִן הַנֶּפֶשׁ"</p>
+        <p class="poem-src">זלדה, "פנאי" (1967)</p>
+        <p class="analysis"><strong>מתוך הניתוח:</strong> השימוש במילה "אוצר" מבהיר מיד לקורא שהשתיקה אצל זלדה איננה חיסרון, ריקנות או שיתוק – היא נכס יקר ערך. הדומייה "באה מן הנפש", כלומר זהו תהליך פנימי של השקטת המחשבות, שרק אחריו יכול האדם להפוך לכלי קיבול נקי להקשבה לעולם.</p>
+      </div>
+      <div class="sample-facts">
+        <div class="sample-fact"><b>5</b><span>שירים נותחו</span></div>
+        <div class="sample-fact"><b>3</b><span>קבוצות תמטיות</span></div>
+        <div class="sample-fact"><b>6</b><span>ימי עבודה</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sample-cta fade-up">
+    <p>רוצים לראות דוגמה מהתחום שלכם? שלחו לנו הודעה ונשמח להראות.</p>
+    <a href="https://wa.me/ROGIB2YQ33TLO1" class="btn-secondary" target="_blank" rel="noopener">דברו איתנו בוואטסאפ</a>
+  </div>
+</section>
+
 <section class="pricing" id="pricing">
   <div class="pricing-header fade-up">
     <div class="section-tag">מחירים</div>
