@@ -38,11 +38,13 @@ body = x[x.index('<w:body>') + 8: x.index('<w:sectPr')]
 # top-level blocks: paragraphs, tables, sdt
 blocks = re.findall(r'(<w:p>.*?</w:p>|<w:p [^>]*>.*?</w:p>|<w:tbl>.*?</w:tbl>|<w:sdt>.*?</w:sdt>)', body, flags=re.S)
 LINES_PER_PAGE, CHARS_PER_LINE = 32.0, 88.0
-page, lines = 1, 0.0
+page, lines, nbreaks = 1, 0.0, 0
 entries = []
 def newpage():
-    global page, lines
-    page += 1; lines = 0.0
+    global page, lines, nbreaks
+    nbreaks += 1
+    page = nbreaks + 1 if nbreaks <= 2 else page + 1   # title page = 1, TOC = 2, introduction = 3
+    lines = 0.0
 for b in blocks:
     if b.startswith('<w:sdt'):  # the TOC field itself
         lines += 0.7 * sum(1 for l,t,p in entries) + 26; continue
@@ -90,7 +92,7 @@ for lvl, text, pg in entries:
     ind = '' if lvl == 1 else '<w:ind w:start="440"/>'
     bold = '<w:b/><w:bCs/>' if lvl == 1 else ''
     toc_paras.append(
-        f'<w:p><w:pPr><w:bidi/><w:tabs><w:tab w:val="right" w:leader="dot" w:pos="9020"/></w:tabs>{ind}<w:spacing w:after="60" w:line="300"/></w:pPr>'
+        f'<w:p><w:pPr><w:bidi/><w:tabs><w:tab w:val="right" w:leader="dot" w:pos="9020"/></w:tabs>{ind}<w:spacing w:after="40" w:line="240"/></w:pPr>'
         f'<w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:cs="David" w:hAnsi="Times New Roman"/>{bold}<w:noProof/><w:sz w:val="24"/><w:szCs w:val="24"/><w:rtl/><w:lang w:val="en-US" w:bidi="he-IL"/></w:rPr><w:t xml:space="preserve">{text}</w:t></w:r>'
         f'<w:r><w:rPr><w:noProof/></w:rPr><w:tab/></w:r>'
         f'<w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:cs="David" w:hAnsi="Times New Roman"/>{bold}<w:noProof/><w:sz w:val="24"/><w:szCs w:val="24"/><w:rtl/></w:rPr><w:t>{pg}</w:t></w:r></w:p>')
