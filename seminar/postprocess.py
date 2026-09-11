@@ -22,7 +22,7 @@ def fix_rpr(m):
             k = inner.find(tag)
             if k != -1 and (pos is None or k < pos): pos = k
         # noProof must come after b/bCs/i/iCs and before color/sz: insert before color/sz if present, else at end
-        for tag in ('<w:color', '<w:sz ', '<w:szCs', '<w:rtl'):
+        for tag in ('<w:color', '<w:sz ', '<w:szCs', '<w:vertAlign', '<w:rtl', '<w:lang'):
             k = inner.find(tag)
             if k != -1: pos = k; break
         else: pos = len(inner)
@@ -103,11 +103,32 @@ x = x[:k] + ''.join(toc_paras) + x[k:]
 # drop the italic instruction line under the TOC (no longer needed)
 x = re.sub(r'<w:p><w:pPr><w:bidi/><w:jc w:val="right"/></w:pPr><w:r><w:rPr>(?:(?!</w:p>).)*?\(מספרי העמודים מתעדכנים.*?</w:p>', '', x, flags=re.S)
 
+# 5. the same noProof/lang treatment for every other part with runs or style definitions,
+#    plus document-level "hide spelling/grammar errors" flags
+def proof_part(name, data):
+    y = data.decode('utf-8')
+    y = re.sub(r'<w:rPr>(.*?)</w:rPr>', fix_rpr, y, flags=re.S)
+    y = re.sub(r'<w:r>(?!<w:rPr>)', '<w:r><w:rPr><w:noProof/><w:lang w:val="en-US" w:eastAsia="en-US" w:bidi="he-IL"/></w:rPr>', y)
+    if name == 'word/styles.xml' and '<w:rPrDefault>' in y and '<w:rPrDefault><w:rPr>' not in y:
+        y = y.replace('<w:rPrDefault>', '<w:rPrDefault><w:rPr><w:noProof/><w:lang w:val="en-US" w:eastAsia="en-US" w:bidi="he-IL"/></w:rPr>', 1)
+    if name == 'word/settings.xml' and 'hideSpellingErrors' not in y:
+        flags = '<w:hideSpellingErrors/><w:hideGrammaticalErrors/>'
+        if '<w:displayBackgroundShape/>' in y:
+            y = y.replace('<w:displayBackgroundShape/>', '<w:displayBackgroundShape/>' + flags, 1)
+        else:
+            y = re.sub(r'(<w:settings[^>]*>)', lambda m: m.group(1) + flags, y, count=1)
+    return y.encode('utf-8')
+
 OUT = SRC
 tmp = OUT + '.tmp'
 with zipfile.ZipFile(tmp, 'w', zipfile.ZIP_DEFLATED) as zout:
     for item in zin.infolist():
-        data = x.encode('utf-8') if item.filename == 'word/document.xml' else zin.read(item.filename)
+        if item.filename == 'word/document.xml':
+            data = x.encode('utf-8')
+        elif item.filename in ('word/styles.xml', 'word/settings.xml', 'word/numbering.xml', 'word/footnotes.xml', 'word/endnotes.xml') or re.match(r'word/(header|footer)\d*\.xml', item.filename):
+            data = proof_part(item.filename, zin.read(item.filename))
+        else:
+            data = zin.read(item.filename)
         zout.writestr(item, data)
 zin.close(); shutil.move(tmp, OUT)
 print('pages estimated: last page', page)
