@@ -16,7 +16,10 @@ const LINE = 360; // 1.5 spacing
 const PAGE_W = 11906, PAGE_H = 16838, MARGIN = 1440;
 const TABLE_W = PAGE_W - 2 * MARGIN; // 9026
 
-const TITLE = 'רשימת מקורות שפיטים: הוראה מודעת טראומה בישראל (2021–2026)';
+const TITLE = process.env.DOC_TITLE || 'רשימת מקורות שפיטים: הוראה מודעת טראומה בישראל (2021–2026)';
+const SUB1 = process.env.DOC_SUB1 || 'מקורות נלווים לספר Becoming Trauma Responsive (Lane, Chow, Hambrick & Earl, 2025)';
+const SUB2 = process.env.DOC_SUB2 || '12 מאמרים בעברית ו-9 מאמרים באנגלית, שפיטים, בגישה פתוחה, מחמש השנים האחרונות, בהקשר ישראלי';
+const CONTENT = process.argv[3] || 'content.txt';
 
 function runs(text, opts = {}) {
   // supports **bold** inline
@@ -99,7 +102,7 @@ function table(rows, weights) {
 }
 
 // ---------- parse content ----------
-const src = fs.readFileSync(path.join(__dirname, 'content.txt'), 'utf8').split('\n');
+const src = fs.readFileSync(path.join(__dirname, CONTENT), 'utf8').split('\n');
 const body = [];
 let numCount = 0;
 let inNum = false;
@@ -170,8 +173,8 @@ const coverLine = (t, o = {}) => new Paragraph({
 });
 const cover = [
   coverLine(TITLE, { bold: true, size: 36, after: 300 }),
-  coverLine('מקורות נלווים לספר Becoming Trauma Responsive (Lane, Chow, Hambrick & Earl, 2025)', { size: 26, after: 200 }),
-  coverLine('12 מאמרים בעברית ו-9 מאמרים באנגלית, שפיטים, בגישה פתוחה, מחמש השנים האחרונות, בהקשר ישראלי', { size: 26, after: 200 }),
+  coverLine(SUB1, { size: 26, after: 200 }),
+  coverLine(SUB2, { size: 26, after: 200 }),
   coverLine('נערך: ספטמבר 2026', { size: 24 }),
   new Paragraph({ children: [new PageBreak()] }),
 ];

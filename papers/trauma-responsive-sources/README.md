@@ -5,5 +5,6 @@
 (Lane, Chow, Hambrick & Earl, 2025).
 
 - `trauma-responsive-sources.docx` — המסמך הסופי (Word, מימין לשמאל).
-- `content.txt` — תוכן המסמך בתבנית הטקסט הפשוטה.
-- `build.js` — סקריפט היצירה (`NODE_PATH=<path-to-node_modules> node build.js out.docx`, דורש `docx@9`).
+- `trauma-responsive-literature-review.docx` — פרק סקירת ספרות (כ-2,300 מילים) המסנתז את 21 המקורות לפי פרקי הספר, עם רשימת מקורות APA.
+- `content.txt` — תוכן רשימת המקורות בתבנית הטקסט הפשוטה; `review.txt` — תוכן סקירת הספרות.
+- `build.js` — סקריפט היצירה: `NODE_PATH=<node_modules> node build.js out.docx content.txt` (דורש `docx@9`; הכותרת נקבעת במשתני הסביבה `DOC_TITLE`, `DOC_SUB1`, `DOC_SUB2`).
