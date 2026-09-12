@@ -8,3 +8,4 @@
 - `trauma-responsive-literature-review.docx` — פרק סקירת ספרות (כ-2,300 מילים) המסנתז את 21 המקורות לפי פרקי הספר, עם רשימת מקורות APA.
 - `content.txt` — תוכן רשימת המקורות בתבנית הטקסט הפשוטה; `review.txt` — תוכן סקירת הספרות.
 - `build.js` — סקריפט היצירה: `NODE_PATH=<node_modules> node build.js out.docx content.txt` (דורש `docx@9`; הכותרת נקבעת במשתני הסביבה `DOC_TITLE`, `DOC_SUB1`, `DOC_SUB2`).
+- `appendix-interview-guide.docx` — נספח א': מתווה ריאיון חצי-מובנה (15 שאלות, 8 ראיונות) לפי כללי הסקייל האקדמי; מקור: `appendix-interview.txt`.

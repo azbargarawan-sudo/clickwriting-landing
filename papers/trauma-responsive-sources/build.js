@@ -9,11 +9,11 @@ const {
 const AR_FONT = process.env.AR_FONT || 'David';
 const EN_FONT = process.env.EN_FONT || 'Times New Roman';
 const FONT = { ascii: EN_FONT, hAnsi: EN_FONT, cs: AR_FONT, eastAsia: EN_FONT };
-const BODY = 28;   // 14pt
-const BODY_CS = 26; // 13pt Hebrew
+const BODY = Number(process.env.DOC_BODY || 28);
+const BODY_CS = Number(process.env.DOC_BODY_CS || 26);
 const H1 = 36, H2 = 32, H3 = 30;
-const LINE = 360; // 1.5 spacing
-const PAGE_W = 11906, PAGE_H = 16838, MARGIN = 1440;
+const LINE = Number(process.env.DOC_LINE || 360);
+const PAGE_W = 11906, PAGE_H = 16838, MARGIN = Number(process.env.DOC_MARGIN || 1440);
 const TABLE_W = PAGE_W - 2 * MARGIN; // 9026
 
 const TITLE = process.env.DOC_TITLE || 'רשימת מקורות שפיטים: הוראה מודעת טראומה בישראל (2021–2026)';
@@ -206,8 +206,8 @@ const doc = new Document({
   },
   numbering,
   sections: [
-    { properties: { page: { size: { width: PAGE_W, height: PAGE_H }, margin: { top: MARGIN, bottom: MARGIN, left: MARGIN, right: MARGIN } }, titlePage: true },
-      children: cover },
+    ...(process.env.DOC_NOCOVER ? [] : [{ properties: { page: { size: { width: PAGE_W, height: PAGE_H }, margin: { top: MARGIN, bottom: MARGIN, left: MARGIN, right: MARGIN } }, titlePage: true },
+      children: cover }]),
     { properties: { page: { size: { width: PAGE_W, height: PAGE_H }, margin: { top: MARGIN, bottom: MARGIN, left: MARGIN, right: MARGIN }, pageNumbers: { start: 1 } } },
       footers: { default: footer },
       children: body },
