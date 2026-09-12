@@ -173,6 +173,7 @@ const cover = [
   coverLine('מקורות נלווים לספר Becoming Trauma Responsive (Lane, Chow, Hambrick & Earl, 2025)', { size: 26, after: 200 }),
   coverLine('12 מאמרים בעברית ו-9 מאמרים באנגלית, שפיטים, בגישה פתוחה, מחמש השנים האחרונות, בהקשר ישראלי', { size: 26, after: 200 }),
   coverLine('נערך: ספטמבר 2026', { size: 24 }),
+  new Paragraph({ children: [new PageBreak()] }),
 ];
 
 // ---------- numbering ----------
