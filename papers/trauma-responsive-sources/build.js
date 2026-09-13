@@ -8,6 +8,7 @@ const {
 
 const AR_FONT = process.env.AR_FONT || 'David';
 const EN_FONT = process.env.EN_FONT || 'Times New Roman';
+const LANG = { value: process.env.DOC_LATIN_LANG || 'en-US', bidirectional: process.env.DOC_BIDI_LANG || 'he-IL' };
 const FONT = { ascii: EN_FONT, hAnsi: EN_FONT, cs: AR_FONT, eastAsia: EN_FONT };
 const BODY = Number(process.env.DOC_BODY || 28);
 const BODY_CS = Number(process.env.DOC_BODY_CS || 26);
@@ -29,7 +30,7 @@ function runs(text, opts = {}) {
     const t = bold ? p.slice(2, -2) : p;
     return new TextRun({
       text: t,
-      font: FONT,
+      font: FONT, language: LANG,
       size: opts.size || BODY,
       sizeComplexScript: opts.sizeCs || BODY_CS,
       bold: bold || opts.bold || false,
@@ -64,7 +65,7 @@ function heading(text, level) {
     alignment: align,
     keepNext: true,
     spacing: { line: LINE, before, after: 120 },
-    children: [new TextRun({ text, font: FONT, size, sizeComplexScript: size + 4, bold: true, boldComplexScript: true, rightToLeft: true })],
+    children: [new TextRun({ text, font: FONT, language: LANG, size, sizeComplexScript: size + 4, bold: true, boldComplexScript: true, rightToLeft: true })],
   });
 }
 
@@ -78,7 +79,7 @@ function cell(text, { header = false, width }) {
       bidirectional: true,
       alignment: header ? AlignmentType.CENTER : AlignmentType.RIGHT,
       spacing: { line: 276, after: 0 },
-      children: [new TextRun({ text, font: FONT, size: 22, sizeComplexScript: 24, bold: header, boldComplexScript: header, rightToLeft: true })],
+      children: [new TextRun({ text, font: FONT, language: LANG, size: 22, sizeComplexScript: 24, bold: header, boldComplexScript: header, rightToLeft: true })],
     })],
   });
 }
@@ -113,7 +114,7 @@ while (i < src.length) {
   if (line.trim() === '') { inNum = false; i++; continue; }
   if (line === '[[TOC]]') {
     body.push(new Paragraph({ bidirectional: true, alignment: AlignmentType.CENTER, spacing: { before: 0, after: 240, line: LINE },
-      children: [new TextRun({ text: 'فهرس المحتويات', font: FONT, size: H1, sizeComplexScript: H1 + 4, bold: true, boldComplexScript: true, rightToLeft: true })] }));
+      children: [new TextRun({ text: 'فهرس المحتويات', font: FONT, language: LANG, size: H1, sizeComplexScript: H1 + 4, bold: true, boldComplexScript: true, rightToLeft: true })] }));
     body.push(new TableOfContents('فهرس المحتويات', { hyperlink: true, headingStyleRange: '1-3' }));
     inNum = false; i++; continue;
   }
@@ -169,7 +170,7 @@ while (i < src.length) {
 const coverLine = (t, o = {}) => new Paragraph({
   bidirectional: true, alignment: AlignmentType.CENTER,
   spacing: { before: o.before || 0, after: o.after === undefined ? 200 : o.after, line: LINE },
-  children: [new TextRun({ text: t, font: FONT, size: o.size || 28, sizeComplexScript: (o.size || 28) + 4, bold: o.bold || false, boldComplexScript: o.bold || false, rightToLeft: true })],
+  children: [new TextRun({ text: t, font: FONT, language: LANG, size: o.size || 28, sizeComplexScript: (o.size || 28) + 4, bold: o.bold || false, boldComplexScript: o.bold || false, rightToLeft: true })],
 });
 const cover = [
   coverLine(TITLE, { bold: true, size: 36, after: 300 }),
@@ -190,18 +191,18 @@ const numbering = {
 };
 
 const footer = new Footer({ children: [new Paragraph({ alignment: AlignmentType.CENTER,
-  children: [new TextRun({ children: [PageNumber.CURRENT], font: FONT, size: 24 })] })] });
+  children: [new TextRun({ children: [PageNumber.CURRENT], font: FONT, language: LANG, size: 24 })] })] });
 
 const doc = new Document({
   creator: 'Student',
   title: TITLE,
   features: { updateFields: true },
   styles: {
-    default: { document: { run: { font: FONT, size: BODY, sizeComplexScript: BODY_CS, rightToLeft: true }, paragraph: { spacing: { line: LINE, after: 120 } } } },
+    default: { document: { run: { font: FONT, language: LANG, size: BODY, sizeComplexScript: BODY_CS, rightToLeft: true }, paragraph: { spacing: { line: LINE, after: 120 } } } },
     paragraphStyles: [
-      { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { size: H1, bold: true, font: FONT, color: '000000' }, paragraph: { spacing: { before: 240, after: 120 }, outlineLevel: 0 } },
-      { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { size: H2, bold: true, font: FONT, color: '000000' }, paragraph: { spacing: { before: 200, after: 120 }, outlineLevel: 1 } },
-      { id: 'Heading3', name: 'Heading 3', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { size: H3, bold: true, font: FONT, color: '000000' }, paragraph: { spacing: { before: 160, after: 120 }, outlineLevel: 2 } },
+      { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { size: H1, bold: true, font: FONT, language: LANG, color: '000000' }, paragraph: { spacing: { before: 240, after: 120 }, outlineLevel: 0 } },
+      { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { size: H2, bold: true, font: FONT, language: LANG, color: '000000' }, paragraph: { spacing: { before: 200, after: 120 }, outlineLevel: 1 } },
+      { id: 'Heading3', name: 'Heading 3', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { size: H3, bold: true, font: FONT, language: LANG, color: '000000' }, paragraph: { spacing: { before: 160, after: 120 }, outlineLevel: 2 } },
     ],
   },
   numbering,
