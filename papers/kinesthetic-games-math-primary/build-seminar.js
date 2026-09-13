@@ -24,10 +24,11 @@ const CONTENT = process.argv[3] || 'content.txt';
 
 function runs(text, opts = {}) {
   // supports **bold** inline
-  const parts = text.split(/(\*\*[^*]+\*\*)/g).filter(Boolean);
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g).filter(Boolean);
   return parts.map(p => {
     const bold = p.startsWith('**') && p.endsWith('**');
-    const t = bold ? p.slice(2, -2) : p;
+    const ital = !bold && p.startsWith('*') && p.endsWith('*') && p.length > 2;
+    const t = bold ? p.slice(2, -2) : (ital ? p.slice(1, -1) : p);
     return new TextRun({
       text: t,
       font: FONT, language: LANG,
@@ -36,7 +37,7 @@ function runs(text, opts = {}) {
       bold: bold || opts.bold || false,
       boldComplexScript: bold || opts.bold || false,
       rightToLeft: opts.ltr ? false : true,
-      italics: opts.italics || false,
+      italics: ital || opts.italics || false,
       color: opts.color,
     });
   });
