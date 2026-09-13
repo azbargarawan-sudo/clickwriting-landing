@@ -10,7 +10,7 @@ const LINE = 360; // 1.5 line spacing
 const CM = 567;   // twips per cm
 
 function run(text, opts = {}) {
-  return new TextRun({ text, font: FONT, size: 24, rightToLeft: true, ...opts });
+  return new TextRun({ text, font: FONT, size: 24, rightToLeft: true, noProof: true, language: { value: "he-IL", bidirectional: "he-IL", eastAsia: "he-IL" }, ...opts });
 }
 // body paragraph: David 12, 1.5 spacing, justified, RTL
 function p(text, opts = {}) {
@@ -164,7 +164,7 @@ const doc = new Document({
   features: { updateFields: true },
   styles: {
     default: {
-      document: { run: { font: FONT, size: 24, rightToLeft: true } },
+      document: { run: { font: FONT, size: 24, rightToLeft: true, noProof: true, language: { value: "he-IL", bidirectional: "he-IL", eastAsia: "he-IL" } } },
     },
     paragraphStyles: [
       { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true,
@@ -185,7 +185,7 @@ const doc = new Document({
         default: new Footer({
           children: [new Paragraph({
             alignment: AlignmentType.CENTER,
-            children: [new TextRun({ children: [PageNumber.CURRENT], font: FONT, size: 22 })],
+            children: [new TextRun({ children: [PageNumber.CURRENT], font: FONT, size: 22, noProof: true })],
           })],
         }),
         first: new Footer({ children: [new Paragraph("")] }),
@@ -210,3 +210,4 @@ Packer.toBuffer(doc).then((buf) => {
   fs.writeFileSync(out, buf);
   console.log("wrote", out, buf.length, "bytes");
 });
+// note: run scripts/patch_settings.py afterwards to add hideSpellingErrors/hideGrammaticalErrors
