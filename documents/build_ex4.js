@@ -1,6 +1,6 @@
 const fs = require("fs");
 const {
-  Document, Packer, Paragraph, TextRun, AlignmentType, LineRuleType, PageNumber, Footer,
+  Document, Packer, Paragraph, TextRun, AlignmentType, LineRuleType, PageNumber, Footer, ImageRun,
 } = require("docx");
 
 const FONT = "David";
@@ -24,7 +24,14 @@ function q(text) {
   return p([run(text, { bold: true })], { alignment: AlignmentType.RIGHT });
 }
 
+const logo = fs.readFileSync(__dirname + "/ono_logo.png");
+const LOGO_W = 150, LOGO_H = Math.round(150 * 157 / 321); // keep aspect ratio (321x157 source)
 const header = [
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 60 },
+    children: [new ImageRun({ type: "png", data: logo, transformation: { width: LOGO_W, height: LOGO_H } })] }),
+  p([run("מבוא לסוציולוגיה בנתיב הכתיבה האקדמית", { bold: true })], { alignment: AlignmentType.CENTER, spacing: { line: 276, lineRule: LineRuleType.AUTO, after: 0 } }),
+  p("הקריה האקדמית אונו", { alignment: AlignmentType.CENTER, spacing: { line: 276, lineRule: LineRuleType.AUTO, after: 0 } }),
+  p("עבודת סיכום קורס, תשפ\"ו", { alignment: AlignmentType.CENTER, spacing: { line: 276, lineRule: LineRuleType.AUTO, after: 120 } }),
   p([run("תרגיל 4", { bold: true }), run(" | שם פרטי: רביע | שם משפחה: אלטורי | תעודת זהות: 209529783")], { alignment: AlignmentType.RIGHT }),
 ];
 

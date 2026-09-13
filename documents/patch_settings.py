@@ -10,7 +10,7 @@ for item in zin.infolist():
             ins = '<w:hideSpellingErrors/><w:hideGrammaticalErrors/>'
             # insert after the last element that precedes hideSpellingErrors in the schema, else right after the opening tag
             m = None
-            for tag in ['zoom', 'view', 'writeProtection']:
+            for tag in reversed(['writeProtection','view','zoom','removePersonalInformation','removeDateAndTime','doNotDisplayPageBoundaries','displayBackgroundShape','printPostScriptOverText','printFractionalCharacterWidth','printFormsData','embedTrueTypeFonts','embedSystemFonts','saveSubsetFonts','saveFormsData','mirrorMargins','alignBordersAndEdges','bordersDoNotSurroundHeader','bordersDoNotSurroundFooter','gutterAtTop']):
                 m = re.search(r'<w:%s\b[^>]*/>' % tag, x) or re.search(r'<w:%s\b[^>]*>.*?</w:%s>' % (tag, tag), x, re.S)
                 if m: break
             if m:
