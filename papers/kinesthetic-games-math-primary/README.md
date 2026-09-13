@@ -26,4 +26,5 @@ node build.js kinesthetic-games-math-primary.docx
 ## بحث السمينار (النسخة المبنية على المقابلات الفعلية)
 
 - `kinesthetic-games-seminar.docx` — بحث السمينار الكامل (نحو 10,300 كلمة) المبني على ثماني مقابلات فعلية مع معلمات رياضيات في النقب، وفق هيكل العمل الأكاديمي وقواعد APA 7.
-- `seminar.txt` — نص البحث بصيغة الترميز البسيطة؛ `seminar-cover.txt` — صفحة الغلاف؛ `build-seminar.js` — سكربت التوليد (يقبل متغيرات البيئة `AR_FONT`, `DOC_BODY`, `DOC_BODY_CS`, `DOC_LINE`, `DOC_MARGIN`, `DOC_COVER_FILE`).
+- `kinesthetic-games-seminar-he.docx` — הגרסה העברית של עבודת הסמינריון (כ-9,600 מילים, גופן David 12, רווח כפול, שוליים 2.5 ס"מ, תגי שפה he-IL ללא סימוני איות). המקור: `seminar-he.txt`, הכריכה: `seminar-he-cover.txt`. בנייה: `DOC_TOC_TITLE="תוכן עניינים" DOC_BIDI_LANG=he-IL AR_FONT=David ... node build-seminar.js kinesthetic-games-seminar-he.docx seminar-he.txt`.
+- `seminar.txt` — نص البحث بصيغة الترميز البسيطة؛ `seminar-cover.txt` — صفحة الغلاف؛ `build-seminar.js` — سكربت التوليد (يقبل متغيرات البيئة `AR_FONT`, `DOC_BODY`, `DOC_BODY_CS`, `DOC_LINE`, `DOC_MARGIN`, `DOC_COVER_FILE`, `DOC_BIDI_LANG`, `DOC_TOC_TITLE`).

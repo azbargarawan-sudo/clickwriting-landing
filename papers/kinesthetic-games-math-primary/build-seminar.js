@@ -17,6 +17,7 @@ const LINE = Number(process.env.DOC_LINE || 360);
 const PAGE_W = 11906, PAGE_H = 16838, MARGIN = Number(process.env.DOC_MARGIN || 1440);
 const TABLE_W = PAGE_W - 2 * MARGIN; // 9026
 
+const TOC_TITLE = process.env.DOC_TOC_TITLE || 'فهرس المحتويات';
 const TITLE = process.env.DOC_TITLE || 'רשימת מקורות שפיטים: הוראה מודעת טראומה בישראל (2021–2026)';
 const SUB1 = process.env.DOC_SUB1 || 'מקורות נלווים לספר Becoming Trauma Responsive (Lane, Chow, Hambrick & Earl, 2025)';
 const SUB2 = process.env.DOC_SUB2 || '12 מאמרים בעברית ו-9 מאמרים באנגלית, שפיטים, בגישה פתוחה, מחמש השנים האחרונות, בהקשר ישראלי';
@@ -115,8 +116,8 @@ while (i < src.length) {
   if (line.trim() === '') { inNum = false; i++; continue; }
   if (line === '[[TOC]]') {
     body.push(new Paragraph({ bidirectional: true, alignment: AlignmentType.CENTER, spacing: { before: 0, after: 240, line: LINE },
-      children: [new TextRun({ text: 'فهرس المحتويات', font: FONT, language: LANG, size: H1, sizeComplexScript: H1 + 4, bold: true, boldComplexScript: true, rightToLeft: true })] }));
-    body.push(new TableOfContents('فهرس المحتويات', { hyperlink: true, headingStyleRange: '1-3' }));
+      children: [new TextRun({ text: TOC_TITLE, font: FONT, language: LANG, size: H1, sizeComplexScript: H1 + 4, bold: true, boldComplexScript: true, rightToLeft: true })] }));
+    body.push(new TableOfContents(TOC_TITLE, { hyperlink: true, headingStyleRange: '1-3' }));
     inNum = false; i++; continue;
   }
   if (line === 'PAGEBREAK') { body.push(new Paragraph({ children: [new PageBreak()] })); inNum = false; i++; continue; }
