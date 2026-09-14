@@ -9,7 +9,12 @@ const NAVY = "1F3A5F", LIGHT = "EAF0F7", ORANGE = "E8892B", INK = "22303F", MUTE
 const FONT = "Arial";
 const logo = "image/jpeg;base64," + fs.readFileSync("logo.jpg").toString("base64");
 
-const T = (slide, text, o) => slide.addText(text, Object.assign({ isTextBox: true, fontFace: FONT, rtlMode: true, lang: "he-IL", align: "right", color: INK, margin: 0, valign: "top" }, o));
+const RLM = "\u200F"; // right-to-left mark: pins trailing punctuation to the end of the line
+const HEB = /[\u0590-\u05FF]/;
+const rtl = t => typeof t === "string" && HEB.test(t)
+  ? t.split("\n").map(l => (HEB.test(l) ? RLM + l + RLM : l)).join("\n")
+  : t;
+const T = (slide, text, o) => slide.addText(rtl(text), Object.assign({ isTextBox: true, fontFace: FONT, rtlMode: true, lang: "he-IL", align: "right", color: INK, margin: 0, valign: "top" }, o));
 const title = (slide, text) => T(slide, text, { x: 0.5, y: 0.28, w: 9, h: 0.68, fontSize: 30, bold: true, color: NAVY });
 const para = (slide, text, x, y, w, h, size = 12) => T(slide, text, { x, y, w, h, fontSize: size, color: INK, align: "justify", lineSpacingMultiple: 1.15 });
 const footer = (slide, n) => {
@@ -87,20 +92,8 @@ function rtlTable(slide, header, rows, opts) {
   const s = pres.addSlide();
   s.background = { color: WHITE };
   title(s, "ממצאים: אוכלוסיית המחקר");
-  T(s, "לוח 1: מאפייני הרקע של השפוטים (N = 2,379)", { x: 0.5, y: 1.02, w: 9, h: 0.28, fontSize: 12, bold: true, color: NAVY });
-  rtlTable(s, ["משתנה", "קטגוריה", "N", "%"], [
-    ["מגדר", "גברים", "2,302", "96.8"],
-    ["", "נשים", "77", "3.2"],
-    ["לאום", "יהודים", "1,136", "47.8"],
-    ["", "לא יהודים", "1,243", "52.2"],
-    ["מספר מאסרים כשפוט", "מאסר ראשון", "1,162", "48.8"],
-    ["", "שני מאסרים", "528", "22.2"],
-    ["", "שלושה מאסרים ומעלה", "689", "29.0"],
-    ["ותק באגף", "עד שלושה חודשים", "755", "31.7"],
-    ["", "מעל שלושה חודשים", "1,624", "68.3"],
-    ["מסלול שיקום", "נמצא במסלול שיקום", "486", "20.4"],
-  ], { x: 0.5, y: 1.34, w: 9, colW: [2.6, 3.4, 1.5, 1.5], rowH: 0.245, fontSize: 11 });
-  para(s, "אוכלוסיית המחקר כוללת 2,379 אסירים פליליים שפוטים, רובם המכריע גברים, בגיל ממוצע של 37.9 שנים ובטווח של 18 עד 82. מעט יותר ממחציתם אינם יהודים, כמחציתם מרצים את מאסרם הראשון ולמעלה ממחציתם ריצו מאסר קודם, יותר משני שלישים שוהים באגף הנוכחי מעל שלושה חודשים וכאחד מכל חמישה נמצא במסלול שיקום. התפלגות זו דומה לזו שדווחה בסקר המקורי, ומכאן שהמדגם משקף את אוכלוסיית האגפים הפליליים (ועקנין, 2024).", 0.5, 4.2, 9, 0.85, 11.5);
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 1.1, w: 9, h: 3.95, fill: { color: LIGHT }, line: { color: LIGHT }, rectRadius: 0.1 });
+  para(s, "אוכלוסיית המחקר כוללת 2,379 אסירים פליליים שפוטים, שהם כשני שלישים מכלל המשיבים לסקר. רובם המכריע גברים, 2,302 איש שהם 96.8 אחוזים, ולעומתם 77 נשים בלבד שהן 3.2 אחוזים, והגיל הממוצע עומד על 37.9 שנים בטווח שבין 18 ל-82. מבחינת לאום המדגם מחולק כמעט שווה בשווה, 1,136 יהודים שהם 47.8 אחוזים ו-1,243 שאינם יהודים שהם 52.2 אחוזים. כמחצית מהשפוטים מרצים את מאסרם הראשון, 1,162 איש שהם 48.8 אחוזים, 528 נמצאים במאסרם השני ו-689 במאסר שלישי ומעלה, ומכאן שלמעלה ממחצית האוכלוסייה כבר ריצתה מאסר קודם. רוב השפוטים ותיקים באגף שבו הם שוהים: 1,624 מהם, שהם 68.3 אחוזים, נמצאים בו מעל שלושה חודשים, ורק 755 שהם 31.7 אחוזים הגיעו אליו בשלושת החודשים האחרונים. לבסוף, 486 שפוטים שהם 20.4 אחוזים משתתפים במסלול שיקום. התפלגות זו דומה לזו שדווחה בסקר המקורי, ומכאן שהמדגם משקף את אוכלוסיית האגפים הפליליים בשירות בתי הסוהר (ועקנין, 2024).", 0.8, 1.35, 8.4, 3.45, 13.5);
   footer(s, 5);
 }
 
@@ -109,32 +102,23 @@ function rtlTable(slide, header, rows, opts) {
   const s = pres.addSlide();
   s.background = { color: WHITE };
   title(s, "ממצאים: הקשר בין רווחה נפשית ללגיטימיות");
-  // chart, left
   s.addChart(pres.charts.BAR, [{
     name: "רווחה נפשית ממוצעת",
     labels: ["לגיטימיות נמוכה", "לגיטימיות בינונית", "לגיטימיות גבוהה"],
     values: [3.34, 3.65, 4.05],
   }], {
-    x: 0.5, y: 1.05, w: 5.3, h: 2.95, barDir: "col", chartColors: [ORANGE], barGapWidthPct: 55,
+    x: 0.5, y: 1.05, w: 5.3, h: 2.6, barDir: "col", chartColors: [ORANGE], barGapWidthPct: 55,
     showTitle: true, title: "רווחה נפשית ממוצעת לפי רמת לגיטימיות", titleFontSize: 11, titleColor: NAVY, titleFontFace: FONT,
     showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.00", dataLabelFontSize: 12, dataLabelColor: INK,
     catAxisLabelFontSize: 10, catAxisLabelColor: INK, catAxisLabelFontFace: FONT,
     valAxisMinVal: 3, valAxisMaxVal: 4.4, valAxisLabelFontSize: 9, valAxisLabelColor: MUTED,
     valGridLine: { color: "DDE3EA", size: 0.5 }, catGridLine: { style: "none" }, showLegend: false,
   });
-  // r box, right
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 6.0, y: 1.05, w: 3.5, h: 1.25, fill: { color: NAVY }, line: { color: NAVY }, rectRadius: 0.12 });
-  s.addText("r = 0.32", { isTextBox: true, x: 6.1, y: 1.13, w: 3.3, h: 0.62, fontSize: 34, bold: true, color: ORANGE, align: "center", fontFace: FONT, margin: 0 });
-  T(s, "מתאם פירסון בין רווחה נפשית ללגיטימיות\np < 0.001, N = 2,344; ספירמן rs = 0.34", { x: 6.1, y: 1.72, w: 3.3, h: 0.5, fontSize: 11, color: "CFDBEA", align: "center" });
-  // table, right
-  T(s, "לוח 2: ממוצעים וסטיות תקן (סולם 1 עד 5)", { x: 6.0, y: 2.45, w: 3.5, h: 0.26, fontSize: 11, bold: true, color: NAVY });
-  rtlTable(s, ["משתנה", "M", "SD"], [
-    ["לגיטימיות הסגל", "4.24", "0.83"],
-    ["רווחה נפשית", "3.78", "0.87"],
-  ], { x: 6.0, y: 2.75, w: 3.5, colW: [1.7, 0.9, 0.9], rowH: 0.34, fontSize: 11 });
-  // paragraph, bottom
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 4.12, w: 9, h: 0.95, fill: { color: LIGHT }, line: { color: LIGHT }, rectRadius: 0.1 });
-  para(s, "נמצא קשר חיובי מובהק ברמה בינונית בין רווחה נפשית לבין תפיסת הלגיטימיות, והוא קיים בכל שלושת פריטי הלגיטימיות כשהחזק שבהם הוא האפשרות לדבר עם הסוהרים. השפוטים ברמת הלגיטימיות הנמוכה דיווחו על רווחה ממוצעת של 3.34 לעומת 4.05 ברמה הגבוהה, פער של כ-0.7 נקודות שהוא כ-80 אחוזים מסטיית תקן, ומכאן שהרווחה חולקת עם הלגיטימיות כעשרה אחוזים מהשונות. השערת המחקר אוששה, והממצא עולה בקנה אחד עם המחקרים מהולנד, מאנגליה ומאוסטרליה.", 0.7, 4.22, 8.6, 0.8, 11);
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 5.95, y: 1.05, w: 3.55, h: 2.6, fill: { color: NAVY }, line: { color: NAVY }, rectRadius: 0.12 });
+  s.addText("r = 0.32", { isTextBox: true, x: 6.05, y: 1.22, w: 3.35, h: 0.7, fontSize: 36, bold: true, color: ORANGE, align: "center", fontFace: FONT, margin: 0 });
+  T(s, "מתאם פירסון בין רווחה נפשית לבין תפיסת הלגיטימיות של הסגל, מובהק ברמה של p < 0.001 בקרב 2,344 שפוטים. מתאם ספירמן קרוב אליו ועומד על 0.34, ומכאן שההטיה בהתפלגות אינה מעוותת את התמונה.", { x: 6.25, y: 1.98, w: 2.95, h: 1.55, fontSize: 11.5, color: "CFDBEA", align: "justify", lineSpacingMultiple: 1.1 });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 3.8, w: 9, h: 1.25, fill: { color: LIGHT }, line: { color: LIGHT }, rectRadius: 0.1 });
+  para(s, "ממוצע הלגיטימיות עמד על 4.24 עם סטיית תקן של 0.83, וממוצע הרווחה הנפשית על 3.78 עם סטיית תקן של 0.87, בסולם שנע בין 1 ל-5. נמצא קשר חיובי מובהק ברמה בינונית בין שני המשתנים, והוא קיים בכל שלושת פריטי הלגיטימיות כשהחזק שבהם הוא האפשרות לדבר עם הסוהרים. השפוטים ברמת הלגיטימיות הנמוכה דיווחו על רווחה ממוצעת של 3.34 לעומת 4.05 ברמה הגבוהה, פער של כ-0.7 נקודות שהוא כ-80 אחוזים מסטיית תקן, ומכאן שהרווחה חולקת עם הלגיטימיות כעשרה אחוזים מהשונות. השערת המחקר אוששה, והממצא עולה בקנה אחד עם המחקרים מהולנד, מאנגליה ומאוסטרליה.", 0.7, 3.92, 8.6, 1.05, 11);
   footer(s, 6);
 }
 
