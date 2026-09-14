@@ -1,0 +1,257 @@
+# -*- coding: utf-8 -*-
+"""Build the seminar paper .docx from a lightly marked-up text file.
+
+Markup (one construct per line):
+  #PAGEBREAK            page break
+  #TOC                  table-of-contents field
+  #COVER ... lines ... #ENDCOVER   centered cover page
+  # / ## / ###          headings (levels 1-3)
+  | a | b |             table rows; first row = header
+  > text                indented block quote (no quotation marks)
+  [REF] text            reference entry, hanging indent; Latin refs left-aligned
+  [AR] text             Arabic paragraph (RTL, Arabic font)
+  [C] text              centered paragraph
+  [B] text              bold paragraph
+  plain text            justified body paragraph, double spacing
+Inline **bold** and *italic* are supported in body/ref/quote lines.
+"""
+import re
+import sys
+
+from docx import Document
+from docx.enum.section import WD_SECTION
+from docx.enum.table import WD_TABLE_ALIGNMENT
+from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK, WD_LINE_SPACING
+from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
+from docx.shared import Cm, Pt
+
+SRC, OUT = sys.argv[1], sys.argv[2]
+
+doc = Document()
+
+# ---------- page setup ----------
+for s in doc.sections:
+    s.top_margin = s.bottom_margin = Cm(2.5)
+    s.left_margin = s.right_margin = Cm(2.5)
+
+# ---------- base styles ----------
+def set_font(style, name, size, bold=None):
+    style.font.name = name
+    style.font.size = Pt(size)
+    if bold is not None:
+        style.font.bold = bold
+    rpr = style.element.get_or_add_rPr()
+    rfonts = rpr.find(qn('w:rFonts'))
+    if rfonts is None:
+        rfonts = OxmlElement('w:rFonts')
+        rpr.append(rfonts)
+    for attr in ('w:ascii', 'w:hAnsi', 'w:cs', 'w:eastAsia'):
+        rfonts.set(qn(attr), name)
+
+normal = doc.styles['Normal']
+set_font(normal, 'David', 12)
+normal.paragraph_format.line_spacing_rule = WD_LINE_SPACING.DOUBLE
+normal.paragraph_format.space_after = Pt(0)
+
+for lvl, size in ((1, 18), (2, 15), (3, 13)):
+    st = doc.styles[f'Heading {lvl}']
+    set_font(st, 'David', size, bold=True)
+    st.font.color.rgb = None
+    st.paragraph_format.space_before = Pt(18 if lvl == 1 else 12)
+    st.paragraph_format.space_after = Pt(6)
+
+
+def rtl(p, align=WD_ALIGN_PARAGRAPH.JUSTIFY):
+    ppr = p._p.get_or_add_pPr()
+    bidi = OxmlElement('w:bidi')
+    bidi.set(qn('w:val'), '1')
+    ppr.append(bidi)
+    p.alignment = align
+    return p
+
+
+def ltr(p, align=WD_ALIGN_PARAGRAPH.LEFT):
+    ppr = p._p.get_or_add_pPr()
+    bidi = OxmlElement('w:bidi')
+    bidi.set(qn('w:val'), '0')
+    ppr.append(bidi)
+    p.alignment = align
+    return p
+
+
+def add_runs(p, text, font=None, size=None):
+    """Add text with **bold** / *italic* inline markup."""
+    tokens = re.split(r'(\*\*.+?\*\*|\*.+?\*)', text)
+    for tok in tokens:
+        if not tok:
+            continue
+        if tok.startswith('**') and tok.endswith('**'):
+            r = p.add_run(tok[2:-2]); r.bold = True
+        elif tok.startswith('*') and tok.endswith('*'):
+            r = p.add_run(tok[1:-1]); r.italic = True
+        else:
+            r = p.add_run(tok)
+        if font:
+            r.font.name = font
+            rpr = r._r.get_or_add_rPr()
+            rf = rpr.find(qn('w:rFonts'))
+            if rf is None:
+                rf = OxmlElement('w:rFonts'); rpr.append(rf)
+            for attr in ('w:ascii', 'w:hAnsi', 'w:cs'):
+                rf.set(qn(attr), font)
+        if size:
+            r.font.size = Pt(size)
+        # mark complex-script so Word uses the cs font for Hebrew/Arabic
+        rpr = r._r.get_or_add_rPr()
+        cs = OxmlElement('w:cs'); rpr.append(cs)
+    return p
+
+
+def add_field(p, instr):
+    r = p.add_run()
+    fld_begin = OxmlElement('w:fldChar'); fld_begin.set(qn('w:fldCharType'), 'begin')
+    instr_el = OxmlElement('w:instrText'); instr_el.set(qn('xml:space'), 'preserve'); instr_el.text = instr
+    fld_sep = OxmlElement('w:fldChar'); fld_sep.set(qn('w:fldCharType'), 'separate')
+    txt = OxmlElement('w:t'); txt.text = ' '
+    fld_end = OxmlElement('w:fldChar'); fld_end.set(qn('w:fldCharType'), 'end')
+    for el in (fld_begin, instr_el, fld_sep, txt, fld_end):
+        r._r.append(el)
+
+
+def page_break():
+    p = doc.add_paragraph()
+    p.add_run().add_break(WD_BREAK.PAGE)
+
+
+def add_table(rows):
+    header, body = rows[0], rows[1:]
+    t = doc.add_table(rows=len(rows), cols=len(header))
+    t.style = 'Table Grid'
+    t.alignment = WD_TABLE_ALIGNMENT.CENTER
+    # right-to-left table
+    tblPr = t._tbl.tblPr
+    bidi = OxmlElement('w:bidiVisual'); bidi.set(qn('w:val'), '1'); tblPr.append(bidi)
+    for i, row in enumerate(rows):
+        for j, cell_text in enumerate(row):
+            cell = t.cell(i, j)
+            cell.text = ''
+            p = cell.paragraphs[0]
+            p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
+            rtl(p, WD_ALIGN_PARAGRAPH.RIGHT)
+            add_runs(p, cell_text.strip(), size=11)
+            if i == 0:
+                for r in p.runs:
+                    r.bold = True
+    doc.add_paragraph()
+
+
+# ---------- footer page numbers ----------
+footer_p = doc.sections[0].footer.paragraphs[0]
+footer_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+add_field(footer_p, 'PAGE')
+
+# ---------- parse ----------
+lines = open(SRC, encoding='utf-8').read().split('\n')
+i = 0
+table_buf = []
+
+
+def flush_table():
+    global table_buf
+    if table_buf:
+        add_table(table_buf)
+        table_buf = []
+
+
+while i < len(lines):
+    line = lines[i].rstrip()
+    i += 1
+    if line.startswith('|'):
+        cells = [c for c in line.strip().strip('|').split('|')]
+        if all(re.fullmatch(r'\s*:?-+:?\s*', c) for c in cells):
+            continue  # markdown separator row
+        table_buf.append(cells)
+        continue
+    flush_table()
+    if not line.strip():
+        continue
+    if line == '#PAGEBREAK':
+        page_break(); continue
+    if line == '#TOC':
+        p = rtl(doc.add_paragraph(), WD_ALIGN_PARAGRAPH.RIGHT)
+        add_field(p, 'TOC \\o "1-3" \\h \\z \\u')
+        continue
+    if line == '#COVER':
+        while i < len(lines) and lines[i].strip() != '#ENDCOVER':
+            cl = lines[i].rstrip(); i += 1
+            p = rtl(doc.add_paragraph(), WD_ALIGN_PARAGRAPH.CENTER)
+            p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+            if cl.startswith('!!'):
+                add_runs(p, cl[2:].strip(), size=20)
+                for r in p.runs: r.bold = True
+            elif cl.startswith('!'):
+                add_runs(p, cl[1:].strip(), size=16)
+                for r in p.runs: r.bold = True
+            else:
+                add_runs(p, cl.strip(), size=13)
+        i += 1
+        continue
+    m = re.match(r'^(#{1,3}) (.+)$', line)
+    if m:
+        lvl = len(m.group(1))
+        h = doc.add_heading('', level=lvl)
+        rtl(h, WD_ALIGN_PARAGRAPH.RIGHT)
+        add_runs(h, m.group(2))
+        continue
+    if line.startswith('> '):
+        p = rtl(doc.add_paragraph())
+        p.paragraph_format.right_indent = Cm(1.25)
+        p.paragraph_format.left_indent = Cm(1.25)
+        add_runs(p, line[2:])
+        continue
+    if line.startswith('[REF] '):
+        text = line[6:]
+        is_latin = bool(re.match(r'^[A-Za-z]', text))
+        p = doc.add_paragraph()
+        if is_latin:
+            ltr(p)
+            p.paragraph_format.left_indent = Cm(1.25)
+            p.paragraph_format.first_line_indent = Cm(-1.25)
+            add_runs(p, text, font='Times New Roman')
+        else:
+            rtl(p, WD_ALIGN_PARAGRAPH.RIGHT)
+            p.paragraph_format.right_indent = Cm(1.25)
+            p.paragraph_format.first_line_indent = Cm(-1.25)
+            add_runs(p, text)
+        continue
+    if line.startswith('[AR] '):
+        p = rtl(doc.add_paragraph(), WD_ALIGN_PARAGRAPH.RIGHT)
+        p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+        add_runs(p, line[5:], font='Arial')
+        continue
+    if line.startswith('[C] '):
+        p = rtl(doc.add_paragraph(), WD_ALIGN_PARAGRAPH.CENTER)
+        add_runs(p, line[4:])
+        continue
+    if line.startswith('[B] '):
+        p = rtl(doc.add_paragraph(), WD_ALIGN_PARAGRAPH.RIGHT)
+        add_runs(p, line[4:])
+        for r in p.runs: r.bold = True
+        continue
+    if line.startswith('[T] '):  # transcript line, 1.5 spacing
+        p = rtl(doc.add_paragraph(), WD_ALIGN_PARAGRAPH.RIGHT)
+        p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+        add_runs(p, line[4:])
+        continue
+    p = rtl(doc.add_paragraph())
+    add_runs(p, line)
+
+flush_table()
+
+# ask Word to refresh fields (TOC) on open
+settings = doc.settings.element
+upd = OxmlElement('w:updateFields'); upd.set(qn('w:val'), 'true'); settings.append(upd)
+
+doc.save(OUT)
+print('saved', OUT)
