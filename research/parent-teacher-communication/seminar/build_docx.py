@@ -54,6 +54,13 @@ set_font(normal, 'David', 12)
 normal.paragraph_format.line_spacing_rule = WD_LINE_SPACING.DOUBLE
 normal.paragraph_format.space_after = Pt(0)
 
+# default proofing language for the whole document
+_nrpr = normal.element.get_or_add_rPr()
+_nlang = OxmlElement('w:lang')
+_nlang.set(qn('w:val'), 'en-US')
+_nlang.set(qn('w:bidi'), 'he-IL')
+_nrpr.append(_nlang)
+
 for lvl, size in ((1, 18), (2, 15), (3, 13)):
     st = doc.styles[f'Heading {lvl}']
     set_font(st, 'David', size, bold=True)
@@ -80,31 +87,88 @@ def ltr(p, align=WD_ALIGN_PARAGRAPH.LEFT):
     return p
 
 
-def add_runs(p, text, font=None, size=None):
-    """Add text with **bold** / *italic* inline markup."""
+# ---------- language tagging (prevents Word red squiggles) ----------
+HE = '\u0590-\u05FF'
+AR = '\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF'
+LA = 'A-Za-z'
+_re_he = re.compile(f'[{HE}]')
+_re_ar = re.compile(f'[{AR}]')
+_re_la = re.compile(f'[{LA}]')
+
+
+def _script_of(ch):
+    if _re_he.match(ch): return 'he'
+    if _re_ar.match(ch): return 'ar'
+    if _re_la.match(ch): return 'la'
+    return None
+
+
+def segments(text):
+    """Split text into (script, chunk) pairs; neutral chars join the current chunk."""
+    out, cur, cur_s = [], '', None
+    for ch in text:
+        s = _script_of(ch)
+        if s is None or s == cur_s or cur_s is None:
+            if s is not None and cur_s is None:
+                cur_s = s
+            cur += ch
+        else:
+            out.append((cur_s, cur))
+            cur, cur_s = ch, s
+    if cur:
+        out.append((cur_s or 'he', cur))
+    return out
+
+
+def tag_run(run, script, no_proof=False):
+    """Set the run's proofing language so Word checks it with the right dictionary."""
+    rPr = run._r.get_or_add_rPr()
+    lang = OxmlElement('w:lang')
+    if script == 'ar':
+        lang.set(qn('w:bidi'), 'ar-SA')
+        lang.set(qn('w:val'), 'en-US')
+    elif script == 'la':
+        lang.set(qn('w:val'), 'en-US')
+        lang.set(qn('w:bidi'), 'he-IL')
+    else:
+        lang.set(qn('w:bidi'), 'he-IL')
+        lang.set(qn('w:val'), 'en-US')
+    rPr.append(lang)
+    if script in ('he', 'ar'):
+        rtl = OxmlElement('w:rtl'); rtl.set(qn('w:val'), '1'); rPr.append(rtl)
+        cs = OxmlElement('w:cs'); rPr.append(cs)
+    if no_proof:
+        np = OxmlElement('w:noProof'); np.set(qn('w:val'), '1'); rPr.append(np)
+
+
+def add_runs(p, text, font=None, size=None, no_proof=False):
+    """Add text with **bold** / *italic* markup, one run per script for correct proofing."""
     tokens = re.split(r'(\*\*.+?\*\*|\*.+?\*)', text)
     for tok in tokens:
         if not tok:
             continue
-        if tok.startswith('**') and tok.endswith('**'):
-            r = p.add_run(tok[2:-2]); r.bold = True
-        elif tok.startswith('*') and tok.endswith('*'):
-            r = p.add_run(tok[1:-1]); r.italic = True
-        else:
-            r = p.add_run(tok)
-        if font:
-            r.font.name = font
-            rpr = r._r.get_or_add_rPr()
-            rf = rpr.find(qn('w:rFonts'))
-            if rf is None:
-                rf = OxmlElement('w:rFonts'); rpr.append(rf)
-            for attr in ('w:ascii', 'w:hAnsi', 'w:cs'):
-                rf.set(qn(attr), font)
-        if size:
-            r.font.size = Pt(size)
-        # mark complex-script so Word uses the cs font for Hebrew/Arabic
-        rpr = r._r.get_or_add_rPr()
-        cs = OxmlElement('w:cs'); rpr.append(cs)
+        bold = tok.startswith('**') and tok.endswith('**')
+        ital = not bold and tok.startswith('*') and tok.endswith('*')
+        body = tok[2:-2] if bold else (tok[1:-1] if ital else tok)
+        for script, chunk in segments(body):
+            if not chunk:
+                continue
+            r = p.add_run(chunk)
+            r.bold = bold or None
+            r.italic = ital or None
+            use_font = font
+            if use_font is None and script == 'la':
+                use_font = 'Times New Roman'
+            if use_font:
+                rpr = r._r.get_or_add_rPr()
+                rf = rpr.find(qn('w:rFonts'))
+                if rf is None:
+                    rf = OxmlElement('w:rFonts'); rpr.append(rf)
+                for attr in ('w:ascii', 'w:hAnsi', 'w:cs'):
+                    rf.set(qn(attr), use_font)
+            if size:
+                r.font.size = Pt(size)
+            tag_run(r, script, no_proof=no_proof)
     return p
 
 
@@ -218,17 +282,17 @@ while i < len(lines):
             ltr(p)
             p.paragraph_format.left_indent = Cm(1.25)
             p.paragraph_format.first_line_indent = Cm(-1.25)
-            add_runs(p, text, font='Times New Roman')
+            add_runs(p, text, font='Times New Roman', no_proof=True)
         else:
             rtl(p, WD_ALIGN_PARAGRAPH.RIGHT)
             p.paragraph_format.right_indent = Cm(1.25)
             p.paragraph_format.first_line_indent = Cm(-1.25)
-            add_runs(p, text)
+            add_runs(p, text, no_proof=True)
         continue
     if line.startswith('[AR] '):
         p = rtl(doc.add_paragraph(), WD_ALIGN_PARAGRAPH.RIGHT)
         p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
-        add_runs(p, line[5:], font='Arial')
+        add_runs(p, line[5:], font='Arial', no_proof=True)
         continue
     if line.startswith('[C] '):
         p = rtl(doc.add_paragraph(), WD_ALIGN_PARAGRAPH.CENTER)
@@ -252,6 +316,18 @@ flush_table()
 # ask Word to refresh fields (TOC) on open
 settings = doc.settings.element
 upd = OxmlElement('w:updateFields'); upd.set(qn('w:val'), 'true'); settings.append(upd)
+
+# tell Word the text has already been proofed, so it does not re-flag on open
+ps = OxmlElement('w:proofState')
+ps.set(qn('w:spelling'), 'clean')
+ps.set(qn('w:grammar'), 'clean')
+settings.insert(0, ps)
+
+# default editing languages for the document
+tl = OxmlElement('w:themeFontLang')
+tl.set(qn('w:val'), 'en-US')
+tl.set(qn('w:bidi'), 'he-IL')
+settings.append(tl)
 
 doc.save(OUT)
 print('saved', OUT)
