@@ -1,4 +1,5 @@
 #COVER
+#IMAGE achva-logo.jpg 3.2
 המכללה האקדמית אחוה
 הפקולטה לחינוך
 

@@ -250,9 +250,25 @@ while i < len(lines):
         p = rtl(doc.add_paragraph(), WD_ALIGN_PARAGRAPH.RIGHT)
         add_field(p, 'TOC \\o "1-3" \\h \\z \\u')
         continue
+    if line.startswith('#IMAGE '):
+        parts = line.split()
+        path = parts[1]
+        width = float(parts[2]) if len(parts) > 2 else 3.5
+        p = doc.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.paragraph_format.space_after = Pt(6)
+        p.add_run().add_picture(path, width=Cm(width))
+        continue
     if line == '#COVER':
         while i < len(lines) and lines[i].strip() != '#ENDCOVER':
             cl = lines[i].rstrip(); i += 1
+            if cl.startswith('#IMAGE '):
+                parts = cl.split()
+                ip = doc.add_paragraph()
+                ip.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                ip.paragraph_format.space_after = Pt(10)
+                ip.add_run().add_picture(parts[1], width=Cm(float(parts[2]) if len(parts) > 2 else 3.5))
+                continue
             p = rtl(doc.add_paragraph(), WD_ALIGN_PARAGRAPH.CENTER)
             p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
             if cl.startswith('!!'):
