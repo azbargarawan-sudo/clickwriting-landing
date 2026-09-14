@@ -60,6 +60,7 @@ _nlang = OxmlElement('w:lang')
 _nlang.set(qn('w:val'), 'en-US')
 _nlang.set(qn('w:bidi'), 'he-IL')
 _nrpr.append(_nlang)
+_nnp = OxmlElement('w:noProof'); _nnp.set(qn('w:val'), '1'); _nrpr.append(_nnp)
 
 for lvl, size in ((1, 18), (2, 15), (3, 13)):
     st = doc.styles[f'Heading {lvl}']
@@ -137,8 +138,9 @@ def tag_run(run, script, no_proof=False):
     if script in ('he', 'ar'):
         rtl = OxmlElement('w:rtl'); rtl.set(qn('w:val'), '1'); rPr.append(rtl)
         cs = OxmlElement('w:cs'); rPr.append(cs)
-    if no_proof:
-        np = OxmlElement('w:noProof'); np.set(qn('w:val'), '1'); rPr.append(np)
+    # every run is marked noProof: Word then draws no red or blue underlines,
+    # regardless of which proofing dictionaries are installed on the machine
+    np = OxmlElement('w:noProof'); np.set(qn('w:val'), '1'); rPr.append(np)
 
 
 def add_runs(p, text, font=None, size=None, no_proof=False):
@@ -179,6 +181,8 @@ def add_field(p, instr):
     fld_sep = OxmlElement('w:fldChar'); fld_sep.set(qn('w:fldCharType'), 'separate')
     txt = OxmlElement('w:t'); txt.text = ' '
     fld_end = OxmlElement('w:fldChar'); fld_end.set(qn('w:fldCharType'), 'end')
+    rPr = r._r.get_or_add_rPr()
+    np = OxmlElement('w:noProof'); np.set(qn('w:val'), '1'); rPr.append(np)
     for el in (fld_begin, instr_el, fld_sep, txt, fld_end):
         r._r.append(el)
 
@@ -322,6 +326,10 @@ ps = OxmlElement('w:proofState')
 ps.set(qn('w:spelling'), 'clean')
 ps.set(qn('w:grammar'), 'clean')
 settings.insert(0, ps)
+for tag in ('w:doNotDisplayPageBoundaries',):
+    pass
+_nospell = OxmlElement('w:hideSpellingErrors'); _nospell.set(qn('w:val'), 'true'); settings.append(_nospell)
+_nogram = OxmlElement('w:hideGrammaticalErrors'); _nogram.set(qn('w:val'), 'true'); settings.append(_nogram)
 
 # default editing languages for the document
 tl = OxmlElement('w:themeFontLang')
