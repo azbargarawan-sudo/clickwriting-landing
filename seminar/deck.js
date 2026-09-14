@@ -5,7 +5,7 @@ pres.layout = "LAYOUT_16x9"; // 10 x 5.625
 pres.rtlMode = true;
 pres.lang = "he-IL";
 
-const NAVY = "1F3A5F", LIGHT = "EAF0F7", ORANGE = "E8892B", INK = "22303F", MUTED = "5B6B7C", WHITE = "FFFFFF", RULE = "C9D6E4";
+const DEEP = "16375C", NAVY = "2E6BA8", LIGHT = "E4EDF7", ORANGE = "E58220", ORANGE_SOFT = "FBEBD8", INK = "1F2933", MUTED = "5B6B7C", WHITE = "FFFFFF", RULE = "C9D6E4";
 const FONT = "Arial";
 const logo = "image/jpeg;base64," + fs.readFileSync("logo.jpg").toString("base64");
 
@@ -41,15 +41,15 @@ function rtlTable(slide, header, rows, opts) {
 // ---------- 1. title ----------
 {
   const s = pres.addSlide();
-  s.background = { color: NAVY };
+  s.background = { color: DEEP };
   s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 10, h: 1.35, fill: { color: WHITE } });
   s.addImage({ data: logo, x: 6.9, y: 0.25, w: 2.6, h: 1.03 });
   T(s, "המכללה האקדמית אשקלון, החוג לקרימינולוגיה", { x: 0.5, y: 0.35, w: 6.2, h: 0.35, fontSize: 14, bold: true, color: NAVY });
   T(s, "סמינריון: תנאי כליאה של אסירים פליליים בישראל ובעולם", { x: 0.5, y: 0.7, w: 6.2, h: 0.3, fontSize: 12, color: MUTED });
   T(s, "מרצה: ד\"ר יוחנן ועקנין", { x: 0.5, y: 0.98, w: 6.2, h: 0.3, fontSize: 12, color: MUTED });
   T(s, "רווחה נפשית ותפיסת הלגיטימיות של סגל הכליאה בקרב אסירים שפוטים בישראל", { x: 0.6, y: 1.6, w: 8.8, h: 1.05, fontSize: 26, bold: true, color: WHITE, valign: "middle" });
-  T(s, "שאלת המחקר: באיזו מידה קיים קשר בין רווחה נפשית לבין תפיסת הלגיטימיות של סגל הכליאה בקרב אסירים שפוטים בלבד?", { x: 0.6, y: 2.75, w: 8.8, h: 0.9, fontSize: 15, color: "CFDBEA", valign: "middle" });
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.6, y: 3.85, w: 8.8, h: 1.2, fill: { color: "2B4C78" }, line: { color: "2B4C78" }, rectRadius: 0.12 });
+  T(s, "שאלת המחקר: באיזו מידה קיים קשר בין רווחה נפשית לבין תפיסת הלגיטימיות של סגל הכליאה בקרב אסירים שפוטים בלבד?", { x: 0.6, y: 2.75, w: 8.8, h: 0.9, fontSize: 16, bold: true, color: ORANGE, valign: "middle" });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.6, y: 3.85, w: 8.8, h: 1.2, fill: { color: "204B7A" }, line: { color: "204B7A" }, rectRadius: 0.12 });
   T(s, "מגישות:", { x: 0.85, y: 3.95, w: 8.3, h: 0.3, fontSize: 13, bold: true, color: ORANGE });
   T(s, "שם: ______________________   ת.ז.: ______________", { x: 0.85, y: 4.28, w: 8.3, h: 0.32, fontSize: 14, color: WHITE });
   T(s, "שם: ______________________   ת.ז.: ______________", { x: 0.85, y: 4.62, w: 8.3, h: 0.32, fontSize: 14, color: WHITE });
@@ -80,8 +80,8 @@ function rtlTable(slide, header, rows, opts) {
   const s = pres.addSlide();
   s.background = { color: WHITE };
   title(s, "שאלת המחקר");
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 1.1, w: 9, h: 1.0, fill: { color: NAVY }, line: { color: NAVY }, rectRadius: 0.12 });
-  T(s, "באיזו מידה קיים קשר בין רווחה נפשית לבין תפיסת הלגיטימיות של סגל הכליאה בקרב אסירים שפוטים בלבד?", { x: 0.8, y: 1.17, w: 8.4, h: 0.86, fontSize: 17, bold: true, color: WHITE, valign: "middle" });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 1.1, w: 9, h: 1.0, fill: { color: ORANGE }, line: { color: ORANGE }, rectRadius: 0.12 });
+  T(s, "באיזו מידה קיים קשר בין רווחה נפשית לבין תפיסת הלגיטימיות של סגל הכליאה בקרב אסירים שפוטים בלבד?", { x: 0.8, y: 1.17, w: 8.4, h: 0.86, fontSize: 17, bold: true, color: DEEP, valign: "middle" });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 2.3, w: 9, h: 2.75, fill: { color: LIGHT }, line: { color: LIGHT }, rectRadius: 0.1 });
   para(s, "המשתנה התלוי הוא תפיסת הלגיטימיות של הסגל, הנמדדת בשלושה פריטים מתוך שאלון סקר תנאי המחיה: האפשרות לדבר עם הסוהרים כשמודאגים או עצובים, היחס המכבד של הסוהרים ושביעות הרצון מהטיפול בבקשות (α = 0.67). המשתנה הבלתי תלוי הוא הרווחה הנפשית, הנמדדת בחמישה פריטים של בריאות גופנית ונפשית, שיפור בבריאות מאז המאסר, שמחה ושביעות רצון מהחיים בחודש האחרון (α = 0.81), ושני הסולמות נעים בטווח של 1 עד 5. השערת המחקר היא שיימצא קשר חיובי מובהק בין רווחה נפשית לבין לגיטימיות, כך שככל שהרווחה גבוהה יותר, הלגיטימיות המיוחסת לסגל גבוהה יותר, ולהפך. המחקר הוא מחקר כמותי מתאמי במערך חתך, המבוסס על נתונים סינתטיים שנבנו על פי סקר שירות בתי הסוהר משנת 2021 וצומצמו ל-2,379 שפוטים, והניתוח נערך ב-SPSS וכלל סטטיסטיקה תיאורית, בדיקת מהימנות ומתאמי פירסון וספירמן.", 0.8, 2.5, 8.4, 2.4, 13);
   footer(s, 4);
@@ -92,7 +92,7 @@ function rtlTable(slide, header, rows, opts) {
   const s = pres.addSlide();
   s.background = { color: WHITE };
   title(s, "ממצאים: אוכלוסיית המחקר");
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 1.1, w: 9, h: 3.95, fill: { color: LIGHT }, line: { color: LIGHT }, rectRadius: 0.1 });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 1.1, w: 9, h: 3.95, fill: { color: ORANGE_SOFT }, line: { color: ORANGE_SOFT }, rectRadius: 0.1 });
   para(s, "אוכלוסיית המחקר כוללת 2,379 אסירים פליליים שפוטים, שהם כשני שלישים מכלל המשיבים לסקר. רובם המכריע גברים, 2,302 איש שהם 96.8 אחוזים, ולעומתם 77 נשים בלבד שהן 3.2 אחוזים, והגיל הממוצע עומד על 37.9 שנים בטווח שבין 18 ל-82. מבחינת לאום המדגם מחולק כמעט שווה בשווה, 1,136 יהודים שהם 47.8 אחוזים ו-1,243 שאינם יהודים שהם 52.2 אחוזים. כמחצית מהשפוטים מרצים את מאסרם הראשון, 1,162 איש שהם 48.8 אחוזים, 528 נמצאים במאסרם השני ו-689 במאסר שלישי ומעלה, ומכאן שלמעלה ממחצית האוכלוסייה כבר ריצתה מאסר קודם. רוב השפוטים ותיקים באגף שבו הם שוהים: 1,624 מהם, שהם 68.3 אחוזים, נמצאים בו מעל שלושה חודשים, ורק 755 שהם 31.7 אחוזים הגיעו אליו בשלושת החודשים האחרונים. לבסוף, 486 שפוטים שהם 20.4 אחוזים משתתפים במסלול שיקום. התפלגות זו דומה לזו שדווחה בסקר המקורי, ומכאן שהמדגם משקף את אוכלוסיית האגפים הפליליים בשירות בתי הסוהר (ועקנין, 2024).", 0.8, 1.35, 8.4, 3.45, 13.5);
   footer(s, 5);
 }
@@ -114,9 +114,9 @@ function rtlTable(slide, header, rows, opts) {
     valAxisMinVal: 3, valAxisMaxVal: 4.4, valAxisLabelFontSize: 9, valAxisLabelColor: MUTED,
     valGridLine: { color: "DDE3EA", size: 0.5 }, catGridLine: { style: "none" }, showLegend: false,
   });
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 5.95, y: 1.05, w: 3.55, h: 2.6, fill: { color: NAVY }, line: { color: NAVY }, rectRadius: 0.12 });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 5.95, y: 1.05, w: 3.55, h: 2.6, fill: { color: DEEP }, line: { color: DEEP }, rectRadius: 0.12 });
   s.addText("r = 0.32", { isTextBox: true, x: 6.05, y: 1.22, w: 3.35, h: 0.7, fontSize: 36, bold: true, color: ORANGE, align: "center", fontFace: FONT, margin: 0 });
-  T(s, "מתאם פירסון בין רווחה נפשית לבין תפיסת הלגיטימיות של הסגל, מובהק ברמה של p < 0.001 בקרב 2,344 שפוטים. מתאם ספירמן קרוב אליו ועומד על 0.34, ומכאן שההטיה בהתפלגות אינה מעוותת את התמונה.", { x: 6.25, y: 1.98, w: 2.95, h: 1.55, fontSize: 11.5, color: "CFDBEA", align: "justify", lineSpacingMultiple: 1.1 });
+  T(s, "מתאם פירסון בין רווחה נפשית לבין תפיסת הלגיטימיות של הסגל, מובהק ברמה של p < 0.001 בקרב 2,344 שפוטים. מתאם ספירמן קרוב אליו ועומד על 0.34, ומכאן שההטיה בהתפלגות אינה מעוותת את התמונה.", { x: 6.25, y: 1.98, w: 2.95, h: 1.55, fontSize: 11.5, color: "D4E2F0", align: "justify", lineSpacingMultiple: 1.1 });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 3.8, w: 9, h: 1.25, fill: { color: LIGHT }, line: { color: LIGHT }, rectRadius: 0.1 });
   para(s, "ממוצע הלגיטימיות עמד על 4.24 עם סטיית תקן של 0.83, וממוצע הרווחה הנפשית על 3.78 עם סטיית תקן של 0.87, בסולם שנע בין 1 ל-5. נמצא קשר חיובי מובהק ברמה בינונית בין שני המשתנים, והוא קיים בכל שלושת פריטי הלגיטימיות כשהחזק שבהם הוא האפשרות לדבר עם הסוהרים. השפוטים ברמת הלגיטימיות הנמוכה דיווחו על רווחה ממוצעת של 3.34 לעומת 4.05 ברמה הגבוהה, פער של כ-0.7 נקודות שהוא כ-80 אחוזים מסטיית תקן, ומכאן שהרווחה חולקת עם הלגיטימיות כעשרה אחוזים מהשונות. השערת המחקר אוששה, והממצא עולה בקנה אחד עם המחקרים מהולנד, מאנגליה ומאוסטרליה.", 0.7, 3.92, 8.6, 1.05, 11);
   footer(s, 6);
