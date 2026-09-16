@@ -17,6 +17,7 @@ function runs(text, opts = {}) {
     size: opts.size || SZ,
     bold: opts.bold,
     rightToLeft: !/[A-Za-z]/.test(p),
+    language: { value: 'en-US', bidirectional: 'he-IL' },
     highlight: opts.flag ? 'yellow' : undefined,
   }));
 }
@@ -24,7 +25,7 @@ function runs(text, opts = {}) {
 function enRefRuns(text, it) {
   const i = it ? text.indexOf(it) : -1;
   const seg = i >= 0 ? [[text.slice(0, i), false], [it, true], [text.slice(i + it.length), false]] : [[text, false]];
-  return seg.filter(s => s[0]).map(s => new TextRun({ text: s[0], font: EN, size: SZ, italics: s[1] }));
+  return seg.filter(s => s[0]).map(s => new TextRun({ text: s[0], font: EN, size: SZ, italics: s[1], language: { value: 'en-US', bidirectional: 'he-IL' } }));
 }
 function heRefRuns(text, it, flag) {
   const i = it ? text.indexOf(it) : -1;
@@ -35,7 +36,7 @@ function heRefRuns(text, it, flag) {
     for (const p of s.split(/(https?:\/\/\S+|[A-Z]\d+-[A-Z]\d+|\[[^\]]*\])/g).filter(Boolean)) {
       const latin = /^https?:|^[A-Z]\d/.test(p);
       const ph = /^\[/.test(p);
-      out.push(new TextRun({ text: p, font: latin ? EN : HE, size: SZ, italics: ital && !latin, rightToLeft: !latin, highlight: (flag && ph) ? 'yellow' : undefined }));
+      out.push(new TextRun({ text: p, font: latin ? EN : HE, size: SZ, italics: ital && !latin, rightToLeft: !latin, language: { value: 'en-US', bidirectional: 'he-IL' }, highlight: (flag && ph) ? 'yellow' : undefined }));
     }
   }
   return out;
@@ -77,7 +78,7 @@ for (const b of blocks) {
       spacing: { before: 240, after: 120, line: LINE }, children: runs(b.x, { bold: true, size: 28 }) }));
   else if (b.t === 'h3') body.push(new Paragraph({ heading: HeadingLevel.HEADING_3, bidirectional: true, alignment: AlignmentType.RIGHT,
       spacing: { before: 120, after: 120, line: LINE }, children: runs(b.x, { bold: true, size: 24 }) }));
-  else if (b.t === 'p') body.push(P(runs(b.x), { indent: { firstLine: 567 } }));
+  else if (b.t === 'p') body.push(P(runs(b.x), { indent: { firstLine: 720 } }));
 
   else if (b.t === 'table') {
     const W = [1900, 2000, 1500, 3026, 600];
@@ -103,11 +104,14 @@ const doc = new Document({
   title: 'תרומת הצוות הפרא-רפואי לשיפור התפקודים הניהוליים בקרב ילדים עם אוטיזם בתפקוד גבוה בגן הילדים',
   features: { updateFields: true },
   styles: {
-    default: { document: { run: { font: HE, size: SZ, rightToLeft: true } } },
+    default: { document: { run: { font: HE, size: SZ, rightToLeft: true, language: { value: 'en-US', bidirectional: 'he-IL' } } } },
     paragraphStyles: [
       { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { font: HE, size: 32, bold: true, color: '000000' }, paragraph: { outlineLevel: 0 } },
       { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { font: HE, size: 28, bold: true, color: '000000' }, paragraph: { outlineLevel: 1 } },
       { id: 'Heading3', name: 'Heading 3', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { font: HE, size: 24, bold: true, color: '000000' }, paragraph: { outlineLevel: 2 } },
+      { id: 'TOC1', name: 'toc 1', basedOn: 'Normal', next: 'Normal', run: { font: HE, size: SZ }, paragraph: { spacing: { after: 60, line: LINE } } },
+      { id: 'TOC2', name: 'toc 2', basedOn: 'Normal', next: 'Normal', run: { font: HE, size: SZ }, paragraph: { spacing: { after: 60, line: LINE }, indent: { start: 360 } } },
+      { id: 'TOC3', name: 'toc 3', basedOn: 'Normal', next: 'Normal', run: { font: HE, size: SZ }, paragraph: { spacing: { after: 60, line: LINE }, indent: { start: 720 } } },
     ],
   },
   sections: [{
