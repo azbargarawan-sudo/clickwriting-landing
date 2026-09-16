@@ -78,7 +78,7 @@ for (const b of blocks) {
       spacing: { before: 240, after: 120, line: LINE }, children: runs(b.x, { bold: true, size: 28 }) }));
   else if (b.t === 'h3') body.push(new Paragraph({ heading: HeadingLevel.HEADING_3, bidirectional: true, alignment: AlignmentType.RIGHT,
       spacing: { before: 120, after: 120, line: LINE }, children: runs(b.x, { bold: true, size: 24 }) }));
-  else if (b.t === 'p') body.push(P(runs(b.x), { indent: { firstLine: 720 } }));
+  else if (b.t === 'p') body.push(P(runs(b.x)));
 
   else if (b.t === 'table') {
     const W = [1900, 2000, 1500, 3026, 600];
