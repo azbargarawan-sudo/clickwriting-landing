@@ -22,11 +22,17 @@ Options:
 |---|---|
 | `--download` | Download the official CSV (`lotto_resultsDownload.aspx`) to `lotto_history.csv` |
 | `--file PATH` | Use an existing CSV (encoding auto-detected: UTF-8 / Windows-1255) |
+| `--mirror` | Fetch the community GitHub mirror of the official archive (`PZABOY/pais-lotto-checker`, JSON, same columns). `--download` falls back to this automatically when pais.co.il is unreachable |
+| `--bundled` | Use `data/lotto_history.csv` shipped with the plugin (real archive, draws #1035–#3807, last draw 06/05/2025). Final fallback when offline |
 | `--recent N` | Window for hot/cold numbers (default 50 draws) |
 | `--tickets K` | Number of tickets to generate (default 5) |
 | `--strategy` | `unpopular` (default), `hot`, `cold`, `random` |
 | `--seed` | Reproducible picks |
 | `--out`, `--json` | Output paths (default `lotto_report.md`, `lotto_summary.json`) |
+
+## Data freshness
+
+The report always prints its data source and the last draw it contains. If the last draw is older than the previous Tuesday/Saturday, say so to the user: the frequencies barely move, but the hot/cold window and gaps are then stale. The official download is the only source guaranteed current.
 
 ## CSV format expected
 

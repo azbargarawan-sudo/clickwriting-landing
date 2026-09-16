@@ -23,6 +23,10 @@ PICK = 6
 STRONG_MAX = 7
 JACKPOT_ODDS = math.comb(MAX_N, PICK) * STRONG_MAX  # 16,273,488
 DOWNLOAD_URL = "https://www.pais.co.il/Lotto/lotto_resultsDownload.aspx"
+# Community mirror of the official archive (same columns, JSON). Used when pais.co.il is unreachable.
+MIRROR_URL = "https://raw.githubusercontent.com/PZABOY/pais-lotto-checker/main/data/lotto.json"
+import os
+BUNDLED = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "data", "lotto_history.csv")
 
 
 # ----------------------------------------------------------------------------- data
@@ -33,6 +37,25 @@ def download(path: str) -> str:
         data = r.read()
     with open(path, "wb") as f:
         f.write(data)
+    return path
+
+
+def download_mirror(path: str) -> str:
+    """Fetch the GitHub mirror JSON and write it as a CSV in the official column layout."""
+    req = urllib.request.Request(MIRROR_URL, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        data = json.loads(r.read().decode("utf-8"))
+    items = data["results"] if isinstance(data, dict) else data
+    rows = []
+    for it in items:
+        try:
+            rows.append([int(it["הגרלה"]), it["תאריך"]] + [int(it[str(i)]) for i in range(1, 7)] + [int(it["המספר החזק/נוסף"])])
+        except (KeyError, ValueError):
+            continue
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["הגרלה", "תאריך", "1", "2", "3", "4", "5", "6", "המספר החזק/נוסף"])
+        w.writerows(rows)
     return path
 
 
@@ -256,10 +279,10 @@ def fmt_ticket(t: dict) -> str:
     return " ".join(f"{x:2d}" for x in t["nums"]) + f"  |  {t['strong']}"
 
 
-def build_report(st: dict, tickets: list[dict], strategy: str, lang: str, today: dt.date) -> str:
+def build_report(st: dict, tickets: list[dict], strategy: str, lang: str, today: dt.date, source: str = "") -> str:
     L = HE if lang == "he" else EN
     out = [L["title"], "", L["honest"], ""]
-    out += [L["data"], "",
+    out += [L["data"], "", f"- source: {source}",
             f"- {st['count']} draws, {st['first']['date']:%d/%m/%Y} (#{st['first']['id']}) → {st['last']['date']:%d/%m/%Y} (#{st['last']['id']})",
             f"- expected appearances per number: {st['expected']:.1f}", ""]
 
@@ -315,6 +338,8 @@ def main(argv=None):
     src = ap.add_mutually_exclusive_group(required=True)
     src.add_argument("--download", action="store_true")
     src.add_argument("--file")
+    src.add_argument("--mirror", action="store_true", help="fetch the GitHub mirror of the archive")
+    src.add_argument("--bundled", action="store_true", help="use the CSV bundled with the plugin (may be stale)")
     ap.add_argument("--recent", type=int, default=50)
     ap.add_argument("--tickets", type=int, default=5)
     ap.add_argument("--strategy", choices=["unpopular", "hot", "cold", "random"], default="unpopular")
@@ -325,11 +350,22 @@ def main(argv=None):
     a = ap.parse_args(argv)
 
     path = a.file
+    source = "user file"
     if a.download:
         try:
-            path = download("lotto_history.csv")
+            path, source = download("lotto_history.csv"), "pais.co.il official download"
         except Exception as e:  # noqa: BLE001
-            sys.exit(f"Download failed ({e}). Download the CSV manually from {DOWNLOAD_URL} and rerun with --file PATH.")
+            print(f"[official download failed: {e}; trying GitHub mirror]", file=sys.stderr)
+            a.mirror = True
+    if a.mirror:
+        try:
+            path, source = download_mirror("lotto_history.csv"), f"GitHub mirror {MIRROR_URL}"
+        except Exception as e:  # noqa: BLE001
+            print(f"[mirror failed: {e}; using bundled CSV]", file=sys.stderr)
+            a.bundled = True
+    if a.bundled:
+        path, source = BUNDLED, "CSV bundled with the plugin"
+    print(f"[data source: {source}]", file=sys.stderr)
 
     all_draws = load_draws(path)
     draws = current_era(all_draws)
@@ -339,10 +375,11 @@ def main(argv=None):
     rng = random.Random(a.seed)
     tickets = generate(st, a.tickets, a.strategy, rng)
     today = dt.date.today()
-    report = build_report(st, tickets, a.strategy, a.lang, today)
+    report = build_report(st, tickets, a.strategy, a.lang, today, source)
     with open(a.out, "w", encoding="utf-8") as f:
         f.write(report)
     summary = {
+        "data_source": source,
         "draws_total_rows": len(all_draws), "draws_used": st["count"],
         "first": {"id": st["first"]["id"], "date": st["first"]["date"].isoformat()},
         "last": {"id": st["last"]["id"], "date": st["last"]["date"].isoformat()},

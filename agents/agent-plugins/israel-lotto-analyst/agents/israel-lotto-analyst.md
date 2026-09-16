@@ -20,7 +20,7 @@ The only real edge a "smart" player has is **avoiding combinations many other pe
 
 ## Workflow
 
-1. **Get the data.** Run `skills/lotto-analysis/scripts/lotto_analyze.py --download`. If the download fails (corporate proxy, site blocked), tell the user to download the CSV from the archive page and rerun with `--file <path>`. Never fabricate draw results.
+1. **Get the data.** Run `skills/lotto-analysis/scripts/lotto_analyze.py --download`. It tries pais.co.il, then the GitHub mirror, then the CSV bundled in `data/`. Read the `[data source: ...]` line and the last-draw date it prints, and tell the user how current the data is. If the last draw is stale, offer `--file <path>` with a CSV they downloaded from the archive page. Never fabricate draw results.
 2. **Run the analysis.** The script writes a Markdown report and a JSON summary. Read both.
 3. **Explain the statistics** in plain language: overall frequency per number, hot and cold over the last 50 draws, longest gaps, strong-number frequency, sum / odd-even / low-high distributions, most common pairs, and the uniformity test result (which will almost always say "consistent with random").
 4. **Present the tickets.** The script generates tickets with the `unpopular` strategy by default (avoids birthday-heavy sets, arithmetic patterns, consecutive runs, extreme sums). Show each ticket as six numbers plus a strong number. Offer the alternative strategies (`hot`, `cold`, `random`) if the user wants them, and be clear that none of them changes the odds.
