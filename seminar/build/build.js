@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType, ShadingType, BorderStyle,
+const { Document, Packer, Paragraph, TextRun, ImageRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType, ShadingType, BorderStyle,
         TableOfContents, PageNumber, Footer, LineRuleType } = require('docx');
 const blocks = [...require('./content1'), ...require('./content2'), ...require('./content3')];
 
@@ -50,7 +50,10 @@ const P = (children, extra = {}) => new Paragraph({ bidirectional: true, alignme
 const cover = (t, o = {}) => new Paragraph({ bidirectional: true, alignment: AlignmentType.CENTER,
   spacing: { line: LINE, before: o.before || 0, after: o.after || 120 },
   children: runs(t, { size: o.size || SZ, bold: o.bold }) });
-body.push(cover('הקריה האקדמית אונו', { bold: true, size: 28, before: 600 }));
+body.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 400, after: 200 },
+  children: [new ImageRun({ type: 'jpg', data: fs.readFileSync(__dirname + '/logo.jpg'),
+    transformation: { width: 150, height: 150 } })] }));
+body.push(cover('הקריה האקדמית אונו', { bold: true, size: 28, before: 0 }));
 body.push(cover('הפקולטה למדעי הרוח והחברה'));
 body.push(cover('התוכנית לתואר שני בחינוך', { after: 1400 }));
 body.push(cover('תרומת הצוות הפרא-רפואי לשיפור התפקודים הניהוליים', { bold: true, size: 32 }));
