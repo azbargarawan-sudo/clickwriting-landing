@@ -1,0 +1,8 @@
+{
+  "name": "portfolio-reviewer",
+  "version": "0.1.0",
+  "description": "Upload a holdings file (Excel/CSV) and get a full report on every stock you own plus a portfolio-level summary",
+  "author": {
+    "name": "clickwriting"
+  }
+}

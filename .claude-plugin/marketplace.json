@@ -69,6 +69,12 @@
       "displayName": "Statement Auditor",
       "source": "./agents/agent-plugins/statement-auditor",
       "description": "Audits pre-generated LP statements before distribution"
+    },
+    {
+      "name": "portfolio-reviewer",
+      "displayName": "Portfolio Reviewer",
+      "source": "./agents/agent-plugins/portfolio-reviewer",
+      "description": "Upload a holdings file (Excel/CSV) and get a full report on every stock you own plus a portfolio-level summary"
     }
   ]
 }

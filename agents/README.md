@@ -19,6 +19,7 @@
 | Month-End Closer | `agent-plugins/month-end-closer` | إقفال الشهر: استحقاقات، ترحيلات، تعليق على الفروقات |
 | Statement Auditor | `agent-plugins/statement-auditor` | تدقيق كشوف LP قبل التوزيع |
 | KYC Screener | `agent-plugins/kyc-screener` | قراءة مستندات الفتح، تشغيل القواعد، رصد النواقص |
+| **Portfolio Reviewer** (جديد، مبني هنا) | `agent-plugins/portfolio-reviewer` | ترفع ملف محفظتك (Excel/CSV) ويطلع تقرير كامل لكل سهم وملخص للمحفظة |
 
 ## التثبيت في Claude Code
 
@@ -36,9 +37,20 @@ Settings → Plugins → Add plugin، ثم إما لصق رابط هذا الر�
 
 ## مثال: تقرير على أسهم محفظتك
 
-ثبّت `financial-analysis` و `earnings-reviewer`، ارفع ملف المحفظة (Excel أو CSV)، واكتب:
+ثبّت `financial-analysis` و `portfolio-reviewer`:
 
-> هذي محفظتي، اعطني تقرير كامل لكل سهم: آخر نتائج، تقييم، مخاطر، وتغيّرات على الأطروحة.
+```
+claude plugin install portfolio-reviewer@clickwriting-financial-agents
+```
+
+ارفع ملف المحفظة (Excel أو CSV فيه على الأقل عمود الرمز أو اسم الشركة، واختيارياً الكمية ومتوسط التكلفة والعملة)، ثم:
+
+```
+/portfolio-report holdings.xlsx SAR markdown
+```
+
+أو اكتب مباشرة: "هذي محفظتي، اعطني تقرير كامل لكل سهم". الناتج: تقرير بلغتك، ملف Excel بالمراكز مع البيانات المالية، وسجل مصادر لكل رقم.
+التقرير وصفي فقط (حقائق، تقييم، مخاطر) ولا يعطي توصيات بيع أو شراء.
 
 البيانات الحية (أسعار، قوائم مالية) تأتي من الموصلات في
 `vertical-plugins/financial-analysis/.mcp.json` وأغلبها يحتاج اشتراك أو مفتاح API من المزوّد.
