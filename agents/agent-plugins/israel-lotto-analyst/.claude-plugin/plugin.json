@@ -1,0 +1,8 @@
+{
+  "name": "israel-lotto-analyst",
+  "version": "0.1.0",
+  "description": "Downloads the full Israeli Lotto (Mifal HaPais) draw history, runs frequency/gap/pattern statistics, and generates tickets (6 numbers + strong number) for the next draw, with honest odds",
+  "author": {
+    "name": "clickwriting"
+  }
+}

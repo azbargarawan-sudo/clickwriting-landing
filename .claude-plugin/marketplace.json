@@ -75,6 +75,12 @@
       "displayName": "Portfolio Reviewer",
       "source": "./agents/agent-plugins/portfolio-reviewer",
       "description": "Upload a holdings file (Excel/CSV) and get a full report on every stock you own plus a portfolio-level summary"
+    },
+    {
+      "name": "israel-lotto-analyst",
+      "displayName": "Israel Lotto Analyst",
+      "source": "./agents/agent-plugins/israel-lotto-analyst",
+      "description": "Full Israeli Lotto draw-history statistics and ticket generation (6/37 + strong number) with honest odds"
     }
   ]
 }

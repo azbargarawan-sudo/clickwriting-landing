@@ -19,6 +19,7 @@
 | Month-End Closer | `agent-plugins/month-end-closer` | إقفال الشهر: استحقاقات، ترحيلات، تعليق على الفروقات |
 | Statement Auditor | `agent-plugins/statement-auditor` | تدقيق كشوف LP قبل التوزيع |
 | KYC Screener | `agent-plugins/kyc-screener` | قراءة مستندات الفتح، تشغيل القواعد، رصد النواقص |
+| **Israel Lotto Analyst** (חדש, נבנה כאן) | `agent-plugins/israel-lotto-analyst` | ניתוח סטטיסטי של כל הגרלות הלוטו בישראל והצעת טפסים (6 מספרים + מספר חזק) להגרלה הבאה, עם הסיכויים האמיתיים |
 | **Portfolio Reviewer** (جديد، مبني هنا) | `agent-plugins/portfolio-reviewer` | ترفع ملف محفظتك (Excel/CSV) ويطلع تقرير كامل لكل سهم وملخص للمحفظة |
 
 ## التثبيت في Claude Code
@@ -54,3 +55,14 @@ claude plugin install portfolio-reviewer@clickwriting-financial-agents
 
 البيانات الحية (أسعار، قوائم مالية) تأتي من الموصلات في
 `vertical-plugins/financial-analysis/.mcp.json` وأغلبها يحتاج اشتراك أو مفتاح API من المزوّد.
+
+## לוטו ישראל (עברית)
+
+```
+claude plugin install israel-lotto-analyst@clickwriting-financial-agents
+/lotto --tickets 5
+```
+
+הסוכן מוריד את ארכיון ההגרלות הרשמי של מפעל הפיס, מנתח שכיחויות, פערים, מספר חזק, סכומים וזוגות, ומציע טפסים.
+אם ההורדה חסומה, מורידים את הקובץ ידנית מ-`https://www.pais.co.il/Lotto/lotto_resultsDownload.aspx` ומריצים `/lotto --file Lotto.csv`.
+חשוב: כל הגרלה אקראית, הסיכוי לפרס הראשון הוא 1 ל-16,273,488 לכל טופס בלי קשר לניתוח. היתרון היחיד הוא בחירת צירופים פחות פופולריים כדי לא להתחלק בפרס.
