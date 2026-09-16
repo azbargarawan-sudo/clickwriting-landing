@@ -42,7 +42,7 @@ function heRefRuns(text, it, flag) {
 }
 
 const body = [];
-const P = (children, extra = {}) => new Paragraph({ bidirectional: true, alignment: AlignmentType.START,
+const P = (children, extra = {}) => new Paragraph({ bidirectional: true, alignment: AlignmentType.JUSTIFIED,
   spacing: { line: LINE, lineRule: LineRuleType.AUTO, after: 120 }, children, ...extra });
 
 // ---- cover page ----
