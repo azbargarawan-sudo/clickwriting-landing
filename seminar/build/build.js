@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, PageBreak, Table, TableRow, TableCell, WidthType, ShadingType, BorderStyle,
         TableOfContents, PageNumber, Footer, LineRuleType } = require('docx');
-const blocks = [...require('./content1'), ...require('./content2'), ...require('./content2b'), ...require('./content3')];
+const blocks = [...require('./content1'), ...require('./content2'), ...require('./content3')];
 
 const HE = 'David', EN = 'Times New Roman';
 const SZ = 24; // 12pt
