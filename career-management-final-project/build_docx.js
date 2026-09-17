@@ -1,15 +1,15 @@
 const fs = require('fs');
 const {
   Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, Table, TableRow, TableCell,
-  WidthType, ShadingType, BorderStyle, PageBreak, LevelFormat, PageNumber, Footer, VerticalAlign,
+  WidthType, ShadingType, BorderStyle, PageBreak, LevelFormat, PageNumber, Footer, VerticalAlign, TableOfContents,
 } = require('docx');
 
 // Fonts per the college guidelines: David for Hebrew, Times New Roman for English, 12pt, double spacing
 const HE_FONT = { ascii: 'David', hAnsi: 'David', cs: 'David', eastAsia: 'David' };
 const EN_FONT = { ascii: 'Times New Roman', hAnsi: 'Times New Roman', cs: 'Times New Roman', eastAsia: 'Times New Roman' };
 const LINE = 480; // double spacing
-const NAVY = '1F3864';
-const TEAL = '0E6E73';
+const NAVY = '000000';
+const TEAL = '000000';
 
 // ---------- helpers ----------
 const he = (text, o = {}) => new TextRun({ text, font: HE_FONT, size: o.size || 24, bold: o.bold, italics: o.italics, color: o.color, rightToLeft: true });
@@ -38,7 +38,7 @@ const P = (text, o = {}) => new Paragraph({
   indent: o.indent,
   children: typeof text === 'string' ? runs(text, o) : text,
 });
-const H1 = (text) => new Paragraph({ heading: HeadingLevel.HEADING_1, bidirectional: true, alignment: AlignmentType.RIGHT, spacing: { before: 240, after: 280, line: LINE }, border: { bottom: { style: BorderStyle.SINGLE, size: 12, color: TEAL, space: 4 } }, children: runs(text, { size: 34, bold: true, color: NAVY }) });
+const H1 = (text) => new Paragraph({ heading: HeadingLevel.HEADING_1, bidirectional: true, alignment: AlignmentType.RIGHT, spacing: { before: 240, after: 240, line: LINE }, children: runs(text, { size: 32, bold: true, color: NAVY }) });
 const H2 = (text) => new Paragraph({ heading: HeadingLevel.HEADING_2, bidirectional: true, alignment: AlignmentType.RIGHT, spacing: { before: 240, after: 120, line: LINE }, children: runs(text, { size: 28, bold: true, color: TEAL }) });
 const Bullet = (text) => new Paragraph({ bidirectional: true, alignment: AlignmentType.JUSTIFIED, numbering: { reference: 'bullets', level: 0 }, spacing: { line: LINE, after: 60 }, children: runs(text) });
 const Ref = (children) => new Paragraph({ bidirectional: false, alignment: AlignmentType.LEFT, indent: { left: 709, hanging: 709 }, spacing: { line: LINE, after: 0 }, children });
@@ -66,13 +66,13 @@ function table(widths, header, rows) {
   return new Table({
     visuallyRightToLeft: true, width: { size: total, type: WidthType.DXA }, columnWidths: widths,
     rows: [
-      new TableRow({ tableHeader: true, children: header.map((h, i) => cell(h, widths[i], { bold: true, fill: 'D9E2F3', color: NAVY })) }),
-      ...rows.map((r, ri) => new TableRow({ children: r.map((c, i) => cell(c, widths[i], { fill: ri % 2 ? 'F5F7FA' : undefined })) })),
+      new TableRow({ tableHeader: true, children: header.map((h, i) => cell(h, widths[i], { bold: true })) }),
+      ...rows.map((r) => new TableRow({ children: r.map((c, i) => cell(c, widths[i])) })),
     ],
   });
 }
 const Caption = (t) => P(t, { align: AlignmentType.RIGHT, bold: true, size: 22, line: 276 });
-const Source = (t) => P(t, { align: AlignmentType.RIGHT, size: 20, color: '595959', line: 276 });
+const Source = (t) => P(t, { align: AlignmentType.RIGHT, size: 20, color: '000000', line: 276 });
 
 const children = [];
 
@@ -81,7 +81,7 @@ const C = (text, o = {}) => new Paragraph({ bidirectional: true, alignment: Alig
 children.push(
   Empty(500),
   C('הקריה האקדמית אונו', { size: 36, bold: true, color: NAVY }),
-  C('Ono Academic College', { size: 24, color: '595959' }),
+  C('Ono Academic College', { size: 24, color: '000000' }),
   C('הפקולטה למנהל עסקים B.A', { size: 26 }),
   Empty(500),
   C('עבודה מסכמת בקורס: ניהול קריירה בארגונים', { size: 28, bold: true }),
@@ -89,15 +89,15 @@ children.push(
   Empty(600),
   C('התמודדות עם חוסר ודאות תעסוקתי', { size: 44, bold: true, color: TEAL, after: 80 }),
   C('עיצוב תפקיד מבוסס צרכים כדרך לבנות בהירות, שליטה ומשמעות בעבודה', { size: 26, after: 40 }),
-  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 60 }, children: [en('Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14.', { size: 22, italics: true, color: '404040' })] }),
-  C('מאמר משלים:', { size: 22, color: '404040', after: 40 }),
-  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 120 }, children: [en('Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. Australian Journal of Psychology, 77(1), Article 2559910.', { size: 22, italics: true, color: '404040' })] }),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 60 }, children: [en('Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14.', { size: 22, italics: true, color: '000000' })] }),
+  C('מאמר משלים:', { size: 22, color: '000000', after: 40 }),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 120 }, children: [en('Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. Australian Journal of Psychology, 77(1), Article 2559910.', { size: 22, italics: true, color: '000000' })] }),
   Empty(400),
 );
 children.push(new Table({
   visuallyRightToLeft: true, width: { size: 7200, type: WidthType.DXA }, columnWidths: [3600, 3600], alignment: AlignmentType.CENTER,
   rows: [
-    new TableRow({ tableHeader: true, children: [cell('שם המגיש/ה', 3600, { bold: true, fill: 'D9E2F3', color: NAVY, align: AlignmentType.CENTER }), cell('מספר תעודת זהות', 3600, { bold: true, fill: 'D9E2F3', color: NAVY, align: AlignmentType.CENTER })] }),
+    new TableRow({ tableHeader: true, children: [cell('שם המגיש/ה', 3600, { bold: true, align: AlignmentType.CENTER }), cell('מספר תעודת זהות', 3600, { bold: true, align: AlignmentType.CENTER })] }),
     new TableRow({ children: [cell('[שם מלא]', 3600, { align: AlignmentType.CENTER }), cell('[ת.ז.]', 3600, { align: AlignmentType.CENTER })] }),
     new TableRow({ children: [cell('[שם מלא]', 3600, { align: AlignmentType.CENTER }), cell('[ת.ז.]', 3600, { align: AlignmentType.CENTER })] }),
     new TableRow({ children: [cell('[שם מלא, אם ההגשה בשלשה]', 3600, { align: AlignmentType.CENTER }), cell('[ת.ז.]', 3600, { align: AlignmentType.CENTER })] }),
@@ -112,18 +112,9 @@ children.push(
   Break(),
 );
 
-// ===== תוכן עניינים =====
+// ===== תוכן עניינים (שדה אוטומטי) =====
 children.push(H1('תוכן העניינים'));
-[
-  ['מבוא', '3'], ['פרק 1: הצגת המאמר המרכזי', '5'], ['פרק 2: תמצית המאמר והנקודות המרכזיות', '6'], ['פרק 3: ניתוח המאמר לפי מבנה, שיטה וממצאים', '11'],
-  ['פרק 4: המאמר המשלים', '13'], ['פרק 5: תובנות, מסקנות ודעה אישית', '14'], ['פרק 6: יישום מעשי בניהול קריירה', '16'], ['סיכום ומסקנות', '18'],
-  ['נספח א: תכנון המצגת והאמצעים להמחשה', '19'], ['נספח ב: שאלון קצר להערכה עצמית', '20'], ['רשימת מקורות', '21'],
-].forEach(([t, pg]) => children.push(new Paragraph({
-  bidirectional: true, alignment: AlignmentType.RIGHT, spacing: { line: LINE, after: 0 },
-  tabStops: [{ type: 'left', position: 8800, leader: 'dot' }],
-  children: [...runs(t), new TextRun({ text: '\t' + pg, font: HE_FONT, size: 24, rightToLeft: true })],
-})));
-children.push(P('מספרי העמודים משוערים ויש לעדכנם לאחר מילוי פרטי המגישים.', { size: 20, color: '595959', align: AlignmentType.RIGHT, line: 276, before: 240 }));
+children.push(new TableOfContents('תוכן העניינים', { hyperlink: true, headingStyleRange: '1-2' }));
 children.push(Break());
 
 // ===== מבוא =====
@@ -311,6 +302,7 @@ refs.forEach(parts => children.push(Ref(parts.map(([t, it]) => en(t, { italics: 
 
 // ---------- document ----------
 const doc = new Document({
+  features: { updateFields: true },
   creator: 'Ono Academic College, Career Management',
   title: 'התמודדות עם חוסר ודאות תעסוקתי: עבודה מסכמת',
   styles: {
