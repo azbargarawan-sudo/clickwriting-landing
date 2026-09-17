@@ -8,25 +8,29 @@ pres.title = 'התמודדות עם חוסר ודאות תעסוקתי';
 
 const HE = 'David', EN = 'Times New Roman';
 const BLACK = '000000', GREY = '595959', LIGHT = 'BFBFBF', DARK = '404040', WHITE = 'FFFFFF';
+const BLUE = '1F4E79', LIGHTBLUE = 'DEEAF6', ORANGE = 'ED7D31', LIGHTORANGE = 'FBE5D6', BORDER = '9DC3E6';
 let n = 0;
 
 // ---------- helpers ----------
 const T = (s, text, o) => s.addText(text, { fontFace: HE, rtlMode: true, lang: 'he-IL', isTextBox: true, align: 'right', valign: 'top', margin: 0, color: BLACK, ...o });
 const E = (s, text, o) => s.addText(text, { fontFace: EN, isTextBox: true, align: 'left', valign: 'top', margin: 0, color: BLACK, ...o });
 function title(s, text) {
-  T(s, text, { x: 0.7, y: 0.4, w: 11.93, h: 0.8, fontSize: 28, bold: true, valign: 'middle' });
+  T(s, text, { x: 0.7, y: 0.4, w: 11.93, h: 0.8, fontSize: 28, bold: true, valign: 'middle', color: BLUE });
 }
 function para(s, text, y, h, o = {}) {
   T(s, text, { x: 0.7, y, w: 11.93, h, fontSize: 16, align: 'justify', lineSpacingMultiple: 1.25, ...o });
 }
 function footer(s) {
-  T(s, 'ניהול קריירה בארגונים, הקריה האקדמית אונו', { x: 6.5, y: 7.0, w: 6.13, h: 0.3, fontSize: 10, color: GREY, valign: 'middle' });
+  T(s, 'ניהול קריירה בארגונים, הקריה האקדמית אונו', { x: 6.5, y: 7.0, w: 6.13, h: 0.3, fontSize: 10, color: BLUE, valign: 'middle' });
   T(s, String(n), { x: 0.7, y: 7.0, w: 1, h: 0.3, fontSize: 10, color: GREY, align: 'left', valign: 'middle' });
 }
-const hdr = (t) => ({ text: t, options: { fontFace: HE, fontSize: 13, bold: true, color: BLACK, fill: { color: 'F2F2F2' }, align: 'right', valign: 'middle', rtlMode: true } });
-const cel = (t, extra = {}) => ({ text: t, options: { fontFace: HE, fontSize: 12.5, color: BLACK, align: 'right', valign: 'middle', rtlMode: true, ...extra } });
+const hdr = (t) => ({ text: t, options: { fontFace: HE, fontSize: 13, bold: true, color: WHITE, fill: { color: BLUE }, align: 'right', valign: 'middle', rtlMode: true } });
+const cel = (t, extra = {}) => ({ text: t, options: { fontFace: HE, fontSize: 12.5, color: BLACK, align: 'right', valign: 'middle', rtlMode: true, ...(extra.bold ? { fill: { color: LIGHTBLUE }, color: BLUE } : {}), ...extra } });
 const celE = (t, extra = {}) => ({ text: t, options: { fontFace: EN, fontSize: 12, color: BLACK, align: 'left', valign: 'middle', ...extra } });
-const tbl = (s, rows, opts) => s.addTable(rows, { border: { type: 'solid', color: LIGHT, pt: 0.75 }, fill: { color: WHITE }, margin: 0.06, ...opts });
+const tbl = (s, rows, opts) => {
+  rows.forEach((r, i) => { if (i > 0 && i % 2 === 0) r.forEach(c => { if (!c.options.fill) c.options.fill = { color: 'F5F8FC' }; }); });
+  s.addTable(rows, { border: { type: 'solid', color: BORDER, pt: 0.75 }, fill: { color: WHITE }, margin: 0.06, ...opts });
+};
 const NOTE = (s, t) => s.addNotes(t);
 
 // ================= 1. שער =================
@@ -35,8 +39,8 @@ const NOTE = (s, t) => s.addNotes(t);
   s.addImage({ path: __dirname + '/ono-logo.jpg', x: 5.92, y: 0.35, w: 1.5, h: 1.5 });
   T(s, 'הקריה האקדמית אונו, הפקולטה למנהל עסקים', { x: 0.7, y: 1.95, w: 11.93, h: 0.45, fontSize: 18, align: 'center' });
   T(s, 'עבודה מסכמת בקורס ניהול קריירה בארגונים', { x: 0.7, y: 2.4, w: 11.93, h: 0.45, fontSize: 18, align: 'center' });
-  T(s, 'התמודדות עם חוסר ודאות תעסוקתי', { x: 0.7, y: 3.05, w: 11.93, h: 0.9, fontSize: 36, bold: true, align: 'center', valign: 'middle' });
-  T(s, 'עיצוב תפקיד מבוסס צרכים כדרך לבנות בהירות, שליטה ומשמעות בעבודה', { x: 0.7, y: 3.95, w: 11.93, h: 0.5, fontSize: 18, align: 'center' });
+  T(s, 'התמודדות עם חוסר ודאות תעסוקתי', { x: 0.7, y: 3.05, w: 11.93, h: 0.9, fontSize: 36, bold: true, align: 'center', valign: 'middle', color: BLUE });
+  T(s, 'עיצוב תפקיד מבוסס צרכים כדרך לבנות בהירות, שליטה ומשמעות בעבודה', { x: 0.7, y: 3.95, w: 11.93, h: 0.5, fontSize: 18, align: 'center', color: ORANGE });
   E(s, 'Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14.', { x: 1.2, y: 4.55, w: 10.93, h: 0.7, fontSize: 12, italic: true, align: 'center' });
   T(s, 'מגישים/ות: [שם מלא], ת.ז. [_________]; [שם מלא], ת.ז. [_________]', { x: 0.7, y: 5.45, w: 11.93, h: 0.45, fontSize: 16, align: 'center' });
   T(s, 'מרצה: גב\' מורן דבדבני דקל   |   עוזר הוראה: מר פאר רועי', { x: 0.7, y: 5.95, w: 11.93, h: 0.45, fontSize: 15, align: 'center' });
@@ -122,8 +126,8 @@ const NOTE = (s, t) => s.addNotes(t);
     { name: 'עיצוב לצרכי התקרבות', labels: ['מובנות', 'ניהוליות', 'משמעותיות'], values: [0.142, 0.137, 0.166] },
     { name: 'עיצוב לצרכי הימנעות', labels: ['מובנות', 'ניהוליות', 'משמעותיות'], values: [0.077, 0.090, 0.027] },
   ], {
-    x: 0.7, y: 3.45, w: 6.4, h: 3.35, barDir: 'col', barGrouping: 'clustered', chartColors: [DARK, LIGHT],
-    showTitle: true, title: 'תרשים 1: מקדמי ניבוי מתוקננים (β) של רכיבי תחושת הקוהרנטיות בגל 2', titleFontFace: HE, titleFontSize: 11, titleColor: BLACK,
+    x: 0.7, y: 3.45, w: 6.4, h: 3.35, barDir: 'col', barGrouping: 'clustered', chartColors: [BLUE, ORANGE],
+    showTitle: true, title: 'תרשים 1: מקדמי ניבוי מתוקננים (β) של רכיבי תחושת הקוהרנטיות בגל 2', titleFontFace: HE, titleFontSize: 11, titleColor: BLUE,
     showValue: true, dataLabelPosition: 'outEnd', dataLabelFontFace: EN, dataLabelFontSize: 9, dataLabelColor: BLACK, dataLabelFormatCode: '0.000',
     catAxisLabelFontFace: HE, catAxisLabelFontSize: 11, catAxisLabelColor: BLACK, valAxisLabelFontFace: EN, valAxisLabelFontSize: 9, valAxisLabelColor: BLACK,
     valAxisMaxVal: 0.2, valAxisMinVal: 0, valGridLine: { color: 'E7E6E6', size: 0.5 }, catGridLine: { style: 'none' },
@@ -137,7 +141,7 @@ const NOTE = (s, t) => s.addNotes(t);
     [cel('לא מובהק'), celE('0.03-0.09'), cel('הימנעות ← שלושת הרכיבים')],
     [celE('p < .001'), celE('0.431'), cel('ניהוליות ← התקרבות')],
   ], { x: 7.4, y: 3.45, w: 5.23, colW: [1.35, 1.1, 2.78], rowH: [0.42, 0.5, 0.5, 0.5, 0.5, 0.5] });
-  T(s, 'טבלה 1: מקדמי הנתיבים העיקריים (Cetkovská et al., 2026, טבלה 4)', { x: 7.4, y: 6.4, w: 5.23, h: 0.35, fontSize: 10.5, color: GREY });
+  T(s, 'טבלה 1: מקדמי הנתיבים העיקריים (Cetkovská et al., 2026, טבלה 4)', { x: 7.4, y: 6.4, w: 5.23, h: 0.35, fontSize: 10.5, color: ORANGE });
   footer(s);
   NOTE(s, 'הגרף: עמודות כהות (התקרבות) מול בהירות (הימנעות). מקדם 0.14 עד 0.17 נשמע קטן, אבל המדדים יציבים מאוד (0.61 עד 0.70), ולכן כל שינוי שנשמר אחרי חצי שנה משמעותי. להזכיר: מתאמים בזמן, לא סיבתיות.');
 }
@@ -213,7 +217,7 @@ const NOTE = (s, t) => s.addNotes(t);
     [cel('לזהות למי העבודה שלי עוזרת ולדבר איתו; לנסח במשפט למה התפקיד חשוב; להתנדב למשימה שמתחברת לערכים'), cel('איזה חלק בעבודה מתחבר למה שחשוב לי, ואיך מגדילים אותו?'), cel('משמעות', { bold: true })],
     [cel('הפסקת קפה קבועה עם עמית; להציע עזרה לפני שמבקשים; להצטרף לפרויקט חוצה מחלקות'), cel('עם מי בעבודה אני רוצה קשר אמיתי יותר?'), cel('שייכות', { bold: true })],
   ], { x: 0.7, y: 2.95, w: 11.93, colW: [6.2, 3.8, 1.93], rowH: [0.42, 0.85, 0.85, 0.85, 0.85] });
-  T(s, 'טבלה 2: תוכנית עיצוב תפקיד אישית לפי צרכי ההתקרבות. מקור: פיתוח של המחברים על פי Cetkovská et al. (2026)', { x: 0.7, y: 6.6, w: 11.93, h: 0.35, fontSize: 10.5, color: GREY });
+  T(s, 'טבלה 2: תוכנית עיצוב תפקיד אישית לפי צרכי ההתקרבות. מקור: פיתוח של המחברים על פי Cetkovská et al. (2026)', { x: 0.7, y: 6.6, w: 11.93, h: 0.35, fontSize: 10.5, color: ORANGE });
   footer(s);
   NOTE(s, 'זה הכלי שאנחנו משאירים לכיתה. ארבעה צרכים, שאלה אחת לכל צורך, ופעולות שאפשר לעשות גם במשרה סטודנטיאלית.');
 }
@@ -236,7 +240,7 @@ const NOTE = (s, t) => s.addNotes(t);
   title(s, 'סיכום');
   para(s, 'העבודה פתחה בשאלה מה מאפשר לעובדים להישאר בריאים ומתפקדים כשעולם העבודה אינו יציב. התשובה שעלתה ממחקר האורך של צטקובסקה ואחרים היא שתחושת הקוהרנטיות בעבודה היא משאב דינמי שהעובד יכול לחזק בעצמו באמצעות עיצוב תפקיד המכוון לצרכי אוטונומיה, מיומנות, משמעות ושייכות, ושהמשאב הזה בתורו מזין יוזמה נוספת (Cetkovská et al., 2026). המאמר המשלים הראה שהמודעות לבינה מלאכותית היא מקור מרכזי לחוסר הביטחון של ימינו ושמשאב אישי ממתן אותו (Chung et al., 2025).', 1.35, 2.5);
   para(s, 'מכאן ההמלצות היישומיות. לסטודנט: לבחור בכל שבועיים צורך התקרבות אחד ופעולה אחת של עיצוב תפקיד, ללמוד כלי בינה מלאכותית אחד בתחום העיסוק, ולתעד בסוף כל שבוע דבר אחד שנלמד. למנהל: לטפח תחושת ניהוליות באמצעות משאבים ומידע ברור, לתת מרחב לעיצוב תפקיד, ולתקשר שינויים טכנולוגיים בשקיפות. את חוסר הוודאות לא תמיד אפשר למנוע. את הבהירות, השליטה והמשמעות בתוך התפקיד אפשר לבנות.', 4.0, 2.4);
-  T(s, 'תודה. נשמח לשאלות.', { x: 0.7, y: 6.45, w: 11.93, h: 0.45, fontSize: 16, bold: true });
+  T(s, 'תודה. נשמח לשאלות.', { x: 0.7, y: 6.45, w: 11.93, h: 0.45, fontSize: 16, bold: true, color: ORANGE });
   footer(s);
   NOTE(s, 'לחזור לתוצאות סקר הפתיחה: מי שדירג נמוך, המאמר אומר שזה לא גזירת גורל, והפעולה שכתבתם עכשיו היא בדיוק הדרך לשנות את זה.');
 }
