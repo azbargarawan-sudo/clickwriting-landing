@@ -147,10 +147,9 @@ let n = 0;
   T(s, 'למה בחרנו בו?', { x: 0.85, y: 1.6, w: 3.9, h: 0.5, fontSize: 18, bold: true, color: NAVY });
   T(s, bullets(['שואל מה עוזר, לא רק מה מזיק', 'נותן כלי שבשליטת העובד, בלי לחכות לארגון', 'מבוסס על רעיון של חוקר שפעל בישראל: אהרן אנטונובסקי מאוניברסיטת בן-גוריון']), { x: 0.85, y: 2.15, w: 3.9, h: 2.6, fontSize: 13 });
   card(s, 0.6, 5.1, 12.13, 1.75, LIGHT);
-  T(s, 'מאמר משלים (2025, גישה פתוחה) וראיות תומכות', { x: 0.85, y: 5.2, w: 11.6, h: 0.45, fontSize: 15, bold: true, color: TEAL });
+  T(s, 'מאמר משלים (2025, גישה פתוחה)', { x: 0.85, y: 5.2, w: 11.6, h: 0.45, fontSize: 15, bold: true, color: TEAL });
   E(s, [
-    { text: 'Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. Australian Journal of Psychology, 77(1), Article 2559910.', options: { breakLine: true } },
-    { text: 'Låstad, L., et al. (2025). Moving on up now? A meta-analysis of the associations between job insecurity and career-related outcomes. Scandinavian Journal of Work and Organizational Psychology, 10(1), Article 2.', options: {} },
+    { text: 'Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. Australian Journal of Psychology, 77(1), Article 2559910.', options: {} },
   ], { x: 0.85, y: 5.65, w: 11.6, h: 1.1, fontSize: 12, color: INK, paraSpaceAfter: 6 });
   footer(s, n);
   NOTE(s, 'להציג את המאמר במשפט: מחקר שעקב אחרי כמעט אלף עובדים במשך חצי שנה ובדק אם מה שהם עושים בתפקיד משנה את איך שהם תופסים אותו. בהגשה בשלשה: להרחיב על צ\'ונג ואחרים בשקופית 9.');
@@ -163,7 +162,7 @@ let n = 0;
   // right: work-SOC
   card(s, 6.85, 1.4, 5.88, 5.45, WHITE);
   T(s, 'תחושת קוהרנטיות בעבודה (Work-SOC)', { x: 7.1, y: 1.5, w: 5.4, h: 0.5, fontSize: 17, bold: true, color: NAVY });
-  T(s, 'מהגישה הסלוטוגנית של אנטונובסקי (1987): לא "למה חולים" אלא "איך נשארים בריאים למרות הלחץ"', { x: 7.1, y: 2.0, w: 5.4, h: 0.7, fontSize: 12.5, color: GRAY });
+  T(s, 'מהגישה הסלוטוגנית של אנטונובסקי, כפי שמובאת במאמר: לא "למה חולים" אלא "איך נשארים בריאים למרות הלחץ"', { x: 7.1, y: 2.0, w: 5.4, h: 0.7, fontSize: 12.5, color: GRAY });
   [['מובנות', 'העבודה מובנית, עקבית וברורה', TEAL, 'קוגניטיבי'], ['ניהוליות', 'יש לי משאבים מספיקים לדרישות', AMBER, 'התנהגותי'], ['משמעותיות', 'העבודה ראויה למחויבות ולמעורבות', RED, 'מוטיבציוני']].forEach(([h, d, c, k], i) => {
     const y = 2.85 + i * 1.3;
     card(s, 7.1, y, 5.4, 1.1, LIGHT);
@@ -297,7 +296,7 @@ let n = 0;
   s.addShape(pres.shapes.RIGHT_ARROW, { x: 6.2, y: 1.95, w: 0.95, h: 0.6, fill: { color: AMBER }, line: { color: AMBER } });
   T(s, 'ספירלת רווח: חוזר להתחלה', { x: 4.3, y: 1.35, w: 4.7, h: 0.5, fontSize: 12, color: GRAY, align: 'center' });
   card(s, 0.6, 5.35, 12.13, 1.5, 'FFF4DE');
-  T(s, 'ההיפוך: המטא-אנליזה של לוסטד ואחרים (Låstad et al., 2025) מראה שחוסר ביטחון מקטין יוזמה ופיתוח מיומנויות. מי שמרגיש שאין לו משאבים לא מעצב את תפקידו, אלא מגן על מה שנשאר. לכן בונים ניהוליות בתקופות של יציבות, לא מחכים לאיום.', { x: 0.9, y: 5.45, w: 11.5, h: 1.3, fontSize: 14, bold: true, color: NAVY, valign: 'middle' });
+  T(s, 'ההיפוך: מי שמרגיש שאין לו מספיק משאבים לא מעצב את תפקידו, אלא מגן על מה שנשאר. והמאמר המשלים מראה שהאיום הטכנולוגי פוגע בביצועים דרך חוסר הביטחון (Chung et al., 2025). לכן בונים ניהוליות בתקופות של יציבות, לא מחכים לאיום.', { x: 0.9, y: 5.45, w: 11.5, h: 1.3, fontSize: 14, bold: true, color: NAVY, valign: 'middle' });
   footer(s, n);
   NOTE(s, 'זה הלב של המסר. הספירלה עובדת לשני הכיוונים: משאבים מולידים יוזמה שמולידה משאבים. אבל בלי משאבים, האיום משתק. לכן העצה "תעצבו את התפקיד" נכונה, אבל צריך לתת אותה לפני שהאיום מגיע.');
 }
@@ -412,17 +411,16 @@ let n = 0;
   const s = pres.addSlide(); n++;
   title(s, 'רשימת מקורות (APA)');
   const refs = [
-    'Antonovsky, A. (1987). Unraveling the mystery of health: How people manage stress and stay well. Jossey-Bass.',
     'Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14. https://doi.org/10.16993/sjwop.389',
     'Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. Australian Journal of Psychology, 77(1), Article 2559910. https://doi.org/10.1080/00049530.2025.2559910',
     'Hone, L. (2019). 3 secrets of resilient people [Video]. TED Conferences. https://www.ted.com/talks/lucy_hone_the_three_secrets_of_resilient_people',
-    'Låstad, L., Pienaar, J., Näswall, K., Richter, A., Hellgren, J., & Sverke, M. (2025). Moving on up now? A meta-analysis of the associations between job insecurity and career-related outcomes. Scandinavian Journal of Work and Organizational Psychology, 10(1), Article 2. https://doi.org/10.16993/sjwop.275',
   ];
   s.addText(refs.map((r, i) => ({ text: r, options: { breakLine: i < refs.length - 1, paraSpaceAfter: 6 } })), { x: 0.6, y: 1.3, w: 12.13, h: 3.2, fontFace: F, fontSize: 11, color: INK, align: 'left', valign: 'top', margin: 0, isTextBox: true });
   T(s, [
     { text: 'בנק ישראל. (2025, 11 במרץ). ההשפעה הצפויה של בינה מלאכותית יוצרת על העובדים: השלכות על המדיניות בשוק העבודה [תיבה מתוך דוח בנק ישראל לשנת 2024]. https://www.boi.org.il/publications/pressreleases/11-3-25/', options: { breakLine: true, paraSpaceAfter: 5 } },
     { text: 'דבדבני דקל, מ\' (2026א). מחזון ורעיון למציאות ממשית [מצגת הרצאה]. ניהול קריירה בארגונים, הקריה האקדמית אונו.', options: { breakLine: true, paraSpaceAfter: 5 } },
     { text: 'דבדבני דקל, מ\' (2026ב). עסקים בצל הקורונה: ממשבר להזדמנות, איך עושים את זה? [מצגת הרצאה]. ניהול קריירה בארגונים, הקריה האקדמית אונו.', options: { breakLine: true, paraSpaceAfter: 5 } },
+    { text: 'דבדבני דקל, מ\' (2026ג). ניתוח הסרט "השטן לובשת פראדה" לפי תיאוריות קריירה [מצגת הרצאה]. ניהול קריירה בארגונים, הקריה האקדמית אונו.', options: { breakLine: true, paraSpaceAfter: 5 } },
     { text: 'הקשיים של מנהלי הייטק ב-2026: גיוס עובדים מתאימים והתייעלות AI. (2026, 21 ביוני). TheMarker.', options: {} },
   ], { x: 0.6, y: 4.7, w: 12.13, h: 2.2, fontSize: 11, color: INK });
   footer(s, n);
