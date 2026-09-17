@@ -1,3 +1,4 @@
+// Academic-style deck: white background, black text, David / Times New Roman, continuous prose with APA citations.
 const pptxgen = require('pptxgenjs');
 const pres = new pptxgen();
 pres.layout = 'LAYOUT_WIDE'; // 13.33 x 7.5
@@ -5,436 +6,256 @@ pres.lang = 'he-IL';
 pres.rtlMode = true;
 pres.title = 'התמודדות עם חוסר ודאות תעסוקתי';
 
-const NAVY = '14213D', AMBER = 'FCA311', LIGHT = 'F4F6FA', GRAY = '6B7280', WHITE = 'FFFFFF', TEAL = '2A9D8F', RED = 'E76F51', INK = '1F2937', CARD = 'EEF2F8', ORANGE = 'D9822B';
-const F = 'Arial';
-const W = 13.33, H = 7.5;
-
-// ---------- helpers ----------
-const T = (slide, text, o) => slide.addText(text, { fontFace: F, rtlMode: true, lang: 'he-IL', isTextBox: true, align: 'right', valign: 'top', margin: 0, color: INK, ...o });
-const E = (slide, text, o) => slide.addText(text, { fontFace: F, isTextBox: true, align: 'right', valign: 'top', margin: 0, color: INK, ...o });
-function title(slide, text, o = {}) {
-  T(slide, text, { x: 0.6, y: 0.35, w: 12.13, h: 0.9, fontSize: 30, bold: true, color: o.color || NAVY, valign: 'middle' });
-}
-function footer(slide, n, dark = false) {
-  T(slide, 'ניהול קריירה בארגונים | הקריה האקדמית אונו', { x: 6.5, y: 7.05, w: 6.23, h: 0.3, fontSize: 10, color: dark ? 'A9B4C8' : GRAY, valign: 'middle' });
-  T(slide, String(n), { x: 0.6, y: 7.05, w: 1, h: 0.3, fontSize: 10, color: dark ? 'A9B4C8' : GRAY, align: 'left', valign: 'middle' });
-}
-function card(slide, x, y, w, h, fill = CARD) {
-  slide.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w, h, fill: { color: fill }, line: { color: fill }, rectRadius: 0.12, shadow: { type: 'outer', blur: 4, offset: 2, angle: 90, color: '000000', opacity: 0.12 } });
-}
-function circleNum(slide, x, y, txt, fill = AMBER, color = NAVY, d = 0.55, fs = 18) {
-  slide.addShape(pres.shapes.OVAL, { x, y, w: d, h: d, fill: { color: fill }, line: { color: fill } });
-  slide.addText(txt, { x, y, w: d, h: d, fontFace: F, fontSize: fs, bold: true, color, align: 'center', valign: 'middle', margin: 0, isTextBox: true });
-}
-const bullets = (items, o = {}) => items.map((t, i) => ({ text: t, options: { bullet: true, breakLine: i < items.length - 1, paraSpaceAfter: o.gap ?? 6, ...o } }));
-const NOTE = (slide, txt) => slide.addNotes(txt);
+const HE = 'David', EN = 'Times New Roman';
+const BLACK = '000000', GREY = '595959', LIGHT = 'BFBFBF', DARK = '404040', WHITE = 'FFFFFF';
 let n = 0;
 
-// ================= 1. Title =================
+// ---------- helpers ----------
+const T = (s, text, o) => s.addText(text, { fontFace: HE, rtlMode: true, lang: 'he-IL', isTextBox: true, align: 'right', valign: 'top', margin: 0, color: BLACK, ...o });
+const E = (s, text, o) => s.addText(text, { fontFace: EN, isTextBox: true, align: 'left', valign: 'top', margin: 0, color: BLACK, ...o });
+function title(s, text) {
+  T(s, text, { x: 0.7, y: 0.4, w: 11.93, h: 0.8, fontSize: 28, bold: true, valign: 'middle' });
+}
+function para(s, text, y, h, o = {}) {
+  T(s, text, { x: 0.7, y, w: 11.93, h, fontSize: 16, align: 'justify', lineSpacingMultiple: 1.25, ...o });
+}
+function footer(s) {
+  T(s, 'ניהול קריירה בארגונים, הקריה האקדמית אונו', { x: 6.5, y: 7.0, w: 6.13, h: 0.3, fontSize: 10, color: GREY, valign: 'middle' });
+  T(s, String(n), { x: 0.7, y: 7.0, w: 1, h: 0.3, fontSize: 10, color: GREY, align: 'left', valign: 'middle' });
+}
+const hdr = (t) => ({ text: t, options: { fontFace: HE, fontSize: 13, bold: true, color: BLACK, fill: { color: 'F2F2F2' }, align: 'right', valign: 'middle', rtlMode: true } });
+const cel = (t, extra = {}) => ({ text: t, options: { fontFace: HE, fontSize: 12.5, color: BLACK, align: 'right', valign: 'middle', rtlMode: true, ...extra } });
+const celE = (t, extra = {}) => ({ text: t, options: { fontFace: EN, fontSize: 12, color: BLACK, align: 'left', valign: 'middle', ...extra } });
+const tbl = (s, rows, opts) => s.addTable(rows, { border: { type: 'solid', color: LIGHT, pt: 0.75 }, fill: { color: WHITE }, margin: 0.06, ...opts });
+const NOTE = (s, t) => s.addNotes(t);
+
+// ================= 1. שער =================
 {
   const s = pres.addSlide(); n++;
-  s.background = { color: NAVY };
-  s.addShape(pres.shapes.OVAL, { x: -1.5, y: 4.6, w: 5.5, h: 5.5, fill: { color: '1D2E52' }, line: { color: '1D2E52' } });
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 10.9, y: 0.35, w: 1.85, h: 1.85, fill: { color: WHITE }, line: { color: WHITE }, rectRadius: 0.15 });
-  s.addImage({ path: __dirname + '/ono-logo.jpg', x: 11.0, y: 0.45, w: 1.65, h: 1.65 });
-  T(s, 'עבודה מסכמת בקורס ניהול קריירה בארגונים', { x: 0.8, y: 1.2, w: 9.8, h: 0.5, fontSize: 18, color: 'CAD3E5' });
-  T(s, 'התמודדות עם חוסר ודאות תעסוקתי', { x: 0.8, y: 1.8, w: 11.7, h: 1.3, fontSize: 48, bold: true, color: WHITE, valign: 'middle' });
-  T(s, 'איך בונים בהירות, שליטה ומשמעות בעבודה כשהסביבה לא יציבה?', { x: 0.8, y: 3.1, w: 11.7, h: 0.6, fontSize: 22, color: AMBER, italic: true });
-  E(s, 'Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14.', { x: 0.8, y: 3.8, w: 11.7, h: 0.8, fontSize: 12, color: 'CAD3E5' });
-  card(s, 0.8, 4.8, 6.2, 1.75, '1D2E52');
-  T(s, 'מגישים/ות', { x: 1.0, y: 4.9, w: 5.8, h: 0.4, fontSize: 14, bold: true, color: AMBER });
-  T(s, [
-    { text: '[שם מלא]  |  ת.ז. [_________]', options: { breakLine: true } },
-    { text: '[שם מלא]  |  ת.ז. [_________]', options: { breakLine: true } },
-    { text: '[שם מלא]  |  ת.ז. [_________]  (אם בשלשה)', options: {} },
-  ], { x: 1.0, y: 5.3, w: 5.8, h: 1.2, fontSize: 15, color: WHITE, paraSpaceAfter: 4 });
-  T(s, [
-    { text: 'מרצה: גב\' מורן דבדבני דקל', options: { breakLine: true } },
-    { text: 'עוזר הוראה: מר פאר רועי', options: { breakLine: true } },
-    { text: 'הפקולטה למנהל עסקים | תשפ"ו, סמסטר 3', options: {} },
-  ], { x: 7.3, y: 4.9, w: 5.2, h: 1.6, fontSize: 15, color: 'CAD3E5', paraSpaceAfter: 4 });
-  NOTE(s, 'פתיחה (30 שניות): שלום לכולם, אנחנו [שמות]. הנושא שלנו הוא התמודדות עם חוסר ודאות תעסוקתי. במקום לשאול מה אי-הוודאות עושה לנו, נשאל מה אנחנו יכולים לעשות לה: מחקר אורך מ-2026 על 924 עובדים נותן תשובה מפתיעה בפשטותה.');
+  s.addImage({ path: __dirname + '/ono-logo.jpg', x: 5.92, y: 0.35, w: 1.5, h: 1.5 });
+  T(s, 'הקריה האקדמית אונו, הפקולטה למנהל עסקים', { x: 0.7, y: 1.95, w: 11.93, h: 0.45, fontSize: 18, align: 'center' });
+  T(s, 'עבודה מסכמת בקורס ניהול קריירה בארגונים', { x: 0.7, y: 2.4, w: 11.93, h: 0.45, fontSize: 18, align: 'center' });
+  T(s, 'התמודדות עם חוסר ודאות תעסוקתי', { x: 0.7, y: 3.05, w: 11.93, h: 0.9, fontSize: 36, bold: true, align: 'center', valign: 'middle' });
+  T(s, 'עיצוב תפקיד מבוסס צרכים כדרך לבנות בהירות, שליטה ומשמעות בעבודה', { x: 0.7, y: 3.95, w: 11.93, h: 0.5, fontSize: 18, align: 'center' });
+  E(s, 'Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14.', { x: 1.2, y: 4.55, w: 10.93, h: 0.7, fontSize: 12, italic: true, align: 'center' });
+  T(s, 'מגישים/ות: [שם מלא], ת.ז. [_________]; [שם מלא], ת.ז. [_________]', { x: 0.7, y: 5.45, w: 11.93, h: 0.45, fontSize: 16, align: 'center' });
+  T(s, 'מרצה: גב\' מורן דבדבני דקל   |   עוזר הוראה: מר פאר רועי', { x: 0.7, y: 5.95, w: 11.93, h: 0.45, fontSize: 15, align: 'center' });
+  T(s, 'תשפ"ו, סמסטר 3   |   ספטמבר 2026', { x: 0.7, y: 6.4, w: 11.93, h: 0.45, fontSize: 14, align: 'center', color: GREY });
+  NOTE(s, 'פתיחה (30 שניות): הצגת המגישים והנושא. במקום לשאול מה אי-הוודאות עושה לנו, נשאל מה אנחנו יכולים לעשות לה. מחקר אורך מ-2026 על 924 עובדים נותן תשובה.');
 }
 
-// ================= 2. Agenda =================
+// ================= 2. מבוא =================
 {
   const s = pres.addSlide(); n++;
-  title(s, 'מה נעשה ב-10 הדקות הקרובות?');
-  const items = [
-    ['סקר פתיחה', 'ברור? בשליטה? משמעותי?', '1 דק\''],
-    ['למה עכשיו', 'בינה מלאכותית, הייטק, מילואים', '1.5 דק\''],
-    ['המאמר', 'סלוטוגנזה, 6 צרכים, 924 עובדים', '2.5 דק\''],
-    ['מאמר משלים, חומר הקורס ותובנות', 'בינה מלאכותית, סלי הכלים, הרצברג', '1.5 דק\''],
-    ['סרטון + הפעלה', 'TED וצורך אחד, פעולה אחת', '2.5 דק\''],
-    ['סיכום', 'המסר שלנו לכיתה', '1 דק\''],
-  ];
-  const cw = 3.85, ch = 2.3, gx = 0.29, x0 = 0.6, y0 = 1.55;
-  items.forEach(([h, d, t], i) => {
-    const col = i % 3, row = Math.floor(i / 3);
-    const x = W - x0 - cw - col * (cw + gx), y = y0 + row * (ch + 0.3);
-    card(s, x, y, cw, ch);
-    circleNum(s, x + cw - 0.85, y + 0.3, String(i + 1));
-    T(s, h, { x: x + 0.3, y: y + 0.3, w: cw - 1.3, h: 0.55, fontSize: 18, bold: true, color: NAVY, valign: 'middle' });
-    T(s, d, { x: x + 0.3, y: y + 1.0, w: cw - 0.6, h: 0.7, fontSize: 15, color: INK });
-    T(s, t, { x: x + 0.3, y: y + 1.75, w: cw - 0.6, h: 0.4, fontSize: 13, color: TEAL, bold: true });
-  });
-  footer(s, n);
-  NOTE(s, 'מעבר מהיר על המבנה. להדגיש שיש סרטון והפעלה.');
+  title(s, 'מבוא: הנושא ורלוונטיותו');
+  para(s, 'עולם העבודה של שנת 2026 מתאפיין באי-ודאות. גלי ההתייעלות בענף ההייטק, כניסת הבינה המלאכותית היוצרת לתפקידי צווארון לבן, המלחמה ושירות המילואים הממושך והמעבר לצורות העסקה גמישות יצרו מציאות שבה גם עובדים בעלי ותק אינם יודעים כיצד ייראה תפקידם בעוד שנה. תיבה בדוח בנק ישראל לשנת 2024 העריכה כי כחמישית מהמועסקים בישראל עובדים במקצועות שבהם הביקוש צפוי לרדת באופן משמעותי עם התרחבות השימוש בבינה מלאכותית (בנק ישראל, 2025), ובעיתונות הכלכלית דווח כי ההתייעלות באמצעות בינה מלאכותית עומדת בראש סדר היום של מנהלי ההייטק ("הקשיים של מנהלי הייטק", 2026). חוסר ביטחון תעסוקתי, החשש לאבד את המשרה או את מאפייניה החשובים, הפך מאירוע חריג לתנאי קבוע (Chung et al., 2025).', 1.4, 3.3);
+  para(s, 'רוב המחקר בתחום שואל מה הנזק שאי-הוודאות גורמת. עבודה זו בוחרת בשאלה ההפוכה, שהציב אהרן אנטונובסקי מאוניברסיטת בן-גוריון: מה מאפשר לעובדים להישאר בריאים ומתפקדים גם כשהסביבה אינה יציבה (Antonovsky, 1987, כפי שמצוטט אצל Cetkovská et al., 2026). המאמר שנבחר מציע תשובה שנמצאת בשליטת העובד עצמו.', 4.8, 1.9);
+  footer(s);
+  NOTE(s, 'כתבת עיתון: להציג את כותרת TheMarker (21.6.2026). נתון בנק ישראל: כחמישית מהמועסקים במקצועות תחליפיים. סקר פתיחה קצר: בסולם 1 עד 5, עד כמה העבודה שלכם מרגישה ברורה, בשליטה ומשמעותית? נחזור לתוצאות בסוף.');
 }
 
-// ================= 3. Poll =================
+// ================= 3. הצגת המאמר =================
 {
   const s = pres.addSlide(); n++;
-  s.background = { color: LIGHT };
-  title(s, 'סקר פתיחה: איך מרגישה לכם העבודה (או הלימודים) עכשיו?');
-  T(s, 'בסולם 1 עד 5, שלוש שאלות:', { x: 0.6, y: 1.35, w: 12.13, h: 0.5, fontSize: 18, color: GRAY });
-  const qs = [['ברור וצפוי?', 'מובנות', TEAL], ['יש לי מספיק זמן, כלים ותמיכה?', 'ניהוליות', AMBER], ['שווה את המאמץ?', 'משמעותיות', RED]];
-  const cw = 3.9, gx = 0.215, x0 = 0.6, y = 2.0, ch = 3.2;
-  qs.forEach(([q, k, c], i) => {
-    const x = W - x0 - cw - i * (cw + gx);
-    card(s, x, y, cw, ch, WHITE);
-    s.addShape(pres.shapes.OVAL, { x: x + cw / 2 - 0.55, y: y + 0.3, w: 1.1, h: 1.1, fill: { color: c }, line: { color: c } });
-    s.addText(String(i + 1), { x: x + cw / 2 - 0.55, y: y + 0.3, w: 1.1, h: 1.1, fontFace: F, fontSize: 36, bold: true, color: WHITE, align: 'center', valign: 'middle', margin: 0, isTextBox: true });
-    T(s, q, { x: x + 0.3, y: y + 1.6, w: cw - 0.6, h: 0.9, fontSize: 20, bold: true, color: NAVY, align: 'center', valign: 'middle' });
-    T(s, k, { x: x + 0.3, y: y + 2.55, w: cw - 0.6, h: 0.45, fontSize: 14, color: c, align: 'center', bold: true });
-  });
-  card(s, 0.6, 5.6, 12.13, 1.2, WHITE);
-  T(s, 'הצבעה ב-Mentimeter או הרמת ידיים. אלה שלושת הרכיבים של "תחושת קוהרנטיות בעבודה". נחזור אליהם בסוף.', { x: 0.9, y: 5.75, w: 11.5, h: 0.9, fontSize: 17, color: INK, valign: 'middle' });
-  footer(s, n);
-  NOTE(s, 'להריץ סקר מנטימטר או הרמת ידיים לכל שאלה. לא להסביר עדיין את המושג, רק לומר שנחזור לזה. לצלם מסך של התוצאות.');
+  title(s, 'הצגת המאמר המרכזי');
+  para(s, 'המאמר שנבחר הוא מחקר אמפירי כמותי במערך אורך, שפורסם בכתב עת שפיט בגישה פתוחה מלאה. הוא נבחר משום שהוא שואל מה עוזר לעובדים ולא רק מה מזיק להם, ומשום שהוא מציע כלי שאינו תלוי בארגון (Cetkovská et al., 2026).', 1.35, 1.2);
+  tbl(s, [
+    [hdr('פירוט'), hdr('פריט')],
+    [celE('The Role of Needs-Based Job Crafting in Strengthening Work-Related Sense of Coherence: A Two-Wave Panel Study'), cel('שם המאמר', { bold: true })],
+    [cel('קריסטינה צטקובסקה (אוניברסיטת קארל, פראג), גאורג באואר ומרטין טושל (המרכז לסלוטוגנזה, אוניברסיטת ציריך)'), cel('מחברים', { bold: true })],
+    [celE('Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14, 2026. https://doi.org/10.16993/sjwop.389'), cel('כתב העת', { bold: true })],
+    [cel('מחקר פאנל בשני גלי מדידה בהפרש של שישה חודשים, 924 עובדים בגרמניה ובשווייץ'), cel('סוג המחקר', { bold: true })],
+    [cel('כתב עת שפיט (peer-reviewed) בהוצאת אוניברסיטת סטוקהולם; גישה פתוחה מלאה; מימון הקרן הלאומית השווייצרית למדע'), cel('מהימנות וגישה', { bold: true })],
+  ], { x: 0.7, y: 2.65, w: 11.93, colW: [8.9, 3.03], rowH: [0.42, 0.72, 0.72, 0.72, 0.62, 0.72] });
+  footer(s);
+  NOTE(s, 'להציג את המאמר במשפט: מחקר שעקב אחרי כמעט אלף עובדים במשך חצי שנה ובדק אם מה שהם עושים בתפקיד משנה את האופן שבו הם תופסים אותו.');
 }
 
-// ================= 4. Why now =================
+// ================= 4. רקע תיאורטי =================
 {
   const s = pres.addSlide(); n++;
-  title(s, 'למה דווקא עכשיו?');
-  card(s, 7.1, 1.45, 5.63, 5.4);
-  T(s, '1 מכל 5', { x: 7.3, y: 1.6, w: 5.2, h: 1.0, fontSize: 60, bold: true, color: RED, align: 'center', valign: 'middle' });
-  T(s, 'מהמועסקים בישראל עובדים במקצועות "תחליפיים" שבהם הביקוש צפוי לרדת משמעותית עם התרחבות הבינה המלאכותית (בנק ישראל, 2025)', { x: 7.4, y: 2.65, w: 5.0, h: 1.1, fontSize: 14, color: INK, align: 'center' });
-  s.addChart(pres.charts.DOUGHNUT, [{ name: 'מועסקים', labels: ['מקצועות תחליפיים', 'שאר המקצועות'], values: [20, 80] }], {
-    x: 7.6, y: 3.8, w: 4.6, h: 2.95, holeSize: 55, chartColors: [RED, 'CBD5E1'], showLegend: true, legendPos: 'b', legendFontFace: F, legendFontSize: 12,
-    showPercent: true, showValue: false, dataLabelFontFace: F, dataLabelFontSize: 12, dataLabelColor: WHITE, showTitle: false,
-  });
-  const drivers = [
-    ['בינה מלאכותית', 'משנה את תוכן התפקיד גם כשהמשרה נשמרת. עצם המודעות לה מייצרת חוסר ביטחון (Chung et al., 2025)'],
-    ['התייעלות בהייטק', 'גלי פיטורים ו"התייעלות AI" בראש סדר היום של מנהלים ב-2026 ("הקשיים של מנהלי הייטק", 2026)'],
-    ['מילואים ומלחמה', 'חוסר ודאות שמקורו מחוץ לארגון. ממד ישראלי ייחודי'],
-    ['דרישות חדשות', 'ניהול עצמי, הסתגלות ויוזמה אישית: מה שעולם העבודה הגמיש דורש (Cetkovská et al., 2026)'],
-  ];
-  drivers.forEach(([h, d], i) => {
-    const y = 1.45 + i * 1.37;
-    card(s, 0.6, y, 6.2, 1.2, WHITE);
-    circleNum(s, 6.0, y + 0.3, ['🤖', '📉', '🎖️', '🧭'][i], AMBER, NAVY, 0.6, 18);
-    T(s, h, { x: 0.8, y: y + 0.12, w: 5.0, h: 0.45, fontSize: 17, bold: true, color: NAVY });
-    T(s, d, { x: 0.8, y: y + 0.55, w: 5.0, h: 0.6, fontSize: 12.5, color: INK });
-  });
-  footer(s, n);
-  NOTE(s, 'כתבת עיתון: להציג את הכותרת של TheMarker (21.6.2026). נתון בנק ישראל: כחמישית מהמועסקים במקצועות תחליפיים. המסר: הארגון לא יכול להבטיח ודאות. השאלה היא מה נשאר בידיים שלנו.');
+  title(s, 'הרקע התיאורטי: סלוטוגנזה ותחושת קוהרנטיות בעבודה');
+  para(s, 'הגישה הסלוטוגנית הופכת את שאלת המחקר המקובלת: במקום לשאול מדוע אנשים חולים, היא שואלת כיצד הם שומרים על בריאותם למרות גורמי דחק. במרכזה עומדת תחושת הקוהרנטיות, המידה שבה האדם תופס את חייו כמובנים, כניתנים לניהול וכמשמעותיים (Antonovsky, 1987, כפי שמצוטט אצל Cetkovská et al., 2026). על בסיס זה פותח המושג תחושת קוהרנטיות בעבודה, המתייחס למצב העבודה הנוכחי בלבד ומורכב משלושה רכיבים המוצגים בטבלה. בניגוד לתחושת הקוהרנטיות הכללית, המתייצבת בבגרות הצעירה, הרכיב התעסוקתי דינמי ומעוצב ללא הרף על ידי תנאי העבודה (Cetkovská et al., 2026).', 1.35, 2.5);
+  tbl(s, [
+    [hdr('משמעות'), hdr('סוג הרכיב'), hdr('הרכיב')],
+    [cel('מצב העבודה נתפס כמובנה, עקבי וברור'), cel('קוגניטיבי'), cel('מובנות', { bold: true })],
+    [cel('לעובד יש משאבים מספיקים להתמודד עם הדרישות'), cel('התנהגותי'), cel('ניהוליות', { bold: true })],
+    [cel('מצב העבודה נתפס כראוי למחויבות ולמעורבות'), cel('מוטיבציוני'), cel('משמעותיות', { bold: true })],
+  ], { x: 0.7, y: 4.0, w: 11.93, colW: [7.4, 2.2, 2.33], rowH: [0.42, 0.55, 0.55, 0.55] });
+  para(s, 'בהקשר של עבודה זו, חוסר ודאות תעסוקתי הוא פגיעה בשלושת הרכיבים: העתיד אינו צפוי, המשאבים נראים בלתי מספיקים, וקשה להתחייב למה שעלול להיעלם.', 6.15, 0.8, { fontSize: 15 });
+  footer(s);
+  NOTE(s, 'להזכיר שאנטונובסקי פעל באוניברסיטת בן-גוריון. חוסר ודאות במונחים שלו הוא בעיקר פגיעה במובנות.');
 }
 
-// ================= 5. The article =================
+// ================= 5. עיצוב תפקיד והשערות =================
 {
   const s = pres.addSlide(); n++;
-  title(s, 'המאמר שבחרנו');
-  card(s, 5.3, 1.45, 7.43, 3.55, NAVY);
-  E(s, 'The Role of Needs-Based Job Crafting in Strengthening Work-Related Sense of Coherence: A Two-Wave Panel Study', { x: 5.55, y: 1.6, w: 6.95, h: 0.95, fontSize: 17, bold: true, color: WHITE, valign: 'middle' });
-  E(s, 'Cetkovská, Bauer & Tušl  |  Scandinavian Journal of Work and Organizational Psychology, 11(1)  |  2026', { x: 5.55, y: 2.55, w: 6.95, h: 0.45, fontSize: 11.5, color: AMBER });
-  T(s, 'המאמר הוא מחקר אורך שעקב אחר 924 עובדים בגרמניה ובשווייץ בשתי מדידות בהפרש של חצי שנה, ובחן האם עיצוב תפקיד מבוסס צרכים מחזק את תחושת הקוהרנטיות בעבודה. הוא פורסם בכתב עת שפיט בגישה פתוחה מלאה בהוצאת אוניברסיטת סטוקהולם, על ידי חוקרים מאוניברסיטת קארל בפראג ומהמרכז לסלוטוגנזה באוניברסיטת ציריך, במימון הקרן הלאומית השווייצרית למדע (Cetkovská et al., 2026).', { x: 5.55, y: 3.05, w: 6.95, h: 1.9, fontSize: 12.5, color: 'E5EAF3' });
-  card(s, 0.6, 1.45, 4.4, 3.55);
-  T(s, 'למה בחרנו בו?', { x: 0.85, y: 1.6, w: 3.9, h: 0.5, fontSize: 17, bold: true, color: NAVY });
-  T(s, 'בחרנו במאמר משום שהוא שואל מה עוזר לעובדים ולא רק מה מזיק להם, ומשום שהוא מציע כלי שנמצא בשליטת העובד עצמו ואינו תלוי בארגון. הוא נשען על רעיון שפיתח אהרן אנטונובסקי, שפעל באוניברסיטת בן-גוריון בנגב, ולכן מתחבר גם להקשר הישראלי של הכיתה.', { x: 0.85, y: 2.1, w: 3.9, h: 2.8, fontSize: 12.5 });
-  card(s, 0.6, 5.2, 12.13, 1.65, LIGHT);
-  T(s, 'מאמר משלים (2025, גישה פתוחה)', { x: 0.85, y: 5.28, w: 11.6, h: 0.4, fontSize: 14, bold: true, color: TEAL });
-  T(s, 'לצורך הצגת שני מאמרים נבחר מחקר אורך שבחן כיצד המודעות לבינה מלאכותית מייצרת חוסר ביטחון תעסוקתי וכיצד חוסן קריירה ממתן אותו (Chung, Im, Kim & Yun, 2025, Australian Journal of Psychology, 77(1), Article 2559910). המאמר המשלים מספק את האבחנה, והמאמר המרכזי את הטיפול.', { x: 0.85, y: 5.68, w: 11.6, h: 1.1, fontSize: 12.5, color: INK });
-  footer(s, n);
-  NOTE(s, 'להציג את המאמר במשפט: מחקר שעקב אחרי כמעט אלף עובדים במשך חצי שנה ובדק אם מה שהם עושים בתפקיד משנה את איך שהם תופסים אותו. בהגשה בשלשה: להרחיב על צ\'ונג ואחרים בשקופית 9.');
+  title(s, 'עיצוב תפקיד מבוסס צרכים והשערות המחקר');
+  para(s, 'עיצוב תפקיד הוגדר לראשונה כמאמצים יזומים של עובדים להתאים היבטים של תפקידם לצרכיהם ולכישוריהם, גישה שהעבירה את העובד ממקבל פסיבי של תנאי עבודה לשחקן פעיל בעיצובם (Wrzesniewski & Dutton, 2001, כפי שמצוטט אצל Cetkovská et al., 2026). המאמר משתמש בגרסה המתמקדת בסיפוק שישה צרכים פסיכולוגיים בעבודה, צרכי DRAMMA: ניתוק והרפיה הם צרכי הימנעות שמטרתם להפחית מאמץ ולהשיב אנרגיה, ואילו אוטונומיה, מיומנות, משמעות ושייכות הם צרכי התקרבות שמטרתם לייצר מצבים חיוביים, צמיחה ומשאבים חדשים. פריט לדוגמה: "ארגנתי את עבודתי כך שאשיג תחושת תכלית במה שאני עושה" (Cetkovská et al., 2026).', 1.35, 2.6);
+  para(s, 'על בסיס תיאוריית שימור המשאבים, שלפיה מי שמחזיק במשאבים נוטה לפתח משאבים נוספים (Hobfoll, 2001, כפי שמצוטט אצל Cetkovská et al., 2026), הועלו שתי השערות. ההשערה הראשונה היא שעיצוב תפקיד מבוסס צרכים מנבא באופן חיובי את שלושת רכיבי תחושת הקוהרנטיות חצי שנה מאוחר יותר. ההשערה השנייה היא שתחושת קוהרנטיות בעבודה מנבאת עיצוב תפקיד עתידי. יחד הן מתארות "ספירלת רווח" שבה שני המשתנים מחזקים זה את זה לאורך זמן (Cetkovská et al., 2026).', 4.1, 2.7);
+  footer(s);
+  NOTE(s, 'שני מושגים ואז השאלה: האם מה שהעובד עושה (עיצוב תפקיד) משנה את איך שהעבודה נתפסת (תחושת קוהרנטיות)? ולהפך?');
 }
 
-// ================= 6. Concepts =================
+// ================= 6. שיטת המחקר =================
 {
   const s = pres.addSlide(); n++;
-  title(s, 'שני מושגים: תחושת קוהרנטיות בעבודה ועיצוב תפקיד מבוסס צרכים');
-  // right: work-SOC
-  card(s, 6.85, 1.4, 5.88, 5.45, WHITE);
-  T(s, 'תחושת קוהרנטיות בעבודה (Work-SOC)', { x: 7.1, y: 1.5, w: 5.4, h: 0.5, fontSize: 17, bold: true, color: NAVY });
-  T(s, 'מהגישה הסלוטוגנית של אנטונובסקי, כפי שמובאת במאמר: לא "למה חולים" אלא "איך נשארים בריאים למרות הלחץ"', { x: 7.1, y: 2.0, w: 5.4, h: 0.7, fontSize: 12.5, color: GRAY });
-  [['מובנות', 'העבודה מובנית, עקבית וברורה', TEAL, 'קוגניטיבי'], ['ניהוליות', 'יש לי משאבים מספיקים לדרישות', AMBER, 'התנהגותי'], ['משמעותיות', 'העבודה ראויה למחויבות ולמעורבות', RED, 'מוטיבציוני']].forEach(([h, d, c, k], i) => {
-    const y = 2.85 + i * 1.3;
-    card(s, 7.1, y, 5.4, 1.1, LIGHT);
-    s.addShape(pres.shapes.OVAL, { x: 11.85, y: y + 0.3, w: 0.5, h: 0.5, fill: { color: c }, line: { color: c } });
-    T(s, h, { x: 7.3, y: y + 0.1, w: 4.4, h: 0.45, fontSize: 16, bold: true, color: NAVY });
-    T(s, d + ' (' + k + ')', { x: 7.3, y: y + 0.55, w: 4.4, h: 0.5, fontSize: 12, color: INK });
-  });
-  // left: NJC / DRAMMA
-  card(s, 0.6, 1.4, 5.88, 5.45, WHITE);
-  T(s, 'עיצוב תפקיד מבוסס צרכים (NJC)', { x: 0.85, y: 1.5, w: 5.4, h: 0.5, fontSize: 17, bold: true, color: NAVY });
-  T(s, 'מאמצים יזומים של העובד לספק שישה צרכים פסיכולוגיים בעבודה (DRAMMA)', { x: 0.85, y: 2.0, w: 5.4, h: 0.7, fontSize: 12.5, color: GRAY });
-  T(s, 'צרכי התקרבות: לייצר מצבים חיוביים וצמיחה', { x: 0.85, y: 2.85, w: 5.4, h: 0.4, fontSize: 13, bold: true, color: TEAL });
-  const needs = [['אוטונומיה', TEAL], ['מיומנות', TEAL], ['משמעות', TEAL], ['שייכות', TEAL]];
-  needs.forEach(([t, c], i) => {
-    const x = 6.25 - 0.1 - (i + 1) * 1.32 + 0.1, y = 3.3;
-    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w: 1.22, h: 0.6, fill: { color: c }, line: { color: c }, rectRadius: 0.1 });
-    T(s, t, { x, y, w: 1.22, h: 0.6, fontSize: 13, bold: true, color: WHITE, align: 'center', valign: 'middle' });
-  });
-  T(s, 'צרכי הימנעות: להפחית מאמץ ולהשיב אנרגיה', { x: 0.85, y: 4.2, w: 5.4, h: 0.4, fontSize: 13, bold: true, color: ORANGE });
-  [['ניתוק', ORANGE], ['הרפיה', ORANGE]].forEach(([t, c], i) => {
-    const x = 6.25 - (i + 1) * 1.32, y = 4.65;
-    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w: 1.22, h: 0.6, fill: { color: c }, line: { color: c }, rectRadius: 0.1 });
-    T(s, t, { x, y, w: 1.22, h: 0.6, fontSize: 13, bold: true, color: WHITE, align: 'center', valign: 'middle' });
-  });
-  T(s, 'דוגמה לפריט: "תכננתי את עבודתי כך שאחווה שליטה"; "ארגנתי את עבודתי כך שאשיג תחושת תכלית במה שאני עושה"', { x: 0.85, y: 5.5, w: 5.4, h: 1.2, fontSize: 12, italic: true, color: INK });
-  footer(s, n);
-  NOTE(s, 'שני מושגים, ואז השאלה: האם הימני (מה שהעובד עושה) משנה את השמאלי (איך העבודה נתפסת)? להזכיר שאנטונובסקי פעל באוניברסיטת בן-גוריון, ושחוסר ודאות הוא במונחים שלו פגיעה במובנות.');
+  title(s, 'שיטת המחקר');
+  para(s, 'המחקר הוא מחקר פאנל בשני גלים בהפרש של שישה חודשים, במסגרת פרויקט Craft4Health. הנתונים נאספו בשאלון מקוון ממדגם מכסות של האוכלוסייה העובדת בגרמניה ובאזור דובר הגרמנית בשווייץ, בדצמבר 2021 עד ינואר 2022 וביוני עד יולי 2022. הניתוח נערך במודל פאנל צולב, לאחר ניתוח גורמים מאשש ובדיקת אי-שונות מדידה בין הגלים, והושוו ארבעה מודלים: יציבות בלבד, שני מודלים חד-כיווניים ומודל הדדי (Cetkovská et al., 2026).', 1.35, 2.1);
+  tbl(s, [
+    [hdr('פירוט'), hdr('מרכיב')],
+    [cel('924 משתתפים בגל הראשון (לאחר סינון 53 משיבים רשלניים), 740 מהם השלימו את הגל השני (80%). 56% גברים, גיל ממוצע 48.9, ממוצע 38.1 שעות עבודה שבועיות, 35% בעלי תואר אקדמי'), cel('מדגם', { bold: true })],
+    [cel('סולם של תשעה פריטים, שלושה לכל רכיב, בדיפרנציאל סמנטי בן שבע דרגות (למשל צפוי לעומת בלתי צפוי)'), cel('תחושת קוהרנטיות בעבודה', { bold: true })],
+    [cel('סולם של 18 פריטים, שלושה לכל אחד משישה הצרכים, בסולם של חמש דרגות ביחס לשבועיים האחרונים'), cel('עיצוב תפקיד מבוסס צרכים', { bold: true })],
+    [cel('ניתוח גורמים מאשש, אי-שונות מדידה, מודל פאנל צולב (CLPM) בתוכנת R עם אמידת FIML'), cel('ניתוח', { bold: true })],
+  ], { x: 0.7, y: 3.6, w: 11.93, colW: [9.1, 2.83], rowH: [0.42, 0.95, 0.65, 0.65, 0.55] });
+  footer(s);
+  NOTE(s, 'להסביר בקצרה מהו מודל פאנל צולב: אותם אנשים נמדדים פעמיים, וכל משתנה בזמן השני מנובא גם מהמשתנה האחר בזמן הראשון. זה מאפשר לבחון כיווניות בזמן.');
 }
 
-// ================= 7. Model & results diagram =================
+// ================= 7. ממצאים =================
 {
   const s = pres.addSlide(); n++;
-  title(s, 'הממצא: מה שאתם עושים בתפקיד משנה איך הוא נתפס חצי שנה אחר כך');
-  // right: NJC approach box with a vertical connector to three straight arrows
-  card(s, 9.3, 3.0, 3.43, 1.5, TEAL);
-  T(s, 'עיצוב תפקיד לצרכי התקרבות', { x: 9.45, y: 3.05, w: 3.15, h: 0.8, fontSize: 15, bold: true, color: WHITE, align: 'center', valign: 'middle' });
-  T(s, 'אוטונומיה, מיומנות, משמעות, שייכות', { x: 9.45, y: 3.8, w: 3.15, h: 0.6, fontSize: 11, color: 'E5F4F1', align: 'center' });
-  s.addShape(pres.shapes.LINE, { x: 9.15, y: 2.15, w: 0, h: 3.2, line: { color: TEAL, width: 3 } });
-  s.addShape(pres.shapes.LINE, { x: 9.15, y: 3.75, w: 0.15, h: 0, line: { color: TEAL, width: 3 } });
-  const comps = [['מובנות', '0.142', TEAL], ['ניהוליות', '0.137', AMBER], ['משמעותיות', '0.166', RED]];
-  comps.forEach(([h, b, c], i) => {
-    const y = 1.5 + i * 1.6;
-    card(s, 0.6, y, 3.4, 1.3, c);
-    T(s, h, { x: 0.75, y: y + 0.1, w: 3.1, h: 0.6, fontSize: 17, bold: true, color: WHITE, align: 'center', valign: 'middle' });
-    E(s, 'β = ' + b, { x: 0.75, y: y + 0.7, w: 3.1, h: 0.5, fontSize: 14, bold: true, color: WHITE, align: 'center' });
-    s.addShape(pres.shapes.LEFT_ARROW, { x: 4.2, y: y + 0.4, w: 4.95, h: 0.5, fill: { color: c }, line: { color: c } });
-  });
-  E(s, 'p < .01 בכל שלושת הנתיבים, מעבר ליציבות של 0.61 עד 0.70 של המדדים עצמם', { x: 4.2, y: 5.55, w: 4.95, h: 0.4, fontSize: 11, italic: true, color: GRAY, align: 'center' });
-  // reverse arrow note
-  card(s, 0.6, 6.05, 12.13, 0.8, 'FFF4DE');
-  T(s, 'עיצוב לצרכי הימנעות (ניתוק, הרפיה): ללא קשר מובהק לאף רכיב. ובכיוון ההפוך: ניהוליות היום מנבאת עיצוב תפקיד בעוד חצי שנה (β = 0.431). ספירלת רווח (Cetkovská et al., 2026)', { x: 0.9, y: 6.1, w: 11.5, h: 0.7, fontSize: 13, bold: true, color: NAVY, valign: 'middle' });
-  footer(s, n);
-  NOTE(s, 'לקרוא מימין לשמאל: מי שעיצב את התפקיד סביב אוטונומיה, מיומנות, משמעות ושייכות, תפס את העבודה חצי שנה אחר כך כברורה יותר, בשליטה יותר ומשמעותית יותר, מעבר ליציבות של המדדים עצמם. מי שרק התנתק ונח: שום שינוי בתפיסה. והקו למטה: המשאבים מזינים את היוזמה.');
-}
-
-// ================= 8. Method + chart =================
-{
-  const s = pres.addSlide(); n++;
-  title(s, 'איך בדקו? ומה גודל האפקט?');
-  const stats = [['924', 'עובדים בגרמניה ובשווייץ, גיל ממוצע 49, מדגם מכסות של האוכלוסייה העובדת'], ['2 × 6', 'שני גלי מדידה בהפרש של שישה חודשים, 80% השלימו את שניהם'], ['9 + 18', 'פריטים: סולם תחושת קוהרנטיות בעבודה וסולם עיצוב תפקיד מבוסס צרכים']];
-  const cw = 3.9, gx = 0.215, x0 = 0.6, y = 1.4, ch = 2.1;
-  stats.forEach(([b, d], i) => {
-    const x = W - x0 - cw - i * (cw + gx);
-    card(s, x, y, cw, ch, WHITE);
-    T(s, b, { x: x + 0.2, y: y + 0.15, w: cw - 0.4, h: 0.9, fontSize: 40, bold: true, color: RED, align: 'center', valign: 'middle' });
-    T(s, d, { x: x + 0.3, y: y + 1.1, w: cw - 0.6, h: 0.95, fontSize: 12.5, color: INK, align: 'center' });
-  });
-  // chart: cross-lagged betas approach vs avoidance
-  card(s, 0.6, 3.7, 7.6, 3.15, WHITE);
+  title(s, 'הממצאים המרכזיים');
+  para(s, 'המודל ההדדי השיג את ההתאמה הטובה ביותר לנתונים. עיצוב תפקיד לצרכי התקרבות ניבא באופן מובהק את שלושת הרכיבים חצי שנה מאוחר יותר, ואילו עיצוב תפקיד לצרכי הימנעות לא ניבא אף אחד מהם. בכיוון ההפוך, ניהוליות (β = 0.431) ומשמעותיות (β = 0.095) ניבאו עיצוב תפקיד עתידי לצרכי התקרבות, ומובנות הראתה מקדם שלילי שהמחברים מייחסים לאפקט דיכוי סטטיסטי. המודל הסביר 56% עד 66% מהשונות ברכיבי תחושת הקוהרנטיות (Cetkovská et al., 2026).', 1.35, 2.0, { fontSize: 15 });
   s.addChart(pres.charts.BAR, [
     { name: 'עיצוב לצרכי התקרבות', labels: ['מובנות', 'ניהוליות', 'משמעותיות'], values: [0.142, 0.137, 0.166] },
     { name: 'עיצוב לצרכי הימנעות', labels: ['מובנות', 'ניהוליות', 'משמעותיות'], values: [0.077, 0.090, 0.027] },
   ], {
-    x: 0.8, y: 3.8, w: 7.2, h: 2.95, barDir: 'col', barGrouping: 'clustered', chartColors: [TEAL, 'B0B7C3'],
-    showTitle: true, title: 'מקדם ניבוי מתוקנן (β) של רכיבי תחושת הקוהרנטיות בגל 2', titleFontFace: F, titleFontSize: 12, titleColor: NAVY,
-    showValue: true, dataLabelPosition: 'outEnd', dataLabelFontFace: F, dataLabelFontSize: 10, dataLabelColor: INK, dataLabelFormatCode: '0.000',
-    catAxisLabelFontFace: F, catAxisLabelFontSize: 11, catAxisLabelColor: INK, valAxisLabelFontFace: F, valAxisLabelFontSize: 9, valAxisLabelColor: GRAY,
-    valAxisMaxVal: 0.2, valAxisMinVal: 0, valGridLine: { color: 'E5E7EB', size: 0.5 }, catGridLine: { style: 'none' },
-    showLegend: true, legendPos: 'b', legendFontFace: F, legendFontSize: 10,
+    x: 0.7, y: 3.45, w: 6.4, h: 3.35, barDir: 'col', barGrouping: 'clustered', chartColors: [DARK, LIGHT],
+    showTitle: true, title: 'תרשים 1: מקדמי ניבוי מתוקננים (β) של רכיבי תחושת הקוהרנטיות בגל 2', titleFontFace: HE, titleFontSize: 11, titleColor: BLACK,
+    showValue: true, dataLabelPosition: 'outEnd', dataLabelFontFace: EN, dataLabelFontSize: 9, dataLabelColor: BLACK, dataLabelFormatCode: '0.000',
+    catAxisLabelFontFace: HE, catAxisLabelFontSize: 11, catAxisLabelColor: BLACK, valAxisLabelFontFace: EN, valAxisLabelFontSize: 9, valAxisLabelColor: BLACK,
+    valAxisMaxVal: 0.2, valAxisMinVal: 0, valGridLine: { color: 'E7E6E6', size: 0.5 }, catGridLine: { style: 'none' },
+    showLegend: true, legendPos: 'b', legendFontFace: HE, legendFontSize: 10,
   });
-  card(s, 8.4, 3.7, 4.33, 3.15, LIGHT);
-  T(s, 'מה זה אומר?', { x: 8.6, y: 3.8, w: 3.95, h: 0.45, fontSize: 15, bold: true, color: TEAL });
-  T(s, 'רק עיצוב התפקיד לצרכי התקרבות (בירוק) ניבא באופן מובהק את שלושת הרכיבים. האפקטים בינוניים, אך הם מתקבלים מעבר ליציבות גבוהה (0.61 עד 0.70) של המדדים עצמם, ולכן כל שינוי שנשמר אחרי חצי שנה משמעותי. מדובר בקשרים בזמן ולא בהוכחת סיבתיות (Cetkovská et al., 2026).', { x: 8.6, y: 4.3, w: 3.95, h: 2.5, fontSize: 12, color: INK });
-  footer(s, n);
-  NOTE(s, 'הגרף: שלוש עמודות ירוקות (התקרבות) מול שלוש אפורות (הימנעות). מקדם 0.14 עד 0.17 נשמע קטן, אבל המדדים האלה יציבים מאוד, ולכן כל שינוי שנשאר אחרי חצי שנה משמעותי. להזכיר בכנות: מתאמים בזמן, לא סיבתיות.');
+  tbl(s, [
+    [hdr('מובהקות'), hdr('β'), hdr('נתיב (גל 1 מנבא גל 2)')],
+    [celE('p = .002'), celE('0.142'), cel('התקרבות ← מובנות')],
+    [celE('p = .003'), celE('0.137'), cel('התקרבות ← ניהוליות')],
+    [celE('p < .001'), celE('0.166'), cel('התקרבות ← משמעותיות')],
+    [cel('לא מובהק'), celE('0.03-0.09'), cel('הימנעות ← שלושת הרכיבים')],
+    [celE('p < .001'), celE('0.431'), cel('ניהוליות ← התקרבות')],
+  ], { x: 7.4, y: 3.45, w: 5.23, colW: [1.35, 1.1, 2.78], rowH: [0.42, 0.5, 0.5, 0.5, 0.5, 0.5] });
+  T(s, 'טבלה 1: מקדמי הנתיבים העיקריים (Cetkovská et al., 2026, טבלה 4)', { x: 7.4, y: 6.4, w: 5.23, h: 0.35, fontSize: 10.5, color: GREY });
+  footer(s);
+  NOTE(s, 'הגרף: עמודות כהות (התקרבות) מול בהירות (הימנעות). מקדם 0.14 עד 0.17 נשמע קטן, אבל המדדים יציבים מאוד (0.61 עד 0.70), ולכן כל שינוי שנשמר אחרי חצי שנה משמעותי. להזכיר: מתאמים בזמן, לא סיבתיות.');
 }
 
-// ================= 9. Complementary article =================
+// ================= 8. מסקנות המאמר =================
 {
   const s = pres.addSlide(); n++;
-  title(s, 'המאמר המשלים: הבינה המלאכותית, חוסר הביטחון וחוסן הקריירה');
-  E(s, 'Chung, Im, Kim & Yun (2025), Australian Journal of Psychology, Open Access', { x: 0.6, y: 1.25, w: 12.13, h: 0.4, fontSize: 13, italic: true, color: GRAY });
-  const boxes = [['מודעות לבינה מלאכותית', '"הטכנולוגיה עלולה להחליף אותי או לשנות את התפקיד"', NAVY], ['חוסר ביטחון תעסוקתי', 'המתווך', RED], ['תוצאות', 'ירידה בביצועי משימה, עלייה בהתנהגות סוטה', ORANGE]];
-  const bw = 3.4, gap = 0.95, x0 = W - 0.6 - bw;
-  boxes.forEach(([h, d, c], i) => {
-    const x = x0 - i * (bw + gap), y = 1.95;
-    card(s, x, y, bw, 1.6, c);
-    T(s, h, { x: x + 0.2, y: y + 0.15, w: bw - 0.4, h: 0.6, fontSize: 16, bold: true, color: WHITE, align: 'center', valign: 'middle' });
-    T(s, d, { x: x + 0.2, y: y + 0.8, w: bw - 0.4, h: 0.7, fontSize: 12, color: 'F3F4F6', align: 'center' });
-    if (i < 2) s.addShape(pres.shapes.LEFT_ARROW, { x: x - gap + 0.12, y: y + 0.5, w: 0.7, h: 0.6, fill: { color: AMBER }, line: { color: AMBER } });
-  });
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 7.0, y: 4.05, w: 4.2, h: 0.95, fill: { color: TEAL }, line: { color: TEAL }, rectRadius: 0.1 });
-  T(s, 'חוסן קריירה: מחליש את הקשר', { x: 7.1, y: 4.05, w: 4.0, h: 0.95, fontSize: 16, bold: true, color: WHITE, align: 'center', valign: 'middle' });
-  s.addShape(pres.shapes.UP_ARROW, { x: 8.85, y: 3.6, w: 0.5, h: 0.45, fill: { color: TEAL }, line: { color: TEAL } });
-  card(s, 0.6, 5.25, 12.13, 1.6, LIGHT);
-  T(s, 'במחקר אורך בשלוש נקודות זמן בקרב עובדי משרד במשרה מלאה בדרום קוריאה נמצא שעצם המודעות לבינה מלאכותית, עוד לפני שינוי בפועל, מגבירה חוסר ביטחון תעסוקתי, ושחוסר הביטחון מתווך את הפגיעה בביצועים. חוסן קריירה החליש את הקשר (Chung et al., 2025). המאמר המשלים מספק אפוא את האבחנה, והמאמר המרכזי את הדרך לבנות את המשאב שממתן את האיום.', { x: 0.9, y: 5.35, w: 11.5, h: 1.45, fontSize: 13, color: INK });
-  footer(s, n);
-  NOTE(s, 'המשלים = האבחנה: מאיפה מגיע חוסר הביטחון של 2026 ומה ממתן אותו. המרכזי = הטיפול: איך בונים את המשאב. בהגשה בזוג אפשר לקצר שקופית זו לחצי דקה.');
+  title(s, 'מסקנות המאמר, חוזקותיו ומגבלותיו');
+  para(s, 'המחברים מסיקים שתחושת הקוהרנטיות בעבודה היא משאב דינמי שמגיב לשינויים שהעובד עצמו יוזם. עובדים שמעצבים את תפקידם כדי לספק את צרכי האוטונומיה, המיומנות, המשמעות והשייכות תופסים את עבודתם, חצי שנה מאוחר יותר, כמובנת יותר, ניתנת לניהול יותר ומשמעותית יותר. עיצוב תפקיד שמכוון רק להתרחק מהעבודה ולנוח תומך בהתאוששות אך אינו משנה את תפיסת העבודה עצמה. לארגונים המסקנה היא שיש לטפח תחושת ניהוליות ולתת מרחב לעיצוב תפקיד, משום שהניהוליות היא המניע החזק ביותר ליוזמה נוספת (Cetkovská et al., 2026).', 1.35, 2.5);
+  para(s, 'חוזקות המחקר הן מערך האורך המאפשר לבחון כיווניות בזמן, המדגם הגדול והמאוזן, שיעור ההשתתפות הגבוה בגל השני וכלי המדידה המתוקפים. מגבלותיו, שהמחברים עצמם מפרטים, הן מדגם מערבי ולא מייצג לחלוטין, איסוף נתונים בתקופת הקורונה, דיווח עצמי בלבד, הקושי לפרש את המקדם השלילי של המובנות, ומודל פאנל צולב שאינו מפריד בין שונות בין-אישית לתוך-אישית, ולכן יש לפרש את הממצאים כקשרים בזמן ולא כהוכחה סיבתית (Cetkovská et al., 2026).', 4.0, 2.8);
+  footer(s);
+  NOTE(s, 'הכנות של המחברים לגבי המגבלות היא אחד הדברים שהערכנו במאמר. להדגיש: קשרים בזמן, לא סיבתיות.');
 }
 
-// ================= 10. Insight: resources first =================
+// ================= 9. מאמר משלים =================
 {
   const s = pres.addSlide(); n++;
-  title(s, 'התובנה המרכזית: המשאבים קודמים ליוזמה');
-  const nodes = [
-    ['תחושת ניהוליות', '"יש לי מספיק משאבים"', 9.4, 1.6, AMBER],
-    ['עיצוב תפקיד לצרכי התקרבות', 'β = 0.431: המנבא החזק ביותר במודל', 5.0, 3.55, TEAL],
-    ['בהירות, שליטה ומשמעות', 'חצי שנה אחר כך', 0.6, 1.6, NAVY],
-  ];
-  nodes.forEach(([h, d, x, y, c]) => {
-    card(s, x, y, 3.35, 1.55, c);
-    T(s, h, { x: x + 0.2, y: y + 0.12, w: 2.95, h: 0.8, fontSize: 14.5, bold: true, color: WHITE, align: 'center', valign: 'middle' });
-    T(s, d, { x: x + 0.2, y: y + 0.92, w: 2.95, h: 0.55, fontSize: 11.5, color: 'F3F4F6', align: 'center' });
-  });
-  s.addShape(pres.shapes.LEFT_ARROW, { x: 8.45, y: 2.95, w: 0.85, h: 0.6, fill: { color: AMBER }, line: { color: AMBER }, rotate: 30 });
-  s.addShape(pres.shapes.LEFT_ARROW, { x: 4.0, y: 2.95, w: 0.85, h: 0.6, fill: { color: AMBER }, line: { color: AMBER }, rotate: -30 });
-  s.addShape(pres.shapes.RIGHT_ARROW, { x: 6.2, y: 1.95, w: 0.95, h: 0.6, fill: { color: AMBER }, line: { color: AMBER } });
-  T(s, 'ספירלת רווח: חוזר להתחלה', { x: 4.3, y: 1.35, w: 4.7, h: 0.5, fontSize: 12, color: GRAY, align: 'center' });
-  card(s, 0.6, 5.35, 12.13, 1.5, 'FFF4DE');
-  T(s, 'ההיפוך: מי שמרגיש שאין לו מספיק משאבים לא מעצב את תפקידו, אלא מגן על מה שנשאר. והמאמר המשלים מראה שהאיום הטכנולוגי פוגע בביצועים דרך חוסר הביטחון (Chung et al., 2025). לכן בונים ניהוליות בתקופות של יציבות, לא מחכים לאיום.', { x: 0.9, y: 5.45, w: 11.5, h: 1.3, fontSize: 14, bold: true, color: NAVY, valign: 'middle' });
-  footer(s, n);
-  NOTE(s, 'זה הלב של המסר. הספירלה עובדת לשני הכיוונים: משאבים מולידים יוזמה שמולידה משאבים. אבל בלי משאבים, האיום משתק. לכן העצה "תעצבו את התפקיד" נכונה, אבל צריך לתת אותה לפני שהאיום מגיע.');
+  title(s, 'המאמר המשלים: מודעות לבינה מלאכותית, חוסר ביטחון וחוסן קריירה');
+  E(s, 'Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. Australian Journal of Psychology, 77(1), Article 2559910. https://doi.org/10.1080/00049530.2025.2559910', { x: 0.7, y: 1.3, w: 11.93, h: 0.7, fontSize: 12, italic: true, align: 'right' });
+  para(s, 'לצורך הצגת שני מאמרים נבחר מחקר אורך שפורסם בגישה פתוחה בכתב עת שפיט. המחברים, מאוניברסיטת סוּוֹן בדרום קוריאה, בחנו את ההשלכות של מודעות לבינה מלאכותית, כלומר תפיסת העובד שטכנולוגיה עלולה להחליף אותו או לשנות את תפקידו, על חוסר ביטחון תעסוקתי, על ביצועי משימה ועל התנהגות סוטה בעבודה. הנתונים נאספו בשלוש נקודות זמן מעובדי משרד במשרה מלאה (Chung et al., 2025).', 2.1, 1.9);
+  para(s, 'הממצאים מראים שעצם המודעות לבינה מלאכותית, עוד לפני שינוי בפועל, מגבירה חוסר ביטחון תעסוקתי, ושחוסר הביטחון מתווך את הקשר בין המודעות לבין ירידה בביצועי המשימה ועלייה בהתנהגות סוטה. אצל עובדים בעלי חוסן קריירה גבוה הקשר בין המודעות לבין חוסר הביטחון היה חלש יותר (Chung et al., 2025). שני המאמרים משלימים זה את זה: המאמר המשלים מתאר את מקור חוסר הוודאות של שנת 2026 ומראה שמשאב אישי ממתן אותו, והמאמר המרכזי מראה כיצד בונים משאב כזה בפועל, באמצעות עיצוב תפקיד יזום (Cetkovská et al., 2026).', 4.05, 2.8);
+  footer(s);
+  NOTE(s, 'המשלים = האבחנה: מאיפה מגיע חוסר הביטחון של 2026 ומה ממתן אותו. המרכזי = הטיפול. בהגשה בזוג אפשר לקצר שקופית זו לחצי דקה.');
 }
-// ================= 10b. Course material =================
+
+// ================= 10. חומר הקורס =================
 {
   const s = pres.addSlide(); n++;
   title(s, 'חיבור לחומר הנלמד בקורס');
-  const hdr = { fontFace: F, fontSize: 13, bold: true, color: WHITE, fill: { color: NAVY }, align: 'right', valign: 'middle', rtlMode: true };
-  const c = (t, extra = {}) => ({ text: t, options: { fontFace: F, fontSize: 11.5, color: INK, align: 'right', valign: 'middle', rtlMode: true, ...extra } });
-  const rows = [
-    [{ text: 'המקבילה במאמר', options: hdr }, { text: 'מושג מהקורס', options: hdr }],
-    [c('שייכות, משמעות, מיומנות: צרכי ההתקרבות שבונים תחושת קוהרנטיות'), c('שלושת סלי הכלים: רשת אנשים, זהות מקצועית, התפתחות', { bold: true })],
-    [c('צורך המשמעות'), c('חמש השאלות של הזהות המקצועית: איזה ערך אני מביא, למי הוא נחוץ', { bold: true })],
-    [c('ספירלת הרווח: כל צעד של עיצוב תפקיד מאפשר את הבא'), c('קריירה רבודה וקיר הטיפוס', { bold: true })],
-    [c('משמעותיות ומיומנות (מניעים) לעומת צרכי הימנעות (היגייניים)'), c('הגורמים המניעים וההיגייניים של הרצברג', { bold: true })],
-    [c('צורך האוטונומיה ורכיב המובנות'), c('עוגני קריירה: אוטונומיה לעומת ביטחון ויציבות', { bold: true })],
-    [c('ניהוליות: "יש לי מספיק משאבים", המנוע ליוזמה'), c('תמיכה בעבודה ובמשפחה וזמינות פסיכולוגית (Russo et al., 2016)', { bold: true })],
-  ];
-  s.addTable(rows, { x: 6.5, y: 1.4, w: 6.23, colW: [3.2, 3.03], rowH: [0.45, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75], border: { type: 'solid', color: 'D1D5DB', pt: 1 }, fill: { color: WHITE }, margin: 0.06 });
-  card(s, 0.6, 1.4, 5.6, 5.45, LIGHT);
-  T(s, 'המאמר אינו זר לחומר הקורס אלא מעניק לו בסיס אמפירי. שלושת סלי הכלים שנלמדו בקורס מקבילים כמעט אחד לאחד לצרכי ההתקרבות שנמצאו כבונים תחושת קוהרנטיות, והרעיון של קריירה רבודה, שבה כל שלב נבנה על קודמו, הוא בדיוק ספירלת הרווח שהמחקר מתעד. הגורמים המניעים של הרצברג ועוגני הקריירה מסבירים מדוע צרכים שונים חשובים לעובדים שונים, ומאמר החובה של Russo ואחרים (2016) מראה שתמיכה מהסביבה מזינה את הזמינות הפסיכולוגית, כלומר את תחושת הניהוליות שהמחקר מזהה כמנוע ליוזמה (Cetkovská et al., 2026).', { x: 0.85, y: 1.6, w: 5.1, h: 5.1, fontSize: 13.5, color: INK });
-  footer(s, n);
-  NOTE(s, 'שקופית קצרה: להראות שהמאמר לא מחליף את הקורס אלא נותן לו ראיות. לעצור על שורה אחת בטבלה, למשל הרצברג: המניעים = התקרבות, ההיגייניים = הימנעות.');
+  para(s, 'המאמר אינו זר לחומר הקורס אלא מעניק לו בסיס אמפירי. שלושת סלי הכלים שנלמדו בקורס, רשת אנשים, זהות מקצועית והתפתחות, מקבילים כמעט אחד לאחד לצרכי ההתקרבות שנמצאו כבונים תחושת קוהרנטיות, והרעיון של קריירה רבודה, שבה כל שלב נבנה על קודמו, הוא ספירלת הרווח שהמחקר מתעד. הגורמים המניעים של הרצברג ועוגני הקריירה מסבירים מדוע צרכים שונים חשובים לעובדים שונים, ומאמר החובה בקורס מראה שתמיכה במקום העבודה ובמשפחה משפרת את הזמינות הפסיכולוגית (Russo et al., 2016), כלומר את תחושת הניהוליות שהמחקר מזהה כמנוע ליוזמה (Cetkovská et al., 2026).', 1.35, 2.35, { fontSize: 15 });
+  tbl(s, [
+    [hdr('המקבילה במאמר'), hdr('המושג שנלמד בקורס')],
+    [cel('צרכי ההתקרבות: שייכות, משמעות, מיומנות'), cel('שלושת סלי הכלים: רשת אנשים, זהות מקצועית, התפתחות', { bold: true })],
+    [cel('עיצוב תפקיד לצורך המשמעות'), cel('חמש השאלות של הזהות המקצועית', { bold: true })],
+    [cel('ספירלת הרווח: כל צעד מאפשר את הבא'), cel('קריירה רבודה וקיר הטיפוס', { bold: true })],
+    [cel('משמעותיות ומיומנות לעומת צרכי הימנעות'), cel('הגורמים המניעים וההיגייניים של הרצברג', { bold: true })],
+    [cel('צורך האוטונומיה ורכיב המובנות'), cel('עוגני קריירה: אוטונומיה לעומת ביטחון ויציבות', { bold: true })],
+    [cel('ניהוליות, המנוע ליוזמה'), cel('תמיכה בעבודה ובמשפחה וזמינות פסיכולוגית (Russo et al., 2016)', { bold: true })],
+  ], { x: 0.7, y: 3.85, w: 11.93, colW: [5.6, 6.33], rowH: [0.42, 0.42, 0.42, 0.42, 0.42, 0.42, 0.42] });
+  footer(s);
+  NOTE(s, 'לעצור על שורה אחת בטבלה, למשל הרצברג: המניעים = התקרבות, ההיגייניים = הימנעות.');
 }
 
-// ================= 11. Insights & opinion =================
+// ================= 11. תובנות ומסקנות =================
 {
   const s = pres.addSlide(); n++;
-  title(s, 'תובנות, ביקורת ודעה אישית');
-  card(s, 6.85, 1.45, 5.88, 3.2, 'E8F5F1');
-  T(s, 'מה אהבנו', { x: 7.1, y: 1.55, w: 5.4, h: 0.5, fontSize: 18, bold: true, color: TEAL });
-  T(s, 'אהבנו את נקודת המבט של המאמר, ששואל מה עוזר לעובדים ולא רק מה מזיק להם, ואת הפרקטיות שלו: שישה צרכים, שאלות פשוטות ופעולות שאפשר לבצע בשבועיים. הערכנו את הכנות של המחברים, שמקדישים כמעט עמוד שלם למגבלות, כולל ממצא שקשה להם להסביר, ואת העובדה שהמאמר זמין לכולם בחינם (Cetkovská et al., 2026).', { x: 7.1, y: 2.1, w: 5.4, h: 2.45, fontSize: 12.5 });
-  card(s, 0.6, 1.45, 5.88, 3.2, 'FDECEA');
-  T(s, 'מה חסר לנו', { x: 0.85, y: 1.55, w: 5.4, h: 0.5, fontSize: 18, bold: true, color: RED });
-  T(s, 'המאמר אינו מודד חוסר ביטחון תעסוקתי במישרין, ואת החיבור לנושא בנינו בעצמנו דרך המאמר המשלים. המדגם גרמני ושווייצרי, בגיל ממוצע של כמעט 49, מתרבות עבודה עם ביטחון סוציאלי גבוה, ולא ברור שהמרחב לעצב תפקיד קיים גם אצל סטודנטים ישראלים בתחילת הדרך. המחקר עוסק בשכירים בתפקיד קיים בלבד, ולא במחפשי עבודה או בעצמאים.', { x: 0.85, y: 2.1, w: 5.4, h: 2.45, fontSize: 12.5 });
-  card(s, 0.6, 4.9, 12.13, 1.95, NAVY);
-  T(s, 'העמדה שלנו', { x: 0.9, y: 5.0, w: 11.5, h: 0.45, fontSize: 17, bold: true, color: AMBER });
-  T(s, 'המאמר משלים את "ממשבר להזדמנות": משבר לא הופך להזדמנות מעצמו, אלא כשמישהו מעצב אותו כך. אבל המסר צריך להיות כפול: לעצב את התפקיד עכשיו, כשעוד יש משאבים, ולזכור שמי שמרגיש שאין לו משאבים צריך קודם תמיכה ולא עצות.', { x: 0.9, y: 5.45, w: 11.5, h: 1.35, fontSize: 14.5, color: WHITE });
-  footer(s, n);
+  title(s, 'תובנות ומסקנות');
+  para(s, 'התובנה הראשונה היא שבהירות, שליטה ומשמעות אינן רק תוצר של הסביבה: תחושת הקוהרנטיות עולה כשהעובד פועל על תפקידו, גם כשהסביבה לא השתנתה. התובנה השנייה היא שההבדל בין התקרבות להימנעות מכריע, שכן מאמצים להתנתק ולנוח חשובים להתאוששות אך אינם משנים את תפיסת העבודה. התובנה השלישית היא שהמשאבים קודמים ליוזמה: תחושת הניהוליות ניבאה עיצוב תפקיד עתידי במקדם החזק ביותר במודל, ולכן מי שמרגיש שאין לו משאבים מגן על מה שנותר במקום להשקיע (Cetkovská et al., 2026). התובנה הרביעית, מהמאמר המשלים, היא שמשאב אישי ממתן את הקשר בין האיום הטכנולוגי לבין חוסר הביטחון (Chung et al., 2025).', 1.35, 3.1);
+  para(s, 'המסקנה המרכזית היא שההתמודדות עם חוסר ודאות תעסוקתי אינה מסתכמת בהגנה מפני האיום, אלא בבנייה יזומה של בהירות, שליטה ומשמעות בתוך התפקיד הקיים, ושאת המשאבים לכך יש לבנות בתקופות של יציבות, לפני שהאיום מדלדל אותם. ברמה הארגונית, מנהלים שרוצים עובדים יוזמים בתקופת שינוי צריכים קודם כול לדאוג לתחושת ניהוליות: משאבים מספיקים, מידע ברור ומרחב לעיצוב התפקיד.', 4.6, 2.2);
+  footer(s);
+  NOTE(s, 'זה הלב של המסר: המשאבים קודמים ליוזמה. העצה "תעצבו את התפקיד" נכונה, אבל צריך לתת אותה לפני שהאיום מגיע.');
+}
+
+// ================= 12. דעה אישית =================
+{
+  const s = pres.addSlide(); n++;
+  title(s, 'דעה אישית וביקורת');
+  para(s, 'אהבנו במאמר את נקודת המבט, ששואלת מה עוזר לעובדים ולא רק מה מזיק להם, ואת העובדה שהיא נשענת על רעיון של חוקר שפעל בישראל. אהבנו את הפרקטיות שלו, שישה צרכים, שאלות פשוטות ופעולות לשבועיים, ואת הכנות של המחברים, שמקדישים כמעט עמוד שלם למגבלות, כולל הודאה שהמקדם השלילי של המובנות קשה להם להסביר. העובדה שהמאמר זמין לכולם בחינם חשובה בעינינו (Cetkovská et al., 2026).', 1.35, 2.2);
+  para(s, 'חסרו לנו שלושה דברים. המאמר אינו מודד חוסר ביטחון תעסוקתי במישרין, ואת החיבור לנושא בנינו דרך המאמר המשלים. המדגם גרמני ושווייצרי, בגיל ממוצע של כמעט 49 ומתרבות עבודה עם ביטחון סוציאלי גבוה, ולא ברור שהמרחב לעצב תפקיד קיים גם אצל סטודנטים ישראלים בתחילת הדרך. המחקר עוסק בשכירים בתפקיד קיים בלבד. עמדתנו היא שהמאמר משלים את המסר "ממשבר להזדמנות" שנלמד בקורס: משבר הופך להזדמנות לא מעצמו, אלא כשמישהו מעצב אותו כך, ומי שמרגיש שאין לו משאבים צריך קודם תמיכה ולא עצות.', 3.7, 3.1);
+  footer(s);
   NOTE(s, 'להגיד את הביקורת בקול. ועדיין, זה המאמר שנתן לנו הכי הרבה מה לעשות מחר בבוקר.');
 }
 
-// ================= 12. Video =================
+// ================= 13. יישום =================
 {
   const s = pres.addSlide(); n++;
-  s.background = { color: NAVY };
-  title(s, 'סרטון: "3 הסודות של אנשים חסינים", Lucy Hone, TED', { color: WHITE });
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 6.9, y: 1.6, w: 5.83, h: 3.3, fill: { color: '0B1530' }, line: { color: '0B1530' }, rectRadius: 0.12 });
-  s.addShape(pres.shapes.OVAL, { x: 9.2, y: 2.6, w: 1.25, h: 1.25, fill: { color: AMBER }, line: { color: AMBER } });
-  s.addText('▶', { x: 9.2, y: 2.6, w: 1.25, h: 1.25, fontFace: F, fontSize: 30, bold: true, color: NAVY, align: 'center', valign: 'middle', margin: 0, isTextBox: true });
-  s.addText('ted.com/talks/lucy_hone_the_three_secrets_of_resilient_people', { x: 7.1, y: 4.35, w: 5.4, h: 0.4, fontFace: F, fontSize: 11, color: 'CAD3E5', align: 'center', margin: 0, isTextBox: true, hyperlink: { url: 'https://www.ted.com/talks/lucy_hone_the_three_secrets_of_resilient_people' } });
-  T(s, 'מה לחפש בקטע (90 שניות):', { x: 0.8, y: 1.6, w: 5.7, h: 0.5, fontSize: 18, bold: true, color: AMBER });
-  T(s, 'חוקרת החוסן לוסי הון מציעה שלושה עקרונות: לקבל שדברים רעים קורים כחלק מהחיים, לבחור במה להתמקד ולהפנות את הקשב למה שבשליטתנו, ולשאול על כל פעולה האם היא עוזרת או פוגעת (Hone, 2019). שני העקרונות האחרונים הם, במונחי המאמר, חיזוק המובנות והניהוליות והבחירה לעצב את המצב במקום רק לשרוד אותו.', { x: 0.8, y: 2.15, w: 5.7, h: 2.9, fontSize: 13.5, color: WHITE });
-  card(s, 0.8, 5.25, 11.93, 1.5, '1D2E52');
-  T(s, 'שאלה לכיתה אחרי הסרטון: איזה מהשלושה הכי קשה לכם ליישם בהקשר של הקריירה? (הרמת ידיים)', { x: 1.05, y: 5.35, w: 11.4, h: 1.3, fontSize: 16, color: WHITE, valign: 'middle' });
-  footer(s, n, true);
-  NOTE(s, 'להקרין כ-90 שניות (לבדוק את הטיים-קוד מראש). לחבר: "לבחור במה להתמקד" זה בדיוק לעצב את התפקיד סביב מה שבשליטתי.');
+  title(s, 'יישום מעשי: תוכנית עיצוב תפקיד אישית');
+  para(s, 'ממצאי המאמר תורגמו לכלי אישי המבוסס על ארבעת צרכי ההתקרבות, שנמצאו כבונים תחושת קוהרנטיות. לכל צורך שאלה מנחה ודוגמאות לפעולה שאפשר לבצע בשבועיים, גם בתפקיד סטודנטיאלי או במשרה חלקית. את צרכי ההימנעות מומלץ לטפח לצורך התאוששות, אך לפי המאמר הם אינם משנים את תפיסת העבודה (Cetkovská et al., 2026).', 1.35, 1.45, { fontSize: 15 });
+  tbl(s, [
+    [hdr('דוגמאות לפעולה בשבועיים הקרובים'), hdr('שאלה מנחה'), hdr('הצורך')],
+    [cel('לקבוע את סדר המשימות של הבוקר; להציע דרך משלי למשימה חוזרת; שעה קבועה ללא הפרעות'), cel('באילו החלטות קטנות אני יכול לבחור בעצמי?'), cel('אוטונומיה', { bold: true })],
+    [cel('משימה אחת מעט מעבר ליכולת; כלי בינה מלאכותית אחד בתחום; לתעד בסוף השבוע דבר אחד שלמדתי'), cel('איזה אתגר בגובה הנכון יגרום לי להרגיש שאני מתקדם?'), cel('מיומנות', { bold: true })],
+    [cel('לזהות למי העבודה שלי עוזרת ולדבר איתו; לנסח במשפט למה התפקיד חשוב; להתנדב למשימה שמתחברת לערכים'), cel('איזה חלק בעבודה מתחבר למה שחשוב לי, ואיך מגדילים אותו?'), cel('משמעות', { bold: true })],
+    [cel('הפסקת קפה קבועה עם עמית; להציע עזרה לפני שמבקשים; להצטרף לפרויקט חוצה מחלקות'), cel('עם מי בעבודה אני רוצה קשר אמיתי יותר?'), cel('שייכות', { bold: true })],
+  ], { x: 0.7, y: 2.95, w: 11.93, colW: [6.2, 3.8, 1.93], rowH: [0.42, 0.85, 0.85, 0.85, 0.85] });
+  T(s, 'טבלה 2: תוכנית עיצוב תפקיד אישית לפי צרכי ההתקרבות. מקור: פיתוח של המחברים על פי Cetkovská et al. (2026)', { x: 0.7, y: 6.6, w: 11.93, h: 0.35, fontSize: 10.5, color: GREY });
+  footer(s);
+  NOTE(s, 'זה הכלי שאנחנו משאירים לכיתה. ארבעה צרכים, שאלה אחת לכל צורך, ופעולות שאפשר לעשות גם במשרה סטודנטיאלית.');
 }
 
-// ================= 13. Personal crafting plan =================
+// ================= 14. אמצעי המחשה והפעלה =================
 {
   const s = pres.addSlide(); n++;
-  title(s, 'יישום: תוכנית עיצוב תפקיד אישית לפי ארבעת צרכי ההתקרבות');
-  const hdr = { fontFace: F, fontSize: 14, bold: true, color: WHITE, fill: { color: NAVY }, align: 'right', valign: 'middle', rtlMode: true };
-  const c = (t, extra = {}) => ({ text: t, options: { fontFace: F, fontSize: 12, color: INK, align: 'right', valign: 'middle', rtlMode: true, ...extra } });
-  const rows = [
-    [{ text: 'דוגמאות לפעולה בשבועיים הקרובים', options: hdr }, { text: 'שאלה מנחה', options: hdr }, { text: 'הצורך', options: hdr }],
-    [c('לקבוע את סדר המשימות של הבוקר; להציע דרך משלי למשימה חוזרת; שעה קבועה ללא הפרעות'), c('באילו החלטות קטנות אני יכול לבחור בעצמי?'), c('אוטונומיה', { bold: true, color: TEAL })],
-    [c('משימה אחת מעט מעבר ליכולת; כלי בינה מלאכותית אחד בתחום; לתעד בסוף השבוע דבר אחד שלמדתי'), c('איזה אתגר בגובה הנכון יגרום לי להרגיש שאני מתקדם?'), c('מיומנות', { bold: true, color: AMBER })],
-    [c('לזהות למי העבודה שלי עוזרת ולדבר איתו; לנסח במשפט למה התפקיד חשוב; להתנדב למשימה שמתחברת לערכים'), c('איזה חלק בעבודה מתחבר למה שחשוב לי, ואיך מגדילים אותו?'), c('משמעות', { bold: true, color: RED })],
-    [c('הפסקת קפה קבועה עם עמית; להציע עזרה לפני שמבקשים; להצטרף לפרויקט חוצה מחלקות'), c('עם מי בעבודה אני רוצה קשר אמיתי יותר?'), c('שייכות', { bold: true, color: NAVY })],
-  ];
-  s.addTable(rows, { x: 0.6, y: 1.45, w: 12.13, colW: [5.9, 3.9, 2.33], rowH: [0.5, 0.95, 0.95, 0.95, 0.95], border: { type: 'solid', color: 'D1D5DB', pt: 1 }, fill: { color: WHITE }, margin: 0.08 });
-  card(s, 0.6, 6.05, 12.13, 0.8, 'FFF4DE');
-  T(s, 'מתחבר ל"שלושת סלי הכלים" מהקורס: רשת אנשים = שייכות, התפתחות = מיומנות, זהות מקצועית = משמעות. המאמר מוסיף אוטונומיה וראיה אמפירית', { x: 0.9, y: 6.1, w: 11.5, h: 0.7, fontSize: 13, bold: true, color: NAVY, valign: 'middle' });
-  footer(s, n);
-  NOTE(s, 'זה הכלי שאנחנו משאירים לכיתה. ארבעה צרכים, שאלה אחת לכל צורך, ופעולות שאפשר לעשות גם במשרה סטודנטיאלית. ניתוק והרפיה חשובים להתאוששות, אבל לפי המאמר לא משנים את תפיסת העבודה.');
+  title(s, 'אמצעי המחשה והפעלה');
+  para(s, 'סקר פתיחה. בפתיחת ההצגה הכיתה מתבקשת לדרג, בסולם 1 עד 5, עד כמה העבודה או הלימודים הנוכחיים מרגישים ברורים, בשליטה ומשמעותיים. שלוש השאלות הן שלושת רכיבי תחושת הקוהרנטיות בעבודה, והתוצאות נשמרות לדיון בסיום.', 1.35, 1.2);
+  para(s, 'סרטון. יוקרן קטע של כ-75 שניות מהרצאת TED של חוקרת החוסן לוסי הון, המציעה שלושה עקרונות: לקבל שדברים רעים קורים, לבחור במה להתמקד ולהפנות את הקשב למה שבשליטתנו, ולשאול על כל פעולה האם היא עוזרת או פוגעת (Hone, 2019). שני העקרונות האחרונים הם, במונחי המאמר, חיזוק המובנות והניהוליות והבחירה לעצב את המצב במקום רק לשרוד אותו.', 2.65, 1.6);
+  E(s, 'https://www.ted.com/talks/lucy_hone_the_three_secrets_of_resilient_people', { x: 0.7, y: 4.3, w: 11.93, h: 0.35, fontSize: 12, align: 'right', hyperlink: { url: 'https://www.ted.com/talks/lucy_hone_the_three_secrets_of_resilient_people' } });
+  para(s, 'הפעלה. כל סטודנט בוחר צורך התקרבות אחד מתוך ארבעת הצרכים שבטבלה 2, כותב פעולה אחת קונקרטית ומועד לביצועה, ומשתף את השכן במשפט אחד. המציגים אוספים שתיים או שלוש דוגמאות מהכיתה ומחברים אותן לממצא: פעולות מסוג זה, לפי המאמר, מנבאות עלייה בבהירות, בשליטה ובמשמעות חצי שנה מאוחר יותר (Cetkovská et al., 2026). משך ההפעלה כשתי דקות.', 4.8, 2.0);
+  footer(s);
+  NOTE(s, 'לחלק כרטיסיות מודפסות או להשאיר את השקופית. אחרי השיתוף: "שימו לב שאף אחד לא בחר לנוח יותר. זה נכון, וזה גם מה שהמאמר מצא".');
 }
 
-// ================= 14. Activity =================
+// ================= 15. סיכום =================
 {
   const s = pres.addSlide(); n++;
-  s.background = { color: LIGHT };
-  title(s, 'הפעלה (2 דקות): צורך אחד, פעולה אחת, מועד אחד');
-  const sc = [
-    ['אוטונומיה', 'איזו החלטה קטנה בעבודה או בלימודים אני לוקח לידיים כבר השבוע?', TEAL],
-    ['מיומנות', 'איזה אתגר אחד, מעט מעבר ליכולת הנוכחית, אני לוקח על עצמי בשבועיים הקרובים?', AMBER],
-    ['משמעות', 'למי העבודה שלי עוזרת, ומתי בפעם האחרונה דיברתי איתו?', RED],
-    ['שייכות', 'עם מי בעבודה אני רוצה קשר אמיתי יותר, ומה הצעד הראשון?', NAVY],
-  ];
-  const cw = 2.9, gx = 0.18, x0 = 0.6, y = 1.5, ch = 2.6;
-  sc.forEach(([h, d, c], i) => {
-    const x = W - x0 - cw - i * (cw + gx);
-    card(s, x, y, cw, ch, WHITE);
-    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: x + 0.25, y: y + 0.25, w: cw - 0.5, h: 0.55, fill: { color: c }, line: { color: c }, rectRadius: 0.1 });
-    T(s, h, { x: x + 0.25, y: y + 0.25, w: cw - 0.5, h: 0.55, fontSize: 15, bold: true, color: WHITE, align: 'center', valign: 'middle' });
-    T(s, d, { x: x + 0.25, y: y + 1.0, w: cw - 0.5, h: 1.5, fontSize: 13, color: INK });
-  });
-  card(s, 0.6, 4.35, 12.13, 2.5, NAVY);
-  T(s, 'שלושה שלבים:', { x: 0.9, y: 4.45, w: 11.5, h: 0.45, fontSize: 17, bold: true, color: AMBER });
-  [['1', 'בוחרים כרטיסייה אחת (30 שניות)'], ['2', 'כותבים פעולה אחת קונקרטית ומועד לביצועה (60 שניות)'], ['3', 'משתפים את השכן במשפט אחד (30 שניות). נשמע 2 עד 3 דוגמאות מהכיתה']].forEach(([k, t], i) => {
-    const yy = 5.0 + i * 0.6;
-    circleNum(s, 11.85, yy + 0.05, k, AMBER, NAVY, 0.45, 14);
-    T(s, t, { x: 0.9, y: yy, w: 10.8, h: 0.55, fontSize: 15, color: WHITE, valign: 'middle' });
-  });
-  footer(s, n);
-  NOTE(s, 'לחלק כרטיסיות מודפסות או להשאיר את השקופית. אחרי השיתוף לחבר לממצא: "פעולות כאלה, לפי המאמר, מנבאות עלייה בבהירות, בשליטה ובמשמעות חצי שנה מאוחר יותר. ושימו לב: אף אחד לא בחר \'לנוח יותר\'. זה נכון, וזה גם מה שהמאמר מצא".');
+  title(s, 'סיכום');
+  para(s, 'העבודה פתחה בשאלה מה מאפשר לעובדים להישאר בריאים ומתפקדים כשעולם העבודה אינו יציב. התשובה שעלתה ממחקר האורך של צטקובסקה ואחרים היא שתחושת הקוהרנטיות בעבודה היא משאב דינמי שהעובד יכול לחזק בעצמו באמצעות עיצוב תפקיד המכוון לצרכי אוטונומיה, מיומנות, משמעות ושייכות, ושהמשאב הזה בתורו מזין יוזמה נוספת (Cetkovská et al., 2026). המאמר המשלים הראה שהמודעות לבינה מלאכותית היא מקור מרכזי לחוסר הביטחון של ימינו ושמשאב אישי ממתן אותו (Chung et al., 2025).', 1.35, 2.5);
+  para(s, 'מכאן ההמלצות היישומיות. לסטודנט: לבחור בכל שבועיים צורך התקרבות אחד ופעולה אחת של עיצוב תפקיד, ללמוד כלי בינה מלאכותית אחד בתחום העיסוק, ולתעד בסוף כל שבוע דבר אחד שנלמד. למנהל: לטפח תחושת ניהוליות באמצעות משאבים ומידע ברור, לתת מרחב לעיצוב תפקיד, ולתקשר שינויים טכנולוגיים בשקיפות. את חוסר הוודאות לא תמיד אפשר למנוע. את הבהירות, השליטה והמשמעות בתוך התפקיד אפשר לבנות.', 4.0, 2.4);
+  T(s, 'תודה. נשמח לשאלות.', { x: 0.7, y: 6.45, w: 11.93, h: 0.45, fontSize: 16, bold: true });
+  footer(s);
+  NOTE(s, 'לחזור לתוצאות סקר הפתיחה: מי שדירג נמוך, המאמר אומר שזה לא גזירת גורל, והפעולה שכתבתם עכשיו היא בדיוק הדרך לשנות את זה.');
 }
 
-// ================= 15. Summary =================
+// ================= 16. מקורות =================
 {
   const s = pres.addSlide(); n++;
-  s.background = { color: NAVY };
-  s.addShape(pres.shapes.OVAL, { x: -1.8, y: -1.8, w: 4.5, h: 4.5, fill: { color: '1D2E52' }, line: { color: '1D2E52' } });
-  T(s, 'המסר שלנו לכיתה', { x: 0.8, y: 0.6, w: 11.7, h: 0.7, fontSize: 20, color: 'CAD3E5' });
-  T(s, 'את חוסר הוודאות לא תמיד אפשר למנוע.\nאת הבהירות, השליטה והמשמעות בתוך התפקיד אפשר לבנות.', { x: 0.8, y: 1.3, w: 11.7, h: 1.9, fontSize: 32, bold: true, color: WHITE, valign: 'middle' });
-  const tk = [['מה שעושים משנה', '924 עובדים: עיצוב תפקיד לצרכי התקרבות ניבא עבודה מובנת, בשליטה ומשמעותית יותר חצי שנה אחר כך'], ['להתקרב, לא רק להימנע', 'לנוח ולהתנתק חשוב להתאוששות, אבל לא משנה איך העבודה נתפסת'], ['המשאבים קודמים ליוזמה', 'ניהוליות מנבאת עיצוב תפקיד. בונים אותה עכשיו, לפני שהאיום מדלדל אותה']];
-  const cw = 3.75, gx = 0.22, x0 = 0.8, y = 3.55, ch = 2.55;
-  tk.forEach(([h, d], i) => {
-    const x = W - x0 - cw - i * (cw + gx);
-    card(s, x, y, cw, ch, '1D2E52');
-    circleNum(s, x + cw - 0.85, y + 0.3, String(i + 1));
-    T(s, h, { x: x + 0.25, y: y + 0.3, w: cw - 1.2, h: 0.55, fontSize: 16, bold: true, color: AMBER, valign: 'middle' });
-    T(s, d, { x: x + 0.25, y: y + 1.0, w: cw - 0.5, h: 1.45, fontSize: 13, color: WHITE });
-  });
-  T(s, 'תודה! שאלות?', { x: 0.8, y: 6.35, w: 11.7, h: 0.6, fontSize: 22, bold: true, color: WHITE });
-  footer(s, n, true);
-  NOTE(s, 'לחזור לתוצאות הסקר מהפתיחה: "מי שסימן נמוך בשאלה 1 או 2: המאמר אומר שזה לא גזירת גורל, ושהפעולה שכתבתם עכשיו היא בדיוק הדרך לשנות את זה". לסיים במסר ולפתוח לשאלות.');
-}
-
-// ================= 16. References =================
-{
-  const s = pres.addSlide(); n++;
-  title(s, 'רשימת מקורות (APA)');
-  s.addImage({ path: __dirname + '/ono-logo.jpg', x: 0.6, y: 5.9, w: 1.0, h: 1.0 });
-  const refs = [
-    'Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14. https://doi.org/10.16993/sjwop.389',
-    'Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. Australian Journal of Psychology, 77(1), Article 2559910. https://doi.org/10.1080/00049530.2025.2559910',
-    'Hone, L. (2019). 3 secrets of resilient people [Video]. TED Conferences. https://www.ted.com/talks/lucy_hone_the_three_secrets_of_resilient_people',
-    'Russo, M., Shteigman, A., & Carmeli, A. (2016). Workplace and family support and work-life balance: Implications for individual psychological availability and energy at work. The Journal of Positive Psychology, 11(2), 173-188. https://doi.org/10.1080/17439760.2015.1025424',
-  ];
-  s.addText(refs.map((r, i) => ({ text: r, options: { breakLine: i < refs.length - 1, paraSpaceAfter: 6 } })), { x: 0.6, y: 1.3, w: 12.13, h: 3.2, fontFace: F, fontSize: 11, color: INK, align: 'left', valign: 'top', margin: 0, isTextBox: true });
+  title(s, 'רשימת מקורות');
   T(s, [
-    { text: 'בנק ישראל. (2025, 11 במרץ). ההשפעה הצפויה של בינה מלאכותית יוצרת על העובדים: השלכות על המדיניות בשוק העבודה [תיבה מתוך דוח בנק ישראל לשנת 2024]. https://www.boi.org.il/publications/pressreleases/11-3-25/', options: { breakLine: true, paraSpaceAfter: 5 } },
+    { text: 'בנק ישראל. (2025, 11 במרץ). ההשפעה הצפויה של בינה מלאכותית יוצרת על העובדים: השלכות על המדיניות בשוק העבודה [תיבה מתוך דוח בנק ישראל לשנת 2024]. https://www.boi.org.il/publications/pressreleases/11-3-25/', options: { breakLine: true, paraSpaceAfter: 8 } },
     { text: 'הקשיים של מנהלי הייטק ב-2026: גיוס עובדים מתאימים והתייעלות AI. (2026, 21 ביוני). TheMarker.', options: {} },
-  ], { x: 0.6, y: 4.7, w: 12.13, h: 2.2, fontSize: 11, color: INK });
-  footer(s, n);
+  ], { x: 0.7, y: 1.35, w: 11.93, h: 1.5, fontSize: 13 });
+  E(s, [
+    { text: 'Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14. https://doi.org/10.16993/sjwop.389', options: { breakLine: true, paraSpaceAfter: 8 } },
+    { text: 'Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. Australian Journal of Psychology, 77(1), Article 2559910. https://doi.org/10.1080/00049530.2025.2559910', options: { breakLine: true, paraSpaceAfter: 8 } },
+    { text: 'Hone, L. (2019). 3 secrets of resilient people [Video]. TED Conferences. https://www.ted.com/talks/lucy_hone_the_three_secrets_of_resilient_people', options: { breakLine: true, paraSpaceAfter: 8 } },
+    { text: 'Russo, M., Shteigman, A., & Carmeli, A. (2016). Workplace and family support and work-life balance: Implications for individual psychological availability and energy at work. The Journal of Positive Psychology, 11(2), 173-188. https://doi.org/10.1080/17439760.2015.1025424', options: {} },
+  ], { x: 0.7, y: 3.0, w: 11.93, h: 3.6, fontSize: 13 });
+  footer(s);
 }
 
 const out = process.argv[2] || 'out.pptx';
