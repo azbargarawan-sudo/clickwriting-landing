@@ -116,7 +116,7 @@ let n = 0;
   // left: drivers
   const drivers = [
     ['בינה מלאכותית', 'משנה את תוכן התפקיד גם כשהמשרה נשמרת – "איום איכותני"'],
-    ['התייעלות בהייטק', 'גלי פיטורים ו"התייעלות AI" בראש סדר היום של מנהלים ב-2026 (TheMarker, 21.6.2026)'],
+    ['התייעלות בהייטק', 'גלי פיטורים ו"התייעלות AI" בראש סדר היום של מנהלים ב-2026 ("הקשיים של מנהלי הייטק", 2026)'],
     ['מילואים ומלחמה', 'חוסר ודאות שמקורו מחוץ לארגון – ממד ישראלי ייחודי'],
     ['צורות העסקה חדשות', 'פרילנס, חוזים זמניים, גיג – חוסר ביטחון הופך ממצב חריג למצב כרוני'],
   ];
@@ -151,7 +151,7 @@ let n = 0;
   card(s, 0.6, 5.0, 12.13, 1.85, LIGHT);
   T(s, 'מאמר משלים וראיות תומכות', { x: 0.85, y: 5.1, w: 11.6, h: 0.45, fontSize: 16, bold: true, color: TEAL });
   s.addText([
-    { text: 'Lee, C., Huang, G.-H., & Ashford, S. J. (2018). Job insecurity and the changing workplace. Annual Review of Organizational Psychology and Organizational Behavior, 5, 335–359.', options: { breakLine: true } },
+    { text: 'Lee, C., Huang, G.-H., & Ashford, S. J. (2018). Job insecurity and the changing workplace. Annual Review of Organizational Psychology and Organizational Behavior, 5, 335-359.', options: { breakLine: true } },
     { text: 'Jiang, L., & Lavaysse, L. M. (2018). Cognitive and affective job insecurity: A meta-analysis and a primary study. Journal of Management, 44(6), 2307–2342.', options: {} },
   ], { x: 0.85, y: 5.55, w: 11.6, h: 1.2, fontFace: F, fontSize: 12.5, color: INK, align: 'right', valign: 'top', margin: 0, isTextBox: true, paraSpaceAfter: 6 });
   footer(s, n);
@@ -299,7 +299,7 @@ let n = 0;
   T(s, 'המשמעות לניהול קריירה', { x: 0.9, y: 4.45, w: 11.5, h: 0.45, fontSize: 17, bold: true, color: TEAL });
   T(s, bullets([
     'לא המחשבה "ייתכן שאפוטר" פוגעת – אלא הדאגה שהיא מעוררת. שם נמצא המנוף: ויסות רגשי, תמיכה ומסגור מחדש.',
-    'המאמר המשלים של לי, הואנג ואשפורד (2018) מוסיף: העוצמה משתנה בין תרבויות ומדינות, ובעולם העבודה החדש חוסר ביטחון הוא מצב כרוני, לא אירוע.',
+    'המאמר המשלים של לי ואחרים (Lee et al., 2018) מוסיף: העוצמה משתנה בין תרבויות ומדינות, ובעולם העבודה החדש חוסר ביטחון הוא מצב כרוני, לא אירוע.',
     'מסקנה: "לא לפחד" זו לא עצה. "לבנות כרית שתאפשר לפעול" – כן.',
   ], { gap: 6 }), { x: 0.9, y: 4.95, w: 11.5, h: 1.85, fontSize: 14, color: INK });
   footer(s, n);
@@ -318,7 +318,7 @@ let n = 0;
   T(s, bullets(['תיאורטי – בלי "מה עושים עם זה" (בנינו לבד)', 'נכתב לפני הקורונה ולפני הבינה המלאכותית היוצרת', 'לא מתייחס לאיום שמקורו מחוץ לארגון – מילואים, מלחמה', 'נשען בעיקר על מחקרים מערביים'], { gap: 6 }), { x: 0.85, y: 2.1, w: 5.4, h: 2.4, fontSize: 13.5 });
   card(s, 0.6, 4.9, 12.13, 1.95, NAVY);
   T(s, 'העמדה שלנו', { x: 0.9, y: 5.0, w: 11.5, h: 0.45, fontSize: 17, bold: true, color: AMBER });
-  T(s, 'המאמר צודק שחוסר ביטחון הוא בעיקר גורם לחץ מזיק. אבל לאור "ממשבר להזדמנות" והתרבות הישראלית של אלתור, אנחנו מאמינים שמידה של חוסר ודאות יכולה להיות מנוע לצמיחה – בתנאי שיש משאבים. בלי משאבים חוסר ודאות משתק; עם משאבים הוא מניע.', { x: 0.9, y: 5.45, w: 11.5, h: 1.35, fontSize: 14.5, color: WHITE });
+  T(s, 'המאמר צודק שחוסר ביטחון הוא בעיקר גורם לחץ מזיק. אבל לאור "ממשבר להזדמנות" (דבדבני דקל, 2026ב) והתרבות הישראלית של אלתור, אנחנו מאמינים שמידה של חוסר ודאות יכולה להיות מנוע לצמיחה – בתנאי שיש משאבים. בלי משאבים חוסר ודאות משתק; עם משאבים הוא מניע.', { x: 0.9, y: 5.45, w: 11.5, h: 1.35, fontSize: 14.5, color: WHITE });
   footer(s, n);
   NOTE(s, 'להגיד את הביקורת בקול: המאמר לא מכיר את המציאות הישראלית של 2026. ועם זאת, המסגרת שלו מחזיקה מעמד מצוין – זו בדיוק הסיבה שהשתמשנו בה כדי לבנות כלי.');
 }
@@ -355,7 +355,7 @@ let n = 0;
   ];
   s.addTable(rows, { x: 0.6, y: 1.45, w: 12.13, colW: [5.6, 3.6, 2.93], rowH: [0.5, 0.95, 0.95, 0.95, 0.95], border: { type: 'solid', color: 'D1D5DB', pt: 1 }, fill: { color: WHITE }, margin: 0.08 });
   card(s, 0.6, 6.05, 12.13, 0.8, 'FFF4DE');
-  T(s, 'מתחבר ל"שלושת סלי הכלים" מהקורס: רשת אנשים = תמיכה, זהות מקצועית = פחות איום איכותני, למידה = יכולת תעסוקה', { x: 0.9, y: 6.1, w: 11.5, h: 0.7, fontSize: 13.5, bold: true, color: NAVY, valign: 'middle' });
+  T(s, 'מתחבר ל"שלושת סלי הכלים" מהקורס (דבדבני דקל, 2026א): רשת אנשים = תמיכה, זהות מקצועית = פחות איום איכותני, למידה = יכולת תעסוקה', { x: 0.9, y: 6.1, w: 11.5, h: 0.7, fontSize: 13.5, bold: true, color: NAVY, valign: 'middle' });
   footer(s, n);
   NOTE(s, 'זה הכלי שאנחנו משאירים לכיתה. כל שורה = משתנה ממתן מהמאמר שהפכנו לפעולה. השורה הרביעית היא הבחירה המודעת במנגנון הפרואקטיבי.');
 }
@@ -426,11 +426,13 @@ let n = 0;
     'Schein, E. H. (1996). Career anchors revisited: Implications for career development in the 21st century. Academy of Management Executive, 10(4), 80–88.',
     'Shoss, M. K. (2017). Job insecurity: An integrative review and agenda for future research. Journal of Management, 43(6), 1911–1939. https://doi.org/10.1177/0149206317691574',
   ];
-  s.addText(refs.map((r, i) => ({ text: r, options: { breakLine: i < refs.length - 1, paraSpaceAfter: 5 } })), { x: 0.6, y: 1.35, w: 12.13, h: 4.6, fontFace: F, fontSize: 10.5, color: INK, align: 'left', valign: 'top', margin: 0, isTextBox: true });
+  s.addText(refs.map((r, i) => ({ text: r, options: { breakLine: i < refs.length - 1, paraSpaceAfter: 5 } })), { x: 0.6, y: 1.3, w: 12.13, h: 4.3, fontFace: F, fontSize: 10, color: INK, align: 'left', valign: 'top', margin: 0, isTextBox: true });
   T(s, [
     { text: 'בנק ישראל (2025). ההשפעה הצפויה של בינה מלאכותית יוצרת על העובדים: השלכות על המדיניות בשוק העבודה (תיבה מתוך דוח בנק ישראל לשנת 2024). https://www.boi.org.il/publications/pressreleases/11-3-25/', options: { breakLine: true, paraSpaceAfter: 5 } },
-    { text: 'TheMarker (2026, 21 ביוני). הקשיים של מנהלי הייטק ב-2026: גיוס עובדים מתאימים – והתייעלות AI.', options: {} },
-  ], { x: 0.6, y: 6.0, w: 12.13, h: 0.95, fontSize: 10.5, color: INK });
+    { text: 'דבדבני דקל, מ\' (2026א). מחזון ורעיון למציאות ממשית [מצגת הרצאה]. ניהול קריירה בארגונים, הקריה האקדמית אונו.', options: { breakLine: true, paraSpaceAfter: 5 } },
+    { text: 'דבדבני דקל, מ\' (2026ב). עסקים בצל הקורונה: ממשבר להזדמנות, איך עושים את זה? [מצגת הרצאה]. ניהול קריירה בארגונים, הקריה האקדמית אונו.', options: { breakLine: true, paraSpaceAfter: 5 } },
+    { text: 'הקשיים של מנהלי הייטק ב-2026: גיוס עובדים מתאימים והתייעלות AI. (2026, 21 ביוני). TheMarker.', options: {} },
+  ], { x: 0.6, y: 5.6, w: 12.13, h: 1.4, fontSize: 10.5, color: INK });
   footer(s, n);
 }
 
