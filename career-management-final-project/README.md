@@ -2,7 +2,7 @@
 
 **נושא:** התמודדות עם חוסר ודאות תעסוקתי (Job Insecurity)
 
-**מאמר מרכזי (שפיט, 2025, גישה פתוחה מלאה):** Låstad, L., Pienaar, J., Näswall, K., Richter, A., Hellgren, J., & Sverke, M. (2025). Moving on up now? A meta-analysis of the associations between job insecurity and career-related outcomes. *Scandinavian Journal of Work and Organizational Psychology, 10*(1), Article 2. https://doi.org/10.16993/sjwop.275
+**מאמר מרכזי (שפיט, 2026, גישה פתוחה מלאה):** Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. *Scandinavian Journal of Work and Organizational Psychology, 11*(1), Article 14. https://doi.org/10.16993/sjwop.389
 
 **מאמר משלים (שפיט, 2025, גישה פתוחה):** Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. *Australian Journal of Psychology, 77*(1), Article 2559910. https://doi.org/10.1080/00049530.2025.2559910
 
