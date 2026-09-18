@@ -290,8 +290,8 @@ children.push(P('פרשנות: ציון נמוך בהיגדים 1 עד 3 מעי�
 // ===== רשימת מקורות =====
 children.push(Break());
 children.push(H1('רשימת מקורות'));
-children.push(RefHe('בנק ישראל. (2025, 11 במרץ). ההשפעה הצפויה של בינה מלאכותית יוצרת על העובדים: השלכות על המדיניות בשוק העבודה [תיבה מתוך דוח בנק ישראל לשנת 2024]. {{https://www.boi.org.il/publications/pressreleases/11-3-25/}}'));
-children.push(RefHe('הקשיים של מנהלי הייטק ב-2026: גיוס עובדים מתאימים והתייעלות {{AI}}. (2026, 21 ביוני). {{TheMarker}}. {{https://www.themarker.com/career/2026-06-21/ty-article/.premium/0000019e-e3b1-d2b1-a5bf-fbb76dff0000}}'));
+children.push(RefHe('בנק ישראל. (2025, 11 במרץ). ההשפעה הצפויה של בינה מלאכותית יוצרת על העובדים: השלכות על המדיניות בשוק העבודה [תיבה מתוך דוח בנק ישראל לשנת 2024].'));
+children.push(RefHe('הקשיים של מנהלי הייטק ב-2026: גיוס עובדים מתאימים והתייעלות {{AI}}. (2026, 21 ביוני). {{TheMarker}}.'));
 const refs = [
   [['Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. '], ['Scandinavian Journal of Work and Organizational Psychology, 11', true], ['(1), Article 14. https://doi.org/10.16993/sjwop.389']],
   [['Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. '], ['Australian Journal of Psychology, 77', true], ['(1), Article 2559910. https://doi.org/10.1080/00049530.2025.2559910']],

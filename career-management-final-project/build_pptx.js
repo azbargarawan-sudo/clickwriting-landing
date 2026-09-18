@@ -250,7 +250,7 @@ const NOTE = (s, t) => s.addNotes(t);
   const s = pres.addSlide(); n++;
   title(s, 'רשימת מקורות');
   T(s, [
-    { text: 'בנק ישראל. (2025, 11 במרץ). ההשפעה הצפויה של בינה מלאכותית יוצרת על העובדים: השלכות על המדיניות בשוק העבודה [תיבה מתוך דוח בנק ישראל לשנת 2024]. https://www.boi.org.il/publications/pressreleases/11-3-25/', options: { breakLine: true, paraSpaceAfter: 8 } },
+    { text: 'בנק ישראל. (2025, 11 במרץ). ההשפעה הצפויה של בינה מלאכותית יוצרת על העובדים: השלכות על המדיניות בשוק העבודה [תיבה מתוך דוח בנק ישראל לשנת 2024].', options: { breakLine: true, paraSpaceAfter: 8 } },
     { text: 'הקשיים של מנהלי הייטק ב-2026: גיוס עובדים מתאימים והתייעלות AI. (2026, 21 ביוני). TheMarker.', options: {} },
   ], { x: 0.7, y: 1.35, w: 11.93, h: 1.5, fontSize: 13 });
   E(s, [
