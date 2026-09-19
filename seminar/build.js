@@ -93,7 +93,7 @@ function bodyChildren(text) {
 }
 
 const body = (text, extra = {}) => new Paragraph({
-  alignment: AlignmentType.JUSTIFIED,
+  alignment: AlignmentType.RIGHT,
   bidirectional: true,
   spacing: { line: 360, lineRule: LineRuleType.AUTO, after: 120 },
   children: bodyChildren(text),
@@ -104,6 +104,7 @@ const heading = (text, level) => new Paragraph({
   heading: level === 1 ? HeadingLevel.HEADING_1 : HeadingLevel.HEADING_2,
   bidirectional: true,
   alignment: AlignmentType.RIGHT,
+  pageBreakBefore: level === 1,
   spacing: { before: level === 1 ? 360 : 240, after: 160, line: 360 },
   children: [new TextRun({ text, font: FONT, size: level === 1 ? 32 : 28, bold: true, rightToLeft: true })],
 });
@@ -128,9 +129,34 @@ const bibEntry = (text) => {
 };
 
 // ---------- parse ----------
+// node build.js [outName] [--only=00,01]  (--only keeps the listed src prefixes; the
+// reference list is then filtered to entries whose surname and year are cited in the kept text)
+const args = process.argv.slice(2);
+const onlyArg = args.find(a => a.startsWith('--only='));
+const only = onlyArg ? onlyArg.slice(7).split(',') : null;
 const srcDir = path.join(__dirname, 'src');
-const files = fs.readdirSync(srcDir).filter(f => f.endsWith('.txt')).sort();
-const text = files.map(f => fs.readFileSync(path.join(srcDir, f), 'utf8')).join('\n\n');
+let files = fs.readdirSync(srcDir).filter(f => f.endsWith('.txt')).sort();
+const bibFile = files.find(f => /bib/.test(f));
+if (only) files = files.filter(f => only.some(p => f.startsWith(p)) || f === bibFile);
+const readF = f => fs.readFileSync(path.join(srcDir, f), 'utf8');
+const bodyText = files.filter(f => f !== bibFile).map(readF).join('\n\n');
+let bibText = bibFile ? readF(bibFile) : '';
+if (only && bibText) {
+  const [head, list] = bibText.split('%%BIB%%');
+  const kept = list.split(/\n\s*\n/).map(s => s.trim()).filter(Boolean).filter(entry => {
+    if (entry.startsWith('#')) return true;
+    const m = entry.match(/^([^,(]+?)(?:,|\s*\()/);
+    const surname = (m ? m[1] : entry.split(' ')[0]).trim().replace(/[\u0591-\u05C7]/g, '');
+    const year = (entry.match(/\((\d{4}|[\u05D0-\u05EA"']{3,6})/) || [])[1];
+    const key = surname.split(' ')[0];
+    const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // an entry stays only when "Surname, Year" (optionally "orig/Year") is cited in the kept text
+    const re = new RegExp(esc(key) + ',\\s*(?:\\d{4}/)?' + esc(year || ''));
+    return re.test(bodyText);
+  });
+  bibText = head + '%%BIB%%\n\n' + kept.join('\n\n');
+}
+const text = bodyText + '\n\n' + bibText;
 const paras = text.split(/\n\s*\n/).map(s => s.replace(/\s*\n\s*/g, ' ').trim()).filter(Boolean);
 
 const children = [];
@@ -145,7 +171,8 @@ children.push(cl(cover.course, 26, false));
 children.push(cl(cover.kind, 28, true, 1600));
 children.push(cl(cover.title, 34, true, 400));
 children.push(cl(cover.subtitle, 30, true));
-cover.lines.forEach((l, i) => children.push(cl(l, 26, false, i === 0 ? 2000 : 0)));
+if (process.env.SUBMISSION) children.push(cl(process.env.SUBMISSION, 26, true, 400));
+cover.lines.forEach((l, i) => children.push(cl(l, 26, false, i === 0 ? 1600 : 0)));
 children.push(new Paragraph({ children: [new PageBreak()] }));
 
 let inBib = false;
@@ -192,7 +219,7 @@ const doc = new Document({
   }],
 });
 
-const outName = process.argv[2] || 'סמינריון - פרשת דרייפוס והרצל.docx';
+const outName = args.find(a => !a.startsWith('--')) || 'סמינריון - פרשת דרייפוס והרצל.docx';
 Packer.toBuffer(doc).then(buf => {
   fs.writeFileSync(path.join(__dirname, outName), buf);
   console.log('wrote', outName, 'footnotes:', noteId, 'paragraphs:', paras.length);
