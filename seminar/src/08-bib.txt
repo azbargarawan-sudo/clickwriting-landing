@@ -1,0 +1,91 @@
+%%PAGEBREAK%%
+
+# ביבליוגרפיה
+
+## מקורות ראשוניים
+
+%%BIB%%
+
+דרימון, א' (1886). צרפת המיוהדת. בתוך **מקראת הקורס האנטישמיות במאה ה-19** (עמ' 443–444). רעננה: האוניברסיטה הפתוחה.
+
+הרצל, ב"ז (1997). **עניין היהודים: ספרי יומן 1895–1904** (י' ונקרט, מתרגם), כרך א. ירושלים: מוסד ביאליק.
+
+Drumont, É. (1886). *La France juive: Essai d'histoire contemporaine* (2 vols.). Paris: Marpon & Flammarion.
+
+Herzl, T. (1899). Zionism. *The North American Review*, 169, 1–8.
+
+Herzl, T. (1960). *The Complete Diaries of Theodor Herzl* (R. Patai, Ed.; H. Zohn, Trans.) (5 vols.). New York: Herzl Press and Thomas Yoseloff.
+
+Herzl, T. (1988). *The Jewish State*. New York: Dover. (Original work published 1896)
+
+Lazare, B. (1896). *Une erreur judiciaire: La vérité sur l'affaire Dreyfus*. Brussels: Veuve Monnom.
+
+Zola, É. (1898, January 13). J'accuse...! Lettre au Président de la République. *L'Aurore*. [Electronic version]. Retrieved from Project Gutenberg, ebook no. 76045: https://www.gutenberg.org/ebooks/76045
+
+## מקורות מחקריים בעברית
+
+אבינרי, ש' (1980). **הרעיון הציוני לגווניו: פרקים בתולדות המחשבה המדינית היהודית**. תל אביב: עם עובד.
+
+אבינרי, ש' (2007). **הרצל**. ירושלים: מרכז זלמן שזר.
+
+אטינגר, ש' (1978). **האנטישמיות בעת החדשה: פרקי מחקר ועיון**. תל אביב: מורשת וספרית פועלים.
+
+השל, ס' (תש"ף). לקראת היסטוריוגרפיה ארוטית: חקר הממדים החושיים והרגשיים של האנטישמיות. בתוך ג' מירון וס' אורי (עורכים), אנטישמיות בין מושג היסטורי לשיח ציבורי, **ציון**, פה, 5–30.
+
+וולקוב, ש' (2002). **במעגל המכושף: יהודים, אנטישמים וגרמנים אחרים**. תל אביב: עם עובד.
+
+ויטל, ד' (1978). **המהפכה הציונית: ראשית התנועה**. תל אביב: עם עובד.
+
+כ"ץ, י' (1979). **שנאת ישראל: משנאת הדת לשלילת הגזע**. תל אביב: עם עובד.
+
+מירון, ג' (2022). **האנטישמיות במאה ה-19: מדריך למידה**. רעננה: האוניברסיטה הפתוחה.
+
+קוץ, ג' (2014). ראשיתה של פרשת דרייפוס בעיתונות העברית והיהודית באירופה. **קשר**, 46.
+
+## מקורות מחקריים באנגלית
+
+Avineri, S. (1999). Theodor Herzl's diaries as a Bildungsroman. *Jewish Social Studies*, 5(3), 1–46.
+
+Bein, A. (1941). *Theodore Herzl: A biography* (M. Samuel, Trans.). Philadelphia: Jewish Publication Society.
+
+Beller, S. (1991). *Herzl*. London: Peter Halban.
+
+Birnbaum, P. (2003). *The anti-Semitic moment: A tour of France in 1898* (J. M. Todd, Trans.). New York: Hill and Wang.
+
+Bredin, J.-D. (1986). *The affair: The case of Alfred Dreyfus* (J. Mehlman, Trans.). New York: George Braziller.
+
+Burns, M. (1991). *Dreyfus: A family affair, 1789–1945*. New York: HarperCollins.
+
+Cahm, E. (1996). *The Dreyfus affair in French society and politics*. London: Longman.
+
+Elon, A. (1975). *Herzl*. New York: Holt, Rinehart and Winston.
+
+Engel, D. (2009). Away from a definition of antisemitism: An essay in the semantics of historical description. In J. Cohen & M. Rosman (Eds.), *Rethinking European Jewish history* (pp. 30–53). Oxford: Littman Library of Jewish Civilization.
+
+Harris, R. (2010). *Dreyfus: Politics, emotion, and the scandal of the century*. New York: Metropolitan Books.
+
+Hyman, P. E. (1998). *The Jews of modern France*. Berkeley: University of California Press.
+
+Kornberg, J. (1980). Theodor Herzl: A reevaluation. *Journal of Modern History*, 52, 226–252.
+
+Kornberg, J. (1993). *Theodor Herzl: From assimilation to Zionism*. Bloomington: Indiana University Press.
+
+Marrus, M. R. (1971). *The politics of assimilation: A study of the French Jewish community at the time of the Dreyfus affair*. Oxford: Clarendon Press.
+
+Pawel, E. (1989). *The labyrinth of exile: A life of Theodor Herzl*. New York: Farrar, Straus and Giroux.
+
+Penslar, D. (2020). *Theodor Herzl: The charismatic leader*. New Haven: Yale University Press.
+
+Pulzer, P. (1988). *The rise of political anti-Semitism in Germany and Austria* (Rev. ed.). Cambridge, MA: Harvard University Press.
+
+Schorske, C. E. (1980). *Fin-de-siècle Vienna: Politics and culture*. New York: Alfred A. Knopf.
+
+Stewart, D. (1974). *Theodor Herzl: Artist and politician*. London: Hamish Hamilton.
+
+Volkov, S. (1978). Antisemitism as a cultural code: Reflections on the history and historiography of antisemitism in Imperial Germany. *Leo Baeck Institute Year Book*, 23, 25–46.
+
+Wilson, S. (1982). *Ideology and experience: Antisemitism in France at the time of the Dreyfus affair*. Rutherford: Fairleigh Dickinson University Press.
+
+Wistrich, R. S. (1989). *The Jews of Vienna in the age of Franz Joseph*. Oxford: Oxford University Press.
+
+Wistrich, R. S. (1995). Theodor Herzl: Zionist icon, myth-maker, and social utopian. *Israel Affairs*, 1(3), 1–37.
