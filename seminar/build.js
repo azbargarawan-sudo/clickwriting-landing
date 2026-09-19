@@ -43,6 +43,7 @@ function runs(text, opts = {}) {
     out.push(new TextRun({
       text: s, font: FONT, size: opts.size || SIZE, bold: bold || opts.bold, italics,
       rightToLeft: HEB.test(s) ? true : (opts.rtlDefault ?? true),
+      language: { value: 'en-US', bidirectional: 'he-IL' },
     }));
   };
   while ((m = re.exec(text))) {
@@ -93,7 +94,7 @@ function bodyChildren(text) {
 }
 
 const body = (text, extra = {}) => new Paragraph({
-  alignment: AlignmentType.RIGHT,
+  alignment: AlignmentType.JUSTIFIED,
   bidirectional: true,
   spacing: { line: 360, lineRule: LineRuleType.AUTO, after: 120 },
   children: bodyChildren(text),
