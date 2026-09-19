@@ -156,7 +156,34 @@ if (only && bibText) {
   });
   bibText = head + '%%BIB%%\n\n' + kept.join('\n\n');
 }
-const text = bodyText + '\n\n' + bibText;
+// Convert author-year citations "(Surname, Year, locator; ...)" into footnotes at the same spot.
+// First mention of a source in the built document gets the full form, later mentions the short form.
+const SOURCES = require('./sources.js');
+const seen = new Set();
+const YEAR = '(?:\\d{4}/)?(\\d{4}|תש"ף)';
+const partRe = new RegExp('^\\s*([A-Za-z\\u05D0-\\u05EA"\'.\\-]+),\\s*' + YEAR + '(?:,\\s*(.+))?\\s*$');
+function toNote(group) {
+  const parts = group.split(';').map(s => s.trim()).filter(Boolean);
+  const out = [];
+  for (const part of parts) {
+    const m = part.match(partRe);
+    if (!m) return null;
+    const key = m[1] + '|' + m[2];
+    const src = SOURCES[key];
+    if (!src) return null;
+    let s = seen.has(key) ? src.short : src.full;
+    seen.add(key);
+    if (m[3]) s += (/,"?$/.test(s) ? ' ' : ', ') + m[3].trim();
+    out.push(s);
+  }
+  return out.join('; ') + '.';
+}
+const cited = bodyText.replace(/\(([^()]*?(?:\d{4}|תש"ף)[^()]*?)\)(\.?)/g, (all, group, dot) => {
+  const note = toNote(group);
+  if (!note) return all;
+  return (dot || '') + '[[' + note + ']]';
+});
+const text = cited + '\n\n' + bibText;
 const paras = text.split(/\n\s*\n/).map(s => s.replace(/\s*\n\s*/g, ' ').trim()).filter(Boolean);
 
 const children = [];
