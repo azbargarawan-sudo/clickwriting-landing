@@ -130,7 +130,7 @@ function tocPage() {
     const pg = tocPages[b.text] != null ? String(tocPages[b.text]) : '';
     out.push(new Paragraph({
       bidirectional: true, alignment: AlignmentType.START,
-      spacing: { line: 360, after: b.type === 'h1' ? 60 : 0, before: b.type === 'h1' ? 120 : 0 },
+      spacing: { line: 276, after: 0, before: b.type === 'h1' ? 100 : 0 },
       indent: b.type === 'h2' ? { start: 567 } : undefined,
       tabStops: [{ type: TabStopType.RIGHT, position: TEXT_W, leader: LeaderType.DOT }],
       children: [
