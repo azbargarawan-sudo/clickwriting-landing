@@ -178,7 +178,8 @@ function toNote(group) {
   }
   return out.join('; ') + '.';
 }
-const cited = bodyText.replace(/\(([^()]*?(?:\d{4}|תש"ף)[^()]*?)\)(\.?)/g, (all, group, dot) => {
+// --inline keeps the author-year citations in the body instead of converting them to footnotes
+const cited = args.includes('--inline') ? bodyText : bodyText.replace(/\(([^()]*?(?:\d{4}|תש"ף)[^()]*?)\)(\.?)/g, (all, group, dot) => {
   const note = toNote(group);
   if (!note) return all;
   return (dot || '') + '[[' + note + ']]';
