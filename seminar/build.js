@@ -13,6 +13,8 @@ const { cover, body } = require('./content.js');
 const tocPages = process.argv[2] ? JSON.parse(fs.readFileSync(process.argv[2], 'utf8')) : {};
 
 const HEB_FONT = { ascii: 'Times New Roman', hAnsi: 'Times New Roman', cs: 'David', eastAsia: 'David' };
+// שפת ההגהה: עברית לכתב ימין-לשמאל, אנגלית לכתב לטיני, וללא סימון שגיאות כתיב (noProof).
+const PROOF = { noProof: true, language: { value: 'en-US', bidirectional: 'he-IL' } };
 const BODY = 24; // 12pt
 const FN = 20;   // 10pt
 const PAGE_W = 11906, MARGIN = 1417, TEXT_W = PAGE_W - 2 * MARGIN;
@@ -50,7 +52,7 @@ function runs(text, opts = {}) {
     for (const seg of segments(t)) {
       res.push(new TextRun({
         text: seg.text, italics, bold: opts.bold, size, sizeComplexScript: size,
-        font: HEB_FONT, rightToLeft: seg.dir === 'H',
+        font: HEB_FONT, rightToLeft: seg.dir === 'H', ...PROOF,
       }));
     }
   }
@@ -135,7 +137,7 @@ function tocPage() {
       tabStops: [{ type: TabStopType.RIGHT, position: TEXT_W, leader: LeaderType.DOT }],
       children: [
         ...runs(b.text, { bold: b.type === 'h1' }),
-        new TextRun({ text: '\t' + pg, size: BODY, sizeComplexScript: BODY, font: HEB_FONT, rightToLeft: true }),
+        new TextRun({ text: '\t' + pg, size: BODY, sizeComplexScript: BODY, font: HEB_FONT, rightToLeft: true, ...PROOF }),
       ],
     }));
   }
@@ -188,7 +190,7 @@ const doc = new Document({
   creator: 'Seminar',
   title: cover.title2,
   styles: {
-    default: { document: { run: { font: HEB_FONT, size: BODY, sizeComplexScript: BODY } } },
+    default: { document: { run: { font: HEB_FONT, size: BODY, sizeComplexScript: BODY, ...PROOF } } },
     paragraphStyles: [
       { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { size: 32, bold: true, font: HEB_FONT }, paragraph: { outlineLevel: 0 } },
       { id: 'Heading2', name: 'Heading 2', basedOn: 'Normal', next: 'Normal', quickFormat: true, run: { size: 28, bold: true, font: HEB_FONT }, paragraph: { outlineLevel: 1 } },
@@ -199,7 +201,7 @@ const doc = new Document({
     { properties: { page: pageProps, bidi: true }, children: [...coverPage(), ...tocPage()] },
     {
       properties: { page: { ...pageProps, pageNumbers: { start: 1 } }, bidi: true },
-      footers: { default: new Footer({ children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ children: [PageNumber.CURRENT], size: 22, font: HEB_FONT })] })] }) },
+      footers: { default: new Footer({ children: [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ children: [PageNumber.CURRENT], size: 22, font: HEB_FONT, ...PROOF })] })] }) },
       children: bodyChildren,
     },
   ],

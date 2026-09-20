@@ -3,5 +3,5 @@
 - `seminar-donkey-fables.docx` – העבודה (שער, תוכן עניינים, פרקים, הערות שוליים, ביבליוגרפיה, נספחים).
 - `seminar-donkey-fables.pdf` – תצוגה מקדימה (רונדרה ב-LibreOffice עם גופן חלופי).
 - `content.js` – טקסט העבודה. `[[...]]` = הערת שוליים, `_..._` = כתב נטוי.
-- `build.js` – בונה את קובץ ה-Word (`node build.js toc.json seminar-donkey-fables.docx`). דורש חבילת `docx` מ-npm.
+- `build.js` – בונה את קובץ ה-Word (`node build.js toc.json seminar-donkey-fables.docx` ואחריו `python3 postprocess.py seminar-donkey-fables.docx`). דורש חבילת `docx` מ-npm.
 - `toc.json` – מספרי העמודים בתוכן העניינים, לפי הרינדור האחרון. אחרי שינוי טקסט יש לרנדר ל-PDF ולעדכן.
