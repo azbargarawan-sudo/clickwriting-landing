@@ -18,11 +18,13 @@ const BAR1 = '1F3864', BAR2 = 'ED7D31'; // צבעי תרשים
 let n = 0;
 
 // ---------- helpers ----------
-// סימן כיוון ימני (RLM) בתחילת כל פסקה עברית, כדי שגם תצוגות שמתעלמות מהגדרת rtl יזהו את הכיוון
-const RLM = '\u200F';
+// הטמעת כיוון ימני (RLE ... PDF) סביב כל פסקה עברית: כופה סידור נכון של הפניות באנגלית ושל סימני פיסוק
+// גם בתוכנות תצוגה שמתעלמות מהגדרת rtl של הקובץ (למשל תצוגה מקדימה באייפון).
+const RLE = '\u202B', PDF = '\u202C';
+const wrap = (l) => (l ? RLE + l + PDF : l);
 const rtlText = (text) => {
-  if (typeof text === 'string') return text.split('\n').map(l => l ? RLM + l : l).join('\n');
-  return text.map(r => ({ ...r, text: RLM + r.text }));
+  if (typeof text === 'string') return text.split('\n').map(wrap).join('\n');
+  return text.map(r => ({ ...r, text: wrap(r.text) }));
 };
 const T = (s, text, o) => s.addText(rtlText(text), { fontFace: HE, rtlMode: true, lang: 'he-IL', isTextBox: true, align: 'right', valign: 'top', margin: 0, color: BLACK, ...o });
 const E = (s, text, o) => s.addText(text, { fontFace: EN, isTextBox: true, align: 'left', valign: 'top', margin: 0, color: BLACK, ...o });
