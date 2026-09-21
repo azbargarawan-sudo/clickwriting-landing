@@ -1,4 +1,4 @@
-// מצגת אקדמית לפי הנחיות המטלה: רקע לבן, טקסט שחור, ללא טבלאות, כתיבה רציפה עם הפניות APA.
+// מצגת אקדמית לפי הנחיות המטלה: ערכת כחול כהה וכתום, טקסט גוף שחור על רקע לבן, ללא טבלאות, כתיבה רציפה עם הפניות APA.
 // סדר השקופיות עוקב אחר ההנחיות: שער, מבוא (הנושא והמאמר), תמצית המאמר והנקודות המרכזיות,
 // תובנות, מסקנות ודעה אישית, יישום מעשי עם כלים ויזואליים, אמצעי עזר (סרטון, הפעלה, כתבת עיתון), מקורות.
 const pptxgen = require('pptxgenjs');
@@ -10,46 +10,55 @@ pres.title = 'התמודדות עם חוסר ודאות תעסוקתי';
 
 const HE = 'David', EN = 'Times New Roman';
 const BLACK = '000000', GREY = '595959', WHITE = 'FFFFFF';
-const LINE = 'BDD7EE';      // קו עדין מתחת לכותרת
-const BOXFILL = 'F3F8FD';   // מילוי בהיר לתיבות
-const BOXLINE = 'BDD7EE';   // מסגרת בהירה
-const BAR1 = '9DC3E6', BAR2 = 'F8CBAD'; // צבעי תרשים בהירים
+const NAVY = '1F3864';      // כחול כהה: פס כותרת, שער, כותרות תיבות
+const ORANGE = 'ED7D31';    // כתום: קו הדגשה, מספרי שקפים, הדגשות
+const BOXFILL = 'FFFFFF';   // גוף התיבות לבן
+const BOXLINE = '1F3864';   // מסגרת התיבות בכחול כהה
+const BAR1 = '1F3864', BAR2 = 'ED7D31'; // צבעי תרשים
 let n = 0;
 
 // ---------- helpers ----------
 const T = (s, text, o) => s.addText(text, { fontFace: HE, rtlMode: true, lang: 'he-IL', isTextBox: true, align: 'right', valign: 'top', margin: 0, color: BLACK, ...o });
 const E = (s, text, o) => s.addText(text, { fontFace: EN, isTextBox: true, align: 'left', valign: 'top', margin: 0, color: BLACK, ...o });
 function title(s, text) {
-  T(s, text, { x: 0.7, y: 0.4, w: 11.93, h: 0.8, fontSize: 28, bold: true, valign: 'middle' });
-  s.addShape(pres.shapes.LINE, { x: 0.7, y: 1.22, w: 11.93, h: 0, line: { color: LINE, width: 1.5 } });
+  s.background = { color: WHITE };
+  s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 0, w: 13.33, h: 1.15, fill: { color: NAVY }, line: { color: NAVY } });
+  s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 1.15, w: 13.33, h: 0.07, fill: { color: ORANGE }, line: { color: ORANGE } });
+  T(s, text, { x: 0.7, y: 0.15, w: 11.93, h: 0.85, fontSize: 28, bold: true, valign: 'middle', color: WHITE });
 }
 function para(s, text, y, h, o = {}) {
   T(s, text, { x: 0.7, y, w: 11.93, h, fontSize: 16, align: 'justify', lineSpacingMultiple: 1.25, ...o });
 }
 function footer(s) {
-  T(s, 'ניהול קריירה בארגונים, הקריה האקדמית אונו', { x: 6.5, y: 7.0, w: 6.13, h: 0.3, fontSize: 10, color: GREY, valign: 'middle' });
-  T(s, String(n), { x: 0.7, y: 7.0, w: 1, h: 0.3, fontSize: 10, color: GREY, align: 'left', valign: 'middle' });
+  s.addShape(pres.shapes.LINE, { x: 0.7, y: 6.95, w: 11.93, h: 0, line: { color: ORANGE, width: 1 } });
+  T(s, 'ניהול קריירה בארגונים, הקריה האקדמית אונו', { x: 6.5, y: 7.0, w: 6.13, h: 0.3, fontSize: 10, color: NAVY, valign: 'middle' });
+  T(s, String(n), { x: 0.7, y: 7.0, w: 1, h: 0.3, fontSize: 11, bold: true, color: ORANGE, align: 'left', valign: 'middle' });
 }
 // תיבה בהירה עם כותרת וטקסט (חלופה ויזואלית לטבלה)
 function box(s, x, y, w, h, head, body, o = {}) {
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w, h, fill: { color: BOXFILL }, line: { color: BOXLINE, width: 1 }, rectRadius: 0.08 });
-  T(s, head, { x: x + 0.15, y: y + 0.12, w: w - 0.3, h: 0.45, fontSize: o.headSize || 16, bold: true, align: 'center', valign: 'middle' });
-  T(s, body, { x: x + 0.15, y: y + 0.6, w: w - 0.3, h: h - 0.7, fontSize: o.bodySize || 13, align: o.bodyAlign || 'right', lineSpacingMultiple: 1.15 });
+  s.addShape(pres.shapes.RECTANGLE, { x, y, w, h, fill: { color: BOXFILL }, line: { color: BOXLINE, width: 1.25 } });
+  s.addShape(pres.shapes.RECTANGLE, { x, y, w, h: 0.55, fill: { color: NAVY }, line: { color: NAVY } });
+  s.addShape(pres.shapes.RECTANGLE, { x, y: y + 0.55, w, h: 0.05, fill: { color: ORANGE }, line: { color: ORANGE } });
+  T(s, head, { x: x + 0.1, y, w: w - 0.2, h: 0.55, fontSize: o.headSize || 16, bold: true, align: 'center', valign: 'middle', color: WHITE });
+  T(s, body, { x: x + 0.15, y: y + 0.7, w: w - 0.3, h: h - 0.8, fontSize: o.bodySize || 13, align: o.bodyAlign || 'right', lineSpacingMultiple: 1.15 });
 }
 const NOTE = (s, t) => s.addNotes(t);
 
 // ================= 1. שער =================
 {
   const s = pres.addSlide(); n++;
-  s.addImage({ path: __dirname + '/ono-logo.jpg', x: 5.92, y: 0.35, w: 1.5, h: 1.5 });
-  T(s, 'הקריה האקדמית אונו, הפקולטה למנהל עסקים', { x: 0.7, y: 1.95, w: 11.93, h: 0.45, fontSize: 18, align: 'center' });
-  T(s, 'עבודה מסכמת בקורס ניהול קריירה בארגונים', { x: 0.7, y: 2.4, w: 11.93, h: 0.45, fontSize: 18, align: 'center' });
-  T(s, 'התמודדות עם חוסר ודאות תעסוקתי', { x: 0.7, y: 3.0, w: 11.93, h: 0.9, fontSize: 36, bold: true, align: 'center', valign: 'middle' });
-  T(s, 'עיצוב תפקיד מבוסס צרכים כדרך לבנות בהירות, שליטה ומשמעות בעבודה', { x: 0.7, y: 3.9, w: 11.93, h: 0.5, fontSize: 18, align: 'center' });
-  E(s, 'Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14.', { x: 1.2, y: 4.5, w: 10.93, h: 0.7, fontSize: 12, italic: true, align: 'center' });
-  T(s, 'מגיש/ה: דוחה עמאש, מספר תעודת זהות 208121137', { x: 0.7, y: 5.4, w: 11.93, h: 0.45, fontSize: 18, bold: true, align: 'center' });
-  T(s, 'מרצה: גב\' מורן דבדבני דקל   |   עוזר הוראה: מר פאר רועי', { x: 0.7, y: 5.95, w: 11.93, h: 0.45, fontSize: 15, align: 'center' });
-  T(s, 'תשפ"ו, סמסטר 3   |   ספטמבר 2026', { x: 0.7, y: 6.4, w: 11.93, h: 0.45, fontSize: 14, align: 'center', color: GREY });
+  s.background = { color: NAVY };
+  s.addShape(pres.shapes.RECTANGLE, { x: 0, y: 4.42, w: 13.33, h: 0.07, fill: { color: ORANGE }, line: { color: ORANGE } });
+  s.addShape(pres.shapes.RECTANGLE, { x: 5.77, y: 0.3, w: 1.8, h: 1.8, fill: { color: WHITE }, line: { color: WHITE } });
+  s.addImage({ path: __dirname + '/ono-logo.jpg', x: 5.92, y: 0.45, w: 1.5, h: 1.5 });
+  T(s, 'הקריה האקדמית אונו, הפקולטה למנהל עסקים', { x: 0.7, y: 2.25, w: 11.93, h: 0.4, fontSize: 17, align: 'center', color: WHITE });
+  T(s, 'עבודה מסכמת בקורס ניהול קריירה בארגונים', { x: 0.7, y: 2.65, w: 11.93, h: 0.4, fontSize: 17, align: 'center', color: WHITE });
+  T(s, 'התמודדות עם חוסר ודאות תעסוקתי', { x: 0.7, y: 3.15, w: 11.93, h: 0.85, fontSize: 38, bold: true, align: 'center', valign: 'middle', color: WHITE });
+  T(s, 'עיצוב תפקיד מבוסס צרכים כדרך לבנות בהירות, שליטה ומשמעות בעבודה', { x: 0.7, y: 3.98, w: 11.93, h: 0.45, fontSize: 18, align: 'center', color: ORANGE });
+  E(s, 'Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14.', { x: 1.2, y: 4.65, w: 10.93, h: 0.65, fontSize: 12, italic: true, align: 'center', color: WHITE });
+  T(s, 'מגיש/ה: דוחה עמאש, מספר תעודת זהות 208121137', { x: 0.7, y: 5.45, w: 11.93, h: 0.45, fontSize: 18, bold: true, align: 'center', color: ORANGE });
+  T(s, 'מרצה: גב\' מורן דבדבני דקל   |   עוזר הוראה: מר פאר רועי', { x: 0.7, y: 5.98, w: 11.93, h: 0.45, fontSize: 15, align: 'center', color: WHITE });
+  T(s, 'תשפ"ו, סמסטר 3   |   ספטמבר 2026', { x: 0.7, y: 6.42, w: 11.93, h: 0.45, fontSize: 14, align: 'center', color: 'D9E2F3' });
   NOTE(s, 'פתיחה (30 שניות): הצגת הנושא. במקום לשאול מה אי-הוודאות עושה לנו, נשאל מה אנחנו יכולים לעשות לה. מחקר אורך מ-2026 על 924 עובדים נותן תשובה.');
 }
 
@@ -67,7 +76,7 @@ const NOTE = (s, t) => s.addNotes(t);
 {
   const s = pres.addSlide(); n++;
   title(s, 'מבוא: הצגת המאמר');
-  E(s, 'Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14. https://doi.org/10.16993/sjwop.389', { x: 0.7, y: 1.4, w: 11.93, h: 0.75, fontSize: 13, italic: true, align: 'right' });
+  E(s, 'Cetkovská, K., Bauer, G. F., & Tušl, M. (2026). The role of needs-based job crafting in strengthening work-related sense of coherence: A two-wave panel study. Scandinavian Journal of Work and Organizational Psychology, 11(1), Article 14. https://doi.org/10.16993/sjwop.389', { x: 0.7, y: 1.4, w: 11.93, h: 0.75, fontSize: 13, italic: true, align: 'right', color: NAVY });
   para(s, 'המאמר שנבחר הוא מחקר אמפירי כמותי במערך אורך, שפורסם בשנת 2026 בכתב העת השפיט Scandinavian Journal of Work and Organizational Psychology, היוצא לאור בהוצאת אוניברסיטת סטוקהולם, בגישה פתוחה מלאה. מחבריו הם קריסטינה צטקובסקה מאוניברסיטת קארל בפראג, וגאורג באואר ומרטין טושל מהמרכז לסלוטוגנזה באוניברסיטת ציריך, והמחקר מומן על ידי הקרן הלאומית השווייצרית למדע (Cetkovská et al., 2026).', 2.3, 1.9);
   para(s, 'מדובר במחקר פאנל בשני גלי מדידה בהפרש של שישה חודשים, שבו השתתפו 924 עובדים מגרמניה ומשווייץ. המאמר נבחר משום שהוא שואל מה עוזר לעובדים ולא רק מה מזיק להם, משום שהוא מציע כלי שאינו תלוי בארגון, ומשום שהוא עומד בדרישות המטלה: מאמר שפיט מחמש השנים האחרונות, מקיף ומהימן, הזמין במלואו לכל קורא (Cetkovská et al., 2026).', 4.3, 2.2);
   footer(s);
@@ -80,11 +89,11 @@ const NOTE = (s, t) => s.addNotes(t);
   title(s, 'תמצית המאמר: הרקע התיאורטי');
   para(s, 'הגישה הסלוטוגנית הופכת את שאלת המחקר המקובלת: במקום לשאול מדוע אנשים חולים, היא שואלת כיצד הם שומרים על בריאותם למרות גורמי דחק. במרכזה עומדת תחושת הקוהרנטיות, המידה שבה האדם תופס את חייו כמובנים, כניתנים לניהול וכמשמעותיים (Antonovsky, 1987, כפי שמצוטט אצל Cetkovská et al., 2026). על בסיס זה פותח המושג תחושת קוהרנטיות בעבודה, המתייחס למצב העבודה הנוכחי בלבד ומורכב משלושה רכיבים. בניגוד לתחושת הקוהרנטיות הכללית, המתייצבת בבגרות הצעירה, הרכיב התעסוקתי דינמי ומעוצב ללא הרף על ידי תנאי העבודה (Cetkovská et al., 2026).', 1.45, 2.45);
   // איור 1: שלושת הרכיבים (שלוש תיבות בהירות, מימין לשמאל)
-  const bw = 3.8, gap = 0.265, y = 4.05, h = 1.75;
+  const bw = 3.8, gap = 0.265, y = 4.0, h = 1.85;
   box(s, 0.7 + 2 * (bw + gap), y, bw, h, 'מובנות (רכיב קוגניטיבי)', 'מצב העבודה נתפס כמובנה, עקבי וברור. חוסר ודאות פוגע ברכיב זה ראשון: העתיד אינו צפוי.', { bodyAlign: 'center' });
   box(s, 0.7 + (bw + gap), y, bw, h, 'ניהוליות (רכיב התנהגותי)', 'לעובד יש משאבים מספיקים להתמודד עם הדרישות. בתקופת אי-ודאות המשאבים נראים בלתי מספיקים.', { bodyAlign: 'center' });
   box(s, 0.7, y, bw, h, 'משמעותיות (רכיב מוטיבציוני)', 'מצב העבודה נתפס כראוי למחויבות ולמעורבות. קשה להתחייב למה שעלול להיעלם.', { bodyAlign: 'center' });
-  T(s, 'איור 1: שלושת רכיבי תחושת הקוהרנטיות בעבודה ופגיעתו של חוסר הוודאות בכל אחד מהם (על פי Cetkovská et al., 2026)', { x: 0.7, y: 5.95, w: 11.93, h: 0.35, fontSize: 11, color: GREY });
+  T(s, 'איור 1: שלושת רכיבי תחושת הקוהרנטיות בעבודה ופגיעתו של חוסר הוודאות בכל אחד מהם (על פי Cetkovská et al., 2026)', { x: 0.7, y: 6.0, w: 11.93, h: 0.35, fontSize: 11, color: NAVY });
   footer(s);
   NOTE(s, 'להזכיר שאנטונובסקי פעל באוניברסיטת בן-גוריון. חוסר ודאות במונחים שלו הוא בעיקר פגיעה במובנות.');
 }
@@ -121,10 +130,10 @@ const NOTE = (s, t) => s.addNotes(t);
     x: 3.2, y: 3.85, w: 6.9, h: 2.75, barDir: 'col', barGrouping: 'clustered', chartColors: [BAR1, BAR2],
     showValue: true, dataLabelPosition: 'outEnd', dataLabelFontFace: EN, dataLabelFontSize: 9, dataLabelColor: BLACK, dataLabelFormatCode: '0.000',
     catAxisLabelFontFace: HE, catAxisLabelFontSize: 11, catAxisLabelColor: BLACK, valAxisLabelFontFace: EN, valAxisLabelFontSize: 9, valAxisLabelColor: BLACK,
-    valAxisMaxVal: 0.2, valAxisMinVal: 0, valGridLine: { color: 'E7E6E6', size: 0.5 }, catGridLine: { style: 'none' },
+    valAxisMaxVal: 0.2, valAxisMinVal: 0, catAxisOrientation: 'maxMin', valGridLine: { color: 'E7E6E6', size: 0.5 }, catGridLine: { style: 'none' },
     showLegend: true, legendPos: 'b', legendFontFace: HE, legendFontSize: 10,
   });
-  T(s, 'תרשים 1: מקדמי ניבוי מתוקננים (β) של שלושת רכיבי תחושת הקוהרנטיות בגל 2 לפי סוג עיצוב התפקיד בגל 1 (Cetkovská et al., 2026, טבלה 4)', { x: 0.7, y: 6.6, w: 11.93, h: 0.35, fontSize: 11, color: GREY, align: 'center' });
+  T(s, 'תרשים 1: מקדמי ניבוי מתוקננים (β) של שלושת רכיבי תחושת הקוהרנטיות בגל 2 לפי סוג עיצוב התפקיד בגל 1 (Cetkovská et al., 2026, טבלה 4)', { x: 0.7, y: 6.6, w: 11.93, h: 0.35, fontSize: 11, color: NAVY, align: 'center' });
   footer(s);
   NOTE(s, 'הגרף: עמודות כחולות (התקרבות) מול כתומות (הימנעות). מקדם 0.14 עד 0.17 נשמע קטן, אבל המדדים יציבים מאוד (0.61 עד 0.70), ולכן כל שינוי שנשמר אחרי חצי שנה משמעותי. להזכיר: מתאמים בזמן, לא סיבתיות.');
 }
@@ -143,7 +152,7 @@ const NOTE = (s, t) => s.addNotes(t);
 {
   const s = pres.addSlide(); n++;
   title(s, 'המאמר המשלים: מודעות לבינה מלאכותית, חוסר ביטחון וחוסן קריירה');
-  E(s, 'Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. Australian Journal of Psychology, 77(1), Article 2559910. https://doi.org/10.1080/00049530.2025.2559910', { x: 0.7, y: 1.4, w: 11.93, h: 0.7, fontSize: 12, italic: true, align: 'right' });
+  E(s, 'Chung, Y. W., Im, S., Kim, J. E., & Yun, J. K. (2025). Artificial intelligence awareness, career resilience, job insecurity and behavioural outcomes. Australian Journal of Psychology, 77(1), Article 2559910. https://doi.org/10.1080/00049530.2025.2559910', { x: 0.7, y: 1.4, w: 11.93, h: 0.7, fontSize: 12, italic: true, align: 'right', color: NAVY });
   para(s, 'לחיזוק הקשר בין המאמר המרכזי לבין נושא העבודה נבחר מחקר אורך נוסף, שפורסם בגישה פתוחה בכתב עת שפיט. המחברים, מאוניברסיטת סוּוֹן בדרום קוריאה, בחנו את ההשלכות של מודעות לבינה מלאכותית, כלומר תפיסת העובד שטכנולוגיה עלולה להחליף אותו או לשנות את תפקידו, על חוסר ביטחון תעסוקתי, על ביצועי משימה ועל התנהגות סוטה בעבודה. הנתונים נאספו בשלוש נקודות זמן מעובדי משרד במשרה מלאה (Chung et al., 2025).', 2.2, 1.9);
   para(s, 'הממצאים מראים שעצם המודעות לבינה מלאכותית, עוד לפני שינוי בפועל, מגבירה חוסר ביטחון תעסוקתי, ושחוסר הביטחון מתווך את הקשר בין המודעות לבין ירידה בביצועי המשימה ועלייה בהתנהגות סוטה. אצל עובדים בעלי חוסן קריירה גבוה הקשר בין המודעות לבין חוסר הביטחון היה חלש יותר (Chung et al., 2025). שני המאמרים משלימים זה את זה: המאמר המשלים מתאר את מקור חוסר הוודאות של שנת 2026 ומראה שמשאב אישי ממתן אותו, והמאמר המרכזי מראה כיצד בונים משאב כזה בפועל, באמצעות עיצוב תפקיד יזום (Cetkovská et al., 2026).', 4.15, 2.75);
   footer(s);
@@ -192,7 +201,7 @@ const NOTE = (s, t) => s.addNotes(t);
   box(s, xs[1], y, bw, h, 'מיומנות', 'שאלה מנחה: איזה אתגר בגובה הנכון יגרום לי להרגיש שאני מתקדם/ת?\n\nלשבועיים הקרובים: משימה אחת מעט מעבר ליכולת; כלי בינה מלאכותית אחד בתחום; לתעד בסוף השבוע דבר אחד שלמדתי.', { bodySize: 12.5 });
   box(s, xs[2], y, bw, h, 'משמעות', 'שאלה מנחה: איזה חלק בעבודה מתחבר למה שחשוב לי, ואיך מגדילים אותו?\n\nלשבועיים הקרובים: לזהות למי העבודה שלי עוזרת ולדבר איתו; לנסח במשפט למה התפקיד חשוב; להתנדב למשימה שמתחברת לערכים.', { bodySize: 12.5 });
   box(s, xs[3], y, bw, h, 'שייכות', 'שאלה מנחה: עם מי בעבודה אני רוצה קשר אמיתי יותר?\n\nלשבועיים הקרובים: הפסקת קפה קבועה עם עמית; להציע עזרה לפני שמבקשים; להצטרף לפרויקט חוצה מחלקות.', { bodySize: 12.5 });
-  T(s, 'איור 2: תוכנית עיצוב תפקיד אישית לפי ארבעת צרכי ההתקרבות. פיתוח על פי Cetkovská et al. (2026)', { x: 0.7, y: 6.4, w: 11.93, h: 0.35, fontSize: 11, color: GREY });
+  T(s, 'איור 2: תוכנית עיצוב תפקיד אישית לפי ארבעת צרכי ההתקרבות. פיתוח על פי Cetkovská et al. (2026)', { x: 0.7, y: 6.4, w: 11.93, h: 0.35, fontSize: 11, color: NAVY });
   footer(s);
   NOTE(s, 'זה הכלי שאני משאיר/ה לכיתה. ארבעה צרכים, שאלה אחת לכל צורך, ופעולות שאפשר לעשות גם במשרה סטודנטיאלית.');
 }
@@ -215,7 +224,7 @@ const NOTE = (s, t) => s.addNotes(t);
   title(s, 'סיכום');
   para(s, 'העבודה פתחה בשאלה מה מאפשר לעובדים להישאר בריאים ומתפקדים כשעולם העבודה אינו יציב. התשובה שעלתה ממחקר האורך של צטקובסקה ואחרים היא שתחושת הקוהרנטיות בעבודה היא משאב דינמי שהעובד יכול לחזק בעצמו באמצעות עיצוב תפקיד המכוון לצרכי אוטונומיה, מיומנות, משמעות ושייכות, ושהמשאב הזה בתורו מזין יוזמה נוספת (Cetkovská et al., 2026). המאמר המשלים הראה שהמודעות לבינה מלאכותית היא מקור מרכזי לחוסר הביטחון של ימינו ושמשאב אישי ממתן אותו (Chung et al., 2025).', 1.45, 2.5);
   para(s, 'מכאן ההמלצות היישומיות. לסטודנט: לבחור בכל שבועיים צורך התקרבות אחד ופעולה אחת של עיצוב תפקיד, ללמוד כלי בינה מלאכותית אחד בתחום העיסוק, ולתעד בסוף כל שבוע דבר אחד שנלמד. למנהל: לטפח תחושת ניהוליות באמצעות משאבים ומידע ברור, לתת מרחב לעיצוב תפקיד, ולתקשר שינויים טכנולוגיים בשקיפות. את חוסר הוודאות לא תמיד אפשר למנוע. את הבהירות, השליטה והמשמעות בתוך התפקיד אפשר לבנות.', 4.05, 2.4);
-  T(s, 'תודה. אשמח לשאלות.', { x: 0.7, y: 6.45, w: 11.93, h: 0.45, fontSize: 16, bold: true });
+  T(s, 'תודה. אשמח לשאלות.', { x: 0.7, y: 6.45, w: 11.93, h: 0.45, fontSize: 16, bold: true, color: ORANGE });
   footer(s);
   NOTE(s, 'לחזור לתוצאות סקר הפתיחה: מי שדירג נמוך, המאמר אומר שזה לא גזירת גורל, והפעולה שכתבתם עכשיו היא בדיוק הדרך לשנות את זה.');
 }
