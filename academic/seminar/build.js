@@ -8,7 +8,7 @@ const {
 } = require('docx');
 const SRC = require('./sources.js');
 
-const FONT = { ascii: 'Times New Roman', hAnsi: 'Times New Roman', cs: 'David', eastAsia: 'David' };
+const FONT = { ascii: 'David', hAnsi: 'David', cs: 'David', eastAsia: 'David' };
 const BODY = 24;   // 12pt
 const NOTE = 20;   // 10pt
 
@@ -303,7 +303,7 @@ const doc = new Document({
     properties: { page: { margin: { top: 1440, bottom: 1440, left: 1440, right: 1440 } } },
     footers: { default: new Footer({ children: [new Paragraph({ alignment: AlignmentType.CENTER,
       children: [new TextRun({ children: [PageNumber.CURRENT], font: FONT, size: 20 })] })] }) },
-    children: [...cover, ...body, ...bib],
+    children: [...cover, ...body],   // לפי הנחיות הקורס אין צורך ברשימה ביבליוגרפית
   }],
 });
 
