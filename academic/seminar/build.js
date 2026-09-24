@@ -214,7 +214,7 @@ for (const f of ['text-1.txt', 'text-2.txt', 'text-3.txt', 'text-4.txt']) {
     if (!b) continue;
     if (b.startsWith('### ')) body.push(heading(b.slice(4), 3));
     else if (b.startsWith('## ')) body.push(heading(b.slice(3), 2));
-    else if (b.startsWith('# ')) body.push(heading(b.slice(2), 1, true));
+    else if (b.startsWith('# ')) body.push(heading(b.slice(2), 1, body.length === 0));
     else if (b.startsWith('- ')) {
       for (const line of b.split('\n')) {
         body.push(para(line.replace(/^- /, ''), { p: { numbering: { reference: 'recs', level: 0 } } }));
