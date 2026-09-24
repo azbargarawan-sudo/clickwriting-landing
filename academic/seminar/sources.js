@@ -89,4 +89,72 @@ module.exports = {
   weisburd: { type: 'chapter', author: 'דיוויד וייסבורד וג\'ון א\' אק', title: 'מה יכולה המשטרה לעשות כדי להפחית פשיעה, אי-סדר ופחד מפשיעה?', book: 'עבריינות וסטייה חברתית: תאוריה ויישום', start: '[עמוד]', editors: '[עורכים]', year: '2022', short: 'וייסבורד ואק' },
   amitai:   { type: 'chapter', author: 'גילה אמיתי וענבל וילמובסקי', title: 'קרימינולוגיה ביקורתית: עוגנים תיאורטיים ויישום', book: 'קרימינולוגיה ישראלית', start: '[עמוד]', editors: '[עורכים]', year: '2022', short: 'אמיתי ווילמובסקי' },
   harmelin: { type: 'chapter', author: 'איתי הרמלין', title: 'אומרים הסכמה (לחיפוש) יש בעולם. מה זאת הסכמה?', book: '75 שנות עצמאות במשפט', start: '[עמוד]', editors: '[עורכים]', year: '2023', short: 'הרמלין' },
+
+  // ---------- חקיקה זרה נוספת ----------
+  cjpoa:    { type: 'law', text: '_Criminal Justice and Public Order Act 1994_, c. 33 (UK)', foreign: true },
+  equality: { type: 'law', text: '_Equality Act 2010_, c. 15 (UK)', foreign: true },
+
+  // ---------- פסיקה ישראלית נוספת ----------
+  abuq:     { type: 'case', proc: 'בג"ץ 1504/20', parties: 'אבו אלקיעאן נ\' פרקליט המדינה', date: '20.10.2021', short: 'אבו אלקיעאן' },
+  mashaich: { type: 'case', proc: 'רע"פ 2161/21', parties: 'משאיך נ\' מדינת ישראל', date: '18.7.2021', short: 'משאיך' },
+
+  // ---------- דוחות ומסמכים רשמיים ----------
+  // report: author **title** pin (publisher, year)
+  mev18:    { type: 'report', author: 'מבקר המדינה', title: 'דוח ביקורת מיוחד: התמודדות משטרת ישראל עם החזקת אמצעי לחימה לא חוקיים ואירועי ירי ביישובי החברה הערבית וביישובים מעורבים', year: '2018', short: 'מבקר המדינה **דוח 2018**' },
+  mev21:    { type: 'report', author: 'מבקר המדינה', title: 'ביקורת מעקב: התמודדות משטרת ישראל עם החזקת אמצעי לחימה לא חוקיים ואירועי ירי ביישובי החברה הערבית וביישובים מעורבים', year: '2021', short: 'מבקר המדינה **ביקורת מעקב 2021**' },
+  ricOver:  { type: 'report', author: 'נורית יכימוביץ-כהן', title: 'סוגיות הקשורות לשיטור יתר ושימוש משטרתי בכוח כלפי קבוצות אוכלוסייה מסוימות', publisher: 'הכנסת, מרכז המחקר והמידע', year: '2025', short: 'יכימוביץ-כהן **שיטור יתר**' },
+  ricYouth: { type: 'report', author: 'נורית יכימוביץ-כהן', title: 'פשיעה ועבריינות של צעירים ערבים: נתוני אכיפה', publisher: 'הכנסת, מרכז המחקר והמידע', year: '2025', short: 'יכימוביץ-כהן **צעירים ערבים**' },
+  elran:    { type: 'report', author: 'מאיר אלרן, אפרים לביא, מני יצחקי ומוחמד ותד', title: 'המלצות למדיניות התמודדות לאומית עם האלימות והפשיעה בחברה הערבית בישראל', publisher: 'המכון למחקרי ביטחון לאומי', year: '2021', short: 'אלרן ואחרים' },
+
+  // ---------- מאמרים בכתב העת העיקר במחקר ----------
+  amonPol:  { type: 'article', author: 'משטרת ישראל, אגף התכנון והארגון', title: 'רפורמת אמו"ן במשטרת ישראל: מרעיון מסדר לשינוי עומק', journal: 'העיקר במחקר', vol: '[כרך]', start: '11', year: '2017', short: 'משטרת ישראל "רפורמת אמו"ן"' },
+  kaisi:    { type: 'article', author: 'יהודה קייסי', title: 'השיטור הקלאסי: הבסיס המחקרי לרפורמת אמו"ן במשטרת ישראל', journal: 'העיקר במחקר', vol: '[כרך]', start: '13', year: '2017', short: 'קייסי' },
+  prop18:   { type: 'article', author: 'דיויד וייסבורד, באדי חסייסי, יעל לטמנוביץ, תומר כרמל ושני תשובה', title: 'מחקר הערכת תכנית אמו"ן: דו"ח מספר 1, סל עבירות פע"ר', journal: 'העיקר במחקר', vol: '[כרך]', start: '75', year: '2018', short: 'וייסבורד ואחרים "דו"ח מספר 1"' },
+  prop20:   { type: 'article', author: 'דיויד וייסבורד, באדי חסייסי, יעל לטמנוביץ, תומר כרמל ושני תשובה', title: 'מחקר הערכת תכנית אמו"ן: סל עבירות פע"ר', journal: 'העיקר במחקר', vol: '[כרך]', start: '167', year: '2020', short: 'וייסבורד ואחרים "סל עבירות פע"ר"' },
+  exec:     { type: 'article', author: 'דייוויד ויסבורד, באדי חסייסי, יעל ליטמנוביץ, תומר כרמל ושני תשובה', title: 'מיסוד שיטור מוכוון בעיות: הערכה של רפורמת אמו"ן בישראל, תקציר מנהלים', journal: 'העיקר במחקר', vol: '[כרך]', start: '152', year: '2020', short: 'ויסבורד ואחרים "מיסוד שיטור מוכוון בעיות"' },
+  chatira:  { type: 'article', author: 'באדי חסייסי ויעל ליטמנוביץ', title: 'חתירה למגע אחר: שיטור החברה הערבית בישראל, נקודת המבט של מפקדי תחנות', journal: 'העיקר במחקר', vol: '[כרך]', start: '119', year: '2017', short: 'חסייסי וליטמנוביץ' },
+  attitudes:{ type: 'article', author: 'באדי חסייסי, טל יונתן-זמיר, דיויד וייסבורד, יעל ליטמנוביץ, טאינה טרכטנברג ועדי דוידוביץ\'', title: 'ניתוח עמדות הציבור כלפי המשטרה בחברה הישראלית: ההשפעה של הוגנות ההליכים, מאפייני הפרט ומאפייני התחנה', journal: 'העיקר במחקר', vol: '[כרך]', start: '283', year: '2020', short: 'חסייסי ואחרים "עמדות הציבור"' },
+  violence: { type: 'article', author: 'באדי חסייסי, יעל ליטמנוביץ, דיויד וייסבורד, שני תשובה וטאינה טרכטנברג', title: 'מחקר הערכת תכנית אמו"ן: עבירות אלימות', journal: 'העיקר במחקר', vol: '[כרך]', start: '247', year: '2020', short: 'חסייסי ואחרים "עבירות אלימות"' },
+  firearms: { type: 'article', author: 'יעל ליטמנוביץ, באדי חסייסי, דיויד וייסבורד ושני תשובה', title: 'מחקר הערכת תכנית אמו"ן: טיפול משטרת ישראל בעבירות ירי בחברה הערבית', journal: 'העיקר במחקר', vol: '[כרך]', start: '226', year: '2020', short: 'ליטמנוביץ ואחרים' },
+
+  // ---------- מקורות זרים: הסימן @ מציין את מקום ההפניה המדויקת ----------
+  // sep: מה שקודם להפניה באזכור המלא (ברירת מחדל ", "). cat: flaw / flit.
+  us4:      { type: 'other', cat: 'flaw', text: 'U.S. CONST. amend. IV', short: 'U.S. CONST. amend. IV' },
+  s1983:    { type: 'other', cat: 'flaw', text: '42 U.S.C. § 1983', short: '42 U.S.C. § 1983' },
+  s12601:   { type: 'other', cat: 'flaw', text: '34 U.S.C. § 12601', short: '34 U.S.C. § 12601' },
+  pacecode: { type: 'other', cat: 'flaw', text: 'Home Office, Police and Criminal Evidence Act 1984 Code A: Revised Code of Practice for the Exercise by Police Officers of Statutory Powers of Stop and Search@ (2023)', sep: ', para. ', short: 'PACE Code A', sp: 'בפס\' ' },
+  terry:    { type: 'fcase', text: '_Terry v. Ohio_, 392 U.S. 1@ (1968)', short: '_Terry_' },
+  whren:    { type: 'fcase', text: '_Whren v. United States_, 517 U.S. 806@ (1996)', short: '_Whren_' },
+  wardlow:  { type: 'fcase', text: '_Illinois v. Wardlow_, 528 U.S. 119@ (2000)', short: '_Wardlow_' },
+  armstrong:{ type: 'fcase', text: '_United States v. Armstrong_, 517 U.S. 456@ (1996)', short: '_Armstrong_' },
+  monell:   { type: 'fcase', text: '_Monell v. Department of Social Services_, 436 U.S. 658@ (1978)', short: '_Monell_' },
+  deshaney: { type: 'fcase', text: '_DeShaney v. Winnebago County Department of Social Services_, 489 U.S. 189@ (1989)', short: '_DeShaney_' },
+  roberts:  { type: 'fcase', text: '_R (Roberts) v. Commissioner of Police of the Metropolis_ [2015] UKSC 79@', short: '_Roberts_' },
+  michael:  { type: 'fcase', text: '_Michael v. Chief Constable of South Wales Police_ [2015] UKSC 2@', short: '_Michael_' },
+  dsd:      { type: 'fcase', text: '_Commissioner of Police of the Metropolis v. DSD_ [2018] UKSC 11@', short: '_DSD_' },
+  goldstein:{ type: 'other', text: 'Herman Goldstein, _Improving Policing: A Problem-Oriented Approach_, 25 CRIME & DELINQ. 236@ (1979)', short: 'Goldstein' },
+  eck:      { type: 'other', text: 'John E. Eck & William Spelman, Problem-Solving: Problem-Oriented Policing in Newport News@ (1987)', sep: ' ', short: 'Eck & Spelman' },
+  hinkle:   { type: 'other', text: 'Joshua C. Hinkle, David Weisburd, Cody W. Telep & Kevin Petersen, _Problem-Oriented Policing for Reducing Crime and Disorder: An Updated Systematic Review and Meta-Analysis_, 16 CAMPBELL SYSTEMATIC REVS. e1089@ (2020)', short: 'Hinkle et al.' },
+  braga12:  { type: 'other', text: 'Anthony A. Braga, Andrew V. Papachristos & David M. Hureau, _Hot Spots Policing Effects on Crime_, 8 CAMPBELL SYSTEMATIC REVS. 1@ (2012)', short: 'Braga, Papachristos & Hureau' },
+  braga19:  { type: 'other', text: 'Anthony A. Braga, David Weisburd & Brandon Turchan, _Focused Deterrence Strategies Effects on Crime: A Systematic Review_, 15 CAMPBELL SYSTEMATIC REVS. e1051@ (2019)', short: 'Braga, Weisburd & Turchan' },
+  gaffney:  { type: 'other', text: 'Hannah Gaffney, Darrick Jolliffe & Howard White, Hot Spot Policing: Toolkit Technical Report@ (2022)', sep: ' ', short: 'Gaffney, Jolliffe & White' },
+  nas:      { type: 'other', text: 'Proactive Policing: Effects on Crime and Communities@ (David Weisburd & Malay K. Majmundar eds., 2018)', sep: ' ', short: 'Proactive Policing' },
+  scott:    { type: 'other', text: 'Michael S. Scott, Focused Deterrence of High-Risk Individuals@ (Problem-Oriented Guides for Police, Response Guide Series No. 13, 2017)', sep: ' ', short: 'Scott' },
+  gvi:      { type: 'other', text: 'National Network for Safe Communities, Group Violence Intervention: An Implementation Guide@ (2015)', sep: ' ', short: 'Group Violence Intervention' },
+  natapoff: { type: 'other', text: 'Alexandra Natapoff, _Underenforcement_, 75 FORDHAM L. REV. 1715@ (2006)', short: 'Natapoff' },
+  bell:     { type: 'other', text: 'Monica C. Bell, _Police Reform and the Dismantling of Legal Estrangement_, 126 YALE L.J. 2054@ (2017)', short: 'Bell' },
+  sunshine: { type: 'other', text: 'Jason Sunshine & Tom R. Tyler, _The Role of Procedural Justice and Legitimacy in Shaping Public Support for Policing_, 37 LAW & SOC\'Y REV. 513@ (2003)', short: 'Sunshine & Tyler' },
+  tgm:      { type: 'other', text: 'Tom R. Tyler, Phillip Atiba Goff & Robert J. MacCoun, _The Impact of Psychological Science on Policing in the United States: Procedural Justice, Legitimacy, and Effective Law Enforcement_, 16 PSYCHOL. SCI. PUB. INT. 75@ (2015)', short: 'Tyler, Goff & MacCoun' },
+  skogan:   { type: 'other', text: 'Wesley G. Skogan, _Asymmetry in the Impact of Encounters with Police_, 16 POLICING & SOC\'Y 99@ (2006)', short: 'Skogan' },
+  desmond:  { type: 'other', text: 'Matthew Desmond, Andrew V. Papachristos & David S. Kirk, _Police Violence and Citizen Crime Reporting in the Black Community_, 81 AM. SOCIO. REV. 857@ (2016)', short: 'Desmond, Papachristos & Kirk' },
+  hasisi08: { type: 'other', text: 'Badi Hasisi, _Police, Politics, and Culture in a Deeply Divided Society_, 98 J. CRIM. L. & CRIMINOLOGY 1119@ (2008)', short: 'Hasisi' },
+  hasisiw:  { type: 'other', text: 'Badi Hasisi & Ronald Weitzer, _Police Relations with Arabs and Jews in Israel_, 47 BRIT. J. CRIMINOLOGY 728@ (2007)', short: 'Hasisi & Weitzer' },
+  jzp:      { type: 'other', text: 'Tal Jonathan-Zamir & Gali Perry, _A Landmark in the Study of Proactive Policing: Commentary on Proactive Policing: Effects on Crime and Communities_, 24 JERUSALEM REV. LEGAL STUD. 1@ (2021)', short: 'Jonathan-Zamir & Perry' },
+  taskforce:{ type: 'other', text: 'President\'s Task Force on 21st Century Policing, Final Report@ (2015)', sep: ' ', short: 'Final Report' },
+  ferguson: { type: 'other', text: 'U.S. Department of Justice, Civil Rights Division, Investigation of the Ferguson Police Department@ (2015)', sep: ' ', short: 'Ferguson Report' },
+  floyd:    { type: 'other', text: 'Statement of Interest of the United States@, _Floyd v. City of New York_, No. 08-cv-01034 (S.D.N.Y. June 12, 2013)', sep: ' at ', short: 'Statement of Interest' },
+  macpherson:{ type: 'other', text: 'The Stephen Lawrence Inquiry: Report of an Inquiry by Sir William Macpherson of Cluny, Cm 4262-I@ (1999)', short: 'Macpherson Report' },
+  hmic:     { type: 'other', text: 'HM Inspectorate of Constabulary and Fire & Rescue Services, Disproportionate Use of Police Powers: A Spotlight on Stop and Search and the Use of Force@ (2021)', sep: ' ', short: 'HMICFRS' },
+  dawson:   { type: 'other', text: 'Paul Dawson, Anthony DuGuay, Ryan Flanagan & Abigail McNeill, Investigating Disproportionality in Stop and Search in London@ (2026)', sep: ' ', short: 'Dawson et al.' },
+  lammy:    { type: 'other', text: 'David Lammy, The Lammy Review: An Independent Review into the Treatment of, and Outcomes for, Black, Asian and Minority Ethnic Individuals in the Criminal Justice System@ (2017)', sep: ' ', short: 'Lammy Review' },
 };

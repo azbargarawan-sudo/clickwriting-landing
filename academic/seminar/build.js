@@ -13,13 +13,14 @@ const BODY = 24;   // 12pt
 const NOTE = 20;   // 10pt
 
 // ---------- עיבוד טקסט לריצות ----------
-const PLACEHOLDER = /\[(?:עמוד|כרך|עורכים|שנה|פרטי[^\]]*)\]/;
-const LATIN = /[A-Za-z][A-Za-z0-9 .,:;&'’()\-\/]*[A-Za-z0-9.)]|[A-Za-z]/g;
+const PLACEHOLDER = /\[(?:עמוד|כרך|עורכים|שנה|תאריך|פרטי[^\]]*)\]/;
+// קטע לועזי: אפשר שייפתח במספרים (למשל 34 U.S.C.), אך חייב לכלול אות לטינית.
+const LATIN = /(?:[0-9\[][0-9 .,:;§\[\]\-]*)?[A-Za-z][A-Za-z0-9 .,:;&'’()\-\/\[\]§]*[A-Za-z0-9.)\]]|[A-Za-z]/g;
 
 // מפצל מחרוזת עם **מודגש**, _נטוי_ ו-[מציין מקום] לריצות.
 function runs(text, size, extra = {}) {
   const out = [];
-  const re = /\*\*(.+?)\*\*|_(.+?)_|(\[(?:עמוד|כרך|עורכים|שנה|פרטי[^\]]*)\])/g;
+  const re = /\*\*(.+?)\*\*|_(.+?)_|(\[(?:עמוד|כרך|עורכים|שנה|תאריך|פרטי[^\]]*)\])/g;
   let last = 0, m;
   const push = (t, fmt) => { if (t) out.push(...scriptSplit(t, size, { ...extra, ...fmt })); };
   while ((m = re.exec(text))) {
@@ -34,15 +35,23 @@ function runs(text, size, extra = {}) {
 }
 
 // מפריד בין קטעים לועזיים לקטעים עבריים, כדי שהכיווניות תוצג נכון.
+// סימן LRM בסוף קטע לועזי מצמיד אליו את סימני הפיסוק שבסופו.
+const LRM = '\u200E';
 function scriptSplit(t, size, fmt) {
   const res = [];
   const hasHeb = /[֐-׿]/.test(t);
-  if (!hasHeb) return [mk(t, size, fmt, false)];
+  if (!hasHeb) return [mk(/[A-Za-z]/.test(t) ? t + LRM : t, size, fmt, !/[A-Za-z0-9]/.test(t))];
   let last = 0, m;
   LATIN.lastIndex = 0;
   while ((m = LATIN.exec(t))) {
+    let seg = m[0];
+    // סוגר שאין לו פותח בתוך הקטע הלועזי שייך לטקסט העברי שסביבו
+    if (seg.endsWith(')') && (seg.match(/\(/g) || []).length < (seg.match(/\)/g) || []).length) {
+      seg = seg.slice(0, -1);
+      LATIN.lastIndex -= 1;
+    }
     if (m.index > last) res.push(mk(t.slice(last, m.index), size, fmt, true));
-    res.push(mk(m[0], size, fmt, false));
+    res.push(mk(seg + LRM, size, fmt, false));
     last = LATIN.lastIndex;
   }
   if (last < t.length) res.push(mk(t.slice(last), size, fmt, true));
@@ -61,8 +70,23 @@ function mk(text, size, fmt, rtl) {
 // ---------- ציטוטים ----------
 const used = new Set();
 const firstNote = {};           // key -> מספר ההערה שבה אוזכר לראשונה
-const isPage = p => /^[\d\-–,\s]+$/.test(p) || /^\[עמוד\]$/.test(p);
-const pinR = p => (isPage(p) ? `בעמ' ${p}` : p);
+const isPage = p => /^\d/.test(p) || /^\[עמוד\]$/.test(p);
+const pinR = p => (isPage(p) ? `בעמ' ${p}` : /^פס'/.test(p) ? 'ב' + p : p);
+// הפניה מדויקת במקור זר, כפי שתופיע בהפניה מקוצרת בעברית
+function foreignPin(s, p) {
+  if (s.sp) return s.sp + p;
+  let m;
+  if ((m = p.match(/^§§?\s*(.+)$/))) return `בס' ${m[1]}`;
+  if ((m = p.match(/^¶(.+)$/))) return `בפס' ${m[1]}`;
+  if ((m = p.match(/^paras?\.\s*(.+)$/))) return `בפס' ${m[1]}`;
+  if ((m = p.match(/^recs?\.\s*(.+)$/))) return `בהמלצה ${m[1]}`;
+  if (/^[\dxivlc][\dxivlc\-–,\s]*$/.test(p)) return `בעמ' ${p}`;
+  return p;
+}
+function pinShort(key, p) {
+  const s = SRC[key];
+  return (s.type === 'other' || s.type === 'fcase') ? foreignPin(s, p) : pinR(p);
+}
 
 function full(key, pin) {
   const s = SRC[key];
@@ -77,6 +101,10 @@ function full(key, pin) {
       return `${s.proc} **${s.parties}**${pin ? ', ' + pin : ''} (נבו ${s.date})`;
     case 'fcase':
     case 'other': {
+      if (pin && pin.startsWith('¶')) pin = `[${pin.slice(1)}]`;   // פסקה בפסק דין אנגלי
+      let sep = s.sep || ', ';
+      if (pin && sep === ', para. ' && /[-,]/.test(pin)) sep = ', paras. ';
+      if (s.text.includes('@')) return s.text.replace('@', pin ? sep + pin : '');
       if (!pin) return s.text;
       const i = s.text.lastIndexOf(' (');
       return i > 0 ? `${s.text.slice(0, i)}, ${pin}${s.text.slice(i)}` : `${s.text}, ${pin}`;
@@ -85,7 +113,9 @@ function full(key, pin) {
       pin = pin || (s.needPage ? '[עמוד]' : '');
       return `${s.author} **${s.title}**${s.vol ? ' ' + s.vol : ''}${pin ? ' ' + pin : ''} (${s.year})`;
     case 'article':
-      return `${s.author} "${s.title}" **${s.journal}** ${s.vol} ${s.start}${pin ? ', ' + pin : ''} (${s.year})`;
+      return `${s.author} "${s.title}" **${s.journal}** ${s.vol ? s.vol + ' ' : ''}${s.start}${pin ? ', ' + pin : ''} (${s.year})`;
+    case 'report':
+      return `${s.author} **${s.title}**${pin ? ' ' + pin : ''} (${s.publisher ? s.publisher + ', ' : ''}${s.year})`;
     case 'chapter':
       return `${s.author} "${s.title}" **${s.book}** ${s.start}${pin ? ', ' + pin : ''} (${s.editors}, ${s.year})`;
   }
@@ -98,13 +128,14 @@ function short(key, pin, n) {
   let name;
   if (s.type === 'case') name = `${s.shortPrefix || 'עניין'} **${s.short}**`;
   else name = s.short;
-  return `${name}, לעיל ה"ש ${firstNote[key]}${pin ? ', ' + pinR(pin) : ''}`;
+  return `${name}, לעיל ה"ש ${firstNote[key]}${pin ? ', ' + pinShort(key, pin) : ''}`;
 }
 
 // ---------- הערות שוליים ----------
 const footnotes = {};
 let fnCount = 0;
 let prevSingle = null;          // מקור יחיד של ההערה הקודמת, לצורך "שם"
+let prevPin = null;             // ההפניה המדויקת בהערה הקודמת
 
 function makeFootnote(raw) {
   const n = ++fnCount;
@@ -112,23 +143,27 @@ function makeFootnote(raw) {
   const text = raw.replace(/\[\[([^\]|]+)(?:\|([^\]]*))?\]\]/g, (_, key, pin, offset) => {
     used.add(key);
     const s = SRC[key];
-    if (s.type === 'law') return full(key, pin);
+    if (s.type === 'law' || (s.cat === 'flaw' && !s.text.includes('@'))) return full(key, pin);
     // "שם" רק כשהאזכור פותח את ההערה ומפנה למקור היחיד של ההערה הקודמת
     if (prevSingle === key && raw.slice(0, offset).trim() === '') {
       const p = pin || (s.needPage ? '[עמוד]' : '');
-      return 'שם' + (p ? ', ' + pinR(p) : '');
+      if (p && p === prevPin) return 'שם';
+      return 'שם' + (p ? ', ' + pinShort(key, p) : '');
     }
     if (firstNote[key]) return short(key, pin, n);
     firstNote[key] = n;
     return full(key, pin);
   });
   const citeKeys = tokens.map(t => t[1]).filter(k => SRC[k].type !== 'law');
+  const newPin = tokens.length === 1 ? (tokens[0][2] || null) : null;
   if (tokens.length === 0 && /^שם/.test(raw.trim())) {
     // הערת "שם" ידנית: המקור הקודם נשאר
   } else if (citeKeys.length === 1 && tokens.length === 1 && !/כמובא/.test(raw)) {
     prevSingle = citeKeys[0];
+    prevPin = newPin;
   } else {
     prevSingle = null;
+    prevPin = null;
   }
   footnotes[n] = {
     children: [new Paragraph({
@@ -172,7 +207,7 @@ function heading(text, level, newPage) {
 
 // ---------- קריאת הטקסט ----------
 const body = [];
-for (const f of ['text-1.txt', 'text-2.txt', 'text-3.txt']) {
+for (const f of ['text-1.txt', 'text-2.txt', 'text-3.txt', 'text-4.txt']) {
   const blocks = fs.readFileSync(path.join(__dirname, f), 'utf8').split(/\n\s*\n/);
   for (let b of blocks) {
     b = b.trim();
@@ -190,46 +225,39 @@ for (const f of ['text-1.txt', 'text-2.txt', 'text-3.txt']) {
 
 // ---------- רשימת מקורות ----------
 function bibPara(text) {
+  const en = !/[֐-׿]/.test(text);
   return new Paragraph({
-    bidirectional: true, alignment: AlignmentType.BOTH,
+    bidirectional: !en, alignment: en ? AlignmentType.LEFT : AlignmentType.BOTH,
     spacing: { line: 276, after: 100 },
     indent: { hanging: 360, left: 360 },
     children: runs(text, BODY),
   });
 }
 const heSort = (a, b) => a.localeCompare(b, 'he');
+const enKey = t => t.replace(/[_*]/g, '').replace(/^The /, '');
 const usedKeys = [...used];
 const group = (pred) => usedKeys.filter(k => pred(SRC[k]));
 const bib = [];
-bib.push(heading('רשימת מקורות', 1, true));
+bib.push(heading('ביבליוגרפיה', 1, true));
 
 const sections = [
-  ['חקיקה ישראלית', group(s => s.type === 'law' && !s.foreign), k => SRC[k].text],
-  ['חקיקה זרה', group(s => s.type === 'law' && s.foreign), k => SRC[k].text],
-  ['פסיקה ישראלית', group(s => s.type === 'case'), k => full(k)],
-  ['פסיקה זרה', group(s => s.type === 'fcase'), k => SRC[k].text],
-  ['ספרים', group(s => s.type === 'book'), k => full(k)],
-  ['מאמרים ופרקים בספרים', group(s => s.type === 'article' || s.type === 'chapter'), k => full(k)],
+  ['חקיקה ישראלית', group(s => s.type === 'law' && !s.foreign), k => SRC[k].text, false],
+  ['פסיקה ישראלית', group(s => s.type === 'case'), k => full(k), false],
+  ['ספרים', group(s => s.type === 'book'), k => full(k), false],
+  ['מאמרים ופרקים בספרים', group(s => s.type === 'article' || s.type === 'chapter'), k => full(k), false],
+  ['דוחות ומסמכים רשמיים', group(s => s.type === 'report'), k => full(k), false],
+  ['חקיקה ומסמכים נורמטיביים זרים', group(s => (s.type === 'law' && s.foreign) || (s.type === 'other' && s.cat === 'flaw')), k => full(k), true],
+  ['פסיקה זרה', group(s => s.type === 'fcase'), k => full(k), true],
+  ['ספרות ודוחות בשפה האנגלית', group(s => s.type === 'other' && s.cat !== 'flaw'), k => full(k), true],
 ];
-for (const [title, keys, fmt] of sections) {
+for (const [title, keys, fmt, en] of sections) {
   if (!keys.length) continue;
   bib.push(heading(title, 2));
-  const items = keys.map(fmt);
   const sortKey = (k) => SRC[k].type === 'case' ? SRC[k].parties : (SRC[k].author || SRC[k].text);
-  keys.sort((a, b) => heSort(sortKey(a), sortKey(b)));
-  for (const k of keys) bib.push(bibPara(fmt(k)));
+  if (en) keys.sort((a, b) => enKey(fmt(a)).localeCompare(enKey(fmt(b)), 'en'));
+  else keys.sort((a, b) => heSort(sortKey(a), sortKey(b)));
+  for (const k of keys) bib.push(bibPara(fmt(k) + '.'));
 }
-bib.push(heading('מקורות שאוזכרו כמובא במקור אחר', 2));
-for (const t of [
-  'אהרן ברק "המשטרה וזכויות האזרח" (הרצאה ביום עיון בנושא: זכויות האזרח ואכיפת החוק במסגרת שבוע המשטרה וזכויות האזרח, 1986), כמובא אצל דרומי.',
-  'באדי חסייסי ויעל ליטמנוביץ "משילות ויעילות בשיטור מיעוטים בחברות שסועות: נקודת המבט של מפקדי תחנות משטרה על החברה הערבית בישראל" **משפט ומשטרה** 265 (2021), כמובא אצל קדוש נוסבאום.',
-  'Badi Hasisi & Ronald Weitzer, _Police Relations with Arabs and Jews in Israel_, 47 BRIT. J. CRIMINOLOGY 728 (2007).',
-  'Stephen Halpern, _Police Employee Organizations and Accountability Procedures in Three Cities: Some Reflections on Police Policy-Making_, 8 LAW & SOC\'Y REV. 561 (1974).',
-  'Kent Roach, _Models of Civilian Police Review: The Objectives and Mechanisms of Legal and Political Regulation of the Police_, 61 CRIM. L.Q. 29 (2014).',
-  'Jason Sunshine & Tom R. Tyler, _The Role of Procedural Justice and Legitimacy in Shaping Public Support for Policing_, 37 LAW & SOC\'Y REV. 513 (2003).',
-  'Tom R. Tyler & Jeffrey Fagan, _Legitimacy and Cooperation: Why Do People Help the Police Fight Crime in Their Communities?_, 6 OHIO ST. J. CRIM. L. 231 (2008).',
-  'Moule et al. [פרטי המאמר כפי שהם מופיעים בהערת השוליים של הפורום] (2019).',
-]) bib.push(bibPara(t));
 
 // ---------- עמוד שער ותוכן עניינים ----------
 const center = (t, size, bold, after = 200) => new Paragraph({
@@ -237,13 +265,15 @@ const center = (t, size, bold, after = 200) => new Paragraph({
   children: runs(t, size, bold ? { bold: true } : {}),
 });
 const cover = [
-  center('[שם המוסד והפקולטה]', 28, true, 120),
-  center('סמינריון מונחה במשפט פלילי', 26, false, 120),
-  center('המנחה: ד"ר עו"ד גלית אהרון', 26, false, 1600),
-  center('רפורמת אמו"ן במשטרת ישראל: בין אפקטיביות עקרונית ליישום בפועל', 36, true, 200),
-  center('אכיפה, הפחתת עבריינות ולגיטימציה בקרב צעירים ערבים בני 18 עד 24', 30, false, 1600),
-  center('מגיש/ה: [שם מלא]    ת"ז: [מספר]', 26, false, 120),
-  center('תשרי התשפ"ז, ספטמבר 2026', 26, false, 120),
+  center('הפקולטה למשפטים', 30, true, 120),
+  center('תואר שני במשפטים (LL.M.)', 26, false, 120),
+  center('סמינר מתקדם במשפט הפלילי', 26, false, 1800),
+  center('רפורמת אמו"ן במשטרת ישראל:', 38, true, 60),
+  center('בין אפקטיביות עקרונית ליישום בפועל', 38, true, 240),
+  center('הפחתת עבריינות, אכיפה ולגיטימציה בקרב צעירים ערבים בני 18 עד 24', 28, false, 2000),
+  center('מוגש ל: פרופ\' יואב ספיר', 26, false, 120),
+  center('מגיש: יזיד גריפאת', 26, false, 120),
+  center('תאריך הגשה: [תאריך]', 26, false, 120),
   new Paragraph({ children: [new PageBreak()] }),
   new Paragraph({ bidirectional: true, alignment: AlignmentType.CENTER, spacing: { after: 240 },
     children: [mk('תוכן עניינים', 32, { bold: true }, true)] }),
