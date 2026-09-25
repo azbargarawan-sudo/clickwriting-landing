@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const {
   Document, Packer, Paragraph, TextRun, FootnoteReferenceRun, AlignmentType,
-  HeadingLevel, PageNumber, ShadingType, Footer, TableOfContents, LevelFormat, PageBreak,
+  HeadingLevel, PageNumber, ShadingType, Footer, TableOfContents, LevelFormat, PageBreak, ImageRun,
 } = require('docx');
 const SRC = require('./sources.js');
 
@@ -270,12 +270,16 @@ const center = (t, size, bold, after = 200) => new Paragraph({
   children: runs(t, size, bold ? { bold: true } : {}),
 });
 const cover = [
-  center('הפקולטה למשפטים', 30, true, 120),
+  new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 360 }, children: [
+    new ImageRun({ type: 'jpg', data: fs.readFileSync(path.join(__dirname, 'tau-logo.jpg')),
+      transformation: { width: 150, height: 150 } }),
+  ] }),
+  center('הפקולטה למשפטים ע"ש בוכמן', 30, true, 120),
   center('תואר שני במשפטים (LL.M.)', 26, false, 120),
-  center('סמינר מתקדם במשפט הפלילי', 26, false, 1800),
+  center('סמינר מתקדם במשפט הפלילי', 26, false, 1200),
   center('רפורמת אמו"ן במשטרת ישראל:', 38, true, 60),
   center('בין אפקטיביות עקרונית ליישום בפועל', 38, true, 240),
-  center('הפחתת עבריינות, אכיפה ולגיטימציה בקרב צעירים ערבים בני 18 עד 24', 28, false, 2000),
+  center('הפחתת עבריינות, אכיפה ולגיטימציה בקרב צעירים ערבים בני 18 עד 24', 28, false, 1400),
   center('מוגש ל: פרופ\' יואב ספיר', 26, false, 120),
   center('מגיש: יזיד גריפאת', 26, false, 120),
   center('תאריך הגשה: תשרי התשפ"ז, ספטמבר 2026', 26, false, 120),
