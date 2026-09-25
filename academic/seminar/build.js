@@ -61,6 +61,9 @@ function scriptSplit(t, size, fmt) {
 function mk(text, size, fmt, rtl) {
   return new TextRun({
     text, font: FONT, size, sizeComplexScript: size, rightToLeft: rtl,
+    // שפה נכונה לכל קטע, וביטול בדיקת איות (שמות ומונחים מקצועיים אינם במילון)
+    language: rtl ? { bidirectional: 'he-IL' } : { value: 'en-US', bidirectional: 'he-IL' },
+    noProof: true,
     bold: fmt.bold, boldComplexScript: fmt.bold,
     italics: fmt.italics, italicsComplexScript: fmt.italics,
     shading: fmt.highlight ? { type: ShadingType.CLEAR, fill: 'FFF200', color: 'auto' } : undefined,
@@ -285,7 +288,7 @@ const cover = [
 const doc = new Document({
   features: { updateFields: true },
   styles: {
-    default: { document: { run: { font: FONT, size: BODY, sizeComplexScript: BODY, rightToLeft: true } } },
+    default: { document: { run: { font: FONT, size: BODY, sizeComplexScript: BODY, rightToLeft: true, noProof: true, language: { value: 'en-US', bidirectional: 'he-IL' } } } },
     paragraphStyles: [
       { id: 'Heading1', name: 'Heading 1', basedOn: 'Normal', next: 'Normal', quickFormat: true,
         run: { font: FONT, size: 32, sizeComplexScript: 32, bold: true, boldComplexScript: true },
