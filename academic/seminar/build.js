@@ -109,6 +109,8 @@ function full(key, pin) {
       const i = s.text.lastIndexOf(' (');
       return i > 0 ? `${s.text.slice(0, i)}, ${pin}${s.text.slice(i)}` : `${s.text}, ${pin}`;
     }
+    case 'hraw':
+      return s.text;
     case 'book':
       pin = pin || (s.needPage ? '[עמוד]' : '');
       return `${s.author} **${s.title}**${s.vol ? ' ' + s.vol : ''}${pin ? ' ' + pin : ''} (${s.editors ? s.editors + ', ' : ''}${s.year})`;
@@ -244,7 +246,7 @@ const sections = [
   ['חקיקה ישראלית', group(s => s.type === 'law' && !s.foreign), k => SRC[k].text, false],
   ['פסיקה ישראלית', group(s => s.type === 'case'), k => full(k), false],
   ['ספרים', group(s => s.type === 'book'), k => full(k), false],
-  ['מאמרים ופרקים בספרים', group(s => s.type === 'article' || s.type === 'chapter'), k => full(k), false],
+  ['מאמרים ופרקים בספרים', group(s => s.type === 'article' || s.type === 'chapter' || s.type === 'hraw'), k => full(k), false],
   ['דוחות ומסמכים רשמיים', group(s => s.type === 'report'), k => full(k), false],
   ['חקיקה ומסמכים נורמטיביים זרים', group(s => (s.type === 'law' && s.foreign) || (s.type === 'other' && s.cat === 'flaw')), k => full(k), true],
   ['פסיקה זרה', group(s => s.type === 'fcase'), k => full(k), true],
@@ -273,7 +275,7 @@ const cover = [
   center('הפחתת עבריינות, אכיפה ולגיטימציה בקרב צעירים ערבים בני 18 עד 24', 28, false, 2000),
   center('מוגש ל: פרופ\' יואב ספיר', 26, false, 120),
   center('מגיש: יזיד גריפאת', 26, false, 120),
-  center('תאריך הגשה: [תאריך]', 26, false, 120),
+  center('תאריך הגשה: תשרי התשפ"ז, ספטמבר 2026', 26, false, 120),
   new Paragraph({ children: [new PageBreak()] }),
   new Paragraph({ bidirectional: true, alignment: AlignmentType.CENTER, spacing: { after: 240 },
     children: [mk('תוכן עניינים', 32, { bold: true }, true)] }),
