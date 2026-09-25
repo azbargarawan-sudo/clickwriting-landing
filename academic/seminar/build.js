@@ -111,7 +111,7 @@ function full(key, pin) {
     }
     case 'book':
       pin = pin || (s.needPage ? '[עמוד]' : '');
-      return `${s.author} **${s.title}**${s.vol ? ' ' + s.vol : ''}${pin ? ' ' + pin : ''} (${s.year})`;
+      return `${s.author} **${s.title}**${s.vol ? ' ' + s.vol : ''}${pin ? ' ' + pin : ''} (${s.editors ? s.editors + ', ' : ''}${s.year})`;
     case 'article':
       return `${s.author} "${s.title}" **${s.journal}** ${s.vol ? s.vol + ' ' : ''}${s.start}${pin ? ', ' + pin : ''} (${s.year})`;
     case 'report':
