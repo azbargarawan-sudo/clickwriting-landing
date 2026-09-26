@@ -61,6 +61,13 @@ function badge(slide, n, kicker, onDark) {
   pres.title = "אסטרטגיות ניהוליות בהתמודדות עם היעדרויות מורים";
   pres.author = "חנון מנסור, אולפת עבד אל חי";
 
+  // Flowing-prose paragraph with an icon marker in the right margin (RTL)
+  async function para(s, Comp, y, h, runs, o = {}) {
+    const d = 0.5, iconX = o.right - d;
+    await iconCircle(s, Comp, iconX, y + 0.02, d, o.iconFill || C.ink, o.iconFg || C.white);
+    t(s, runs, { x: o.left, y, w: iconX - 0.25 - o.left, h, fontSize: o.size || 16, color: o.color || C.text, lineSpacingMultiple: 1.15 });
+  }
+
   // ---------------- Slide 1 ----------------
   {
     const s = pres.addSlide();
@@ -70,49 +77,33 @@ function badge(slide, n, kicker, onDark) {
       isTextBox: true, x: 0.6, y: 0.55, w: 5.6, h: 0.4, fontFace: FONT, fontSize: 11, color: C.mist,
       rtlMode: true, align: "left", valign: "middle", margin: 0,
     });
+    t(s, "מה קורה בבית הספר כשהמורה לא מגיע?", { x: 0.6, y: 1.25, w: 12.13, h: 0.85, fontSize: 40, bold: true, color: C.white, valign: "middle" });
 
-    t(s, "מה קורה בבית הספר כשהמורה לא מגיע?", { x: 0.6, y: 1.3, w: 12.13, h: 0.85, fontSize: 40, bold: true, color: C.white, valign: "middle" });
-    t(s, "הנושא: אסטרטגיות ניהוליות בהתמודדות עם היעדרויות מורים ושמירה על רצף לימודי", { x: 0.6, y: 2.2, w: 12.13, h: 0.45, fontSize: 18, color: C.mist, valign: "middle" });
-
-    // Research question card (right)
-    s.addShape("roundRect", { x: 5.0, y: 2.95, w: 7.73, h: 2.3, rectRadius: 0.12, fill: { color: C.inkSoft }, line: { color: C.inkSoft } });
-    t(s, "שאלת המחקר", { x: 5.35, y: 3.15, w: 7.03, h: 0.35, fontSize: 14, bold: true, color: C.amber });
-    t(s, "כיצד מנהלי בתי ספר בצפון הארץ מתארים את התמודדותם עם היעדרויות מורים, ואילו אסטרטגיות ושיקולים מנחים את החלטותיהם לשמירה על רצף לימודי?",
-      { x: 5.35, y: 3.55, w: 7.03, h: 1.5, fontSize: 20, bold: true, color: C.white, lineSpacingMultiple: 1.1 });
-
-    // Why this question (left)
-    t(s, "למה דווקא השאלה הזאת?", { x: 0.6, y: 2.95, w: 4.05, h: 0.35, fontSize: 14, bold: true, color: C.amber });
-    const why = [
-      [fa.FaExchangeAlt, "מי נכנס לכיתה במקום המורה?"],
-      [fa.FaBalanceScale, "מי מחליט, ולפי אילו שיקולים?"],
-      [fa.FaChalkboardTeacher, "מה קורה לשיעור עצמו?"],
-      [fa.FaUsers, "מה המחיר לצוות שמחליף?"],
-    ];
-    for (let i = 0; i < why.length; i++) {
-      const y = 3.42 + i * 0.47;
-      await iconCircle(s, why[i][0], 4.27, y, 0.38, C.amber, C.ink);
-      t(s, why[i][1], { x: 0.6, y, w: 3.5, h: 0.38, fontSize: 14, color: C.white, valign: "middle" });
-    }
-
-    // "Our research matters because..."
-    s.addShape("roundRect", { x: 0.6, y: 5.6, w: 12.13, h: 1.25, rectRadius: 0.12, fill: { color: C.ink }, line: { color: C.amber, width: 1.5 } });
-    await iconCircle(s, fa.FaQuoteRight, 11.95, 5.83, 0.55, C.amber, C.ink);
-    t(s, [
-      { text: "המחקר שלנו חשוב כי ", options: { bold: true, color: C.amber } },
-      { text: "היעדרות מורים קורית כמעט בכל יום, וההחלטה של המנהל באותו בוקר קובעת אם התלמידים יקבלו שיעור אמיתי או רק השגחה.", options: { color: C.white } },
-    ], { x: 0.9, y: 5.75, w: 10.85, h: 0.95, fontSize: 18, valign: "middle" });
+    const P = { left: 0.6, right: 12.73, size: 17, color: C.white, iconFill: C.amber, iconFg: C.ink };
+    await para(s, fa.FaSchool, 2.55, 1.25, [
+      { text: "המחקר שלנו עוסק בהיעדרויות מורים, ", options: { bold: true, color: C.amber } },
+      { text: "תופעה שמוכרת לכל בית ספר ומתרחשת כמעט בכל יום. ההיעדרות עצמה אינה הבעיה. המורכבות מתחילה ברגע שבו המנהל צריך להחליט בתוך דקות מי ייכנס לכיתה, מה יקרה בשיעור ומי מהצוות ישלם את המחיר." },
+    ], P);
+    await para(s, fa.FaQuestion, 4.0, 1.25, [
+      { text: "לכן אנחנו שואלים: ", options: { color: C.white } },
+      { text: "כיצד מנהלי בתי ספר בערים בצפון הארץ מתארים את התמודדותם עם היעדרויות מורים, ואילו אסטרטגיות ושיקולים מנחים את החלטותיהם לשמירה על רצף לימודי?", options: { bold: true, color: C.white } },
+    ], P);
+    await para(s, fa.FaQuoteRight, 5.2, 1.6, [
+      { text: "השאלה הזאת מעסיקה אותנו ", options: { bold: true, color: C.amber } },
+      { text: "משום שראינו שאותה היעדרות יכולה להסתיים בשיעור שממשיך כרגיל, או בשעה של השגחה בלבד, וההבדל נקבע בהחלטות של המנהל. המחקר שלנו חשוב כי הוא מאיר את מה שקורה מאחורי הקלעים של ההחלטות האלה, שמשפיעות ישירות על הלמידה של התלמידים." },
+    ], P);
 
     s.addNotes(
 `[חנון | כדקה ורבע]
-בוקר רגיל, 7:30. מורה מתקשרת ואומרת שהיא לא תגיע היום. בתוך כמה דקות המנהל צריך להחליט: מי נכנס לכיתה, מה יקרה בשיעור, ומי ישלם את המחיר.
+בוקר רגיל, שבע וחצי. מורה מתקשרת ואומרת שהיא לא תגיע היום. בתוך כמה דקות המנהל צריך להחליט: מי נכנס לכיתה, מה יקרה בשיעור, ומי מהצוות ישלם את המחיר.
 
-הנושא שלנו הוא היעדרויות מורים. היעדרות כשלעצמה היא לא הבעיה, היא חלק מהחיים של כל בית ספר. מה שמעניין אותנו הוא מה שהמנהל עושה ברגע הזה.
+המחקר שלנו עוסק בהיעדרויות מורים. ההיעדרות עצמה היא חלק מהחיים של כל בית ספר. מה שמעניין אותנו הוא מה שהמנהל עושה ברגע הזה.
 
-שאלת המחקר שלנו: כיצד מנהלי בתי ספר בצפון הארץ מתארים את התמודדותם עם היעדרויות מורים, ואילו אסטרטגיות ושיקולים מנחים את החלטותיהם לשמירה על רצף לימודי?
+לכן שאלת המחקר שלנו היא: כיצד מנהלי בתי ספר בערים בצפון הארץ מתארים את התמודדותם עם היעדרויות מורים, ואילו אסטרטגיות ושיקולים מנחים את החלטותיהם לשמירה על רצף לימודי?
 
-למה דווקא השאלה הזאת? כי בכל בית ספר ראינו שאותה היעדרות יכולה להסתיים בשיעור שממשיך כרגיל, או בשעה של השגחה בלבד. ההבדל תלוי בהחלטות של המנהל.
+השאלה הזאת מעסיקה אותנו כי ראינו שאותה היעדרות יכולה להסתיים בשיעור שממשיך כרגיל, או בשעה של השגחה בלבד. ההבדל תלוי בהחלטות של המנהל.
 
-המחקר שלנו חשוב כי היעדרות מורים קורית כמעט בכל יום, וההחלטה של המנהל באותו בוקר קובעת אם התלמידים יקבלו שיעור אמיתי או רק השגחה.
+המחקר שלנו חשוב כי הוא מאיר את מה שקורה מאחורי הקלעים של ההחלטות האלה, שמשפיעות ישירות על הלמידה של התלמידים.
 [מעבר לאולפת]`);
   }
 
@@ -123,79 +114,35 @@ function badge(slide, n, kicker, onDark) {
     badge(s, 2, "מה אנחנו כבר יודעים ומה עדיין לא?", false);
     t(s, "הספרות שינתה את השאלה שלנו", { x: 0.6, y: 1.15, w: 12.13, h: 0.75, fontSize: 36, bold: true, color: C.ink, valign: "middle" });
 
-    // Three cards, read right-to-left: known -> tension -> gap
-    const cardY = 2.15, cardH = 2.55, cardW = 3.85;
-    const xs = [8.88, 4.74, 0.6];
-    const cards = [
-      { ic: fa.FaBookOpen, head: "מה כבר ידוע", fill: C.tint },
-      { ic: fa.FaBolt, head: "איפה המתח", fill: C.tint },
-      { ic: fa.FaQuestion, head: "מה עדיין לא ברור", fill: C.tint },
-    ];
-    for (let i = 0; i < 3; i++) {
-      s.addShape("roundRect", { x: xs[i], y: cardY, w: cardW, h: cardH, rectRadius: 0.12, fill: { color: cards[i].fill }, line: { color: cards[i].fill } });
-      await iconCircle(s, cards[i].ic, xs[i] + cardW - 0.75, cardY + 0.22, 0.5, C.ink, C.white);
-      t(s, cards[i].head, { x: xs[i] + 0.25, y: cardY + 0.25, w: cardW - 1.15, h: 0.45, fontSize: 18, bold: true, color: C.ink, valign: "middle" });
-    }
-    // chevrons between cards (pointing left = forward in RTL)
-    for (const cx of [8.88 - 0.145 - 0.2, 4.74 - 0.145 - 0.2]) {
-      await iconCircle(s, fa.FaArrowLeft, cx + 0.025, cardY + cardH / 2 - 0.175, 0.35, C.amber, C.white);
-    }
+    const P = { left: 0.6, right: 12.73, size: 16 };
+    await para(s, fa.FaBookOpen, 2.2, 1.1, [
+      { text: "הספרות מלמדת שהיעדרויות מורים אינן עניין טכני בלבד: ", options: { bold: true, color: C.ink } },
+      { text: "מילר ועמיתיו (2008) וקלוטפלטר ועמיתיו (2009) מצאו שהן פוגעות בהישגי התלמידים, והפגיעה גדלה ככל שההיעדרויות מצטברות. שפירא־לישצ'ינסקי ורוזנבלט (2010) הראו שהמנהל אינו רק מגיב להיעדרות, שכן האקלים שהוא מעצב בבית הספר קשור גם להיקף ההיעדרויות." },
+    ], P);
+    s.addText("Miller et al., 2008 · Clotfelter et al., 2009 · Shapira-Lishchinsky & Rosenblatt, 2010", {
+      isTextBox: true, x: 0.6, y: 3.3, w: 11.38, h: 0.3, fontFace: FONT, fontSize: 10, color: C.muted, align: "right", margin: 0,
+    });
+    await para(s, fa.FaBolt, 3.75, 1.35, [
+      { text: "אלא שכאן נוצר מתח: ", options: { bold: true, color: C.ink } },
+      { text: "בתיאוריה, רצף לימודי הוא עניין פדגוגי של המשך תוכן, יחסים ושגרה. במציאות, בשבע וחצי בבוקר, המנהל צריך קודם כול שמישהו יהיה בכיתה. רוב המחקרים בודקים כמה מורים נעדרים, מדוע ומה המחיר, ומעט ידוע על מה שהמנהל עושה ושוקל ברגע ההיעדרות עצמו." },
+    ], P);
 
-    // Card 1 content
-    t(s, [
-      { text: "היעדרויות פוגעות בלמידה, במיוחד כשהן מצטברות", options: { bold: true, breakLine: true } },
-      { text: "Miller et al., 2008; Clotfelter et al., 2009", options: { fontSize: 10, color: C.muted, rtlMode: false, breakLine: true } },
-      { text: " ", options: { fontSize: 6, breakLine: true } },
-      { text: "המנהל לא רק מגיב: האקלים שהוא יוצר קשור גם להיקף ההיעדרויות", options: { bold: true, breakLine: true } },
-      { text: "Shapira-Lishchinsky & Rosenblatt, 2010", options: { fontSize: 10, color: C.muted, rtlMode: false } },
-    ], { x: xs[0] + 0.25, y: cardY + 0.9, w: cardW - 0.5, h: 1.5, fontSize: 13.5, color: C.text });
-
-    // Card 2 content
-    t(s, [
-      { text: "בתיאוריה: ", options: { bold: true } },
-      { text: "רצף לימודי הוא עניין פדגוגי, כלומר המשך תוכן, יחסים ושגרה.", options: { breakLine: true } },
-      { text: " ", options: { fontSize: 6, breakLine: true } },
-      { text: "במציאות, ב־7:30 בבוקר: ", options: { bold: true } },
-      { text: "קודם כול צריך שמישהו יהיה בכיתה.", options: {} },
-    ], { x: xs[1] + 0.25, y: cardY + 0.9, w: cardW - 0.5, h: 1.5, fontSize: 13.5, color: C.text });
-
-    // Card 3 content
-    t(s, [
-      { text: "המחקר בודק בעיקר ", options: {} },
-      { text: "כמה ולמה", options: { bold: true } },
-      { text: " מורים נעדרים ומה המחיר.", options: { breakLine: true } },
-      { text: " ", options: { fontSize: 6, breakLine: true } },
-      { text: "מעט ידוע על מה שהמנהל ", options: {} },
-      { text: "עושה ושוקל", options: { bold: true } },
-      { text: " ברגע ההיעדרות עצמו.", options: {} },
-    ], { x: xs[2] + 0.25, y: cardY + 0.9, w: cardW - 0.5, h: 1.5, fontSize: 13.5, color: C.text });
-
-    // Shift in thinking
-    s.addShape("roundRect", { x: 0.6, y: 5.05, w: 12.13, h: 1.8, rectRadius: 0.12, fill: { color: C.ink }, line: { color: C.ink } });
-    t(s, "השינוי בחשיבה שלנו", { x: 0.95, y: 5.2, w: 11.43, h: 0.4, fontSize: 14, bold: true, color: C.amber });
-    t(s, [
-      { text: "בתחילת הדרך חשבנו", options: { bold: true, color: C.mist, breakLine: true } },
-      { text: "שהבעיה לוגיסטית: למצוא ממלא מקום.", options: { color: C.mist } },
-    ], { x: 7.35, y: 5.65, w: 5.03, h: 1.0, fontSize: 16, valign: "middle" });
-    await iconCircle(s, fa.FaArrowLeft, 6.4, 5.9, 0.5, C.amber, C.ink);
-    t(s, [
-      { text: "היום אנחנו מבינים", options: { bold: true, color: C.amber, breakLine: true } },
-      { text: "שרצף הוא פדגוגי, ארגוני ורגשי, ושהמנהל פועל גם לפני ההיעדרות ולא רק אחריה.", options: { bold: true, color: C.white } },
-    ], { x: 0.95, y: 5.65, w: 5.2, h: 1.0, fontSize: 16, valign: "middle" });
+    // Shift in thinking, as a continuous paragraph on a dark panel
+    s.addShape("roundRect", { x: 0.6, y: 5.35, w: 12.13, h: 1.25, rectRadius: 0.12, fill: { color: C.ink }, line: { color: C.ink } });
+    await para(s, fa.FaSyncAlt, 5.5, 0.95, [
+      { text: "הקריאה שינתה גם את החשיבה שלנו. ", options: { bold: true, color: C.amber } },
+      { text: "בתחילת הדרך ראינו בבעיה עניין לוגיסטי של מציאת ממלא מקום. היום אנחנו מבינים שרצף לימודי הוא פדגוגי, ארגוני ורגשי, ושהמנהל פועל גם לפני ההיעדרות ולא רק אחריה.", options: { color: C.white } },
+    ], { left: 0.95, right: 12.43, size: 16, iconFill: C.amber, iconFg: C.ink });
 
     s.addNotes(
 `[אולפת | כדקה ושלושת רבעי]
-מה למדנו מהספרות? שתי תובנות.
+מה למדנו מהספרות? קודם כול, שהיעדרויות מורים אינן עניין טכני. מחקרים גדולים, של מילר ועמיתיו ושל קלוטפלטר ועמיתיו, מצאו שהיעדרויות פוגעות בהישגי התלמידים, והפגיעה גדלה ככל שהן מצטברות.
 
-הראשונה: היעדרויות מורים פוגעות בלמידה, והפגיעה גדלה כשההיעדרויות מצטברות. מחקרים גדולים בארצות הברית, של מילר ועמיתיו ושל קלוטפלטר ועמיתיו, הראו קשר בין מספר ימי ההיעדרות של המורה לבין הישגי התלמידים.
+מה שהפתיע אותנו הוא שהמנהל לא רק מגיב להיעדרות. מחקר ישראלי של שפירא־לישצ'ינסקי ורוזנבלט מצא שהאקלים שהמנהל יוצר בבית הספר קשור גם להיקף ההיעדרויות.
 
-השנייה, שהפתיעה אותנו: המנהל לא רק מגיב להיעדרות. מחקר ישראלי של שפירא־לישצ'ינסקי ורוזנבלט מצא שהאקלים שהמנהל יוצר בבית הספר קשור גם להיקף ההיעדרויות.
+אבל כאן נוצר מתח. בתיאוריה, רצף לימודי הוא עניין פדגוגי: שהחומר ימשיך, שהיחסים והשגרה יישמרו. במציאות, בשבע וחצי בבוקר, המנהל צריך קודם כול שמישהו יהיה בכיתה. ורוב המחקרים בודקים כמה מורים נעדרים ולמה, ולא מה המנהל עושה ושוקל ברגע ההיעדרות עצמו.
 
-ואיפה המתח? בתיאוריה, רצף לימודי הוא עניין פדגוגי: שהחומר ימשיך, שהיחסים והשגרה יישמרו. אבל בשבע וחצי בבוקר המנהל צריך קודם כול שמישהו יהיה בכיתה.
-
-והפער: רוב המחקר בודק כמה מורים נעדרים, למה, ומה המחיר. מעט ידוע על מה שהמנהל עושה ושוקל ברגע ההיעדרות עצמו.
-
-זה גם שינה את החשיבה שלנו. בהתחלה חשבנו שהבעיה לוגיסטית, רק למצוא ממלא מקום. היום אנחנו מבינים שרצף הוא פדגוגי, ארגוני ורגשי, ושהמנהל פועל גם לפני ההיעדרות ולא רק אחריה.
+הקריאה שינתה גם את החשיבה שלנו. בהתחלה חשבנו שהבעיה לוגיסטית, רק למצוא ממלא מקום. היום אנחנו מבינים שרצף הוא פדגוגי, ארגוני ורגשי, ושהמנהל פועל גם לפני ההיעדרות ולא רק אחריה.
 [מעבר לחנון]`);
   }
 
@@ -206,62 +153,51 @@ function badge(slide, n, kicker, onDark) {
     badge(s, 3, "יוצאים לשטח", false);
     t(s, "12 שיחות עם מי שמחליטים בבוקר", { x: 0.6, y: 1.15, w: 12.13, h: 0.75, fontSize: 36, bold: true, color: C.ink, valign: "middle" });
 
-    // Who panel (right)
-    const pX = 9.6, pY = 2.15, pW = 3.13, pH = 3.15;
-    s.addShape("roundRect", { x: pX, y: pY, w: pW, h: pH, rectRadius: 0.12, fill: { color: C.ink }, line: { color: C.ink } });
-    t(s, "את מי נחקור", { x: pX + 0.25, y: pY + 0.2, w: pW - 0.5, h: 0.35, fontSize: 14, bold: true, color: C.amber });
-    s.addText("12", { isTextBox: true, x: pX + 0.25, y: pY + 0.5, w: pW - 0.5, h: 0.95, fontFace: FONT, fontSize: 60, bold: true, color: C.white, align: "right", valign: "middle", margin: 0 });
-    t(s, [
-      { text: "מנהלים ומנהלות", options: { bold: true, fontSize: 16, breakLine: true } },
-      { text: "בצפון הארץ, מאזורים ויישובים שונים: עירוני וכפרי, יסודי ועל־יסודי, ותק שונה", options: { fontSize: 12, color: C.mist, breakLine: true } },
-      { text: " ", options: { fontSize: 5, breakLine: true } },
-      { text: "למה הם? הם מקבלי ההחלטות.", options: { fontSize: 12, color: C.amber, bold: true } },
-    ], { x: pX + 0.25, y: pY + 1.6, w: pW - 0.5, h: 1.4, color: C.white });
+    // Stat panel (left)
+    s.addShape("roundRect", { x: 0.6, y: 2.2, w: 2.6, h: 3.0, rectRadius: 0.12, fill: { color: C.ink }, line: { color: C.ink } });
+    s.addText("12", { isTextBox: true, x: 0.6, y: 2.75, w: 2.6, h: 1.1, fontFace: FONT, fontSize: 66, bold: true, color: C.amber, align: "center", valign: "middle", margin: 0 });
+    s.addText([
+      { text: "מנהלים ומנהלות", options: { bold: true, fontSize: 16, color: C.white, breakLine: true } },
+      { text: "בערים בצפון הארץ", options: { fontSize: 14, color: C.mist } },
+    ], { isTextBox: true, x: 0.8, y: 3.95, w: 2.2, h: 1.0, fontFace: FONT, rtlMode: true, align: "center", valign: "top", margin: 0 });
 
-    // 2x2 grid (read right-to-left)
-    const gW = 4.2, gH = 1.5, gap = 0.15;
-    const gx = [0.6 + gW + 0.3, 0.6];
-    const gy = [2.15, 2.15 + gH + gap];
-    const grid = [
-      { ic: fa.FaMicrophone, head: "איך נחקור", body: "ראיון חצי מובנה (45 עד 60 דקות). נבקש מכל מנהל: \"ספר/י לי על בוקר אחד של היעדרות\". אחר כך ניתוח תמטי." },
-      { ic: fa.FaSearch, head: "מה אנחנו מחפשים", body: "אסטרטגיות מונעות או מגיבות; היעדרות קצרה או ממושכת; שיקולים: פדגוגיה, תקציב, הוגנות לצוות, רווחת המורה." },
-      { ic: fa.FaMountain, head: "האתגר הגדול", body: "מנהלים עלולים להציג תמונה יפה מהמציאות, ומה שהם מתארים לא תמיד זהה למה שקורה. קשה גם למצוא זמן ביומן שלהם." },
-      { ic: fa.FaLightbulb, head: "מה יפתיע אותנו", body: "אם יתברר שמה שמנחה את ההחלטה הוא בעיקר \"שקט וסדר\" ולא רצף לימודי." },
-    ];
-    for (let i = 0; i < 4; i++) {
-      const x = gx[i % 2], y = gy[Math.floor(i / 2)];
-      s.addShape("roundRect", { x, y, w: gW, h: gH, rectRadius: 0.1, fill: { color: C.tint }, line: { color: C.tint } });
-      await iconCircle(s, grid[i].ic, x + gW - 0.62, y + 0.17, 0.44, C.ink, C.white);
-      t(s, grid[i].head, { x: x + 0.2, y: y + 0.17, w: gW - 0.95, h: 0.44, fontSize: 15, bold: true, color: C.ink, valign: "middle" });
-      t(s, grid[i].body, { x: x + 0.2, y: y + 0.66, w: gW - 0.4, h: 0.78, fontSize: 12, color: C.text });
-    }
+    const P = { left: 3.5, right: 12.73, size: 15 };
+    await para(s, fa.FaUsers, 2.2, 1.0, [
+      { text: "נשוחח עם 12 מנהלים ומנהלות ", options: { bold: true, color: C.ink } },
+      { text: "של בתי ספר בערים בצפון הארץ, יסודיים ועל־יסודיים ובעלי ותק שונה. בחרנו במנהלים כי הם מקבלי ההחלטות בבוקר ההיעדרות, ובערים כדי לבחון את התופעה בהקשר אחיד ולהשוות בין ערים שונות." },
+    ], P);
+    await para(s, fa.FaMicrophone, 3.35, 1.25, [
+      { text: "בראיונות חצי מובנים ", options: { bold: true, color: C.ink } },
+      { text: "נבקש מכל מנהל לתאר בוקר אחד של היעדרות וגם היעדרות ממושכת. כך נוכל להבין שיקולים ודילמות ולא רק נהלים כתובים. בניתוח תמטי נחפש אסטרטגיות מונעות לעומת מגיבות, ואת האיזון בין פדגוגיה, תקציב, הוגנות כלפי הצוות ורווחת המורה." },
+    ], P);
+    await para(s, fa.FaLightbulb, 4.55, 0.95, [
+      { text: "האתגר המרכזי ", options: { bold: true, color: C.ink } },
+      { text: "הוא שמנהלים עלולים להציג תמונה יפה מהמציאות, ולכן נבקש דוגמאות מוחשיות. ממצא שיפתיע אותנו: שמה שמנחה את ההחלטה בפועל הוא השקט והסדר ולא הרצף הלימודי." },
+    ], P);
 
-    // Closing sentence
-    s.addShape("roundRect", { x: 0.6, y: 5.55, w: 12.13, h: 1.3, rectRadius: 0.12, fill: { color: C.ink }, line: { color: C.ink } });
+    s.addShape("roundRect", { x: 0.6, y: 5.9, w: 12.13, h: 1.05, rectRadius: 0.12, fill: { color: C.ink }, line: { color: C.ink } });
     t(s, [
       { text: "אם המחקר שלנו יהיה מוצלח, בסופו נבין טוב יותר ", options: { bold: true, color: C.amber } },
       { text: "איך מנהלים מאזנים, בזמן אמת, בין הצורך שמישהו יהיה בכיתה לבין הזכות של התלמידים לרצף לימודי אמיתי.", options: { color: C.white } },
-    ], { x: 0.95, y: 5.65, w: 11.43, h: 1.1, fontSize: 18, valign: "middle" });
+    ], { x: 0.95, y: 5.98, w: 11.43, h: 0.9, fontSize: 17, valign: "middle" });
 
     s.addNotes(
 `[חנון | כדקה וחצי]
-איך נבדוק את זה? נצא לשטח ונשוחח עם 12 מנהלים ומנהלות מבתי ספר בצפון הארץ. בחרנו בתי ספר מאזורים שונים, עירוניים וכפריים, יסודיים ועל־יסודיים, ומנהלים עם ותק שונה, כדי לראות מגוון של דרכי פעולה. בחרנו במנהלים כי הם מקבלי ההחלטות.
+איך נבדוק את זה? נשוחח עם 12 מנהלים ומנהלות של בתי ספר בערים בצפון הארץ, יסודיים ועל־יסודיים, עם ותק שונה. בחרנו במנהלים כי הם מקבלי ההחלטות בבוקר ההיעדרות, ובחרנו בערים כדי לבחון את התופעה בהקשר אחיד ולהשוות בין ערים שונות.
 
-הכלי שלנו הוא ראיון חצי מובנה. נבקש מכל מנהל לתאר בוקר אחד של היעדרות, צעד אחר צעד, ונשאל גם על היעדרות ממושכת. ראיון מאפשר לנו להבין את השיקולים ואת הדילמות, ולא רק את הנוהל הכתוב.
+הכלי שלנו הוא ראיון חצי מובנה. נבקש מכל מנהל לתאר בוקר אחד של היעדרות, צעד אחר צעד, ונשאל גם על היעדרות ממושכת. כך נבין את השיקולים ואת הדילמות, ולא רק את הנוהל הכתוב. בניתוח נחפש אסטרטגיות מונעות לעומת מגיבות, ואת האיזון בין פדגוגיה, תקציב, הוגנות כלפי הצוות שמחליף, ורווחת המורה הנעדרת.
 
-מה נחפש? אסטרטגיות מונעות לעומת אסטרטגיות מגיבות, הבדלים בין היעדרות קצרה לממושכת, ובעיקר את השיקולים: פדגוגיה, תקציב, הוגנות כלפי הצוות שמחליף, ורווחת המורה הנעדרת.
-
-האתגר הגדול: מנהלים עלולים להציג תמונה יפה מהמציאות. לכן נבקש דוגמאות מוחשיות ולא רק עקרונות.
+האתגר המרכזי: מנהלים עלולים להציג תמונה יפה מהמציאות. לכן נבקש דוגמאות מוחשיות ולא רק עקרונות.
 
 [אולפת | כחצי דקה]
-ומה יפתיע אותנו? אם יתברר שמה שמנחה את ההחלטה הוא בעיקר השקט והסדר בבית הספר ולא רצף לימודי. זה יערער הנחה שלנו.
+ומה יפתיע אותנו? אם יתברר שמה שמנחה את ההחלטה בפועל הוא השקט והסדר בבית הספר ולא הרצף הלימודי. זה יערער הנחה שלנו.
 
 אם המחקר שלנו יהיה מוצלח, בסופו נבין טוב יותר איך מנהלים מאזנים, בזמן אמת, בין הצורך שמישהו יהיה בכיתה לבין הזכות של התלמידים לרצף לימודי אמיתי.
 תודה.
 
 [שאלות המשך אפשריות]
 למה רק מנהלים? כי השאלה היא על קבלת החלטות, והם אלה שמחליטים. במחקר המשך אפשר לשמוע גם את המורים המחליפים.
-למה צפון? יש לנו גישה, ויש בצפון מגוון רחב של יישובים ומגזרים.`);
+למה רק ערים? כדי לבחון את התופעה בהקשר אחיד. בתי ספר בכפרים פועלים בתנאים אחרים, וזה יכול להיות כיוון למחקר המשך.`);
   }
 
   await pres.writeFile({ fileName: OUT });
