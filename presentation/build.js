@@ -290,6 +290,9 @@ function section(slide, heading, body, o) {
       } else {
         inner = '<a:pPr rtl="1"/>' + inner;
       }
+      // Viewers that ignore rtl="1" (e.g. iOS Quick Look) still honor Unicode
+      // embedding marks, so wrap each run in RLE ... PDF.
+      inner = inner.replace(/<a:t>([^<]+)<\/a:t>/g, (m, txt) => `<a:t>‫${txt}‬</a:t>`);
       return `<a:p>${inner}</a:p>`;
     });
     zip.file(name, xml);
