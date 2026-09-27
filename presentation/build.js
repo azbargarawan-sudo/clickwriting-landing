@@ -282,6 +282,24 @@ function badge(slide, n, kicker, onDark) {
 למה רק ערים? כדי לבחון את התופעה בהקשר אחיד. בתי ספר בכפרים פועלים בתנאים אחרים, וזה יכול להיות כיוון למחקר המשך.`);
   }
 
-  await pres.writeFile({ fileName: OUT });
+  // pptxgenjs only marks some paragraphs rtl; force every Hebrew paragraph to RTL
+  const JSZip = require("jszip");
+  const zip = await JSZip.loadAsync(await pres.write({ outputType: "nodebuffer" }));
+  const hebrew = /[\u0590-\u05FF]/;
+  for (const name of Object.keys(zip.files).filter((n) => /^ppt\/(slides|notesSlides)\/[^/]+\.xml$/.test(n))) {
+    let xml = await zip.file(name).async("string");
+    xml = xml.replace(/<a:p>([\s\S]*?)<\/a:p>/g, (para, inner) => {
+      if (!hebrew.test(inner)) return para;
+      if (/^<a:pPr\b/.test(inner)) {
+        inner = inner.replace(/^<a:pPr\b([^>]*?)(\/?)>/, (m, attrs, slash) =>
+          `<a:pPr${attrs.replace(/\s+rtl="[01]"/, "")} rtl="1"${slash}>`);
+      } else {
+        inner = '<a:pPr rtl="1"/>' + inner;
+      }
+      return `<a:p>${inner}</a:p>`;
+    });
+    zip.file(name, xml);
+  }
+  require("fs").writeFileSync(OUT, await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" }));
   console.log("wrote", OUT);
 })();
