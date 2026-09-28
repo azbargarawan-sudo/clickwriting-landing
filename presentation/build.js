@@ -6,7 +6,7 @@ const pptxgen = require("pptxgenjs");
 const sharp = require("sharp");
 const JSZip = require("jszip");
 
-const OUT = process.argv[2] || "היעדרויות-מורים-מצגת-סיום.pptx";
+const OUT = process.argv[2] || "מצגת סיום.pptx";
 const LOGO = path.join(__dirname, "ono-logo.jpg");
 // Optional ID numbers for the cover, kept out of git: IDS_FILE=ids.json ({"hanin": "...", "ulfat": "..."})
 const IDS = process.env.IDS_FILE ? JSON.parse(require("fs").readFileSync(process.env.IDS_FILE, "utf8")) : {};
