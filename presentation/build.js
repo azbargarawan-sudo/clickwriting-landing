@@ -72,28 +72,22 @@ function section(slide, heading, body, o) {
     });
 
     s.addShape("roundRect", { x: 2.4, y: 5.45, w: 8.53, h: 1.35, rectRadius: 0.12, fill: { color: C.tint }, line: { color: C.tint } });
-    // Presenters: heading, then aligned name and ID columns (IDs left blank to fill in)
-    const pBox = { isTextBox: true, y: 5.6, h: 1.05, fontFace: FONT, fontSize: 15, color: C.text, valign: "middle", rtlMode: true, margin: 0 };
-    s.addText([
-      { text: "הוגש על ידי", options: { bold: true, color: C.ink, breakLine: true } },
-      { text: " ", options: { breakLine: true } },
-      { text: " ", options: {} },
-    ], { ...pBox, x: 5.75, w: 5.0, align: "center" });
-    s.addText([
-      { text: " ", options: { breakLine: true } },
-      { text: "חנין מנסור", options: { breakLine: true } },
-      { text: "אולפת עבד אל חי", options: {} },
-    ], { ...pBox, x: 8.75, w: 1.85, align: "right" });
-    s.addText([
-      { text: " ", options: { breakLine: true } },
-      { text: idText(IDS.hanin), options: { breakLine: true } },
-      { text: idText(IDS.ulfat), options: {} },
-    ], { ...pBox, x: 6.4, w: 2.2, align: "right" });
-    s.addText([
-      { text: "המרצה", options: { bold: true, color: C.ink, breakLine: true } },
-      { text: "ד״ר ליאור הלוי", options: { breakLine: true } },
-      { text: "תשפ״ז, 2026", options: {} },
-    ], { isTextBox: true, x: 2.6, y: 5.6, w: 2.9, h: 1.05, fontFace: FONT, fontSize: 15, color: C.text, align: "center", valign: "middle", rtlMode: true, margin: 0 });
+    // One single-line box per row at fixed positions, so every viewer lays it out the same
+    const row = (text, x, y, w, align, bold) => s.addText(text, {
+      isTextBox: true, x, y, w, h: 0.32, fontFace: FONT, fontSize: 15, bold: !!bold,
+      color: bold ? C.ink : C.text, align, valign: "top", rtlMode: true, margin: 0,
+    });
+    const rows = [5.62, 5.97, 6.3];
+    // Presenters: heading on top, then aligned name and ID columns
+    row("מוגש על ידי", 5.75, rows[0], 5.0, "center", true);
+    row("חנין מנסור", 8.75, rows[1], 1.85, "right");
+    row("אולפת עבד אל חי", 8.75, rows[2], 1.85, "right");
+    row(idText(IDS.hanin), 6.4, rows[1], 2.2, "right");
+    row(idText(IDS.ulfat), 6.4, rows[2], 2.2, "right");
+    // Lecturer
+    row("המרצה", 2.6, rows[0], 2.9, "center", true);
+    row("ד״ר ליאור הלוי", 2.6, rows[1], 2.9, "center");
+    row("תשפ״ז, 2026", 2.6, rows[2], 2.9, "center");
 
     s.addNotes(
 `[חנין | כעשר שניות]
