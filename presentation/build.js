@@ -69,16 +69,28 @@ function section(slide, heading, body, o) {
     });
 
     s.addShape("roundRect", { x: 2.4, y: 5.45, w: 8.53, h: 1.35, rectRadius: 0.12, fill: { color: C.tint }, line: { color: C.tint } });
+    // Presenters: heading, then aligned name and ID columns (IDs left blank to fill in)
+    const pBox = { isTextBox: true, y: 5.6, h: 1.05, fontFace: FONT, fontSize: 15, color: C.text, valign: "middle", rtlMode: true, margin: 0 };
     s.addText([
       { text: "הוגש על ידי", options: { bold: true, color: C.ink, breakLine: true } },
+      { text: " ", options: { breakLine: true } },
+      { text: " ", options: {} },
+    ], { ...pBox, x: 5.75, w: 5.0, align: "center" });
+    s.addText([
+      { text: " ", options: { breakLine: true } },
       { text: "חנון מנסור", options: { breakLine: true } },
       { text: "אולפת עבד אל חי", options: {} },
-    ], { isTextBox: true, x: 6.9, y: 5.6, w: 3.7, h: 1.05, fontFace: FONT, fontSize: 15, color: C.text, align: "center", valign: "middle", rtlMode: true, margin: 0 });
+    ], { ...pBox, x: 8.75, w: 1.85, align: "right" });
+    s.addText([
+      { text: " ", options: { breakLine: true } },
+      { text: "ת.ז. ______________", options: { breakLine: true } },
+      { text: "ת.ז. ______________", options: {} },
+    ], { ...pBox, x: 6.4, w: 2.2, align: "right" });
     s.addText([
       { text: "המרצה", options: { bold: true, color: C.ink, breakLine: true } },
       { text: "ד״ר ליאור הלוי", options: { breakLine: true } },
       { text: "תשפ״ז, 2026", options: {} },
-    ], { isTextBox: true, x: 2.73, y: 5.6, w: 3.7, h: 1.05, fontFace: FONT, fontSize: 15, color: C.text, align: "center", valign: "middle", rtlMode: true, margin: 0 });
+    ], { isTextBox: true, x: 2.6, y: 5.6, w: 2.9, h: 1.05, fontFace: FONT, fontSize: 15, color: C.text, align: "center", valign: "middle", rtlMode: true, margin: 0 });
 
     s.addNotes(
 `[חנון | כעשר שניות]
