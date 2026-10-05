@@ -8,14 +8,15 @@ const BIB = (t) => ({ type: 'bib', text: t });
 const TABLE = (rows) => ({ type: 'table', rows });
 
 const cover = {
-  institution: '[שם המוסד האקדמי]',
+  institution: 'אוניברסיטת בר-אילן',
+  logo: 'logo-biu.png',
   department: '[שם החוג / התוכנית]',
   kind: 'עבודה סמינריונית',
   title1: '"וַחֲמוֹר אֵבוּס בְּעָלָיו לֹא יָדַע"',
   title2: 'דמות החמור במשלי שועלים לרבי ברכיה הנקדן',
   course: 'הקורס: [שם הקורס ומספרו]',
   lecturer: 'המרצה: [שם המרצה]',
-  student: 'מגיש/ה: [שם מלא], ת"ז [מספר]',
+  student: 'מגישה: אחמד מונא, ת"ז 037094190',
   date: 'תשרי תשפ"ז, ספטמבר 2026',
 };
 

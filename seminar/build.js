@@ -6,7 +6,7 @@ const docx = require(path.join(SCRATCH, 'node_modules/docx'));
 const {
   Document, Packer, Paragraph, TextRun, FootnoteReferenceRun, AlignmentType, HeadingLevel,
   PageBreak, Footer, PageNumber, Table, TableRow, TableCell, WidthType, ShadingType,
-  TabStopType, LeaderType, BorderStyle, VerticalAlign,
+  TabStopType, LeaderType, BorderStyle, VerticalAlign, ImageRun,
 } = docx;
 const { cover, body } = require('./content.js');
 
@@ -109,7 +109,12 @@ function coverPage() {
     bidirectional: true, alignment: AlignmentType.CENTER, spacing: { after, line: 360 },
     children: runs(t, { size, bold }),
   });
+  const logo = cover.logo ? [new Paragraph({
+    alignment: AlignmentType.CENTER, spacing: { after: 240 },
+    children: [new ImageRun({ type: 'png', data: fs.readFileSync(path.join(__dirname, cover.logo)), transformation: { width: 260, height: 96 } })],
+  })] : [];
   return [
+    ...logo,
     c(cover.institution, 28, true, 120),
     c(cover.department, 26, false, 1800),
     c(cover.kind, 30, true, 1200),
