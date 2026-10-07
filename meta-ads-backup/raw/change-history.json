@@ -1,0 +1,3370 @@
+[
+ {
+  "time": "10/6/2026 at 2:05 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "10/3/2026 at 9:36 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/30/2026 at 5:00 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/30/2026 at 12:23 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "9/27/2026 at 10:50 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/25/2026 at 2:18 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "9/25/2026 at 2:18 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "9/24/2026 at 9:10 PM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "9/24/2026 at 9:10 PM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "9/24/2026 at 8:33 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/22/2026 at 6:55 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 35091,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/20/2026 at 8:39 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/17/2026 at 4:42 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/14/2026 at 6:57 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/12/2026 at 1:55 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה עדויות ערבית #1",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Not Approved",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "9/11/2026 at 5:12 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/10/2026 at 11:45 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "9/10/2026 at 11:45 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "9/9/2026 at 12:18 AM",
+  "who": "Yoni Shimoni",
+  "event": "Payment method removed",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "9/8/2026 at 5:41 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/6/2026 at 9:50 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/3/2026 at 8:03 PM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Payment Needed",
+   "new_value": "Active",
+   "type": "status"
+  }
+ },
+ {
+  "time": "9/3/2026 at 8:02 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70305,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "9/2/2026 at 9:32 PM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Payment Needed",
+   "type": "status"
+  }
+ },
+ {
+  "time": "9/2/2026 at 3:01 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "9/2/2026 at 10:24 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/31/2026 at 11:56 AM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/31/2026 at 11:55 AM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 10000,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 14000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "8/31/2026 at 11:55 AM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Pending Process",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/31/2026 at 9:04 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/29/2026 at 1:20 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "8/29/2026 at 1:20 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "8/27/2026 at 9:37 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/26/2026 at 9:56 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/24/2026 at 12:40 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה #7 ערבית",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 6000,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 3000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "8/24/2026 at 12:40 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/24/2026 at 12:40 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - עברית",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 10000,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 5000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "8/24/2026 at 12:40 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/24/2026 at 12:40 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 5000,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 2000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "8/24/2026 at 12:40 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Pending Process",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/24/2026 at 12:40 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 4000,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 10000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "8/24/2026 at 12:40 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Pending Process",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/24/2026 at 9:34 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/23/2026 at 1:24 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/22/2026 at 6:43 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 3481,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/20/2026 at 9:30 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/19/2026 at 11:18 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/19/2026 at 11:18 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/18/2026 at 8:25 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/18/2026 at 3:28 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1_Image",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/17/2026 at 11:03 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/17/2026 at 7:31 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1_Image",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/15/2026 at 5:30 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/15/2026 at 10:04 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/15/2026 at 9:30 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 9:40 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 8:47 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 8:47 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 8:13 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 6:45 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:17 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:17 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:16 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:15 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:14 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:13 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:13 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:12 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:05 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה עדויות ערבית #1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:02 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 5:01 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:55 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה עדויות ערבית #1",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:54 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:53 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה עדויות ערבית #1",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:53 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget sharing updated",
+  "object": "קמפיין תנועה whatsapp YSM 08/26",
+  "change": {
+   "old_value": null,
+   "new_value": true,
+   "type": "update_budget_flex_toggle_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה עדויות ערבית #1",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set targeting updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": [],
+   "new_value": [
+    {
+     "content": "Location:",
+     "children": [
+      "Israel"
+     ]
+    },
+    {
+     "content": "Minimum age:",
+     "children": [
+      "18"
+     ]
+    },
+    {
+     "content": "Age:",
+     "children": [
+      "23 - 48"
+     ]
+    },
+    {
+     "content": "Language:",
+     "children": [
+      "Arabic"
+     ]
+    },
+    {
+     "content": "Placements:",
+     "children": [
+      "on pages: Instagram feed, Instagram Stories, Instagram Profile Feed, Instagram Reels, Feed on mobile devices, Marketplace on mobile devices, Facebook Stories on mobile devices, Facebook profile feed on mobile devices or Facebook Reels"
+     ]
+    },
+    {
+     "content": "Advantage+ audience:",
+     "children": [
+      "On"
+     ]
+    }
+   ],
+   "type": "targets_spec"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set bidding updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": null,
+   "new_value": "Automatically bid for actions",
+   "type": "bid_type"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set created",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 5000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set optimization goal updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": null,
+   "new_value": "Replies",
+   "type": "optimization_goal"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set targeting updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": [],
+   "new_value": [
+    {
+     "content": "Location:",
+     "children": [
+      "Israel"
+     ]
+    },
+    {
+     "content": "Age:",
+     "children": [
+      "23 - 48"
+     ]
+    },
+    {
+     "content": "Language:",
+     "children": [
+      "Arabic"
+     ]
+    },
+    {
+     "content": "Placements:",
+     "children": [
+      "on pages: Instagram feed, Instagram Stories, Instagram Profile Feed, Instagram Reels, Feed on mobile devices, Marketplace on mobile devices, Facebook Stories on mobile devices, Facebook profile feed on mobile devices or Facebook Reels"
+     ]
+    },
+    {
+     "content": "People who match:",
+     "children": [
+      "Interests: ‎‎‎‎אוניברסיטה (השכלה גבוהה)‎, ‎אגודת סטודנטים‎‎, ‎‎תואר ראשון (השכלה גבוהה)‎, ‎מכללה (השכלה גבוהה)‎‎‎ or ‎סטודנט (חינוך)‎‎",
+      "Education level: In college, Some college, Master's degree or Professional degree"
+     ]
+    },
+    {
+     "content": "Advantage+ detailed targeting:",
+     "children": [
+      "On"
+     ]
+    },
+    {
+     "content": "Advantage+ audience:",
+     "children": [
+      "Off"
+     ]
+    }
+   ],
+   "type": "targets_spec"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set bidding updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": null,
+   "new_value": "Automatically bid for actions",
+   "type": "bid_type"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set created",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 4000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set optimization goal updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": null,
+   "new_value": "Replies",
+   "type": "optimization_goal"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:52 PM",
+  "who": "Yoni Shimoni",
+  "event": "Campaign created",
+  "object": "קמפיין תנועה whatsapp YSM 08/26",
+  "change": {
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "8/14/2026 at 4:28 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:27 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Pending Process",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/14/2026 at 4:27 PM",
+  "who": "Yoni Shimoni",
+  "event": "Updated status of ad after it finishes Ad Review",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status_to_set_after_review"
+  }
+ },
+ {
+  "time": "8/13/2026 at 1:58 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/11/2026 at 7:54 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/9/2026 at 11:08 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/7/2026 at 11:40 AM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Payment Needed",
+   "new_value": "Active",
+   "type": "status"
+  }
+ },
+ {
+  "time": "8/7/2026 at 11:40 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 60552,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/6/2026 at 7:09 PM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Payment Needed",
+   "type": "status"
+  }
+ },
+ {
+  "time": "8/4/2026 at 6:16 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/4/2026 at 6:16 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Pending Process",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "8/4/2026 at 6:16 PM",
+  "who": "Yoni Shimoni",
+  "event": "Updated status of ad after it finishes Ad Review",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status_to_set_after_review"
+  }
+ },
+ {
+  "time": "8/4/2026 at 5:36 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "8/2/2026 at 5:59 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/31/2026 at 3:15 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 69986,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/31/2026 at 3:15 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 14,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/30/2026 at 1:47 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "7/30/2026 at 1:47 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "7/28/2026 at 11:07 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/26/2026 at 10:51 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/24/2026 at 1:49 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/22/2026 at 6:52 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 16904,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/21/2026 at 3:11 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 19299,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/21/2026 at 3:06 PM",
+  "who": "Yoni Shimoni",
+  "event": "Payment method removed",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "7/20/2026 at 11:17 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/19/2026 at 12:43 AM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Payment Needed",
+   "new_value": "Active",
+   "type": "status"
+  }
+ },
+ {
+  "time": "7/19/2026 at 12:43 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70258,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/16/2026 at 10:33 PM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "In grace period",
+   "new_value": "Payment Needed",
+   "type": "status"
+  }
+ },
+ {
+  "time": "7/16/2026 at 10:29 PM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Active",
+   "new_value": "In grace period",
+   "type": "status"
+  }
+ },
+ {
+  "time": "7/14/2026 at 2:14 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/12/2026 at 4:35 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/10/2026 at 11:01 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/7/2026 at 7:40 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/7/2026 at 12:50 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "7/7/2026 at 12:50 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "7/5/2026 at 11:49 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/3/2026 at 6:13 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "7/1/2026 at 5:02 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "6/30/2026 at 2:32 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #7 #2",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/30/2026 at 2:23 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 4000,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 11000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "6/30/2026 at 2:19 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - עברית",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 4000,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 10000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "6/30/2026 at 2:18 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #7 #2",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/30/2026 at 2:16 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #7 #2",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/30/2026 at 2:15 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #7 #2",
+  "change": {}
+ },
+ {
+  "time": "6/28/2026 at 10:27 AM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Payment Needed",
+   "new_value": "Active",
+   "type": "status"
+  }
+ },
+ {
+  "time": "6/28/2026 at 10:27 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70093,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "6/27/2026 at 7:18 PM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Payment Needed",
+   "type": "status"
+  }
+ },
+ {
+  "time": "6/22/2026 at 6:43 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 5491,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "6/21/2026 at 3:51 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "6/15/2026 at 11:24 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/15/2026 at 11:24 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/15/2026 at 11:24 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Pending Process",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/15/2026 at 11:24 PM",
+  "who": "Yoni Shimoni",
+  "event": "Updated status of ad after it finishes Ad Review",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status_to_set_after_review"
+  }
+ },
+ {
+  "time": "6/15/2026 at 11:24 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Pending Process",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/15/2026 at 11:24 PM",
+  "who": "Yoni Shimoni",
+  "event": "Updated status of ad after it finishes Ad Review",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status_to_set_after_review"
+  }
+ },
+ {
+  "time": "6/15/2026 at 12:45 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "6/12/2026 at 5:29 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #7",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Update Required",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/10/2026 at 6:23 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "6/9/2026 at 9:57 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #4_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 2:50 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #4",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 2:03 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #4_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 10:44 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 10:07 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 1:59 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 1:28 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #3_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:56 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #3",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:55 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:52 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:52 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:50 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #3_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:50 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #4",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:49 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1_Group_1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:45 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:43 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:43 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/9/2026 at 12:43 AM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #3",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:40 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:39 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #3",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:39 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:38 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #3",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:38 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:37 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:37 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:36 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:36 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 6000,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 4000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:35 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #4",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:35 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה #2",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:35 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #4",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:34 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:34 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:34 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #4",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #4",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #3",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:33 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #3",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #4",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget scheduling enabled",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": null,
+   "new_value": false,
+   "type": "update_budget_schedule_state"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set targeting updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": [],
+   "new_value": [
+    {
+     "content": "Location:",
+     "children": [
+      "Israel"
+     ]
+    },
+    {
+     "content": "Age:",
+     "children": [
+      "23 - 48"
+     ]
+    },
+    {
+     "content": "Language:",
+     "children": [
+      "Arabic"
+     ]
+    },
+    {
+     "content": "Placements:",
+     "children": [
+      "on pages: Instagram feed, Instagram Stories, Instagram Profile Feed, Instagram Reels, Feed on mobile devices, Marketplace on mobile devices, Facebook Stories on mobile devices, Facebook profile feed on mobile devices or Facebook Reels"
+     ]
+    },
+    {
+     "content": "People who match:",
+     "children": [
+      "Interests: ‎‎‎‎אוניברסיטה (השכלה גבוהה)‎, ‎אגודת סטודנטים‎‎, ‎‎תואר ראשון (השכלה גבוהה)‎, ‎מכללה (השכלה גבוהה)‎‎‎ or ‎סטודנט (חינוך)‎‎",
+      "Education level: In college, Some college, Master's degree or Professional degree"
+     ]
+    },
+    {
+     "content": "Advantage+ audience:",
+     "children": [
+      "Off"
+     ]
+    }
+   ],
+   "type": "targets_spec"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set bidding updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": null,
+   "new_value": "Automatically bid for actions",
+   "type": "bid_type"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set created",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 4000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set optimization goal updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - ערבית",
+  "change": {
+   "old_value": null,
+   "new_value": "Replies",
+   "type": "optimization_goal"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:32 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #3",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - עברית",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #5",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #3",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #4",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #6",
+  "change": {}
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget scheduling enabled",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - עברית",
+  "change": {
+   "old_value": null,
+   "new_value": false,
+   "type": "update_budget_schedule_state"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set targeting updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - עברית",
+  "change": {
+   "old_value": [],
+   "new_value": [
+    {
+     "content": "Location:",
+     "children": [
+      "Israel"
+     ]
+    },
+    {
+     "content": "Age:",
+     "children": [
+      "23 - 48"
+     ]
+    },
+    {
+     "content": "Language:",
+     "children": [
+      "Hebrew"
+     ]
+    },
+    {
+     "content": "Placements:",
+     "children": [
+      "on pages: Instagram feed, Instagram Stories, Instagram Profile Feed, Instagram Reels, Feed on mobile devices, Marketplace on mobile devices, Facebook Stories on mobile devices, Facebook profile feed on mobile devices or Facebook Reels"
+     ]
+    },
+    {
+     "content": "People who match:",
+     "children": [
+      "Interests: ‎‎‎‎אוניברסיטה (השכלה גבוהה)‎, ‎אגודת סטודנטים‎‎, ‎‎תואר ראשון (השכלה גבוהה)‎, ‎מכללה (השכלה גבוהה)‎‎‎ or ‎סטודנט (חינוך)‎‎",
+      "Education level: In college, Some college, Master's degree or Professional degree"
+     ]
+    },
+    {
+     "content": "Advantage+ audience:",
+     "children": [
+      "Off"
+     ]
+    }
+   ],
+   "type": "targets_spec"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set bidding updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - עברית",
+  "change": {
+   "old_value": null,
+   "new_value": "Automatically bid for actions",
+   "type": "bid_type"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set created",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - עברית",
+  "change": {
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 4000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:31 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set optimization goal updated",
+  "object": "סדרת מודעות תנועה חדשה טסט רחב - עברית",
+  "change": {
+   "old_value": null,
+   "new_value": "Replies",
+   "type": "optimization_goal"
+  }
+ },
+ {
+  "time": "6/8/2026 at 10:11 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה חדשה תמונות עברית",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "6/7/2026 at 12:06 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "6/2/2026 at 4:50 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "5/30/2026 at 12:08 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "5/25/2026 at 9:42 PM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Payment Needed",
+   "new_value": "Active",
+   "type": "status"
+  }
+ },
+ {
+  "time": "5/25/2026 at 9:42 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70082,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "5/25/2026 at 9:26 PM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Payment Needed",
+   "type": "status"
+  }
+ },
+ {
+  "time": "5/22/2026 at 6:16 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 52693,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "5/18/2026 at 7:18 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "5/15/2026 at 9:51 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "5/11/2026 at 11:15 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "5/8/2026 at 4:29 PM",
+  "who": "אא אל",
+  "event": "Campaign status updated",
+  "object": "קמפיין תנועה whatsapp YSM 22.9",
+  "change": {
+   "old_value": "Inactive",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "5/8/2026 at 4:29 PM",
+  "who": "אא אל",
+  "event": "Campaign status updated",
+  "object": "קמפיין תנועה whatsapp YSM 22.9",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "5/6/2026 at 6:48 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "5/3/2026 at 10:32 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "5/1/2026 at 7:37 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Update Required",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/30/2026 at 10:22 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "4/30/2026 at 3:47 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "4/30/2026 at 3:47 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "4/30/2026 at 3:47 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "4/30/2026 at 3:47 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "4/27/2026 at 2:26 PM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Payment Needed",
+   "new_value": "Active",
+   "type": "status"
+  }
+ },
+ {
+  "time": "4/27/2026 at 2:26 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70083,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "4/26/2026 at 2:07 AM",
+  "who": "Meta",
+  "event": "Account status updated",
+  "object": "click writing ADV",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Payment Needed",
+   "type": "status"
+  }
+ },
+ {
+  "time": "4/25/2026 at 10:20 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה עדויות ערבית #2",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/25/2026 at 10:20 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה עדויות ערבית #2",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Pending Process",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/25/2026 at 10:20 PM",
+  "who": "Yoni Shimoni",
+  "event": "Updated status of ad after it finishes Ad Review",
+  "object": "מודעת תנועה חדשה עדויות ערבית #2",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status_to_set_after_review"
+  }
+ },
+ {
+  "time": "4/22/2026 at 9:20 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/22/2026 at 9:20 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Pending Process",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/22/2026 at 9:20 PM",
+  "who": "Yoni Shimoni",
+  "event": "Updated status of ad after it finishes Ad Review",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status_to_set_after_review"
+  }
+ },
+ {
+  "time": "4/22/2026 at 6:29 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 8648,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "4/21/2026 at 3:08 PM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "4/18/2026 at 11:20 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "4/18/2026 at 11:07 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:39 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה חדשה תמונות עברית",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 2500,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 5500,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:38 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:38 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:37 PM",
+  "who": "Meta",
+  "event": "Ad delivered",
+  "object": "מודעת תנועה חדשה עדויות ערבית #2",
+  "change": {
+   "old_value": null,
+   "new_value": "Started delivery",
+   "type": "delivery_event"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:31 PM",
+  "who": "Meta",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה עדויות ערבית #2",
+  "change": {
+   "old_value": "Pending Review",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:29 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:29 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:29 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה חדשה תמונות עברית",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Active",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:29 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #1",
+  "change": {}
+ },
+ {
+  "time": "4/18/2026 at 10:29 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה #2",
+  "change": {}
+ },
+ {
+  "time": "4/18/2026 at 10:29 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set targeting updated",
+  "object": "סדרת מודעות תנועה חדשה חדשה תמונות עברית",
+  "change": {
+   "old_value": [],
+   "new_value": [
+    {
+     "content": "Location:",
+     "children": [
+      "Israel"
+     ]
+    },
+    {
+     "content": "Age:",
+     "children": [
+      "23 - 48"
+     ]
+    },
+    {
+     "content": "Placements:",
+     "children": [
+      "on pages: Instagram feed, Instagram Stories, Instagram Profile Feed, Instagram Reels, Feed on mobile devices, Marketplace on mobile devices, Facebook Stories on mobile devices, Facebook profile feed on mobile devices or Facebook Reels"
+     ]
+    },
+    {
+     "content": "People who match:",
+     "children": [
+      "Interests: ‎‎‎‎אוניברסיטה (השכלה גבוהה)‎, ‎אגודת סטודנטים‎‎, ‎‎תואר ראשון (השכלה גבוהה)‎, ‎מכללה (השכלה גבוהה)‎‎‎ or ‎סטודנט (חינוך)‎‎",
+      "Education level: In college, Some college, Master's degree or Professional degree"
+     ]
+    },
+    {
+     "content": "Advantage+ audience:",
+     "children": [
+      "Off"
+     ]
+    }
+   ],
+   "type": "targets_spec"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:29 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set bidding updated",
+  "object": "סדרת מודעות תנועה חדשה חדשה תמונות עברית",
+  "change": {
+   "old_value": null,
+   "new_value": "Automatically bid for actions",
+   "type": "bid_type"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:29 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set created",
+  "object": "סדרת מודעות תנועה חדשה חדשה תמונות עברית",
+  "change": {
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 2500,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:29 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set optimization goal updated",
+  "object": "סדרת מודעות תנועה חדשה חדשה תמונות עברית",
+  "change": {
+   "old_value": null,
+   "new_value": "Replies",
+   "type": "optimization_goal"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:29 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget scheduling enabled",
+  "object": "סדרת מודעות תנועה חדשה חדשה תמונות עברית",
+  "change": {
+   "old_value": null,
+   "new_value": false,
+   "type": "update_budget_schedule_state"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:25 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "4/18/2026 at 10:25 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "4/18/2026 at 10:25 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "4/18/2026 at 10:25 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "4/18/2026 at 10:23 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה #7 ערבית",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 2500,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 6000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:23 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set budget updated",
+  "object": "סדרת מודעות תנועה חדשה #6 עדויות קהל ערבי",
+  "change": {
+   "old_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "old_value": 5000,
+    "additional_type": "status_string",
+    "additional_value": ""
+   },
+   "new_value": {
+    "type": "payment_amount",
+    "currency": "ILS",
+    "new_value": 6000,
+    "additional_type": "status_string",
+    "additional_value": "Per day"
+   },
+   "type": "composite_data"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:23 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad status updated",
+  "object": "מודעת תנועה חדשה עדויות ערבית #2",
+  "change": {
+   "old_value": "Pending Process",
+   "new_value": "Pending Review",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/18/2026 at 10:22 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad created",
+  "object": "מודעת תנועה חדשה עדויות ערבית #2",
+  "change": {}
+ },
+ {
+  "time": "4/18/2026 at 10:08 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image edited in library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "4/18/2026 at 10:08 PM",
+  "who": "Yoni Shimoni",
+  "event": "Image added to the library",
+  "object": "click writing ADV",
+  "change": {}
+ },
+ {
+  "time": "4/18/2026 at 10:32 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "4/16/2026 at 8:53 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "4/16/2026 at 8:53 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "4/16/2026 at 8:53 AM",
+  "who": "Meta",
+  "event": "Custom audience created",
+  "object": "asa_auto_custom_audience",
+  "change": {
+   "type": 4
+  }
+ },
+ {
+  "time": "4/11/2026 at 8:39 AM",
+  "who": "Meta",
+  "event": "Account billed",
+  "object": "click writing ADV",
+  "change": {
+   "new_value": 70000,
+   "type": "payment_amount"
+  }
+ },
+ {
+  "time": "4/4/2026 at 10:53 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה #1",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/4/2026 at 10:53 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה #5 עדויות",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/4/2026 at 10:53 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה #3",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ },
+ {
+  "time": "4/4/2026 at 10:53 PM",
+  "who": "Yoni Shimoni",
+  "event": "Ad set status updated",
+  "object": "סדרת מודעות תנועה חדשה #4",
+  "change": {
+   "old_value": "Active",
+   "new_value": "Inactive",
+   "type": "run_status"
+  }
+ }
+]
