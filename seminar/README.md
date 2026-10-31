@@ -28,7 +28,7 @@
 ### מקורות על הסיפור הקצר והסיפור הקצרצר
 - לוין, א' (2016). ממשמעות הסיפור למשמעות הקיום: ז'אנר הסיפור המיניאטורי ככלי לוגותרפויטי. *טיפול באמנויות: מחקר ויצירה במעשה הטיפולי*, 6(1), 592-598. [PDF](https://ajcat.haifa.ac.il/images/June_2016/Orna_Levin_article_hebrew_formatted.pdf)
 - לוין, א' (2020). ספרות קורונה היברידית מאת אתגר קרת: עיון בשני סיפורים מתקופת "הגל הראשון". *כעת: כתב עת של מכללת תלפיות*, ה, 207-221. [PDF של הגיליון](https://www.talpiot.ac.il/wp-content/uploads/2020/12/כעת-גליון-חמישי-תשפ.pdf)
-- Kiosses, S. (2021). Towards a poetics of narrative brevity: Short story, microfiction, flash fiction. *International Journal on Studies in English Language and Literature, 9*(1), 9-18. [Open Access](https://doi.org/10.20431/2347-3134.0901002)
+- Holdefer, C. (2014). How short is short? *Journal of the Short Story in English, 62*, 149-161. [טקסט מלא חופשי (OpenEdition)](https://journals.openedition.org/jsse/1440)
 - Roche-Jacques, S. (2024). Flash fiction as a distinct literary form: Some thoughts on time, space, and context. *New Writing, 21*(2), 171-189. [Open Access](https://doi.org/10.1080/14790726.2023.2293767)
 - בלבן, א' (1995). *גל אחר בסיפורת העברית: סיפורת עברית פוסטמודרניסטית*. כתר.
 - מנדלסון-מעוז, ע' (1998). סיטואציות קיצוניות, זוועתיות וגרוטסקיות ביצירותיהם של קסטל-בלום וקרת. *דפים למחקר בספרות*, 11, 269-295.
